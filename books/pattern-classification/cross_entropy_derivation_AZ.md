@@ -5,7 +5,7 @@ Architecture of the CNN:
 ## CNN Architecture
 
 ```mermaid
-flowchart TB
+flowchart LR
     Input[Input Layer]
     Conv1[Conv1<br/>16×3×3, stride=1, padding=1]
     Pool1[Pool1<br/>2×2, stride=2]
