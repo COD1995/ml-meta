@@ -1,4 +1,5 @@
 ## Purpose
+
 This article will go through the forward pass and backpropagation of a simple CNN. It will go through the math at every step and comput the derivations of the functions. 
 
 
