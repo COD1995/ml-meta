@@ -11,6 +11,7 @@
   --c-gray-900: #24292e;
   --c-gray-700: #586069;
   --c-gray-200: #d0d7de;
+  --c-white: #ffffff;
 
   /* fonts */
   --font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
@@ -234,4 +235,33 @@ code {
 .card {
   background: var(--c-white);
   padding: 2rem;
+}
+
+/* --- Minimal Dark Mode ------------------------------- */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --c-blue-600: #58a6ff;
+    --c-blue-700: #1f6feb;
+    --c-green-600: #3fb950;
+    --c-gray-900: #c9d1d9;
+    --c-gray-700: #8b949e;
+    --c-gray-200: #30363d;
+    --c-white: #161b22;
+  }
+  body {
+    color: var(--c-gray-900);
+    background: #0d1117;
+  }
+  .main-card, .card, .sidebar, .toc-card, details, .original-text-container {
+    background: #161b22;
+    border-color: #30363d;
+  }
+  a {
+    color: var(--c-blue-600);
+  }
+  code {
+    background: #161b22;
+    border-color: #30363d;
+    color: #c9d1d9;
+  }
 }
