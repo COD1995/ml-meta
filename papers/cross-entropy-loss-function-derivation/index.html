@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cross Entropy Loss Function Derivation</title>
+    <!-- Global styles -->
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/layout.css" />
+    <!-- Chapter-specific styles -->
+    <link rel="stylesheet" href="../../assets/css/chapters.css" />
+    <!-- MathJax for LaTeX -->
+    <script>
+        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav>
+                <ul class="home-nav">
+                    <li><a href="../../index.html"> 🏠 Home Page</a></li>
+                </ul>
+                <h3>📄 Papers</h3>
+                <ul class="book-nav">
+                    <li><a href="../cv/index.html">Computer Vision Papers</a></li>
+                    <li><a href="index.html" class="active">Cross Entropy Loss Function Derivation</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="content">
+            <h1>Cross Entropy Loss Function Derivation</h1>
+            <h2>Purpose</h2>
+            <p>This article will go through the forward pass and backpropagation of a simple CNN. It will go through the math at every step and compute the derivations of the functions.</p>
+            <h2>CNN Architecture</h2>
+            <p><em>Diagram omitted (see original markdown for mermaid code)</em></p>
+            <h2>Forward Pass</h2>
+            <h3>1. Input Layer</h3>
+            <p>From the diagram above, we can see that our input is $X \in \mathbb{R}^{32 \times 32 \times 3}$ (height x width x channels).</p>
+            <h3>2. Convolutional 1 layer (conv1)</h3>
+            <p>This is defined by 16 kernels of shape 3x3 with a weight $W_1$ and bias $b_1$. We can then write output after Convolutional 1 layer to be:</p>
+            <p>$$S^{[1]}_{c,i,j} = \sum_{c'=1}^{3}\sum_{u=0}^{2}\sum_{v=0}^{2} W^{[1]}_{c,c',u,v}\; X_{c',\,i+u-1,\,j+v-1} \;+\;b^{[1]}_{c}$$</p>
+            <p>where $c'$ is the number of channels, $u$ and $v$ are the kernel sizes.</p>
+            <h3>3. ReLU Activation</h3>
+            <p>We then apply an element-wise ReLU activation function to clamp all negative values to zero and only keep positive values. The output denoted $A_1$ is:</p>
+            <p>$$A^{[1]}_{c,i,j} = \max\bigl(0,\;S^{[1]}_{c,i,j}\bigr)$$</p>
+            <h3>4. Max-Pooling Layer</h3>
+            <p>We will then reduce the resolution with 2x2 max-pooling which takes the maximum over each non-overlapping 2x2 block. This will reduce the dimensionality of the feature map. The output from this is denoted as $P_1 \in \mathbb{R}^{16\times16\times16}$:</p>
+            <p>$$P^{[1]}_{c,p,q} = \max_{u,v\in\{0,1\}} A^{[1]}_{c,\,2p+u,\,2q+v}$$</p>
+            <h3>5. Flattening</h3>
+            <p>We will then flatten the output from above into a vector $h$:</p>
+            <p>$$h = \mathrm{flatten}\bigl(P^{[1]}\bigr)$$</p>
+            <h3>6. Fully Connected Layer</h3>
+            <p>We will now connect each output neuron to every neuron from the previous layer. The inputs in this step is $h_1$ and will be multiplied by a weight $W_2$ and added to a bias $b_2$:</p>
+            <p>$$z_i = \sum_{k=1}^{4096} W_{\mathrm{fc},\,i,k}\,h_k \;+\; b_{\mathrm{fc},\,i}$$</p>
+            <p>where $i = 1,\ldots,10$</p>
+            <h3>7. Softmax and Cross-Entropy Loss</h3>
+            <p>Finally, we will convert the output from above to probabilities using softmax $p_i$ and compute the loss $\mathcal{L}$:</p>
+            <p>$$p_i = \frac{e^{z_i}}{\sum_{j=1}^{10}e^{z_j}}$$</p>
+            <p>$$\mathcal{L} = -\sum_{i=1}^{10} y_i\,\log p_i$$</p>
+            <p>where $y$ is the one-hot true label</p>
+            <h2>Backpropagation</h2>
+            <p>We can now propagate the gradient from the loss function all the way back to the input layer by using the chain rule.</p>
+            <ol>
+                <li><strong>Conv1</strong> → pre-activation $S^{[1]}$</li>
+                <li><strong>ReLU1</strong> → activation $A^{[1]}$</li>
+                <li><strong>MaxPool1</strong> → $P^{[1]}$</li>
+                <li><strong>Flatten</strong> → vector $h$</li>
+                <li><strong>FC1</strong> → $z$</li>
+                <li><strong>Softmax and Cross Entropy</strong> → loss $\mathcal{L}$</li>
+            </ol>
+            <p>We now compute $\delta^{[\cdot]} = \partial\mathcal{L}/\partial(\cdot)$ <strong>in reverse</strong>:</p>
+            <h3>1. Softmax and Cross‐Entropy ⇒ FC1</h3>
+            <p>From</p>
+            <p>$$p_i = \frac{e^{z_i}}{\sum_{j=1}^{10}e^{z_j}}$$</p>
+            <p>$$\mathcal{L} = -\sum_{i=1}^{10} y_i\,\log p_i$$</p>
+            <p>we get this result</p>
+            <p>$$\delta^{[z]}_i = \frac{\partial\mathcal{L}}{\partial z_i} = p_i - y_i, \quad i=1,\dots,10.$$</p>
+            <h3>2. Fully‐Connected (FC1) ⇒ flatten output $h$</h3>
+            <p>The FC layer computes</p>
+            <p>$$z_i = \sum_{k=1}^{4096}W_{\mathrm{fc},\,i,k}\,h_k + b_{\mathrm{fc},\,i}$$</p>
+            <p>By the chain rule:</p>
+            <ul>
+                <li><strong>Bias gradient</strong><br>$$\delta^{[b_{\mathrm{fc}}]}_i = \frac{\partial\mathcal{L}}{\partial b_{\mathrm{fc},\,i}} = \delta^{[z]}_i$$</li>
+                <li><strong>Weight gradient</strong><br>$$\delta^{[W_{\mathrm{fc}}]}_{i,k} = \frac{\partial\mathcal{L}}{\partial W_{\mathrm{fc},\,i,k}} = \delta^{[z]}_i \;\times\; h_k.$$</li>
+                <li><strong>Back-prop to $h$</strong><br>$$\delta^{[h]}_k = \frac{\partial\mathcal{L}}{\partial h_k} = \sum_{i=1}^{10} W_{\mathrm{fc},\,i,k}\;\delta^{[z]}_i.$$</li>
+            </ul>
+            <h3>3. Flatten ⇒ pooled feature-map $P^{[1]}$</h3>
+            <p>Reshape the vector $\delta^{[h]}\in\mathbb{R}^{4096}$ back into $\delta^{[P^{1}]}\in\mathbb{R}^{16\times16\times16}$ by the inverse of $k = c\cdot16\cdot16 + i\cdot16 + j$.</p>
+            <h3>4. MaxPool ⇒ activation $A^{[1]}$</h3>
+            <p>Max pooling routes gradients only to the max positions. For each channel $c$ and block $(p,q)$:</p>
+            <p>$$
+\delta^{[A^{1}]}_{c,\,2p+u,\,2q+v}
+=
+\begin{cases}
+\delta^{[P^{1}]}_{c,p,q},
+&\text{if }(u,v)\text{ is the arg-max in that 2×2 window},\\
+0,&\text{otherwise}.
+\end{cases}
+$$</p>
+            <h3>5. ReLU1 ⇒ pre-activation $S^{[1]}$</h3>
+            <p>ReLU derivative is a mask:</p>
+            <p>$$
+\boxed{\,
+\delta^{[S^{1}]}_{c,i,j}
+= \delta^{[A^{1}]}_{c,i,j}
+\;\times\;
+\mathbf{1}\bigl(S^{[1]}_{c,i,j}>0\bigr)
+\;}
+$$</p>
+            <h3>6. Conv1 ⇒ input $X$</h3>
+            <p>Conv1 computes</p>
+            <p>$$S^{[1]}_{c,i,j} = \sum_{c'=1}^{3}\sum_{u=0}^{2}\sum_{v=0}^{2} W^{[1]}_{c,c',u,v}\; X_{\,i+u-1,\,j+v-1,\,c'} \;+\;b^{[1]}_{c}$$</p>
+            <p>By the chain rule:</p>
+            <ul>
+                <li><strong>Bias gradient</strong><br>$$\delta^{[b^{1}]}_{c} = \sum_{i,j}\delta^{[S^{1}]}_{c,i,j}$$</li>
+                <li><strong>Weight gradient</strong><br>$$\delta^{[W^{1}]}_{c,c',u,v} = \sum_{i=1}^{32}\sum_{j=1}^{32} \delta^{[S^{1}]}_{c,i,j} \;\times\; X_{c',\,i+u-1,\,j+v-1}$$</li>
+                <li><strong>Back-prop to input</strong><br>$$\delta^{[X]}_{c',x,y} = \sum_{c=1}^{16}\sum_{u=0}^{2}\sum_{v=0}^{2} W^{[1]}_{c,c',u,v} \;\times\; \delta^{[S^{1}]}_{c,\,x-u+1,\,y-v+1}$$</li>
+            </ul>
+        </main>
+    </div>
+    <script src="../../assets/js/main.js" defer></script>
+</body>
+</html> 
