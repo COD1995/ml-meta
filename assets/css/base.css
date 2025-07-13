@@ -237,7 +237,6 @@ code {
   padding: 2rem;
 }
 
-/* --- Minimal Dark Mode ------------------------------- */
 @media (prefers-color-scheme: dark) {
   :root {
     --c-blue-600: #58a6ff;
@@ -248,20 +247,34 @@ code {
     --c-gray-200: #30363d;
     --c-white: #161b22;
   }
+
   body {
-    color: var(--c-gray-900);
     background: #0d1117;
+    color: var(--c-gray-900);
   }
-  .main-card, .card, .sidebar, .toc-card, details, .original-text-container {
-    background: #161b22;
-    border-color: #30363d;
+
+
+  div, section, article, details, summary, fieldset {
+    background-color: var(--c-white) !important;
+    color: var(--c-gray-900);
+    border-color: var(--c-gray-200);
   }
+
+  /* Specific fixes for known white boxes */
+  .main-card, .card, .sidebar, .toc-card, .original-text-container  {
+    background: var(--c-white);
+    border-color: var(--c-gray-200);
+  }
+
   a {
     color: var(--c-blue-600);
   }
+  .tagline {
+    color: var(--c-gray-900) !important;
+  }
   code {
-    background: #161b22;
-    border-color: #30363d;
-    color: #c9d1d9;
+    background: var(--c-white);
+    border-color: var(--c-gray-200);
+    color: var(--c-gray-900);
   }
 }
