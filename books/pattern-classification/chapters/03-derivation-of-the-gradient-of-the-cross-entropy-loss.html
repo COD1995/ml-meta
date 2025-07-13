@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chapter 3: Derivation of the Gradient of the cross-entropy Loss</title>
+
+    <!-- Global styles -->
+    <link rel="stylesheet" href="../../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../../assets/css/layout.css" />
+
+    <!-- Chapter-specific styles -->
+    <link rel="stylesheet" href="../../../assets/css/chapters.css" />
+
+    <!-- MathJax for LaTeX -->
+    <script>
+        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\$', '\$']] } };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+</head>
+
+<body>
+    <div class="layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <nav>
+                <!-- Home Page -->
+                <ul class="home-nav">
+                    <li><a href="../../../index.html"> 🏠 Home Page</a></li>
+                </ul>
+
+                <h3>📖 Pattern Classification</h3>
+
+                <!-- Book navigation -->
+                <ul class="book-nav">
+                    <li><a href="01-introduction.html">Chapter 1: Introduction</a></li>
+                    <li><a href="02-bayes-decision.html">Chapter 2: Bayes Decision Theory</a></li>
+                    <li class="chapter-details">
+                        <details open>
+                            <summary>Chapter 3: Derivation of the Gradient of the cross-entropy Loss</summary>
+                            <ul id="toc-list" class="toc-list">
+                                <!-- main.js will inject section links here -->
+                            </ul>
+                        </details>
+                    </li>
+                    <!-- …additional chapters… -->
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <main class="content">
+            <h1>Chapter 3: Derivation of the Gradient of the cross-entropy Loss</h1>
+
+            <p>
+                In this chapter, we explore how machines learn to recognize patterns — like identifying images — using cross-entropy and gradient descent. Through simple examples, playful analogies, and visual storytelling, we break down the math behind how a robot learns from its mistakes and improves step by step, adjusting one tiny wire at a time.
+            </p>
+            <br>
+            <hr>
+            <h2 style="color: #2c3e50;">Cross Entropy</h2>
+
+            <p>Cross-entropy measures how well a predicted probability distribution (from your model) matches the actual labels (the truth).</p>
+
+            <div style="border-left: 5px solid #27ae60; background: #eafaf1; padding: 1em; border-radius: 6px; margin: 1.5em 0;">
+            <p><strong>Think of it like a guessing game:</strong></p>
+            <blockquote>
+                “I think there's an 80% chance it's a cat, and a 20% chance it's a dog.”
+            </blockquote>
+            <p>Your friend knows the correct answer (it is a cat). Your goal is to guess the right animal with <strong>high confidence</strong>.</p>
+            </div>
+
+            <h3 style="color: #34495e;">How do we score your guess?</h3>
+
+            <p><strong>Cross-entropy</strong> tells you how far off your guess was from the truth. It's like a <strong>"badness score"</strong>:</p>
+
+            <ul style="margin-left: 1em;">
+                <li>If you're <strong>very sure and correct</strong> $\to$ score is <span style="color:green;"><strong>low</strong></span> (good!)</li>
+                <li>If you're <strong>very sure and wrong</strong> $\to$ score is <span style="color:red;"><strong>high</strong></span> (bad!)</li>
+                <li>If you're unsure $\to$ score is <strong>in the middle</strong></li>
+            </ul>
+
+            <p style="font-weight: bold; margin-top: 1em;">The lower your score, the better your model is at guessing.</p>
+
+            <figure>
+                <img
+                src="../../../assets/images/pattern-classification/Chapter 3-image001.png"
+                alt="Guessing Game Illustration"
+                width="600" style="margin-top: 1em; border: 1px solid #ccc; border-radius: 6px;"
+                />
+                <figcaption>Guessing Game Illustration</figcaption>
+            </figure>
+            
+            <hr>
+            <h2 style="color: #2c3e50;">Cross Entropy for Two Classes</h2>
+
+            <p>Binary classification means the model is choosing between two possible outcomes, like <strong>cat vs not-cat</strong>.</p>
+            <br>
+            <p style="color: #34495e;"><strong>Example 1: Confident and Correct</strong></p>
+            <p><strong>You say:</strong> “I’m 90% sure it’s a cat.” $ \to p = 0.9 $<br>
+            <strong>The truth is:</strong> it is a cat $ \to y = 1 $</p>
+            <p>So the score is: $$ Score (or) L = -\log(0.9) \approx 0.105 $$</p>
+            <p style="color: green;"><strong>Low score/loss because you're confident and correct.</strong></p>
+            </br>
+
+            <p style="color: #34495e;"><strong>Example 2: Confident and Wrong</strong></p>
+            <p><strong>You say:</strong> “I’m 90% sure it’s not a cat.” $\to p = 0.1$</code><br>
+            <strong>The truth is:</strong> it is a cat $ \to y = 1$</p>
+            <p>So the score is: $$ Score = -\log(0.1) \approx 2.302 $$</p>
+            <p style="color: red;"><strong>High score/loss because you're confident and wrong.</strong></p>
+            <br>
+            <div style="border-left: 5px solid #8e44ad; background: #f9f1fb; padding: 1em; border-radius: 6px; margin: 1em 0;">
+                <h3 style="color: #2c3e50;">Why Use Logs?</h3>
+                <p>Think of logs like a <strong>magnifying glass</strong> for bad guesses.Logs exaggerate your mistakes.</p>
+                <ul style="padding-left: 1.2em;">
+                    <li>$ \log(1) = 0 $ $\to$ Perfect guess $\to$ <span style="color: green;"><strong>No loss/penalty</strong></span></li>
+                    <li>$ \log(0.9) \approx -0.105 $ $\to$ Good guess $\to$ <strong>Small loss</strong></li>
+                    <li>$\log(0.1) \approx -2.302$ $\to$ Bad guess $\to$ <span style="color: red;"><strong>Big penalty</strong></span></li>
+                </ul>
+                <p>To keep the loss positive and growing for worse predictions, we apply a minus sign:</p>
+                $$ L = -\log(p) $$
+                <p><strong>This design helps the model improve more efficiently during training.</strong></p>
+                <figure>
+                    <img
+                    src="../../../assets/images/pattern-classification/Chapter 3-image002.png"
+                    alt="Logarithmic Penalty Curve"
+                    width="500" style="margin-top: 1em; border: 1px solid #ccc; border-radius: 6px;"
+                    />
+                    <figcaption>Logarithmic Penalty Curve</figcaption>
+                </figure>
+            </div>
+
+            <h3 style="color: #2c3e50;">Binary Cross-Entropy Loss Formula</h3>
+
+            <p>The full loss function for binary classification is:</p>
+            $$ L = - \left[ y \cdot \log(p) + (1 - y) \cdot \log(1 - p) \right] $$
+
+            <p>This handles both the right and wrong choices in a single formula.</p><br>
+            <p><strong>What it means:</strong></p>
+            <ul style="padding-left: 1.2em;">
+                <li>If $ y = 1 $ i.e., true answer is cat, only $ \log(p) $ matters — correct class confidence</li>
+                <li>If $ y = 0 $ i.e., true answer is not cat, only $ \log(1 - p) $ matters — avoiding false positives</li>
+            </ul>
+
+            <h3 style="color: #2c3e50;">Cross-Entropy Over Multiple Samples</h3>
+
+            <p>The above formula was the cross-entropy loss for <strong>one sample</strong> in binary classification. Now let’s generalize it to a <strong>dataset with multiple samples</strong>:</p>
+
+            $$ X_{entropy} = - \sum_i \left[ y_i \log(p_i) + (1 - y_i) \log(1 - p_i) \right] $$
+
+            <h3 style="color: #34495e;">What do the symbols mean?</h3>
+            <ul style="padding-left: 1.2em;">
+                <li>$ y_i $: the true label for the $ i^{th} $ sample (either 0 or 1)</li>
+                <li>$ p_i $: the predicted probability that the sample belongs to class 1</li>
+                <li>$ \log $: natural logarithm, used to penalize wrong predictions</li>
+                <li>$ \sum $: sum over all samples in the dataset</li>
+            </ul>
+
+            <h3 style="color: #34495e;">Intuition</h3>
+            <ul style="padding-left: 1.2em;">
+                <li>If the model says $ p_i = 0.9 $ (90% confident)  and $ y_i = 1 $: great $\to$ low loss</li>
+                <li>If the model says $ p_i = 0.1 $ (only 10% confident) and $ y_i = 1 $: bad $\to$ high loss</li>
+            </ul>
+
+            <table style="width: 100%; border-collapse: collapse; margin-top: 1em; font-family: sans-serif;">
+            <thead style="background-color: #f0f0f0;">
+                <tr>
+                <th style="border: 1px solid #ccc; padding: 8px;">Sample</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">Predicted $ p $</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">True $ y $</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">Loss</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Cat 1</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">0.9</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">1</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">$ -\log(0.9) \approx 0.105 $</td>
+                </tr>
+                <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Cat 2</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">0.1</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">1</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">$ -\log(0.1) \approx 2.302 $</td>
+                </tr>
+                <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Not-cat</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">0.2</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">0</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">$ -\log(1 - 0.2) \approx 0.223 $</td>
+                </tr>
+            </tbody>
+            </table>
+            <br>
+            <hr>
+
+            <h2 style="color: #2c3e50;">Cross Entropy for C Classes (Multiclass Classification)</h2>
+
+            <p>This is used when there are more than two classes — like animals:</p>
+
+            <ul style="font-size: 1.1em;">
+                <li>Cat</li>
+                <li>Dog</li>
+                <li>Bird</li>
+            </ul>
+
+            <p><strong>You guess:</strong></p>
+            $$ \text{[Cat: 60%, Dog: 30%, Bird: 10%]}$$
+            <p>The real animal is <strong>Dog</strong>.</p>
+            <br>
+            <p><strong>Now we ask:</strong> “How much did you believe in the correct answer?”</p>
+            <p>You were 30% sure it was Dog, so the score is:</p>
+
+            $$\text{Score} = -\log(0.3) \approx 1.204$$
+
+            <div style="border-left: 5px solid #2980b9; background: #ecf6fc; padding: 1em; border-radius: 6px; margin: 1.5em 0;">
+            <p><strong>Key idea:</strong> The model is rewarded for putting higher probability on the correct class.</p>
+            <p>We only look at the predicted probability for the true label — and apply a log penalty if it’s low.</p>
+            </div>
+
+            <p>We do this for each sample and take the average across the dataset.</p>
+
+            <h3 style="color: #2c3e50;">Cross-Entropy Loss for Multiclass</h3>
+
+            $$X_{entropy} = -\frac{1}{m} \sum_i \sum_c y_{i}^c \log(p_{i}^c)$$
+
+            <h3 style="color: #34495e;">What do the symbols mean?</h3>
+            <ul style="padding-left: 1.2em;">
+            <li>$ m $: total number of samples</li>
+            <li>$ y_{i}^c $: 1 if class $ c $ is the correct label for sample $ i $, otherwise 0</li>
+            <li>$ p_{i}^c $: predicted probability that sample $ i $ belongs to class $ c $</li>
+            </ul>
+
+            <h3 style="color: #34495e;">Intuition</h3>
+            <ul style="padding-left: 1.2em;">
+            <li>If the model says 80% cat, 10% dog, 10% bird and the truth is cat $\to$ low loss</li>
+            <li>If it says 10% cat, 80% dog and the truth is cat $\to$ high loss</li>
+            </ul>
+
+            <table style="width: 100%; border-collapse: collapse; font-family: sans-serif; margin-top: 1em;">
+            <thead style="background-color: #f0f0f0;">
+                <tr>
+                <th style="border: 1px solid #ccc; padding: 8px;">Class</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">Predicted Probability $ \hat{y} $</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">Ground Truth $ y $</th>
+                <th style="border: 1px solid #ccc; padding: 8px;">Loss Contribution</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Cat</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">0.6</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">0</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">0</td>
+                </tr>
+                <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Dog</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">0.3</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">1</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">$ -\log(0.3) \approx 1.204 $</td>
+                </tr>
+                <tr>
+                <td style="border: 1px solid #ccc; padding: 8px;">Bird</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">0.1</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">0</td>
+                <td style="border: 1px solid #ccc; padding: 8px;">0</td>
+                </tr>
+            </tbody>
+            </table><br>
+            <hr>
+
+            <h2 style="color: #2c3e50;">Gradient of Loss: How the Model Learns</h2>
+
+            <p>Imagine you're playing a video game where you throw a ball into a basket. The game gives you points based on how close you are.</p>
+            <p>If you miss the basket, the game says,</p>
+            <blockquote style="border-left: 4px solid #ccc; margin: 1em 0; padding-left: 1em; color: #555;">
+            “Oops! You threw too far to the left!”
+            </blockquote>
+
+            <p>What do you do next time? <strong>You adjust your throw a little bit.</strong></p>
+
+            <!-- 🔵 INTUITION BOX -->
+            <div style="border-left: 5px solid #27ae60; background: #eafaf1; padding: 1em; border-radius: 6px; margin: 1.5em 0;">
+            <p><strong>That’s exactly what a neural network does.</strong></p>
+            <p>It makes a guess, checks how wrong it was, and then slightly updates its weights to improve next time.</p>
+            </div>
+
+            <p>Let’s break it down:</p>
+
+            <ol style="padding-left: 1.2em;">
+            <li><strong>Check how wrong the guess was</strong>  
+                <br>This is called the <strong>loss</strong> — like a score in a game telling you how far off you were.</li>
+            <li><strong>Figure out what caused the mistake</strong>  
+                <br>This is the <strong>gradient</strong>. It tells the model: “That number (weight) you used? It made you miss by a lot.”</li>
+            <li><strong>Adjust that number a little</strong>  
+                <br>This is the <strong>weight update</strong>. You subtract a small amount so the model does better next time.</li>
+            </ol>
+
+            <h3 style="color: #34495e;">The Update Rule</h3>
+
+            <p>The update rule in plain English:</p>
+            <p style="text-align: center;"> $ W $ =  $ w$  $− $ learning rate $×$ how much you messed up </p>
+
+            <p>In formal notation:</p>
+            $$ w_{ji} := w_{ji} - \alpha \cdot \Delta w_{ji}$$
+
+            <ul style="padding-left: 1.2em;">
+                <li>$ w_{ji} $: the current weight</li>
+                <li>$ \Delta w_{ji} $: how much that weight contributed to the error</li>
+                <li>$ \alpha $: the learning rate — how brave the model is to make a change</li>
+            </ul>
+
+            <div style="border-left: 5px solid #2980b9; background: #ecf6fc; padding: 1em; border-radius: 6px; margin: 2em 0;">
+            <p><strong>So what does the computer actually learn?</strong></p>
+            <ul style="padding-left: 1.2em;">
+                <li>What the correct answer is</li>
+                <li>How bad its guess was</li>
+                <li>Which weights caused the mistake</li>
+                <li>How to tweak them just a little to get better</li>
+            </ul>
+            </div>
+
+            <hr>
+
+            <h2 style="color: #2c3e50;">Few Important Terminologies</h2>
+
+            <p>Let’s review a few key concepts using a playful example: your robot friend is trying to guess your favorite animal.</p>
+
+            <div style="border-left: 5px solid #27ae60; background: #eafaf1; padding: 1em; border-radius: 6px; margin: 1.5em 0;">
+            <p>Animal options:</p>
+            <ul style="list-style-type: none; font-size: 1.1em; padding-left: 1.2em;">
+                <li>1. Cat</li>
+                <li>2. Dog</li>
+                <li>3. Bird</li>
+                <li>4. Insect</li>
+            </ul>
+            <p>You’re secretly thinking of <strong>Bird</strong>.</p>
+            </div>
+
+            <h3 style="color: #34495e;">1. Ground Truth (Real Answer)</h3>
+            <p>The correct answer is represented as a <strong>one-hot vector</strong>:</p>
+
+            $$y = [0,\ 0,\ 1,\ 0]$$
+
+            <p>This means:</p>
+            <ul style="padding-left: 1.2em;">
+                <li>Only one position is “hot” (set to 1 — the correct class)</li>
+                <li>All others are “cold” (set to 0)</li>
+            </ul>
+
+            <h3 style="color: #34495e;">2. Predicted Probability (Robot’s Guess)</h3>
+            <p>Based on clues, the robot makes a guess like:</p>
+
+            $$\hat{y} = [0.2,\ 0.1,\ 0.6,\ 0.1]$$
+
+            <p>Interpretation:</p>
+            <ul style="padding-left: 1.2em;">
+            <li>20% sure it’s Cat</li>
+            <li>10% Dog</li>
+            <li><strong>60% Bird</strong></li>
+            <li>10% Insect</li>
+            </ul>
+
+            <h3 style="color: #34495e;">3. How Did the Robot Get These Guesses? (Softmax)</h3>
+            <p>Before the robot gets these nice percentages, the robot calculates raw scores (called $z$):</p>
+
+            $$ z = [1.2,\ 0.5,\ 2.0,\ 0.6]$$
+
+            <p>These numbers are like the robot’s confidence, but they don’t add up to 1, and they don’t mean much yet. These are then converted into probabilities using the <strong>softmax function</strong>:</p>
+
+            $$\hat{y}_i = \frac{e^{z_i}}{\sum_k e^{z_k}}$$
+
+            <h3 style="color: #34495e;">What do the symbols mean?</h3>
+            <ul style="padding-left: 1.2em;">
+                <li>$ z_i $: The robot’s raw score for animal $i$</li>
+                <li>$ e^{z_i} $: Makes every number positive and grows fast</li>
+            </ul>
+
+            <p>This transformation:</p>
+            <ul style="padding-left: 1.2em;">
+                <li>Turns raw scores into a probability distribution</li>
+                <li>Makes all values positive and sum to 1 by dividing by sum</li>
+            </ul>
+
+            <h3 style="color: #34495e;">4. How Do We Score the Guess? (Cross-Entropy Loss)</h3>
+            <p>We use the cross-entropy loss to see how close the prediction was to the truth i.e., how bad our guess was:</p>
+
+            $$L = -\sum_k y_k \log(\hat{y}_k)$$
+
+            <p>Since only the correct answer in y is 1, only one $ y_k $ is 1, all others are 0. Thus the formula only looks at the guess for the correct animal.</p>
+            <br>
+            <p>In our case, the correct animal is Bird → robot said 0.6 (60% sure). So the score is $L = -\log(0.6) \approx 0.51$</p>
+            <br>
+            <p><strong>The more confident the model is in the correct class, the smaller the loss.</strong></p>
+            <br>
+            <hr>
+
+            <h2 style="color: #2c3e50;">How a Robot Learns to Fix Its Mistakes</h1>
+            
+            <div style="border-left: 5px solid #27ae60; background: #eafaf1; padding: 1em; border-radius: 6px; margin: 1.5em 0;">
+                <p><strong>Let’s Build a Simple Robot Brain</strong></p>
+                <p>Imagine you’ve built a tiny robot. Its job? To decide if something is a cat or a dog. But instead of eyes or ears, this robot has a brain made of math — with wires (called <em>weights</em>) that help it guess.</p>
+            </div>
+            <figure>
+                <img
+                src="../../../assets/images/pattern-classification/Chapter 3-image003.png"
+                alt="Simple Model"
+                width="600" style="margin-top: 1em; border: 1px solid #ccc; border-radius: 6px;"
+                />
+                <figcaption>The robot’s tiny brain model</figcaption>
+            </figure>
+
+            <p><strong>The Robot’s Brain Has:</strong></p>
+            <ul style="padding-left: 1.2em;">
+                <li>3 little detectors (neurons) in the middle — asking things like “Does it have fur?” or “Is it barking?”</li>
+                <li>2 guessers at the end: one guesses “CAT!”, and the other guesses “DOG!”</li>
+            </ul>
+            <p>It gives guesses like:</p>
+            <blockquote style="border-left: 4px solid #ccc; margin: 1em 0; padding-left: 1em; color: #555;">
+            “I’m 80% sure it’s a cat and 20% sure it’s a dog!”
+            </blockquote>
+
+            <h3 style="color: #34495e;">Our Goal</h3>
+            <p>We want to figure out: </p>
+            <blockquote style="border-left: 4px solid #ccc; margin: 1em 0; padding-left: 1em; color: #555;">
+                <strong>How much did one wire (let’s call it $w_{21}$) contribute to a mistake?</strong>
+            </blockquote>
+            <p>In robot-math language, we write this as:</p>
+            <p style="text-align: center;">$$ \frac{\partial L}{\partial w_{21}} $$</p>
+            <p>This tells us how badly that wire affected the final answer — and helps the robot learn to fix it.</p>
+            <br>
+
+            <h3 style="color: #34495e;">But There’s a Twist!</h3>
+            <p>Our robot doesn’t just guess one thing. It uses something called <strong>softmax</strong> to turn all its brain signals into nice percentages.</p>
+            <p>So… even one wire like $w_{21}$ can <strong>change both guesses!</strong></p>
+            <p>That means there are two paths from this wire to the robot’s final loss (mistake). So we add both paths together:</p>
+            <p style="text-align: center;">
+            $$
+            \frac{\partial L}{\partial w_{21}} =
+            \left(
+            \frac{\partial L}{\partial \hat{y}_1} \cdot \frac{\partial \hat{y}_1}{\partial z_1}
+            +
+            \frac{\partial L}{\partial \hat{y}_2} \cdot \frac{\partial \hat{y}_2}{\partial z_1}
+            \right)
+            \cdot \frac{\partial z_1}{\partial w_{21}}
+            $$
+            </p>
+            
+            <h3 style="color: #34495e;">Solving Each Piece</h3>
+            <br>
+
+            <h4>1. $\frac{\partial z_1}{\partial w_{21}}$</h4><br>
+            <p>e know the robot’s math here: $z_1 = h_2 w_{21} + b$</p>
+            <p>The $b$ (bias) goes away when we take the derivative:</p>
+            <p style="text-align: center;">$$ \frac{\partial z_1}{\partial w_{21}} = h_2 $$</p>
+
+            <h4>2. $\frac{\partial \hat{y}_1}{\partial z_1}$</h4><br>
+            <p>Softmax turns robot scores into probabilities. Here's the softmax for $ \hat{y}_1 $:</p>
+            <p style="text-align: center;">
+            $$
+            \hat{y}_1 = \frac{e^{z_1}}{e^{z_1} + e^{z_2}}
+            $$
+            </p>
+            <p>We want to find:</p>
+            <p style="text-align: center;">
+            $$
+            \frac{\partial \hat{y}_1}{\partial z_1}
+            $$
+            </p>
+            <p>Using the derivative rule for fractions:</p>
+            <div style="border-left: 5px solid #8e44ad; background: #f9f1fb; padding: 1em; border-radius: 6px; margin: 1em 0;">
+            <ul style="padding-left: 1.2em;">
+            <li>The derivative of $e^u$ is just $e^u$</li>
+            <li>The derivative of $ \frac{u}{v} $ is: $$ \frac{u'v - uv'}{v^2} $$</li>
+            </ul>
+            </div>
+            <p>Let’s apply that:</p>
+            <p style="text-align: center;">
+            $$
+            \frac{\partial \hat{y}_1}{\partial z_1}
+            =
+            \frac{e^{z_1}(e^{z_1} + e^{z_2}) - e^{z_1} \cdot e^{z_1}}{(e^{z_1} + e^{z_2})^2}
+            $$
+            <p>We simplify this expression:</p>
+            <p style="text-align: center;">
+            $$
+            = \frac{e^{z_1}}{e^{z_1} + e^{z_2}} - \left( \frac{e^{z_1}}{e^{z_1} + e^{z_2}} \right)^2
+            = \hat{y}_1 - \hat{y}_1^2
+            = \hat{y}_1 (1 - \hat{y}_1)
+            $$
+            </p>
+
+            <h4>3. $\frac{\partial \hat{y}_2}{\partial z_1}$</h4><br>
+            <p>This one’s trickier — it’s about how the second guess changes because of $z_1$:</p>
+            <p style="text-align: center;">
+            $$
+            \hat{y}_2 = \frac{e^{z_2}}{e^{z_1} + e^{z_2}}
+            $$
+            </p>
+            So:
+            <p>
+            $$
+            \frac{\partial \hat{y}_2}{\partial z_1}
+            = \frac{0 \cdot {(e^{z_2}}{e^{z_1} + e^{z_2})} - e^{z_2} \cdot e^{z_1}}{(e^{z_1} + e^{z_2})^2}
+            = - \frac{e^{z_2}}{(e^{z_1} + e^{z_2})} \cdot \frac{e^{z_1}}{(e^{z_1} + e^{z_2})}
+            = - \hat{y}_1 \cdot \hat{y}_2
+            $$
+            </p>
+            <p>Even other guesses are affected by $z_1$!</p>
+
+            <h4>4. Cross Entropy Loss Gradients</h4>
+            <p>Loss formula: $L = -(y_1 \log \hat{y}_1 + y_2 \log \hat{y}_2)$</p>
+            <p>Now we take the derivative of the loss with respect to the guesses:</p>
+            $$ \frac{\partial L}{\partial \hat{y}_1} = -\frac{y_1}{\hat{y}_1} $$</li>
+            $$ \frac{\partial L}{\partial \hat{y}_2} = -\frac{y_2}{\hat{y}_2} $$</li>
+            <div style="border-left: 5px solid #8e44ad; background: #f9f1fb; padding: 1em; border-radius: 6px; margin: 1em 0;">
+            <p>When we took the derivative of the loss with respect to the prediction, we used this important math rule:</p>
+            <p style="text-align: center;">
+                $$ \frac{\partial \log x}{\partial x} = \frac{1}{x} $$
+            </p>
+            </div>
+
+            <h3 style="color: #2c3e50;">Putting It All Together</h3>
+            <p>We plug all the puzzle pieces into one formula:</p>
+            <p style="text-align: center;">
+            $$
+            \frac{\partial L}{\partial w_{21}} =
+            \left(
+            -\frac{y_1}{\hat{y}_1} \cdot \hat{y}_1(1 - \hat{y}_1)
+            +
+            -\frac{y_2}{\hat{y}_2} \cdot (-\hat{y}_1 \hat{y}_2)
+            \right) \cdot h_2
+            $$
+            </p>
+
+            <h4 style="color: #34495e;">Let’s Clean It Up</h4>
+            <ul>
+            <li>$\hat{y}_1$ cancels in the first term: → $-y_1 (1 - \hat{y}_1)$</li>
+            <li>Negative signs cancel in the second term: → $+ y_2 \cdot \hat{y}_1$</li>
+            </ul>
+            <p>So we get:</p>
+            <p style="text-align: center;">
+            $$
+            \frac{\partial L}{\partial w_{21}} =
+            (- y_1 (1 - \hat{y}_1) + y_2 \cdot \hat{y}_1) \cdot h_2
+            $$
+            </p>
+            <p>Which becomes even simpler:</p>
+            <p style="text-align: center;">
+            $$
+            = (\hat{y}_1 - y_1) \cdot h_2
+            $$
+            </p>
+
+            <h3 style="color: #2c3e50;">Final Result</h3>
+            <div style="border-left: 5px solid #27ae60; background: #eafaf1; padding: 1em; border-radius: 6px; margin: 1.5em 0;">
+            <p><strong>This is what the robot uses to fix that wire:</strong></p>
+            <p style="text-align: center;">
+            $$ \frac{\partial L}{\partial w_{21}} = (\hat{y}_1 - y_1) \cdot h_2 $$
+            </p>
+            <p>It takes the difference between its guess and the truth, and scales it by the input $h_2$.</p>
+            </div>
+            <br>
+            <hr>
+
+            <h2 style="color: #2c3e50;">What If We Want to Generalize?</h2>
+            <p>What if we want to update <em>any</em> wire — not just $w_{21}$? Let's call it $w_{ji}$, which connects:</p>
+            <ul>
+            <li>Hidden neuron $h_j$</li>
+            <li>To output neuron $z_i$</li>
+            </ul>
+
+            <p>Then:</p>
+            <p style="text-align: center;">
+            $$
+            z_i = h_j \cdot w_{ji} + b \quad \Rightarrow \quad \frac{\partial z_i}{\partial w_{ji}} = h_j
+            $$
+            </p>
+            <p>We already know that:</p>
+            <p style="text-align: center;">
+            $$
+            \frac{\partial L}{\partial z_i} = \hat{y}_i - y_i
+            $$
+            </p>
+            <p>So finally:</p>
+            <p style="text-align: center;">
+            $$
+            \frac{\partial L}{\partial w_{ji}} = h_j (\hat{y}_i - y_i)
+            $$
+            </p>
+
+            <div style="border-left: 5px solid #2980b9; background: #ecf6fc; padding: 1em; border-radius: 6px; margin: 2em 0;">
+            <p><strong>What does this mean?</strong></p>
+            <p>Every time the robot makes a guess:</p>
+            <ul style="padding-left: 1.2em;">
+                <li>It checks how far it was from the truth.</li>
+                <li>It figures out which wires caused the mistake.</li>
+                <li>And gives them a tiny nudge — so it gets better and better over time!</li>
+            </ul>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <!-- Comments -->
+            <section id="comments">
+                <script src="https://utteranc.es/client.js" repo="COD1995/ml-meta" issue-term="pathname" label="comment" theme="github-light" crossorigin="anonymous" async>
+                </script>
+            </section>
+        </main>
+
+    </div>
+
+    <!-- TOC-generation script -->
+    <script src="../../../assets/js/main.js" defer></script>
+</body>
+
+</html>
