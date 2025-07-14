@@ -31,11 +31,50 @@
   box-sizing: border-box;
 }
 
+/* Theme toggle button styles */
+.theme-toggle-btn {
+  background: var(--toggle-bg, #f3f3f3);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 2.5rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.3s, box-shadow 0.3s;
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+}
+.theme-toggle-btn:hover {
+  background: var(--toggle-hover, #e0e0e0);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+.theme-toggle-btn .icon {
+  font-size: 1.4rem;
+  transition: transform 0.3s;
+}
+
+html.theme-dark {
+  color-scheme: dark;
+  background: #181a1b;
+  color: #e0e0e0;
+}
+html.theme-light {
+  color-scheme: light;
+  background: #fff;
+  color: #222;
+}
+
 body {
   font-family: "Helvetica Neue", Arial, sans-serif;
   color: var(--c-gray-900);
   background: #f4f6f8;
   line-height: 1.6;
+  transition: background 0.3s, color 0.3s;
 }
 
 img,
@@ -277,4 +316,66 @@ code {
     border-color: var(--c-gray-200);
     color: var(--c-gray-900);
   }
+}
+
+html.theme-dark body {
+  background: #0d1117 !important;
+  color: #c9d1d9 !important;
+}
+html.theme-dark div,
+html.theme-dark section,
+html.theme-dark article,
+html.theme-dark details,
+html.theme-dark summary,
+html.theme-dark fieldset {
+  background-color: #161b22 !important;
+  color: #c9d1d9 !important;
+  border-color: #30363d !important;
+}
+html.theme-dark .main-card,
+html.theme-dark .card,
+html.theme-dark .sidebar,
+html.theme-dark .toc-card,
+html.theme-dark .original-text-container {
+  background: #161b22 !important;
+  border-color: #30363d !important;
+}
+html.theme-dark code {
+  background: #161b22 !important;
+  border-color: #30363d !important;
+  color: #c9d1d9 !important;
+}
+html.theme-dark .tagline {
+  color: #c9d1d9 !important;
+}
+
+html.theme-light body {
+  background: #f4f6f8 !important;
+  color: #24292e !important;
+}
+html.theme-light div,
+html.theme-light section,
+html.theme-light article,
+html.theme-light details,
+html.theme-light summary,
+html.theme-light fieldset {
+  background-color: #fff !important;
+  color: #24292e !important;
+  border-color: #d0d7de !important;
+}
+html.theme-light .main-card,
+html.theme-light .card,
+html.theme-light .sidebar,
+html.theme-light .toc-card,
+html.theme-light .original-text-container {
+  background: #fafafa !important;
+  border-color: #e0e0e0 !important;
+}
+html.theme-light code {
+  background: #f6f8fa !important;
+  border-color: #d0d7de !important;
+  color: #24292e !important;
+}
+html.theme-light .tagline {
+  color: #586069 !important;
 }
