@@ -69,3 +69,46 @@ document.getElementById("sidebarToggle")?.addEventListener("click", () => {
     .getElementById("sidebarToggle")
     .setAttribute("aria-expanded", (!collapsed).toString());
 });
+
+// Theme toggle logic
+const themeToggleBtn = document.getElementById('theme-toggle');
+const themeIcon = document.getElementById('theme-icon');
+const html = document.documentElement;
+
+function setTheme(theme) {
+  html.classList.remove('theme-light', 'theme-dark');
+  html.classList.add(`theme-${theme}`);
+  themeIcon.textContent = theme === 'dark' ? '🌙' : '☀️';
+}
+
+function getSystemTheme() {
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+function getSavedTheme() {
+  return localStorage.getItem('theme');
+}
+
+function saveTheme(theme) {
+  localStorage.setItem('theme', theme);
+}
+
+function applyPreferredTheme() {
+  const saved = getSavedTheme();
+  if (saved === 'light' || saved === 'dark') {
+    setTheme(saved);
+  } else {
+    setTheme(getSystemTheme());
+  }
+}
+
+if (themeToggleBtn) {
+  themeToggleBtn.addEventListener('click', () => {
+    const current = html.classList.contains('theme-dark') ? 'dark' : 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    setTheme(next);
+    saveTheme(next);
+  });
+}
+
+applyPreferredTheme();
