@@ -1,84 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chapter 1 — Introduction</title>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Chapter 1: Introduction – Pattern Classification</title>
-
-    <!-- Global styles -->
     <link rel="stylesheet" href="../../../assets/css/base.css" />
-    <link rel="stylesheet" href="../../../assets/css/layout.css" />
-
-    <!-- Chapter-specific styles -->
     <link rel="stylesheet" href="../../../assets/css/chapters.css" />
 
-    <!-- MathJax for LaTeX -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
     <script>
-        window.MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] } };
+      /* inline‑MathJax config BEFORE the loader */
+      window.MathJax = {
+        tex: {
+          inlineMath: [
+            ["$", "$"],
+            ["\\(", "\\)"],
+          ],
+        },
+      };
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
-</head>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
 
-<body>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"
+    ></script>
+  </head>
+
+  <body>
     <div class="layout">
+      <aside id="page-sidebar" class="sidebar">
+        <div class="sidebar-header">
+          <a class="home-link" href="../../../index.html">🏠 Home Page</a>
+          <button
+            id="sidebarToggle"
+            class="sidebar-toggle"
+            aria-label="Toggle sidebar"
+            aria-expanded="true"
+          >
+            &#9776;
+          </button>
+        </div>
 
-        <!-- Sidebar -->
-        <aside class="sidebar">
-            <nav>
-                <!-- Home Page -->
-                <ul class="home-nav">
-                    <li><a href="../../../index.html"> 🏠 Home Page</a></li>
-                </ul>
+        <div class="sidebar-inner">
+          <nav>
+            <h3>
+                <a class="section-link" href="#">📖 Pattern Classification</a>
+            </h3>
+            <ul class="book-nav">
+              <li class="chapter-details">
+                <details open>
+                  <summary>Chapter 1: Introduction</summary>
+                  <ul id="toc-ch01" class="toc-list" data-src="self"></ul>
+                </details>
+              </li>
+              <li class="chapter-details">
+                <details>
+                  <summary>Chapter 2: Bayesian Decision Theory</summary>
+                  <ul
+                    id="toc-ch02"
+                    class="toc-list"
+                    data-src="ch02.html"
+                  ></ul>
+                </details>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </aside>
 
-                <h3>📖 Pattern Classification</h3>
+      <main class="content card">
+        <h1>Chapter 1: Introduction</h1>
 
-                <!-- Book navigation -->
-                <ul class="book-nav">
-                    <li><a href="../index.html"> 📚 Book Home</a></li>
+        <section id="machine-perception">
+          <h2>1.1 Machine Perception</h2>
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >We are awash in a sea of data. We can recognize the sounds of
+                  the city, the smell of baking bread, the patterns of the
+                  Milky Way in a starry sky. We can name the people in a
+                  photograph, read the handwritten numbers on a check, identify
+                  our car keys in our pocket by feel, and decide whether an
+                  apple is ripe by its smell. Each of these acts of pattern
+                  recognition—the act of taking in raw data and taking an action
+                  based on the “category” of the pattern—has been crucial for
+                  our survival, and over the past tens of millions of years we
+                  have evolved highly sophisticated neural and cognitive
+                  systems for such tasks.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                Welcome to the world of pattern recognition! This opening
+                paragraph sets a beautiful scene. It reminds us that we humans
+                are natural pattern-recognizing machines. From identifying a
+                friend's face to knowing if a fruit is ripe, our brains are
+                constantly taking in data and making decisions. The goal of
+                this field is to teach computers to do the very same thing.
+              </p>
+            </div>
+          </div>
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >The problem of designing and building machines that can
+                  recognize patterns is a grand challenge, one that has been at
+                  the center of computer science, engineering and statistics for
+                  decades, and has deep roots in psychology and philosophy. The
+                  use of pattern recognition and classification is fundamental
+                  to many of the automated electronic systems in use today. Its
+                  applications range from military defense to medical
+                  diagnosis, from biometrics to machine learning, from
+                  bioinformatics to home entertainment, and more. From
+                  automated speech recognition, fingerprint identification,
+                  optical character recognition, DNA sequence identification
+                  and much more, it is clear that reliable, accurate pattern
+                  recognition by machine would be immensely useful. Moreover,
+                  in solving the myriad problems required to build such
+                  systems, we gain deeper understanding and appreciation for
+                  pattern recognition systems in the natural world—most
+                  particularly in humans.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                Building machines that can recognize patterns is a huge and
+                important goal. This isn't just a niche topic; it's a cornerstone
+                of modern technology. Think about the apps and devices you use
+                every day: fingerprint scanners on phones, voice assistants,
+                spam filters in your email, and even the systems that recommend
+                movies. All of these are powered by pattern recognition. By
+                trying to solve these problems, we also learn a lot more about
+                the most amazing pattern recognizer of all: the human brain.
+              </p>
+            </div>
+          </div>
+        </section>
 
-                    <!-- Chapter 1 with collapsible TOC -->
-                    <li class="chapter-details">
-                        <details open>
-                            <summary>Chapter 1: Introduction</summary>
-                            <ul id="toc-list" class="toc-list">
-                                <!-- main.js will inject section links here -->
-                            </ul>
-                        </details>
-                    </li>
+        <section id="an-example">
+          <h2>1.2 Simple Example</h2>
 
-                    <li><a href="02-bayes-decision.html">Chapter 2: Bayes Decision Theory</a></li>
-                    <!-- …additional chapters… -->
-                </ul>
-            </nav>
-        </aside>
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >To illustrate the complexity of some of the types of problems
+                  involved, let us consider the following imaginary and
+                  somewhat fanciful example. Suppose that a fish packing plant
+                  wants to automate the process of sorting incoming fish on a
+                  conveyor belt according to species. As a pilot project it is
+                  decided to try to separate sea bass from salmon using optical
+                  sensing.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                Okay, let's get practical with a fun example. Imagine you're
+                hired by a fish company that wants to automatically sort fish
+                moving along a conveyor belt. The first task is to build a
+                machine that can tell the difference between two types: sea bass
+                and salmon. This simple-sounding problem is perfect for seeing
+                all the steps involved in building a real pattern recognition
+                system.
+              </p>
+            </div>
+          </div>
 
-        <!-- Main content -->
-        <main class="content">
-            <h1>Chapter 1: Introduction</h1>
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >We set up a camera, take some sample images and begin to note
+                  some physical differences between the two types of fish —
+                  length, lightness, width, number and shape of fins, position
+                  of the mouth, and so on and these suggest features to explore
+                  for use in our classifier. We also notice noise or variations
+                  in the images... The overarching goal and approach in pattern
+                  classification is to hypothesize the class of these models,
+                  process the sensed data to eliminate noise (not due to the
+                  models), and for any sensed pattern choose the model that
+                  corresponds best.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                So, how would you start? You'd probably look for clues. You
+                might notice that sea bass are generally longer than salmon, or
+                that their scales have a different shade. These clues—like
+                length, width, and lightness—are called <strong>features</strong>.
+                They are the specific, measurable properties we'll use to tell
+                the fish apart. The core idea is to find features that are
+                consistently different between the two types of fish, while
+                also being mindful of "noise" like bad lighting that could throw
+                off our measurements.
+              </p>
+            </div>
+          </div>
+        </section>
 
-            <p>
-                In this chapter, we introduce the problem of classification and the fundamental concepts of pattern recognition. We use Bayes’ decision rule:
-            </p>
-            <p>$$\delta^*(x)=\arg\min_j\sum_iL(j,i)\,p(i\mid x)\,.$$</p>
+        <section id="the-feature-space">
+          <h2>1.3 The Feature Space</h2>
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >Let us be more precise. Let us represent the lightness of a fish by a number $x_1$ and its length by a number $x_2$. Thus, a two-dimensional vector $\mathbf{x} = [x_1, x_2]^T$ represents each fish. This vector is called a <strong>feature vector</strong>, and the two-dimensional space in which it lies is called a <strong>feature space</strong>. If we plot the feature vectors for all of our sample fish, we can visually inspect the data. We might find that the points corresponding to sea bass tend to cluster in one region of the feature space, while those for salmon cluster in another.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                Let's formalize our fish example. We're using two features: lightness and length. We can call lightness $x_1$ and length $x_2$. This means we can represent every single fish as a pair of numbers, or a <strong>feature vector</strong> $\mathbf{x} = [x_1, x_2]$. If we plot these points on a simple 2D graph, with lightness on one axis and length on the other, we've created a <strong>feature space</strong>. The hope is that when we plot all our sample fish, we'll see two distinct clouds of points—one for sea bass and one for salmon. 📊
+              </p>
+            </div>
+          </div>
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >This graphical representation suggests a simple path to classification: we can try to find a line that separates the two regions. For any new fish, we measure its features to get its feature vector $\mathbf{x}$, plot the point in the feature space, and see on which side of the line it falls. This separating line is called a <strong>decision boundary</strong>. Any new fish is then classified according to the region in which its feature vector lies.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                Once we have our plot, the goal becomes clear: can we draw a line that separates the sea bass points from the salmon points? This line is called a <strong>decision boundary</strong>. The idea is simple: for any new fish that comes down the conveyor belt, we measure its features, plot its point, and check which side of the line it's on. Voilà! We've classified the fish. This visual approach helps to understand the core task of a classifier.
+              </p>
+            </div>
+          </div>
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >Of course, we need not be restricted to using just two features. We could use $d$ features, in which case the feature vector $\mathbf{x}$ would lie in a $d$-dimensional feature space. While we lose the ability to easily visualize the data for $d > 3$, the general principles remain the same. The task of the classifier is to partition the feature space into regions, one for each category. A classifier is thus a machine that implements a set of decision boundaries in feature space.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                Why stop at two features? We could add width ($x_3$), fin size ($x_4$), and so on. If we use $d$ features, our feature vector lives in a $d$-dimensional space. We can't easily draw a picture of a 4D space (our human brains aren't built for it! 🧠), but the math works exactly the same. The decision boundary is no longer a simple line, but a more complex surface (a "hyperplane") that carves up the high-dimensional space into different category zones. The classifier's job is to create this partition.
+              </p>
+            </div>
+          </div>
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >In most real-world problems, however, the separation is not so clean. It is often the case that the feature distributions for different categories will overlap. In such cases, no simple decision boundary will ever be able to achieve perfect classification. This is the fundamental challenge in pattern recognition. We must design a classifier that makes the fewest errors possible, on average. This leads us to consider probabilistic approaches, where we model the likelihood of a feature vector belonging to a particular class, rather than relying on deterministic rules.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                So, what happens if the clouds of points overlap? What if some small sea bass look a lot like large salmon? This is a super common problem. In the real world, data is messy, and you can't just draw a perfect line to separate the classes. This is where simple rules break down. We can't be 100% certain. Instead, we have to think in terms of probabilities. We need to build a classifier that makes the smartest guess and minimizes the number of mistakes. This is the core challenge and why we need more powerful techniques, like those we'll see in the next chapter.
+              </p>
+            </div>
+          </div>
+        </section>
 
-            <h2>Probability</h2>
-            <p>…text on probability…</p>
+        <section id="the-design-cycle">
+          <h2>1.4 The Design Cycle</h2>
 
-            <h2>Decision Boundaries</h2>
-            <p>…text on decision boundaries…</p>
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >Most pattern recognition systems are designed with the benefit of a
+                  human expert, who has some knowledge of the domain. For
+                  instance, a fisheries expert might tell us that the lengths
+                  of the two types of fish are indeed different, and thus the
+                  length is a good feature to measure. The full system, then,
+                  will consist of a sensor (e.g., a camera), a preprocessing
+                  mechanism, a feature extractor, a classifier, and a
+                  post-processing stage. The design of such systems typically
+                  involves a repeating cycle of steps.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                Building a pattern recognition system isn't a one-shot deal;
+                it's a cycle. You don't just build it and walk away. You design,
+                test, and refine it over and over. This section introduces the
+                key stages of that process, which we'll explore one by one. It's
+                like cooking: you have a recipe (the design cycle), but you
+                constantly taste and adjust the ingredients (the features and
+                models) to get it just right.
+              </p>
+            </div>
+          </div>
 
-            <!-- Comments -->
-            <section id="comments">
-                <script src="https://utteranc.es/client.js" repo="COD1995/ml-meta" issue-term="pathname" label="comment" theme="github-light" crossorigin="anonymous" async>
-                </script>
-            </section>
-        </main>
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p><strong>1. Data Collection</strong></p>
+              <p class="original-text">
+                <em
+                  >The first step in the design cycle is to collect a set of
+                  data. This data set should be representative of the patterns
+                  we want to classify. For instance, in our fish example, we
+                  would collect a large number of images of both sea bass and
+                  salmon, taken under various lighting conditions and at
+                  different positions on the conveyor belt.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                First thing's first: you need data! And not just a little bit.
+                You need lots of examples of both sea bass and salmon. This is
+                your "training set," and it's what your machine will learn from.
+                It's crucial that this data represents the real world. If you
+                only take pictures in perfect lighting, your system will fail
+                the moment a cloud passes over the factory.
+              </p>
+            </div>
+          </div>
 
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p><strong>2. Feature Choice</strong></p>
+              <p class="original-text">
+                <em
+                  >The second step is to choose the features that will be used
+                  to represent the patterns. For instance, we might decide to
+                  use the length and the lightness of the fish as our features.
+                  A good feature is one that helps to distinguish between the
+                  categories. The selection of good features is one of the most
+                  important aspects of pattern recognition system design.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                Next, you have to decide what to measure. This is the "feature
+                choice" step. For our fish, we might start with length and
+                lightness. The goal is to pick features where the values for
+                salmon are clearly different from the values for sea bass.
+                Choosing good features is arguably the most critical part of the
+                whole process. Bad features will doom a project from the start,
+                no matter how fancy your algorithm is.
+              </p>
+            </div>
+          </div>
+
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p><strong>3. Model Choice</strong></p>
+              <p class="original-text">
+                <em
+                  >The third step is to choose a model. A model is a rule or a
+                  set of rules that describes the relationship between the
+                  features and the categories. For instance, a simple model
+                  might be: "If the length is greater than some threshold $L^*$,
+                  classify the fish as a sea bass; otherwise, classify it as a
+                  salmon."</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                Now that you have your features, you need to choose a
+                "classifier model." This is just the logic your machine will
+                use to make its decision. You could start with a very simple
+                rule-based model. For example, you might notice that sea bass
+                are always longer than 15 inches and salmon are always shorter.
+                Your model could be a simple rule: "If length > 15 inches, it's
+                a sea bass."
+              </p>
+            </div>
+          </div>
+
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p><strong>4. Training</strong></p>
+              <p class="original-text">
+                <em
+                  >The fourth step is to train the classifier. This involves
+                  using the data we collected to "learn" the best values for
+                  the parameters of our model. For instance, in our simple
+                  model, we would need to find the best value for the threshold
+                  $L^*$. We would try different values of $L^*$ and see which
+                  one gives the best performance on our training data.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                "Training" is where the learning happens. Using your labeled
+                data (where you know which fish is which), the system figures
+                out the best settings for your model. For our simple rule, the
+                training process would involve finding the perfect length
+                threshold. It would test many values (14 inches? 15.2? 16?) to
+                find the one that correctly classifies the most fish in your
+                training set.
+              </p>
+            </div>
+          </div>
+
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p><strong>5. Evaluation</strong></p>
+              <p class="original-text">
+                <em
+                  >The final step is to evaluate the performance of the trained
+                  classifier. This involves testing the classifier on a new set
+                  of data that was not used for training. This is called the
+                  test set. The performance on the test set gives us an
+                  estimate of how well the classifier will perform on future,
+                  unseen data. If the performance is not satisfactory, we may
+                  have to go back and change our choice of features or our
+                  model, and repeat the cycle.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                This is the moment of truth! You test your trained model on a
+                brand new set of fish pictures that it has never seen before.
+                This is called the "test set." How well it performs on this new
+                data tells you how well it will likely work in the real world.
+                This is crucial for avoiding a problem called "overfitting,"
+                where a model gets really good at memorizing the training data
+                but fails on anything new. If the accuracy is too low, it's time
+                to go back to the drawing board—maybe you need to add "width" as
+                a feature, or try a more complex model. And so, the cycle
+                begins again!
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section id="comments">
+            <script
+                src="https://utteranc.es/client.js"
+                repo="COD1995/ml-meta"
+                issue-term="pathname"
+                label="comment"
+                theme="github-light"
+                crossorigin="anonymous"
+                async
+            ></script>
+        </section>
+
+        <footer>
+          <p>
+            © 2025 Kristopher Kodweis • 
+            <a
+              href="https://github.com/COD1995/ml-meta"
+              target="_blank"
+              rel="noopener"
+            >
+              View on GitHub
+            </a>
+          </p>
+        </footer>
+      </main>
     </div>
 
-    <!-- TOC-generation script -->
-    <script src="../../../assets/js/main.js" defer></script>
-</body>
+    <script type="module" src="../../../assets/js/main.js"></script>
 
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        /* 1. Render Pseudocode blocks */
+        pseudocode.renderClass("pseudocode", {
+          lineNumber: true,
+          lineNumberPunc: ".",
+          indentSize: "1.4em",
+        });
+
+        /* 2. Render MathJax */
+        window.MathJax?.typeset();
+
+        /* 3. Activate Highlight.js */
+        hljs.highlightAll();
+        hljs.initLineNumbersOnLoad(); // ✅ Add this line
+      });
+    </script>
+  </body>
 </html>
