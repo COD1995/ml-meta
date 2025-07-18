@@ -235,3 +235,37 @@ code {
   background: var(--c-white);
   padding: 2rem;
 }
+
+/* Issue #27: Feature Hover Effects */
+
+/* Contributor card hover */
+.main-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.main-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Contributor avatar hover */
+.main-card img:hover {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+}
+
+/* Button hover improvements */
+.btn-github:hover,
+.btn-slack:hover {
+  opacity: 0.9;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+/* Nav links hover */
+.nav-list a:hover {
+  color: var(--c-blue-700);
+  text-decoration: underline;
+}
+
+a, button {
+  transition: all 0.2s ease;
+}
