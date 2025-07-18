@@ -235,3 +235,20 @@ code {
   background: var(--c-white);
   padding: 2rem;
 }
+
+/* Issue #31: Homepage Section Dividers */
+nav,
+#main-contributors,
+#call-for-contribution,
+#contributors {
+  border-top: 1px solid #e5e7eb; /* soft light gray divider */
+  padding-top: 2rem;
+  margin-top: 2rem;
+}
+.container h2 {
+  color: #111827;
+  font-weight: 700;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid #e5e7eb; /* soft gray underline */
+  margin-bottom: 1rem;
+}

@@ -255,17 +255,14 @@
       </section>
 
       <footer>
-        <p>
-          © 2025 Bob Guo •
-          <a
-            href="https://github.com/COD1995/ml-meta"
-            target="_blank"
-            rel="noopener"
-          >
-            View on GitHub
-          </a>
-        </p>
-      </footer>
+      <p>
+        © 2025 Bob Guo •
+        <a href="https://github.com/COD1995/ml-meta" target="_blank" rel="noopener">
+          View on GitHub
+        </a>
+        • Last updated: <span id="lastUpdated"></span>
+      </p>
+    </footer>
     </div>
 
     <!-- ✧ Script to fetch and display GitHub contributors ----------------------- -->
@@ -310,5 +307,15 @@
             '<p class="error">Unable to load contributor list 😢</p>';
         });
     </script>
+    <script>
+      // Auto-fill last updated date
+      document.getElementById("lastUpdated").textContent = new Date(document.lastModified)
+        .toLocaleDateString(undefined, {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        });
+    </script>
+
   </body>
 </html>
