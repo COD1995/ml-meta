@@ -235,3 +235,54 @@ code {
   background: var(--c-white);
   padding: 2rem;
 }
+
+/* Issue #33: Slack Floating Button */
+#slackButton {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  background: #4A154B; /* Slack purple */
+  width: 75px;
+  height: 65px;
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 1.3rem;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  z-index: 1000;
+  cursor: pointer;
+}
+
+/* Slack Icon inside */
+#slackButton svg {
+  width: 28px;
+  height: 28px;
+  fill: #fff; /* Icon stays white */
+}
+
+/* Tail for the speech bubble */
+#slackButton::after {
+  content: "";
+  position: absolute;
+  bottom: -12px; /* Tail below bubble */
+  left: 18px; /* Slightly towards the left */
+  width: 0;
+  height: 0;
+  border-width: 12px 10px 0 10px; /* Tail size */
+  border-style: solid;
+  border-color: #4A154B transparent transparent transparent; /* Slack purple tail */
+  transition: border-color 0.3s ease;
+}
+
+/* Hover effect for button + tail */
+#slackButton:hover {
+  background: #611f69; /* Slightly lighter Slack purple */
+  transform: scale(1.07);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+#slackButton:hover::after {
+  border-color: #611f69 transparent transparent transparent; /* Tail matches hover color */
+}
