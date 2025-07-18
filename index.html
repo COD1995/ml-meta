@@ -310,5 +310,50 @@
             '<p class="error">Unable to load contributor list 😢</p>';
         });
     </script>
+
+
+    <!-- Issue #29: Feature Back-to-Top Button -->
+    <button id="backToTop" title="Go to top">
+      ↑
+    </button>
+
+
+    <style>
+    #backToTop {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      display: none;
+      background: #1f2937; /* nice dark gray (not pitch black) */
+      color: #ffffff;
+      border: none;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+      transition: all 0.3s ease;
+      z-index: 1000;
+    }
+
+    #backToTop:hover {
+      background: #3b82f6; /* bright blue on hover */
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(59,130,246,0.4);
+    }
+  </style>
+  <script>
+  const backToTopBtn = document.getElementById('backToTop');
+  if (backToTopBtn) {
+    window.addEventListener('scroll', () => {
+      backToTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+  </script>
+
   </body>
 </html>
