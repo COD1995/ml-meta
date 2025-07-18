@@ -264,6 +264,7 @@
           >
             View on GitHub
           </a>
+          • Last updated: <span id="lastUpdated"></span>
         </p>
       </footer>
     </div>
@@ -310,25 +311,39 @@
             '<p class="error">Unable to load contributor list 😢</p>';
         });
     </script>
-    <!-- Issue #33: Floating Slack Button -->
-    <a 
+
+    <script>
+      // Auto-fill last updated date
+      document.getElementById("lastUpdated").textContent = new Date(document.lastModified)
+        .toLocaleDateString(undefined, {
+          year: "numeric",
+          month: "long",
+          day: "numeric"
+        });
+    </script>
+    <a
       href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
       id="slackButton"
       target="_blank"
       rel="noopener"
-      title="Join Slack Community"
+      aria-label="Join our Slack Community"
+      data-tooltip="Join Community"
     >
-      <!-- Slack Logo -->
-      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 122.8 122.8" fill="#fff">
-        <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z"/>
-        <path d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z"/>
-        <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z"/>
-        <path d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z"/>
-        <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z"/>
-        <path d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z"/>
-        <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z"/>
-        <path d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z"/>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 122.8 122.8"
+        fill="#fff"
+      >
+        <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
+        <path d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z" />
+        <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
+        <path d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z" />
+        <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
+        <path d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z" />
+        <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
+        <path d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z" />
       </svg>
+      <span class="tooltip">Join our Slack!</span>
     </a>
   </body>
 </html>
