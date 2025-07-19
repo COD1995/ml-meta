@@ -14,7 +14,16 @@
     <link rel="stylesheet" href="assets/css/books.css" />
   </head>
 
-  <body>
+  <body id="top">
+    <!-- Issue #35: Persistent Left Navbar -->
+    <nav class="side-nav">
+      <a href="#top">🏠 Home</a>
+      <a href="#math-foundations">📐 Math Foundations</a>
+      <a href="#books">📚 Books</a>
+      <a href="#papers">📄 Papers</a>
+      <a href="#main-contributors">🌟 Main Contributors</a>
+      <a href="#call-for-contribution">🤝 Join the Community</a>
+    </nav>    
     <div class="container">
       <header>
         <h1>Machine Learning Mastery</h1>
@@ -25,11 +34,16 @@
         </p>
       </header>
 
-      
+      <!-- Issue #37: Expand/Collapse all buttons -->      
+      <div class="expand-collapse-controls">
+        <button id="expandAll" class="btn-toggle">⬇️ Expand All</button>
+        <button id="collapseAll" class="btn-toggle">⬆️ Collapse All</button>
+      </div>
+
 
       <nav>
         <!-- ─────────────── MATH FOUNDATIONS ─────────────── -->
-        <h2>🖇️ Mathematical Foundations</h2>
+        <h2 id="math-foundations">🖇️ Mathematical Foundations</h2>
         <ul class="nav-list">
           <!-- Proof + Math Comprehension Papers ------------------------------------------------------- -->
           <li class="nav-section">
@@ -50,7 +64,7 @@
             </details>
           </li>
         </ul>
-        <h2>📚 Books</h2>
+        <h2 id="books">📚 Books</h2>
         <ul class="nav-list">
           <!-- Algorithms -->
           <li class="nav-section">
@@ -119,7 +133,7 @@
         </ul>
 
         <!-- ─────────────── PAPERS ─────────────── -->
-        <h2>📄 Papers</h2>
+        <h2 id="papers">📄 Papers</h2>
         <ul class="nav-list">
           <!-- CV Papers ------------------------------------------------------- -->
           <li class="nav-section">
@@ -345,5 +359,16 @@
       </svg>
       <span class="tooltip">Join our Slack!</span>
     </a>
+    <script>
+      // Expand All
+      document.getElementById('expandAll').addEventListener('click', () => {
+        document.querySelectorAll('details').forEach(d => d.open = true);
+      });
+
+      // Collapse All
+      document.getElementById('collapseAll').addEventListener('click', () => {
+        document.querySelectorAll('details').forEach(d => d.open = false);
+      });
+    </script>
   </body>
 </html>
