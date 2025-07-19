@@ -240,7 +240,7 @@ code {
 #slackButton {
   position: fixed;
   bottom: 2rem;
-  left: 2rem; /* Keep on the left to avoid the back-to-top button */
+  right: 2rem;
   width: 56px; /* A slightly more standard size */
   height: 56px;
   border-radius: 50%;
