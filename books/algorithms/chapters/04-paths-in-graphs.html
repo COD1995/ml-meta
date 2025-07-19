@@ -100,6 +100,7 @@
           </nav>
         </div>
       </aside>
+
       <main class="content card">
         <h1>Chapter 4: Paths in Graphs</h1>
 
@@ -426,14 +427,26 @@
     </div>
 
     <script type="module" src="../../../assets/js/main.js"></script>
-    <script src="[https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js](https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js)"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script>
 
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        pseudocode.renderClass("pseudocode");
+        /* 1. Render Pseudocode blocks */
+        pseudocode.renderClass("pseudocode", {
+          lineNumber: true,
+          lineNumberPunc: ".",
+          indentSize: "1.4em",
+        });
+
+        /* 2. Render MathJax */
         window.MathJax?.typeset();
+
+        /* 3. Activate Highlight.js */
         hljs.highlightAll();
-        hljs.initLineNumbersOnLoad();
+        hljs.initLineNumbersOnLoad(); // ✅ Add this line
       });
     </script>
   </body>
