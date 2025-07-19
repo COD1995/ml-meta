@@ -237,44 +237,49 @@ code {
 }
 
 /* Refined Floating Slack Button */
+/* Issue #35: Slack Floating Button - with corrected tooltip positioning */
 #slackButton {
   position: fixed;
   bottom: 2rem;
   right: 2rem;
-  width: 56px; /* A slightly more standard size */
-  height: 56px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #4a154b 0%, #301030 100%);
+  background: linear-gradient(135deg, #4a154b 0%, #611f69 100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  z-index: 1001; /* Ensure it's above other elements if necessary */
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  z-index: 1001;
+  cursor: pointer;
 }
 
 #slackButton svg {
-  width: 32px; /* Adjusted for better padding */
+  width: 32px;
   height: 32px;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, fill 0.3s ease;
 }
 
+/* Hover: lift + icon subtle color change */
 #slackButton:hover {
-  transform: translateY(-5px); /* Subtle lift effect */
-  box-shadow: 0 8px 25px rgba(74, 21, 75, 0.5);
+  transform: translateY(-4px);
+  background: linear-gradient(135deg, #611f69, #814388);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
 }
 
 #slackButton:hover svg {
   transform: scale(1.1);
+  fill: #fffd; /* slightly off-white on hover */
 }
 
-/* Tooltip Styling */
+/* Tooltip - now appears to the LEFT for better visibility */
 #slackButton .tooltip {
   position: absolute;
-  left: 70px; /* Position to the right of the button */
+  right: 70px; /* moves tooltip LEFT since button is on right edge */
   top: 50%;
   transform: translateY(-50%);
-  background-color: #1f2937;
+  background: #1f2937;
   color: #fff;
   padding: 6px 12px;
   border-radius: 6px;
@@ -282,8 +287,8 @@ code {
   white-space: nowrap;
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  z-index: 1002;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
 }
 
 #slackButton:hover .tooltip {
