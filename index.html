@@ -12,6 +12,7 @@
 
     <!-- Styles for the book list -->
     <link rel="stylesheet" href="assets/css/books.css" />
+    <link rel="stylesheet" href="assets/css/leaderboard.css"/>
   </head>
 
   <body id="top">
@@ -138,9 +139,7 @@
           <!-- CV Papers ------------------------------------------------------- -->
           <li class="nav-section">
             <details>
-              <summary>
-                  Computer Vision Papers
-                </a></summary>
+            <summary>Computer Vision Papers</summary>
               <ul class="chapter-list">
                 <li>
                   <a href="math-foundations/index.html">
@@ -262,10 +261,23 @@
         </div>
       </section>
 
-      <!-- ✧ Contributors ------------------------------------------------------- -->
       <section id="contributors">
         <h2>🤝 Contributors</h2>
-        <ul class="contributors-list"></ul>
+
+        <div class="leaderboard-panel">
+          <h3 class="leaderboard-title">🏆 Ranking</h3>
+
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th class="number">#</th>
+                <th class="name">Contributor</th>
+                <th class="points">Commits</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </section>
 
       <footer>
@@ -283,58 +295,7 @@
       </footer>
     </div>
 
-    <!-- ✧ Script to fetch and display GitHub contributors ----------------------- -->
-    <script type="module">
-      const owner = "COD1995",
-        repo = "ml-meta";
-      const key = "ghContribCache",
-        ttl = 24 * 60 * 60 * 1e3; // 24 h
-
-      async function getData() {
-        const cached = JSON.parse(localStorage.getItem(key) || "{}");
-        if (cached.when && Date.now() - cached.when < ttl) return cached.data;
-        const res = await fetch(
-          `https://api.github.com/repos/${owner}/${repo}/contributors`
-        );
-        if (!res.ok) throw new Error(res.status);
-        const data = await res.json();
-        localStorage.setItem(key, JSON.stringify({ when: Date.now(), data }));
-        return data;
-      }
-
-      getData()
-        .then((list) => {
-          const ul = document.querySelector(".contributors-list");
-          list.forEach((u) => {
-            ul.insertAdjacentHTML(
-              "beforeend",
-              `
-      <li class="contrib-card">
-        <a href="${u.html_url}" target="_blank" rel="noopener">
-          <img src="${u.avatar_url}&s=60" alt="${u.login}">
-          <span class="name">${u.login}</span>
-          <span class="count">(${u.contributions})</span>
-        </a>
-      </li>`
-            );
-          });
-        })
-        .catch((e) => {
-          console.error(e);
-          document.querySelector("#contributors").innerHTML =
-            '<p class="error">Unable to load contributor list 😢</p>';
-        });
-    </script>
-
-    <script>
-      // Auto-fill last updated date
-      document.getElementById("lastUpdated").textContent = new Date(document.lastModified)
-        .toLocaleDateString(undefined, {
-          year: "numeric",
-          month: "long",
-          day: "numeric"
-        });
-    </script>
+    <!-- Floating slack button -->
     <a
       href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
       id="slackButton"
@@ -359,16 +320,7 @@
       </svg>
       <span class="tooltip">Join our Slack!</span>
     </a>
-    <script>
-      // Expand All
-      document.getElementById('expandAll').addEventListener('click', () => {
-        document.querySelectorAll('details').forEach(d => d.open = true);
-      });
-
-      // Collapse All
-      document.getElementById('collapseAll').addEventListener('click', () => {
-        document.querySelectorAll('details').forEach(d => d.open = false);
-      });
-    </script>
+    <!-- Behaviour specific to the landing page -->
+    <script type="module" src="assets/js/index-page.js"></script>
   </body>
 </html>
