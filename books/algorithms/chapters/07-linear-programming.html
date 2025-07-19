@@ -81,7 +81,7 @@
                 </details>
               </li>
               <li class="chapter-details">
-                <details open>
+                <details>
                   <summary>Chapter 6: Dynamic Programming</summary>
                   <ul
                     id="toc-ch06"
@@ -91,7 +91,7 @@
                 </details>
               </li>
               <li class="chapter-details">
-                <details>
+                <details open>
                   <summary>Chapter 7: Linear Programming & Reductions</summary>
                   <ul id="toc-ch07" class="toc-list" data-src="self"></ul>
                 </details>
@@ -111,11 +111,10 @@
             powerful tool for solving optimization problems.
           </p>
           <p>
-            Linear programming is presented as a method for solving
-            optimization tasks where one must find the best possible outcome
-            (e.g., maximizing profit or minimizing cost) given a set of
-            constraints. Both the objective and the constraints must be linear
-            functions.
+            Linear programming is presented as a method for solving optimization
+            tasks where one must find the best possible outcome (e.g.,
+            maximizing profit or minimizing cost) given a set of constraints.
+            Both the objective and the constraints must be linear functions.
           </p>
 
           <h3>Profit Maximization Example</h3>
@@ -203,12 +202,12 @@
           <h2>7.3 Bipartite Matching</h2>
           <p>
             This section shows how to solve the problem of finding a
-            <strong>perfect matching</strong> in a bipartite graph (for instance,
-            pairing boys and girls who like each other). The problem is reduced
-            to max-flow by constructing a special network. A key insight is that
-            because max-flow with integer capacities yields an integer solution,
-            the result of the reduction correctly corresponds to a valid
-            matching.
+            <strong>perfect matching</strong> in a bipartite graph (for
+            instance, pairing boys and girls who like each other). The problem
+            is reduced to max-flow by constructing a special network. A key
+            insight is that because max-flow with integer capacities yields an
+            integer solution, the result of the reduction correctly corresponds
+            to a valid matching.
           </p>
         </section>
 
@@ -227,13 +226,14 @@
         <section>
           <h2>7.5 Zero-Sum Games</h2>
           <p>
-            Linear programming is applied to game theory, specifically two-player
+            Linear programming is applied to game theory, specifically
+            two-player
             <strong>zero-sum games</strong>. By using
-            <strong>mixed strategies</strong> (probabilities for choosing moves),
-            players aim to optimize their expected payoff. A player's problem of
-            finding their best defensive strategy can be formulated as a linear
-            program. The problems for the maximizing and minimizing players turn
-            out to be duals of each other, proving the famous
+            <strong>mixed strategies</strong> (probabilities for choosing
+            moves), players aim to optimize their expected payoff. A player's
+            problem of finding their best defensive strategy can be formulated
+            as a linear program. The problems for the maximizing and minimizing
+            players turn out to be duals of each other, proving the famous
             <strong>min-max theorem</strong>: there is always an optimal mixed
             strategy for both players, and the expected outcome is the same
             regardless of which player "announces" their strategy first.
@@ -277,8 +277,8 @@
             The chapter concludes by showing the ultimate power of linear
             programming: any problem that can be solved in polynomial time can
             be reduced to it. This is demonstrated by reducing the
-            <strong>CIRCUIT VALUE</strong> problem to a linear program. Since any
-            polynomial-time algorithm can be described by a polynomial-size
+            <strong>CIRCUIT VALUE</strong> problem to a linear program. Since
+            any polynomial-time algorithm can be described by a polynomial-size
             circuit, this implies that all problems in P reduce to linear
             programming.
           </p>
