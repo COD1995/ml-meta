@@ -295,3 +295,51 @@ code {
   opacity: 1;
   visibility: visible;
 }
+
+
+
+/* Issue #35: Persistent Side Navbar */
+.side-nav {
+  position: fixed;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Navbar links */
+.side-nav a {
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333;
+  transition: all 0.2s ease;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+}
+
+/* Hover effect */
+.side-nav a:hover {
+  background: #4a154b;  /* Slack purple for consistency */
+  color: #fff;
+  transform: translateX(4px);
+}
+
+/* Smooth scroll for the whole page */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Optional: Hide navbar on very small screens */
+@media (max-width: 768px) {
+  .side-nav {
+    display: none;
+  }
+}
