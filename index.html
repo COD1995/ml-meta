@@ -34,7 +34,12 @@
         </p>
       </header>
 
-      
+      <!-- Issue #37: Expand/Collapse all buttons -->      
+      <div class="expand-collapse-controls">
+        <button id="expandAll" class="btn-toggle">⬇️ Expand All</button>
+        <button id="collapseAll" class="btn-toggle">⬆️ Collapse All</button>
+      </div>
+
 
       <nav>
         <!-- ─────────────── MATH FOUNDATIONS ─────────────── -->
@@ -354,5 +359,16 @@
       </svg>
       <span class="tooltip">Join our Slack!</span>
     </a>
+    <script>
+      // Expand All
+      document.getElementById('expandAll').addEventListener('click', () => {
+        document.querySelectorAll('details').forEach(d => d.open = true);
+      });
+
+      // Collapse All
+      document.getElementById('collapseAll').addEventListener('click', () => {
+        document.querySelectorAll('details').forEach(d => d.open = false);
+      });
+    </script>
   </body>
 </html>

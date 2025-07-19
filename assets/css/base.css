@@ -343,3 +343,28 @@ html {
     display: none;
   }
 }
+
+/* Issue #37: Expand All & Collapse All Button Styles */
+
+.expand-collapse-controls {
+  display: flex;
+  justify-content: center; /* Centers horizontally */
+  gap: 0.8rem; /* Space between buttons */
+  margin: 1.5rem auto; /* Adds some breathing room */
+  width: 100%; /* Ensures full width so centering works */
+}
+
+.expand-collapse-controls .btn-toggle {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #4a154b; /* Slack purple for consistency */
+  color: #fff;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.expand-collapse-controls .btn-toggle:hover {
+  background: #611f69;
+}
