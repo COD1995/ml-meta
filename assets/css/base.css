@@ -1,6 +1,6 @@
 /* assets/css/base.css
  * -------------------------------------------------------------
- * Global reset, design‑tokens and generic utilities
+ * Global tokens, resets, utilities, and shared component styles
  * ---------------------------------------------------------- */
 
 :root {
@@ -8,9 +8,16 @@
   --c-blue-600: #0366d6;
   --c-blue-700: #044289;
   --c-green-600: #2da44e;
+
   --c-gray-900: #24292e;
   --c-gray-700: #586069;
   --c-gray-200: #d0d7de;
+
+  --c-white: #ffffff;
+
+  /* extra accent colours (used by leaderboard.css) */
+  --c-purple-600: #5c5be5;
+  --c-purple-800: #3838b8;
 
   /* fonts */
   --font-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
@@ -76,8 +83,8 @@ figure figcaption {
   padding-top: 1.5em;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Aligns text to the left */
-  gap: 0.2rem; /* Creates a small space between each line */
+  align-items: center;
+  gap: 0.2rem;
 }
 
 /* Inline code ------------------------------------------------ */
@@ -114,7 +121,10 @@ code {
   background: #279045;
 }
 
-/* Main‑contributor cards ------------------------------------ */
+/* ────────────────────────────────────────────────────────────
+   “Main Contributors” (profile cards shown above the leaderboard)
+   ---------------------------------------------------------- */
+
 #main-contributors {
   margin-top: 3rem;
 }
@@ -128,8 +138,6 @@ code {
   gap: 1.25rem;
   grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
   list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 .main-card {
@@ -140,11 +148,10 @@ code {
   display: flex;
   flex-direction: column;
 }
-
 .main-card figure {
   display: flex;
   align-items: center;
-  margin: 0 0 0.6rem 0;
+  margin-bottom: 0.6rem;
 }
 .main-card img {
   width: 64px;
@@ -162,14 +169,14 @@ code {
 .main-card .bio {
   font-size: 0.85rem;
   line-height: 1.45;
-  margin: 0.5rem 0 0.6rem;
-  flex: 1;
+  margin-top: 0.5rem;
 }
 .site-link {
   font-size: 0.85rem;
   color: var(--c-blue-600);
 }
 
+/* Call‑for‑contribution block ------------------------------- */
 #call-for-contribution {
   text-align: center;
   margin-top: 4rem;
@@ -189,49 +196,128 @@ code {
   gap: 1rem;
 }
 
-/* Contributors grid ----------------------------------------- */
+/* Leaderboard section container (layout spacing only) ------- */
 #contributors {
   margin-top: 3rem;
 }
-.contributors-list {
-  display: grid;
-  gap: 0.8rem;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.contrib-card a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  padding: 0.6rem 0.4rem;
-  transition: box-shadow 0.2s;
-  color: inherit;
-  text-decoration: none;
-}
-.contrib-card a:hover {
-  box-shadow: 0 0 6px rgba(0, 0, 0, 0.15);
-}
-.contrib-card img {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  margin-bottom: 0.4rem;
-}
-.contrib-card .name {
-  font-weight: 600;
-  font-size: 0.9rem;
-}
-.contrib-card .count {
-  font-size: 0.75rem;
-  color: #555;
-}
 
-/* Shared card style for content containers */
+/* Shared “card” helper (used elsewhere) -------------------- */
 .card {
   background: var(--c-white);
   padding: 2rem;
+}
+
+/* Floating Slack button ------------------------------------ */
+#slackButton {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4a154b 0%, #611f69 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+  z-index: 1001;
+  cursor: pointer;
+}
+#slackButton svg {
+  width: 32px;
+  height: 32px;
+  transition: transform 0.3s ease, fill 0.3s ease;
+}
+#slackButton:hover {
+  transform: translateY(-4px);
+  background: linear-gradient(135deg, #611f69, #814388);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
+}
+#slackButton:hover svg {
+  transform: scale(1.1);
+  fill: #fffd;
+}
+
+/* Tooltip for Slack button */
+#slackButton .tooltip {
+  position: absolute;
+  right: 70px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: #1f2937;
+  color: #fff;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+}
+#slackButton:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Persistent side navbar ----------------------------------- */
+.side-nav {
+  position: fixed;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 1rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+.side-nav a {
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #333;
+  transition: all 0.2s ease;
+  padding: 0.3rem 0.5rem;
+  border-radius: 6px;
+}
+.side-nav a:hover {
+  background: #4a154b;
+  color: #fff;
+  transform: translateX(4px);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+@media (max-width: 768px) {
+  .side-nav {
+    display: none;
+  }
+}
+
+/* Expand / Collapse buttons -------------------------------- */
+.expand-collapse-controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.8rem;
+  margin: 1.5rem auto;
+  width: 100%;
+}
+.expand-collapse-controls .btn-toggle {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #4a154b;
+  color: #fff;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.expand-collapse-controls .btn-toggle:hover {
+  background: #611f69;
 }
