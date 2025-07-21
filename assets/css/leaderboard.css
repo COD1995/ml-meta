@@ -1,0 +1,91 @@
+/* assets/css/leaderboard.css
+ * Simple card‑style leaderboard with medals for top‑3
+ * -------------------------------------------------- */
+
+.leaderboard-panel {
+  width: 100%; /* fill the container */
+  max-width: none; /* remove the 640 px cap */
+  margin: 2.5rem 0; /* align left & right with container padding */
+  background: var(--c-white);
+  border-radius: 8px;
+  box-shadow: 0 8px 20px rgba(27, 31, 35, 0.08);
+  overflow: hidden;
+  font-family: "Rubik", sans-serif;
+}
+
+/* Title */
+.leaderboard-title {
+  background: var(--c-purple-600);
+  color: #fff;
+  font-size: 1.2rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 1rem 1.5rem;
+}
+
+/* Table basics */
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+  color: #141a39;
+}
+.leaderboard-table th,
+.leaderboard-table td {
+  padding: 0.9rem 1.5rem;
+  font-size: 1rem;
+}
+.leaderboard-table th {
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--c-gray-700);
+  background: #f6f8fa;
+}
+
+/* Columns */
+.number {
+  width: 3rem;
+  text-align: center;
+  font-weight: 700;
+}
+.name {
+  text-align: left;
+}
+.points {
+  text-align: right;
+  font-weight: 700;
+}
+
+/* Zebra rows */
+.leaderboard-table tbody tr:nth-child(odd) {
+  background: #fbfbfb;
+}
+
+/* Hover highlight */
+.leaderboard-table tbody tr:hover {
+  background: #fff;
+  box-shadow: inset 0 0 0 999px rgba(0, 0, 0, 0.03);
+}
+
+/* Medal emoji size */
+.medal {
+  font-size: 1.4rem;
+  margin-left: 0.4rem;
+}
+
+/* Avatar inside the “Contributor” cell ---------------------- */
+.avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 0.75rem;
+  flex-shrink: 0;
+}
+
+.name-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  white-space: nowrap; /* keep username on one line */
+}

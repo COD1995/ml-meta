@@ -12,9 +12,19 @@
 
     <!-- Styles for the book list -->
     <link rel="stylesheet" href="assets/css/books.css" />
+    <link rel="stylesheet" href="assets/css/leaderboard.css"/>
   </head>
 
-  <body>
+  <body id="top">
+    <!-- Issue #35: Persistent Left Navbar -->
+    <nav class="side-nav">
+      <a href="#top">🏠 Home</a>
+      <a href="#math-foundations">📐 Math Foundations</a>
+      <a href="#books">📚 Books</a>
+      <a href="#papers">📄 Papers</a>
+      <a href="#main-contributors">🌟 Main Contributors</a>
+      <a href="#call-for-contribution">🤝 Join the Community</a>
+    </nav>    
     <div class="container">
       <header>
         <h1>Machine Learning Mastery</h1>
@@ -25,8 +35,37 @@
         </p>
       </header>
 
+      <!-- Issue #37: Expand/Collapse all buttons -->      
+      <div class="expand-collapse-controls">
+        <button id="expandAll" class="btn-toggle">⬇️ Expand All</button>
+        <button id="collapseAll" class="btn-toggle">⬆️ Collapse All</button>
+      </div>
+
+
       <nav>
-        <h2>📚 Books</h2>
+        <!-- ─────────────── MATH FOUNDATIONS ─────────────── -->
+        <h2 id="math-foundations">🖇️ Mathematical Foundations</h2>
+        <ul class="nav-list">
+          <!-- Proof + Math Comprehension Papers ------------------------------------------------------- -->
+          <li class="nav-section">
+            <details>
+              <summary> In Simple Terms</summary>
+              <ul class="chapter-list">
+                <li>
+                  <a href="math-foundations/index.html">
+                    EXAMPLE: **Segment Anything Meets GPT (2024)**
+                  </a>
+                </li>
+                <!-- <li>
+                  <a href="papers/cv/2023-sam.html">
+                    SAM: Segment Anything Model (2023)
+                  </a>
+                </li>
+              </ul> -->
+            </details>
+          </li>
+        </ul>
+        <h2 id="books">📚 Books</h2>
         <ul class="nav-list">
           <!-- Algorithms -->
           <li class="nav-section">
@@ -38,9 +77,30 @@
                 </li>
                 <li>
                   <a
+                    href="books/algorithms/chapters/04-paths-in-graphs.html"
+                  >
+                    Chapter&nbsp;4: Paths in Graphs
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="books/algorithms/chapters/05-greedy-algorithms.html"
+                  >
+                    Chapter&nbsp;5: Greedy Algorithms
+                  </a>
+                </li>
+                <li>
+                  <a
                     href="books/algorithms/chapters/06-dynamic-programming.html"
                   >
                     Chapter&nbsp;6: Dynamic Programming
+                  </a>
+                </li>
+                <li>
+                  <a
+                    href="books/algorithms/chapters/07-linear-programming.html"
+                  >
+                    Chapter&nbsp;7: Linear Programming & Reductions
                   </a>
                 </li>
                 <!-- …additional chapters… -->
@@ -81,16 +141,18 @@
         </ul>
 
         <!-- ─────────────── PAPERS ─────────────── -->
-        <h2>📄 Papers</h2>
+        <h2 id="papers">📄 Papers</h2>
         <ul class="nav-list">
           <!-- CV Papers ------------------------------------------------------- -->
           <li class="nav-section">
             <details>
-              <summary>
-                <a class="paper-link" href="papers/cv/index.html">
-                  Computer Vision Papers (in the process of updating)
-                </a>
-              </summary>
+            <summary>Computer Vision Papers</summary>
+              <ul class="chapter-list">
+                <li>
+                  <a href="math-foundations/index.html">
+                    EXAMPLE: **Segment Anything Meets GPT (2024)**
+                  </a>
+                </li>
               <!-- <ul class="chapter-list">
                 <li>
                   <a href="papers/cv/2024-seg-gpt.html">
@@ -165,10 +227,7 @@
             </figure>
 
             <p class="bio">
-              M.S. candidate in Mechanical Engineering focused on mobile‑first
-              computer‑vision systems. Drawing on visual‑communication design
-              and woodworking, he builds intuitive, user‑centric AI‑powered
-              products.
+              As a M.S. candidate in Mechanical Engineering, Kristopher Kodweis engineers intelligent computer vision systems designed to run efficiently on mobile platforms, enabling a new generation of smart and responsive applications. His engineering philosophy is uniquely shaped by a background in visual communication design and woodworking, instilling a deep focus on human-centered principles. This dual expertise allows him to create technology that is not only technically robust but also fundamentally intuitive, considering both the internal logic and the tangible user experience. Ultimately, he strives to create tools where complex AI becomes a seamless and natural extension of human capability, rendering its underlying complexity invisible and its operation effortless.
             </p>
             <!-- No personal site yet – omit link -->
           </li>
@@ -195,7 +254,12 @@
           >
             🚀 Contribute on GitHub
           </a>
-          <a href="guide/contribution-sample.html" class="btn-slack">
+          <a
+            class="btn-slack"
+            href="https://www.notion.so/Meta-ML-Contribution-Guide-July-2025-23543ced6be680b88eabd9fbfba64ff4?source=copy_link"
+            target="_blank"
+            rel="noopener"
+          >
             📄 View Contribution Guide
           </a>
           <a
@@ -209,10 +273,23 @@
         </div>
       </section>
 
-      <!-- ✧ Contributors ------------------------------------------------------- -->
       <section id="contributors">
         <h2>🤝 Contributors</h2>
-        <ul class="contributors-list"></ul>
+
+        <div class="leaderboard-panel">
+          <h3 class="leaderboard-title">🏆 Ranking</h3>
+
+          <table class="leaderboard-table">
+            <thead>
+              <tr>
+                <th class="number">#</th>
+                <th class="name">Contributor</th>
+                <th class="points">Commits</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
       </section>
 
       <footer>
@@ -225,51 +302,37 @@
           >
             View on GitHub
           </a>
+          • Last updated: <span id="lastUpdated"></span>
         </p>
       </footer>
     </div>
 
-    <!-- ✧ Script to fetch and display GitHub contributors ----------------------- -->
-    <script type="module">
-      const owner = "COD1995",
-        repo = "ml-meta";
-      const key = "ghContribCache",
-        ttl = 24 * 60 * 60 * 1e3; // 24 h
-
-      async function getData() {
-        const cached = JSON.parse(localStorage.getItem(key) || "{}");
-        if (cached.when && Date.now() - cached.when < ttl) return cached.data;
-        const res = await fetch(
-          `https://api.github.com/repos/${owner}/${repo}/contributors`
-        );
-        if (!res.ok) throw new Error(res.status);
-        const data = await res.json();
-        localStorage.setItem(key, JSON.stringify({ when: Date.now(), data }));
-        return data;
-      }
-
-      getData()
-        .then((list) => {
-          const ul = document.querySelector(".contributors-list");
-          list.forEach((u) => {
-            ul.insertAdjacentHTML(
-              "beforeend",
-              `
-      <li class="contrib-card">
-        <a href="${u.html_url}" target="_blank" rel="noopener">
-          <img src="${u.avatar_url}&s=60" alt="${u.login}">
-          <span class="name">${u.login}</span>
-          <span class="count">(${u.contributions})</span>
-        </a>
-      </li>`
-            );
-          });
-        })
-        .catch((e) => {
-          console.error(e);
-          document.querySelector("#contributors").innerHTML =
-            '<p class="error">Unable to load contributor list 😢</p>';
-        });
-    </script>
+    <!-- Floating slack button -->
+    <a
+      href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
+      id="slackButton"
+      target="_blank"
+      rel="noopener"
+      aria-label="Join our Slack Community"
+      data-tooltip="Join Community"
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 122.8 122.8"
+        fill="#fff"
+      >
+        <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
+        <path d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z" />
+        <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
+        <path d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z" />
+        <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
+        <path d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z" />
+        <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
+        <path d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z" />
+      </svg>
+      <span class="tooltip">Join our Slack!</span>
+    </a>
+    <!-- Behaviour specific to the landing page -->
+    <script type="module" src="assets/js/index-page.js"></script>
   </body>
 </html>
