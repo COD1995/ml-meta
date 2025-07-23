@@ -3,40 +3,30 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Chapter 5 — Greedy algorithms</title>
+    <title>Chapter 5 — Greedy Algorithms</title>
 
+    <!-- Global styles -->
     <link rel="stylesheet" href="../../../assets/css/base.css" />
     <link rel="stylesheet" href="../../../assets/css/chapters.css" />
 
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <!-- Library styles -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" />
 
-    <script>
-      window.MathJax = {
-        tex: {
-          inlineMath: [
-            ["$", "$"],
-            ["\\(", "\\)"],
-          ],
-        },
-      };
-    </script>
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
-    ></script>
+    <!-- MathJax global config (must come BEFORE MathJax) -->
+    <script src="../../../assets/js/mathjax-config.js"></script>
 
-    <script
-      defer
-      src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"
-    ></script>
+    <!-- Library scripts (deferred) -->
+    <script defer
+            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script defer
+            src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"></script>
+    <script defer
+            src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+    <script defer
+            src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script>
   </head>
 
   <body>
@@ -609,6 +599,30 @@
           </div>
         </section>
 
+        <section id="comments">
+          <script
+            src="[https://utteranc.es/client.js](https://utteranc.es/client.js)"
+            repo="YOUR_GITHUB_REPO"
+            issue-term="pathname"
+            label="comment"
+            theme="github-light"
+            crossorigin="anonymous"
+            async
+          ></script>
+        </section>
+
+        <section id="comments">
+          <script
+            src="https://utteranc.es/client.js"
+            repo="COD1995/ml-meta"
+            issue-term="pathname"
+            label="comment"
+            theme="github-light"
+            crossorigin="anonymous"
+            async
+          ></script>
+        </section>
+        
         <footer>
           <p>
             © 2025 Kristopher Kodweis • 
@@ -621,15 +635,6 @@
     </div>
 
     <script type="module" src="../../../assets/js/main.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script>
-
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        pseudocode.renderClass("pseudocode");
-        window.MathJax?.typeset();
-        hljs.highlightAll();
-        hljs.initLineNumbersOnLoad();
-      });
-    </script>
+    <script type="module" src="../../../assets/js/chapter-page.js"></script>
   </body>
 </html>
