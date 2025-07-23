@@ -350,8 +350,6 @@ html.theme-dark #slackButton span {
 /* Ensure button hover works for nav controls */
 .side-nav-controls .btn-toggle:hover {
   background: #f6f8fa;
-  color:none
-  ;
 }
 html.theme-dark .side-nav-controls .btn-toggle:hover {
   background: none;
