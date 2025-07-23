@@ -1,3 +1,4 @@
+
 /* assets/js/main.js
  * -------------------------------------------------------------
  * ① Build ToC (current + lazy‑remote)
@@ -113,3 +114,20 @@ if (expandAllBtn) {
 if (collapseAllBtn) {
   collapseAllBtn.addEventListener('click', () => setAllDetails(false));
 }
+
+// --- Book/Chapter Dropdown Functionality for Custom Buttons ---
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.toc-book-title').forEach(function(btn) {
+    // Find the dropdown content (next sibling)
+    var dropdown = btn.nextElementSibling;
+    // Set initial aria-expanded
+    btn.setAttribute('aria-expanded', dropdown && !dropdown.hidden ? 'true' : 'false');
+    btn.addEventListener('click', function(e) {
+      e.preventDefault();
+      if (!dropdown) return;
+      var expanded = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', (!expanded).toString());
+      dropdown.hidden = expanded;
+    });
+  });
+});
