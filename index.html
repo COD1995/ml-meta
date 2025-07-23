@@ -18,12 +18,47 @@
   <body id="top">
     <!-- Issue #35: Persistent Left Navbar -->
     <nav class="side-nav">
+      <!-- Button group for theme/expand/collapse toggle -->
+      <div class="side-nav-controls">
+        <button id="themeToggle" class="btn-toggle" aria-label="Toggle dark mode">🌓</button>
+        <button id="expandAll" class="btn-toggle" aria-label="Expand all sections">⬇️</button>
+        <button id="collapseAll" class="btn-toggle" aria-label="Collapse all sections">⬆️</button>
+      </div>
+      <hr class="side-nav-divider">
       <a href="#top">🏠 Home</a>
       <a href="#math-foundations">📐 Math Foundations</a>
       <a href="#books">📚 Books</a>
       <a href="#papers">📄 Papers</a>
       <a href="#main-contributors">🌟 Main Contributors</a>
       <a href="#call-for-contribution">🤝 Join the Community</a>
+      <hr class="side-nav-divider">
+      <!-- Slack banner below nav links -->
+      <div class="slack-banner">
+        <a
+          href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
+          id="slackButton"
+          target="_blank"
+          rel="noopener"
+          aria-label="Join our Slack Community"
+          data-tooltip="Join Community"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 122.8 122.8"
+            fill="#fff"
+          >
+            <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
+            <path d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z" />
+            <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
+            <path d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z" />
+            <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
+            <path d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z" />
+            <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
+            <path d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z" />
+          </svg>
+          <span>Join our Slack</span>
+        </a>
+      </div>
     </nav>    
     <div class="container">
       <header>
@@ -34,13 +69,6 @@
           intelligence.
         </p>
       </header>
-
-      <!-- Issue #37: Expand/Collapse all buttons -->      
-      <div class="expand-collapse-controls">
-        <button id="expandAll" class="btn-toggle">⬇️ Expand All</button>
-        <button id="collapseAll" class="btn-toggle">⬆️ Collapse All</button>
-      </div>
-
 
       <nav>
         <!-- ─────────────── MATH FOUNDATIONS ─────────────── -->
@@ -295,32 +323,44 @@
       </footer>
     </div>
 
-    <!-- Floating slack button -->
-    <a
-      href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
-      id="slackButton"
-      target="_blank"
-      rel="noopener"
-      aria-label="Join our Slack Community"
-      data-tooltip="Join Community"
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        viewBox="0 0 122.8 122.8"
-        fill="#fff"
-      >
-        <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
-        <path d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z" />
-        <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
-        <path d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z" />
-        <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
-        <path d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z" />
-        <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
-        <path d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z" />
-      </svg>
-      <span class="tooltip">Join our Slack!</span>
-    </a>
     <!-- Behaviour specific to the landing page -->
     <script type="module" src="assets/js/index-page.js"></script>
+    <script>
+      // Theme toggle logic
+      const themeToggle = document.getElementById('themeToggle');
+      const root = document.documentElement;
+
+      function setTheme(theme) {
+        root.classList.remove('theme-light', 'theme-dark');
+        root.classList.add(theme);
+        localStorage.setItem('theme', theme);
+        themeToggle.textContent = theme === 'theme-dark' ? '🌙' : '🌞';
+      }
+
+      // On load: set theme from localStorage or system preference
+      (function() {
+        const saved = localStorage.getItem('theme');
+        if (saved) {
+          setTheme(saved);
+        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          setTheme('theme-dark');
+        } else {
+          setTheme('theme-light');
+        }
+      })();
+
+      themeToggle.addEventListener('click', () => {
+        const isDark = root.classList.contains('theme-dark');
+        setTheme(isDark ? 'theme-light' : 'theme-dark');
+      });
+
+      // Expand/collapse all logic
+      function setAllDetails(open) {
+        document.querySelectorAll('.nav-section details').forEach(d => d.open = open);
+      }
+      document.getElementById('expandAll').addEventListener('click', () => setAllDetails(true));
+      document.getElementById('collapseAll').addEventListener('click', () => setAllDetails(false));
+    </script>
   </body>
+</html>
 </html>
