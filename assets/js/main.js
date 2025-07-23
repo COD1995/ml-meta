@@ -69,3 +69,47 @@ document.getElementById("sidebarToggle")?.addEventListener("click", () => {
     .getElementById("sidebarToggle")
     .setAttribute("aria-expanded", (!collapsed).toString());
 });
+
+// Theme toggle logic (robust for all pages)
+const themeToggle = document.getElementById('themeToggle');
+const root = document.documentElement;
+
+function setTheme(theme) {
+  root.classList.remove('theme-light', 'theme-dark');
+  root.classList.add(theme);
+  localStorage.setItem('theme', theme);
+  if (themeToggle) {
+    themeToggle.textContent = theme === 'theme-dark' ? '🌙' : '🌞';
+  }
+}
+
+(function() {
+  const saved = localStorage.getItem('theme');
+  if (saved) {
+    setTheme(saved);
+  } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    setTheme('theme-dark');
+  } else {
+    setTheme('theme-light');
+  }
+})();
+
+if (themeToggle) {
+  themeToggle.addEventListener('click', () => {
+    const isDark = root.classList.contains('theme-dark');
+    setTheme(isDark ? 'theme-light' : 'theme-dark');
+  });
+}
+
+// Expand/collapse all logic (robust for all pages)
+function setAllDetails(open) {
+  document.querySelectorAll('.nav-section details').forEach(d => d.open = open);
+}
+const expandAllBtn = document.getElementById('expandAll');
+const collapseAllBtn = document.getElementById('collapseAll');
+if (expandAllBtn) {
+  expandAllBtn.addEventListener('click', () => setAllDetails(true));
+}
+if (collapseAllBtn) {
+  collapseAllBtn.addEventListener('click', () => setAllDetails(false));
+}

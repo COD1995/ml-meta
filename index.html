@@ -20,9 +20,11 @@
     <nav class="side-nav">
       <!-- Button group for theme/expand/collapse toggle -->
       <div class="side-nav-controls">
-        <button id="themeToggle" class="btn-toggle" aria-label="Toggle dark mode">🌓</button>
-        <button id="expandAll" class="btn-toggle" aria-label="Expand all sections">⬇️</button>
-        <button id="collapseAll" class="btn-toggle" aria-label="Collapse all sections">⬆️</button>
+        <button id="themeToggle" class="btn-toggle" aria-label="Toggle dark mode" style="background: none; border: none; cursor: pointer; font-size: .9em; display: flex; align-items: center;">🌓</button>
+        <span class="nav-divider" style="display: inline-block; width: 1px; height: 1.5em; background: var(--border-color, #ddd); margin: 0"></span>
+        <button id="expandAll" class="btn-toggle" aria-label="Expand all sections" style="background: none; border: none; cursor: pointer; font-size: .9em; display: flex; align-items: center;">⬇️</button>
+        <span class="nav-divider" style="display: inline-block; width: 1px; height: 1.5em; background: var(--border-color, #ddd); margin: 0"></span>
+        <button id="collapseAll" class="btn-toggle" aria-label="Collapse all sections" style="background: none; border: none; cursor: pointer; font-size: .9em; display: flex; align-items: center;">⬆️</button>
       </div>
       <hr class="side-nav-divider">
       <a href="#top">🏠 Home</a>
@@ -61,6 +63,7 @@
       </div>
     </nav>    
     <div class="container">
+      <main class="container">
       <header>
         <h1>Machine Learning Mastery</h1>
         <p class="tagline">
@@ -100,9 +103,6 @@
             <details>
               <summary>Algorithms (Sanjoy Dasgupta)</summary>
               <ul class="chapter-list">
-                <li>
-                  <a href="books/algorithms/index.html"> 📚 Book Directory </a>
-                </li>
                 <li>
                   <a
                     href="books/algorithms/chapters/04-paths-in-graphs.html"
@@ -328,44 +328,10 @@
       </footer>
     </div>
 
-    <!-- Behaviour specific to the landing page -->
+    </main>
+
+    <script type="module" src="assets/js/main.js"></script>
     <script type="module" src="assets/js/index-page.js"></script>
-    <script>
-      // Theme toggle logic
-      const themeToggle = document.getElementById('themeToggle');
-      const root = document.documentElement;
-
-      function setTheme(theme) {
-        root.classList.remove('theme-light', 'theme-dark');
-        root.classList.add(theme);
-        localStorage.setItem('theme', theme);
-        themeToggle.textContent = theme === 'theme-dark' ? '🌙' : '🌞';
-      }
-
-      // On load: set theme from localStorage or system preference
-      (function() {
-        const saved = localStorage.getItem('theme');
-        if (saved) {
-          setTheme(saved);
-        } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-          setTheme('theme-dark');
-        } else {
-          setTheme('theme-light');
-        }
-      })();
-
-      themeToggle.addEventListener('click', () => {
-        const isDark = root.classList.contains('theme-dark');
-        setTheme(isDark ? 'theme-light' : 'theme-dark');
-      });
-
-      // Expand/collapse all logic
-      function setAllDetails(open) {
-        document.querySelectorAll('.nav-section details').forEach(d => d.open = open);
-      }
-      document.getElementById('expandAll').addEventListener('click', () => setAllDetails(true));
-      document.getElementById('collapseAll').addEventListener('click', () => setAllDetails(false));
-    </script>
   </body>
-</html>
+
 </html>

@@ -64,9 +64,9 @@ a:hover {
   width: 90%;
   max-width: 900px;
   margin: 0 auto;
-  padding: 3.15rem 3.15rem; /* tripled from 1.05rem */
+  padding: 3.15rem 3.15rem 3.15rem 5.4rem; /* left padding ~100px (5.4rem) */
   border-radius: 18px; /* rounded corners */
-  background: inherit; /* keep background consistent */
+  background: none; /* keep background consistent */
   box-sizing: border-box;
 }
 
@@ -325,7 +325,7 @@ html.theme-dark #slackButton span {
 .side-nav a:hover {
   background: #4a154b;
   color: #fff;
-  transform: translateX(4px);
+  transform: translateX(.5px);
 }
 
 /* --- Side nav controls (expand/collapse/theme) --- */
@@ -340,9 +340,19 @@ html.theme-dark #slackButton span {
   margin-left: auto;
   margin-right: auto;
   background: #f0f0f0;
-  box-shadow: none;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border-radius: 10px; /* rounded corners for the section */
   overflow: hidden;
+}
+
+/* Ensure button hover works for nav controls */
+.side-nav-controls .btn-toggle:hover {
+  background: #f6f8fa;
+  color: #4a154b;
+}
+html.theme-dark .side-nav-controls .btn-toggle:hover {
+  background: #621f69;
+  color: #fff;
 }
 
 html.theme-light .side-nav-controls {

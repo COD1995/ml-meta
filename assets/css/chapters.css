@@ -1,3 +1,37 @@
+/* Light/Dark mode styles */
+.dark-mode {
+  background: #181a1b;
+  color: #e0e0e0;
+}
+.dark-mode .container {
+  background: #232526;
+  color: #e0e0e0;
+}
+.dark-mode .side-nav {
+  background: #202224;
+  color: #e0e0e0;
+}
+.dark-mode a {
+  color: #b3d1ff;
+}
+.dark-mode .side-nav-divider, .dark-mode .nav-divider {
+  background: #444;
+}
+.btn-toggle {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1em;
+  padding: 0.2em 0.5em;
+  color: inherit;
+}
+/* ...existing code... */
+
+.container {
+  border-radius: 1.25em;
+  /* You may adjust the value to match index.html exactly */
+  overflow: hidden;
+}
 /* assets/css/chapters.css
  * (Refactored for consistency)
  * ---------------------------------------------------------- */
