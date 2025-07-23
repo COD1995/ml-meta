@@ -131,10 +131,11 @@
 .toc-list {
   list-style: none;
   margin: 0.5rem 0 1rem;
-  padding-left: 1.25rem;
+  padding-left: 1.25rem;;
 }
 .toc-list li {
   margin-bottom: 0.4rem;
+  
 }
 .toc-list a {
   font-size: 0.93rem;

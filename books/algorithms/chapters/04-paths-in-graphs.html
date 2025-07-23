@@ -31,17 +31,17 @@
 
   <body id="top">
       <nav class="side-nav">
-        <div class="nav-row" style="display: flex; align-items: center; gap: 0.75em; margin-bottom: 0.5em;">
-          <a href="../../../index.html" style="display: flex; align-items: center; text-decoration: none; font-size: 1.1em;">🏠 Home</a>
-          <span class="nav-divider" style="display: inline-block; width: 1px; height: 1.5em; background: var(--border-color, #ddd); margin: 0 0.5em;"></span>
-          <button id="themeToggle" class="btn-toggle" aria-label="Toggle dark mode" style="background: none; border: none; cursor: pointer; font-size: 1.1em; display: flex; align-items: center;">🌓</button>
+        <div class="side-nav-controls">
+          <button id="homeBtn" class="btn-toggle" aria-label="Home" onclick="window.location.href='../../../index.html'">🏠</button>
+          <span class="nav-divider"></span>
+          <button id="themeToggle" class="btn-toggle" aria-label="Toggle dark mode">🌓</button>
         </div>
         <hr class="side-nav-divider">
-        <span class="toc-label">Books</span>
+        <span class="toc-label">📚 Books</span>
         <div class="toc-books">
-          <div class="toc-book">
-            <span class="toc-book-title">Algorithms</span>
-            <div class="toc-chapters" style="margin-left: 1em;">
+          <div class="toc-book dropdown">
+            <button class="toc-book-title dropdown-toggle" aria-expanded="false" aria-controls="algorithms-chapters">Algorithms by Sanjoy Dasgupta</button>
+            <div class="toc-chapters dropdown-content" id="algorithms-chapters" hidden>
               <div><a href="../index.html">Overview</a></div>
               <div><a href="04-paths-in-graphs.html">4. Paths in Graphs</a></div>
               <div><a href="05-greedy-algorithms.html">5. Greedy Algorithms</a></div>
@@ -49,15 +49,14 @@
               <div><a href="07-linear-programming.html">7. Linear Programming</a></div>
             </div>
           </div>
-          <div class="toc-book">
-            <span class="toc-book-title"><a href="../../pattern-classification/index.html">Pattern Classification</a></span>
+          <div class="toc-book dropdown">
+            <button class="toc-book-title dropdown-toggle" aria-expanded="false" aria-controls="pattern-classification-chapters">Pattern Classification (Duda et al.)</button>
+            <div class="toc-chapters dropdown-content" id="pattern-classification-chapters" hidden>
+              <div><a href="../../pattern-classification/chapters/01-introduction.html">1. Introduction</a></div>
+              <div><a href="../../pattern-classification/chapters/02-bayes-decision.html">2. Bayes Decision Theory</a></div>
+            </div>
           </div>
-          <div class="toc-book">
-            <span class="toc-book-title"><a href="../../../math-foundations/index.html">Math Foundations</a></span>
-          </div>
-          <div class="toc-book">
-            <span class="toc-book-title"><a href="../../../papers/index.html">Papers</a></span>
-          </div>
+        </div>
         </div>
         <div class="slack-banner" style="margin-top: 1.5em;">
           <a

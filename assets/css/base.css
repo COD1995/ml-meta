@@ -1,3 +1,4 @@
+
 /* assets/css/base.css
  * -------------------------------------------------------------
  * Global tokens, resets, utilities, and shared component styles
@@ -308,6 +309,7 @@ html.theme-dark #slackButton span {
   background: rgba(255, 255, 255, 0.8);
   padding: 1rem;
   border-radius: 12px;
+  border: 1.5px solid #e1e2e4; /* subtle dark gray border */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 1000;
   max-height: 90vh;
@@ -348,10 +350,11 @@ html.theme-dark #slackButton span {
 /* Ensure button hover works for nav controls */
 .side-nav-controls .btn-toggle:hover {
   background: #f6f8fa;
-  color: #4a154b;
+  color:none
+  ;
 }
 html.theme-dark .side-nav-controls .btn-toggle:hover {
-  background: #621f69;
+  background: none;
   color: #fff;
 }
 
@@ -368,7 +371,7 @@ html.theme-dark .side-nav-controls {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #4a154b;
+  color: rgba(22, 27, 34, 0.8);
   padding: 0.22rem 0;
   border-radius: 0;
   font-weight: 600;
@@ -397,7 +400,7 @@ html.theme-dark .side-nav-controls .btn-toggle + .btn-toggle {
 
 /* Button background and color for dark mode */
 html.theme-dark .side-nav-controls .btn-toggle {
-  background: #4a154b;
+  background: #161b22;
   color: #fff;
 }
 
@@ -545,6 +548,22 @@ html.theme-light .side-nav {
   background: #f0f0f0 !important; /* 5% lighter than #e6e6e6 */
 }
 
+
+
+/* --- Book/Chapter region: match sidebar in dark mode --- */
+html.theme-dark .toc-books,
+html.theme-dark .toc-book,
+html.theme-dark .toc-chapters,
+html.theme-dark .toc-chapters > div,
+html.theme-dark .toc-chapters a {
+  background: #231c31 !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+html.theme-dark .toc-book-title {
+  color: #fff !important;
+}
 /* --- Leaderboard dark mode fixes --- */
 html.theme-dark .leaderboard-panel {
   background: #161b22 !important;
