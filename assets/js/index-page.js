@@ -79,3 +79,23 @@ document
   .addEventListener("click", () =>
     document.querySelectorAll("details").forEach((d) => (d.open = false))
   );
+
+// 4) GitHub Contributions Heatmap
+(function(){
+  // Load github-calendar CSS
+  const calendarCss = document.createElement('link');
+  calendarCss.rel = 'stylesheet';
+  calendarCss.href = 'https://cdn.jsdelivr.net/npm/github-calendar@latest/dist/github-calendar-responsive.css';
+  document.head.appendChild(calendarCss);
+
+  // Load github-calendar JS
+  const script = document.createElement('script');
+  script.src = 'https://cdn.jsdelivr.net/npm/github-calendar@latest/dist/github-calendar.min.js';
+  script.onload = function() {
+    // Render the calendar for the repo owner (COD1995)
+    if (window.GitHubCalendar) {
+      GitHubCalendar("#github-heatmap", "COD1995", { responsive: true });
+    }
+  };
+  document.body.appendChild(script);
+})();
