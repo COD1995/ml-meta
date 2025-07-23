@@ -63,8 +63,8 @@ a:hover {
 /* Shared container helper ----------------------------------- */
 .container {
   width: 90%;
-  max-width: 900px;
-  margin: 0 auto;
+  max-width: 850px;
+  margin: 1.5rem auto;
   padding: 3.15rem 3.15rem 3.15rem 5.4rem; /* left padding ~100px (5.4rem) */
   border-radius: 18px; /* rounded corners */
   background: none; /* keep background consistent */
@@ -296,7 +296,7 @@ html.theme-dark #slackButton span {
   left: 0;
   /* Calculate left margin: (viewport - container width) / 2 = margin on each side */
   /* Sidebar width: 220px (adjust if needed) */
-  width: 220px;
+  width: 250px;
   /* Center in left margin: (left margin - sidebar width) / 2 */
   /* left margin = (100vw - 900px) / 2 for max-width, fallback to 5% for smaller screens */
   /* Use clamp to avoid negative values on small screens */
