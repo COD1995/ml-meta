@@ -1,3 +1,4 @@
+
 /* assets/css/base.css
  * -------------------------------------------------------------
  * Global tokens, resets, utilities, and shared component styles
@@ -62,9 +63,12 @@ a:hover {
 /* Shared container helper ----------------------------------- */
 .container {
   width: 90%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 0 1rem;
+  max-width: 850px;
+  margin: 1.5rem auto;
+  padding: 3.15rem; /* left padding ~100px (5.4rem) */
+  border-radius: 18px; /* rounded corners */
+  background: none; /* keep background consistent */
+  box-sizing: border-box;
 }
 
 /* Figure & caption ------------------------------------------ */
@@ -207,9 +211,9 @@ code {
   padding: 2rem;
 }
 
-/* Floating Slack button ------------------------------------ */
+/* Remove or comment out the floating Slack button styles */
 #slackButton {
-  position: fixed;
+  /* position: fixed;
   bottom: 2rem;
   right: 2rem;
   width: 60px;
@@ -222,21 +226,45 @@ code {
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
   transition: all 0.3s ease;
   z-index: 1001;
-  cursor: pointer;
+  cursor: pointer; */
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  color: #4a154b;
+  font-size: 1rem;
+  transition: none;
 }
+
 #slackButton svg {
-  width: 32px;
-  height: 32px;
-  transition: transform 0.3s ease, fill 0.3s ease;
+  width: 24px;
+  height: 24px;
+  background: #4a154b;
+  border-radius: 6px;
+  padding: 3px;
+  margin-right: 0.3em;
+  transition: background 0.2s;
 }
-#slackButton:hover {
-  transform: translateY(-4px);
-  background: linear-gradient(135deg, #611f69, #814388);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.4);
-}
+
 #slackButton:hover svg {
-  transform: scale(1.1);
-  fill: #fffd;
+  background: #611f69;
+}
+
+#slackButton span {
+  color: #4a154b;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+html.theme-dark #slackButton svg {
+  background: #611f69;
+}
+
+html.theme-dark #slackButton span {
+  color: #fff;
 }
 
 /* Tooltip for Slack button */
@@ -265,7 +293,15 @@ code {
 .side-nav {
   position: fixed;
   top: 50%;
-  left: 1rem;
+  left: 0;
+  /* Calculate left margin: (viewport - container width) / 2 = margin on each side */
+  /* Sidebar width: 220px (adjust if needed) */
+  width: 250px;
+  /* Center in left margin: (left margin - sidebar width) / 2 */
+  /* left margin = (100vw - 900px) / 2 for max-width, fallback to 5% for smaller screens */
+  /* Use clamp to avoid negative values on small screens */
+  /* This works best if .container is centered with max-width: 900px and width: 90% */
+  left: clamp(0px, calc((100vw - 900px) / 4), 5vw);
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
@@ -273,8 +309,11 @@ code {
   background: rgba(255, 255, 255, 0.8);
   padding: 1rem;
   border-radius: 12px;
+  border: 1.5px solid #e1e2e4; /* subtle dark gray border */
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   z-index: 1000;
+  max-height: 90vh;
+  overflow-y: auto;
 }
 .side-nav a {
   text-decoration: none;
@@ -288,13 +327,108 @@ code {
 .side-nav a:hover {
   background: #4a154b;
   color: #fff;
-  transform: translateX(4px);
+  transform: translateX(.5px);
+}
+
+/* --- Side nav controls (expand/collapse/theme) --- */
+.side-nav-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 0.06rem; /* further reduced vertical margin */
+  width: 100%;
+  max-width: 220px;
+  margin-left: auto;
+  margin-right: auto;
+  background: #f0f0f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 10px; /* rounded corners for the section */
+  overflow: hidden;
+}
+
+/* Ensure button hover works for nav controls */
+.side-nav-controls .btn-toggle:hover {
+  background: #f6f8fa;
+}
+html.theme-dark .side-nav-controls .btn-toggle:hover {
+  background: none;
+  color: #fff;
+}
+
+html.theme-light .side-nav-controls {
+  background: #fff;
+}
+html.theme-dark .side-nav-controls {
+  background: rgba(22, 27, 34, 0.8);
+}
+
+/* Side nav top buttons */
+.side-nav-controls .btn-toggle {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: rgba(22, 27, 34, 0.8);
+  padding: 0.22rem 0;
+  border-radius: 0;
+  font-weight: 600;
+  background: #fff;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  box-shadow: none;
+  margin: 0;
+  min-width: 0;
+}
+
+/* Only vertical rule between buttons (not on outsides) */
+.side-nav-controls .btn-toggle + .btn-toggle {
+  border-left: 1px solid #e0e0e0;
+}
+html.theme-dark .side-nav-controls .btn-toggle + .btn-toggle {
+  border-left: 1px solid #30363d;
+}
+
+/* Remove border radius on buttons, let parent handle rounding */
+.side-nav-controls .btn-toggle {
+  border-radius: 0;
+}
+
+/* Button background and color for dark mode */
+html.theme-dark .side-nav-controls .btn-toggle {
+  background: #161b22;
+  color: #fff;
+}
+
+/* Button hover states */
+.side-nav-controls .btn-toggle:hover {
+  background: #f6f8fa;
+  color: #4a154b;
+}
+html.theme-dark .side-nav-controls .btn-toggle:hover {
+  background: #621f69;
+  color: #fff;
+}
+
+/* Remove border radius on inner edges for seamless look */
+.side-nav-controls .btn-toggle:first-child {
+  border-top-left-radius: 6px;
+  border-bottom-left-radius: 6px;
+}
+.side-nav-controls .btn-toggle:last-child {
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+}
+.side-nav-controls .btn-toggle:not(:first-child):not(:last-child) {
+  border-radius: 0;
 }
 
 html {
   scroll-behavior: smooth;
 }
-@media (max-width: 768px) {
+@media (max-width: 1500px) {
   .side-nav {
     display: none;
   }
@@ -320,4 +454,326 @@ html {
 }
 .expand-collapse-controls .btn-toggle:hover {
   background: #611f69;
+}
+
+div, section, article, details, summary, fieldset {
+    background-color: var(--c-white) !important;
+    color: var(--c-gray-900);
+    border-color: var(--c-gray-200);
+  }
+
+  /* Specific fixes for known white boxes */
+  .main-card, .card, .sidebar, .toc-card, .original-text-container  {
+    background: var(--c-white);
+    border-color: var(--c-gray-200);
+  }
+
+  a {
+    color: var(--c-blue-600);
+  }
+  .tagline {
+    color: var(--c-gray-900) !important;
+  }
+  code {
+    background: var(--c-white);
+    border-color: var(--c-gray-200);
+    color: var(--c-gray-900);
+  }
+
+  html.theme-dark body {
+    background: #0d1117 !important;
+    color: #c9d1d9 !important;
+  }
+  html.theme-dark div,
+  html.theme-dark section,
+  html.theme-dark article,
+  html.theme-dark details,
+  html.theme-dark summary,
+  html.theme-dark fieldset {
+    background-color: #161b22 !important;
+    color: #c9d1d9 !important;
+    border-color: #30363d !important;
+  }
+  html.theme-dark .main-card,
+  html.theme-dark .card,
+  html.theme-dark .sidebar,
+  html.theme-dark .toc-card,
+  html.theme-dark .original-text-container {
+    background: #161b22 !important;
+    border-color: #30363d !important;
+  }
+  html.theme-dark code {
+    background: #161b22 !important;
+    border-color: #30363d !important;
+    color: #c9d1d9 !important;
+  }
+  html.theme-dark .tagline {
+    color: #c9d1d9 !important;
+  }
+
+  html.theme-light body {
+    background: #dbe0e5 !important; /* 10% darker than #f4f6f8 */
+    color: #24292e !important;
+  }
+  html.theme-light div,
+  html.theme-light section,
+  html.theme-light article,
+  html.theme-light details,
+  html.theme-light summary,
+  html.theme-light fieldset {
+    background-color: #fff !important;
+    color: #24292e !important;
+    border-color: #d0d7de !important;
+  }
+  html.theme-light .main-card,
+  html.theme-light .card,
+  html.theme-light .sidebar,
+  html.theme-light .toc-card,
+  html.theme-light .original-text-container {
+    background: #fafafa !important;
+    border-color: #e0e0e0 !important;
+  }
+  html.theme-light code {
+    background: #f6f8fa !important;
+    border-color: #d0d7de !important;
+    color: #24292e !important;
+  }
+html.theme-light .tagline {
+  color: #586069 !important;
+}
+
+html.theme-light .side-nav {
+  background: #f0f0f0 !important; /* 5% lighter than #e6e6e6 */
+}
+
+
+
+/* --- Book/Chapter region: match sidebar in dark mode --- */
+html.theme-dark .toc-books,
+html.theme-dark .toc-book,
+html.theme-dark .toc-chapters,
+html.theme-dark .toc-chapters > div,
+html.theme-dark .toc-chapters a {
+  background: #231c31 !important;
+  color: #fff !important;
+  border: none !important;
+}
+
+
+/* --- Book/Chapter dropdown button restyle --- */
+
+.toc-books {
+  margin-bottom: 0.7em;
+  border-radius: 12px;
+  background-color: #f0f0f0;
+  transition: box-shadow 0.18s;
+}
+.toc-book {
+  margin-bottom: 0.7em;
+  border-radius: 12px;
+  background-color: #f0f0f0;
+  transition: box-shadow 0.18s;
+}
+.toc-book:last-child {
+  margin-bottom: 0;
+}
+.toc-book-title {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  padding: 1.1em 1.2em 0.7em 2.1em;
+  font-size: 1em;
+  font-weight: 500;
+  background: none;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  cursor: pointer;
+  text-align: left;
+  border-radius: 12px 12px 0 0;
+  transition: background 0.15s, box-shadow 0.15s;
+}
+.toc-book-title:focus, .toc-book-title:hover {
+  background: #e6e6e6;
+  /* box-shadow: 0 2px 8px rgba(80,60,120,0.08); */
+  outline: none;
+}
+.toc-book-title::before {
+  content: '\25B6'; /* right-pointing triangle */
+  display: inline-block;
+  position: absolute;
+  left: .90rem;
+  top: 1.3rem;
+  font-size: 0.82em;
+  line-height: 1;
+  transition: transform 0.18s cubic-bezier(.4,0,.2,1), color 0.18s;
+  color: #a08bbd;
+  opacity: 0.7;
+}
+.toc-book[open] > .toc-book-title::before,
+.toc-book .toc-book-title[aria-expanded="true"]::before {
+  transform: rotate(90deg) scale(0.95);
+  color: #7a5fa3;
+  opacity: 0.85;
+}
+
+/* Dropdown content rounded corners and subtle shadow */
+.toc-chapters.dropdown-content {
+  border-radius: 0 0 10px 10px;
+  box-shadow: 0 2px 8px rgba(80,60,120,0.06);
+  background: #f0f0f0;
+  margin-top: -2px;
+  padding-bottom: 0.5em;
+  transition: box-shadow 0.18s;
+  padding-left: 2.1em;
+}
+html.theme-dark .toc-books,
+html.theme-dark .toc-book,
+html.theme-dark .toc-chapters.dropdown-content {
+  background: #231c31 !important;
+}
+
+.toc-chapters.dropdown-content a {
+  display: block;
+  font-size: 0.9em;
+  padding: 0.32em 0.2em 0.32em 0;
+  margin-left: 0;
+  text-align: left;
+}
+
+html.theme-dark .toc-book-title {
+  color: #fff !important;
+  background: none !important;
+}
+html.theme-light .toc-book-title {
+  color: #24292e !important;
+  background: none !important;
+}
+html.theme-dark .toc-book-title::before {
+  color: #fff;
+}
+html.theme-light .toc-book-title::before {
+  color: #4a154b;
+}
+/* --- Leaderboard dark mode fixes --- */
+html.theme-dark .leaderboard-panel {
+  background: #161b22 !important;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+html.theme-dark .leaderboard-title {
+  background: #282c34 !important;
+  color: #fff !important;
+  border-radius: 12px 12px 0 0;
+}
+
+html.theme-dark .leaderboard-table {
+  background: transparent !important;
+  color: #c9d1d9 !important;
+}
+
+html.theme-dark .leaderboard-table th,
+html.theme-dark .leaderboard-table td {
+  background: transparent !important;
+  color: #c9d1d9 !important;
+  border-color: #30363d !important;
+}
+
+html.theme-dark .leaderboard-table tr {
+  background: transparent !important;
+}
+
+html.theme-dark .leaderboard-table tr:nth-child(even) {
+  background: #1a1d23 !important;
+}
+
+html.theme-dark .leaderboard-table tr:nth-child(odd) {
+  background: #161b22 !important;
+}
+
+html.theme-dark .leaderboard-table .number,
+html.theme-dark .leaderboard-table .name,
+html.theme-dark .leaderboard-table .points {
+  color: #fff !important;
+}
+
+/* Slack banner under side-nav */
+.slack-banner {
+  margin-top: 0.475rem; /* reduced from 0.5rem by 5% */
+  padding: 0.7rem 0.5rem;
+  background: #ede7f6;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.slack-banner #slackButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-weight: 600;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  color: #4a154b;
+  font-size: 1rem;
+  transition: none;
+}
+
+.slack-banner #slackButton svg {
+  width: 24px;
+  height: 24px;
+  background: #4a154b;
+  border-radius: 6px;
+  padding: 3px;
+  margin-right: 0.3em;
+  transition: background 0.2s;
+}
+
+.slack-banner #slackButton:hover svg {
+  background: #611f69;
+}
+
+.slack-banner #slackButton span {
+  color: #4a154b;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+html.theme-dark .slack-banner {
+  background: #231c31;
+}
+
+html.theme-dark .slack-banner #slackButton span {
+  color: #fff;
+}
+
+html.theme-dark .slack-banner #slackButton svg {
+  background: #611f69;
+}
+
+/* Side nav divider (thin horizontal rule) ------------------- */
+.side-nav-divider {
+  border: none;
+  border-top: 1px solid #d0d7de;
+  margin: 0.5rem 0;
+  width: 100%;
+  height: 0;
+  background: none;
+}
+
+html.theme-dark .side-nav-divider {
+  border-top: 1px solid #30363d;
+}
+
+/* Add more space above the first nav link (title area) */
+.side-nav-divider + a:first-of-type {
+  margin-top: .7rem;
 }
