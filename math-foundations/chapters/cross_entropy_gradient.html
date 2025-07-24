@@ -13,51 +13,65 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
 
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [
-                    ["$", "$"],
-                    ["\\(", "\\)"],
-                ],
-            },
-        };
-    </script>
+    <!-- MathJax global config (must come BEFORE MathJax) -->
+    <script src="../../../assets/js/mathjax-config.js"></script>
+
     <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
     <script defer src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"></script>
 </head>
 
 <body>
-    <div class="layout">
-        <aside id="page-sidebar" class="sidebar">
-            <div class="sidebar-header">
-                <a class="home-link" href="../../../index.html"">🏠 Home Page</a>
-                <button
-                    id=" sidebarToggle" class="sidebar-toggle" aria-label="Toggle sidebar" aria-expanded="true"
-                    onclick="document.body.classList.toggle('sidebar-collapsed')">
-                    &#9776;
-                    </button>
+    <!-- Issue #35: Persistent Left Navbar -->
+     <nav class="side-nav">
+        <div class="side-nav-controls">
+          <button id="homeBtn" class="btn-toggle" aria-label="Home" onclick="window.location.href='../../../index.html'">🏠</button>
+          <span class="nav-divider"></span>
+          <button id="themeToggle" class="btn-toggle" aria-label="Toggle dark mode">🌓</button>
+        </div>
+        <hr class="side-nav-divider">
+        <span class="toc-label">🧮 Math Foundations</span>
+        <div class="toc-books">
+          <div class="toc-book dropdown" open>
+            <button class="toc-book-title dropdown-toggle" aria-expanded="true" aria-controls="math-foundations-chapters">In Simple Terms</button>
+            <div class="toc-chapters dropdown-content" id="math-foundations-chapters">
+              <div><a href="../index.html">Section Directory</a></div>
+              <div><a href="cross_entropy_gradient.html" class="active">Cross-Entropy Gradient</a></div>
+              <!-- Add more math foundation chapters here as needed -->
             </div>
+          </div>
+        </div>
+        <hr class="side-nav-divider">
+        <div class="slack-banner">
+          <a
+            href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
+            id="slackButton"
+            target="_blank"
+            rel="noopener"
+            aria-label="Join our Slack Community"
+            data-tooltip="Join Community"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 122.8 122.8"
+              fill="#fff"
+              style="width: 1.5em; height: 1.5em; vertical-align: middle;"
+            >
+              <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
+              <path d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z" />
+              <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
+              <path d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z" />
+              <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
+              <path d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z" />
+              <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
+              <path d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z" />
+            </svg>
+            <span style="margin-left: 0.5em; vertical-align: middle;">Join our Slack</span>
+          </a>
+        </div>
+      </nav>
 
-            <div class="sidebar-inner">
-                <nav>
-                    <h3>
-                        <a class="section-link" href="../index.html">📖 In Simple Terms</a>
-                    </h3>
-                    <ul class="book-nav">
-                        <li class="chapter-details">
-                            <details open>
-                                <summary>Simplified Derivation of the Cross-Entropy Loss Gradient</summary>
-                                <ul id="toc-cross-entropy" class="toc-list" data-src="self"></ul>
-                            </details>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-        </aside>
-
-        <main class="content card">
+    <div class="container">
             <h1>Simplified Derivation of the Cross-Entropy Loss Gradient</h1>
 
             <p class="tagline">
@@ -399,7 +413,18 @@
                 </div>
             </section>
 
-            <footer style="margin-top:3rem;">
+            <section id="comments">
+                <script
+                    src="https://utteranc.es/client.js"
+                    repo="COD1995/ml-meta"
+                    issue-term="pathname"
+                    label="comment"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async
+                ></script>
+            </section>
+            <footer>
                 <p>
                     © 2025 Saksham Lakhera •
                     <a href="../../../index.html">Back to Home</a>
@@ -412,7 +437,7 @@
 
             <script src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script>
 
-        </main>
+        </div>
     </div>
 </body>
 

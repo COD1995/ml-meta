@@ -295,13 +295,13 @@ html.theme-dark #slackButton span {
   top: 50%;
   left: 0;
   /* Calculate left margin: (viewport - container width) / 2 = margin on each side */
-  /* Sidebar width: 220px (adjust if needed) */
-  width: 250px;
+  /* Sidebar width: 200px (adjust if needed) */
+  width: 220px;
   /* Center in left margin: (left margin - sidebar width) / 2 */
   /* left margin = (100vw - 900px) / 2 for max-width, fallback to 5% for smaller screens */
   /* Use clamp to avoid negative values on small screens */
   /* This works best if .container is centered with max-width: 900px and width: 90% */
-  left: clamp(0px, calc((100vw - 900px) / 4), 5vw);
+  left: clamp(0px, calc((100vw - 900px) / 5), 3.5vw);
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
@@ -321,7 +321,7 @@ html.theme-dark #slackButton span {
   font-weight: 500;
   color: #333;
   transition: all 0.2s ease;
-  padding: 0.3rem 0.5rem;
+  padding: 0.3rem 0rem;
   border-radius: 6px;
 }
 .side-nav a:hover {
@@ -338,7 +338,7 @@ html.theme-dark #slackButton span {
   gap: 0;
   margin-bottom: 0.06rem; /* further reduced vertical margin */
   width: 100%;
-  max-width: 220px;
+  max-width: 200px;
   margin-left: auto;
   margin-right: auto;
   background: #f0f0f0;
@@ -428,11 +428,13 @@ html.theme-dark .side-nav-controls .btn-toggle:hover {
 html {
   scroll-behavior: smooth;
 }
-@media (max-width: 1500px) {
+@media (max-width: 1350px) {
   .side-nav {
     display: none;
   }
 }
+
+
 
 /* Expand / Collapse buttons -------------------------------- */
 .expand-collapse-controls {
@@ -563,13 +565,13 @@ html.theme-dark .toc-chapters a {
 /* --- Book/Chapter dropdown button restyle --- */
 
 .toc-books {
-  margin-bottom: 0.7em;
+  margin-bottom: 0em;
   border-radius: 12px;
   background-color: #f0f0f0;
   transition: box-shadow 0.18s;
 }
 .toc-book {
-  margin-bottom: 0.7em;
+  margin-bottom: 0em;
   border-radius: 12px;
   background-color: #f0f0f0;
   transition: box-shadow 0.18s;
@@ -702,7 +704,7 @@ html.theme-dark .leaderboard-table .points {
 /* Slack banner under side-nav */
 .slack-banner {
   margin-top: 0.475rem; /* reduced from 0.5rem by 5% */
-  padding: 0.7rem 0.5rem;
+  padding: 0.2rem 0.5rem;
   background: #ede7f6;
   border-radius: 8px;
   display: flex;

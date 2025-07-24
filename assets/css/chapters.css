@@ -29,12 +29,8 @@
 
 .container {
   border-radius: 1.25em;
-  /* You may adjust the value to match index.html exactly */
-  overflow: hidden;
+
 }
-/* assets/css/chapters.css
- * (Refactored for consistency)
- * ---------------------------------------------------------- */
 
 :root {
   --sb-open: 350px;
