@@ -474,7 +474,7 @@ div, section, article, details, summary, fieldset {
     border-color: var(--c-gray-200);
   }
   
-.original-text{
+.original-text {
     color: var(--c-gray-900);
 }
   /* Specific fixes for known white boxes */
