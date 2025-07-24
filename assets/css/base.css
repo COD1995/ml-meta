@@ -65,7 +65,7 @@ a:hover {
   width: 90%;
   max-width: 850px;
   margin: 1.5rem auto;
-  padding: 3.15rem 3.15rem 3.15rem 5.4rem; /* left padding ~100px (5.4rem) */
+  padding: 3.15rem; /* left padding ~100px (5.4rem) */
   border-radius: 18px; /* rounded corners */
   background: none; /* keep background consistent */
   box-sizing: border-box;
@@ -428,7 +428,7 @@ html.theme-dark .side-nav-controls .btn-toggle:hover {
 html {
   scroll-behavior: smooth;
 }
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
   .side-nav {
     display: none;
   }
