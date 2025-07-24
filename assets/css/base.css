@@ -1,4 +1,3 @@
-
 /* assets/css/base.css
  * -------------------------------------------------------------
  * Global tokens, resets, utilities, and shared component styles
@@ -474,7 +473,10 @@ div, section, article, details, summary, fieldset {
     color: var(--c-gray-900);
     border-color: var(--c-gray-200);
   }
-
+  
+.original-text{
+    color: var(--c-gray-900);
+}
   /* Specific fixes for known white boxes */
   .main-card, .card, .sidebar, .toc-card, .original-text-container  {
     background: var(--c-white);
@@ -502,7 +504,8 @@ div, section, article, details, summary, fieldset {
   html.theme-dark article,
   html.theme-dark details,
   html.theme-dark summary,
-  html.theme-dark fieldset {
+  html.theme-dark fieldset, 
+  html.theme-dark .original-text{
     background-color: #161b22 !important;
     color: #c9d1d9 !important;
     border-color: #30363d !important;
@@ -822,6 +825,11 @@ html.theme-dark .main-nav-divider {
   border-top: 1px solid #4e5358;
   background: #161b22 !important;
 }
+
+html.theme-dark .toc-label {
+  color: #c9d1d9 !important;
+}
+
 html.theme-dark .toc-books,
 html.theme-dark .toc-book {
   background: #161b22 !important;
@@ -852,7 +860,7 @@ html.theme-dark .toc-book {
   content: '\25B6'; /* right-pointing triangle */
   display: inline-block;
   position: absolute;
-  left: 1.05rem;
+  left: 1.25rem;
   top: 1.8rem;
   bottom: 1.8rem;
   font-size: 0.82em;
@@ -869,4 +877,16 @@ html.theme-dark .toc-book {
   transform: rotate(90deg) scale(0.95);
   color: #7a5fa3;
   opacity: 0.85;
+}
+.toc-label {
+  font-size: 1.15em;
+  font-weight: 600;
+  color: #23213a;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  margin-bottom: 0.7em;
+}
+html.theme-dark .toc-label {
+  color: #1e2236 !important;
 }
