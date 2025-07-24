@@ -428,7 +428,7 @@ html.theme-dark .side-nav-controls .btn-toggle:hover {
 html {
   scroll-behavior: smooth;
 }
-@media (max-width: 1000px) {
+@media (max-width: 1500px) {
   .side-nav {
     display: none;
   }
