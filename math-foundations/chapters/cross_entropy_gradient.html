@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chapter 4: Paths in Graphs</title>
+
+    <link rel="stylesheet" href="../../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../../assets/css/chapters.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [
+                    ["$", "$"],
+                    ["\\(", "\\)"],
+                ],
+            },
+        };
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"></script>
+</head>
+
+<body>
+    <div class="layout">
+        <aside id="page-sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <a class="home-link" href="../../../index.html"">🏠 Home Page</a>
+                <button
+                    id=" sidebarToggle" class="sidebar-toggle" aria-label="Toggle sidebar" aria-expanded="true"
+                    onclick="document.body.classList.toggle('sidebar-collapsed')">
+                    &#9776;
+                    </button>
+            </div>
+
+            <div class="sidebar-inner">
+                <nav>
+                    <h3>
+                        <a class="section-link" href="../index.html">📖 In Simple Terms</a>
+                    </h3>
+                    <ul class="book-nav">
+                        <li class="chapter-details">
+                            <details open>
+                                <summary>Simplified Derivation of the Cross-Entropy Loss Gradient</summary>
+                                <ul id="toc-cross-entropy" class="toc-list" data-src="self"></ul>
+                            </details>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+
+        <main class="content card">
+            <h1>Simplified Derivation of the Cross-Entropy Loss Gradient</h1>
+
+            <p class="tagline">
+                An intuitive guide to how robots learn to classify, guess, and improve using cross-entropy loss and
+                backpropagation.
+            </p>
+
+            <section id="introduction">
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>Imagine you have a robot friend who loves to guess what's in your drawings.</strong>
+                        </p>
+                        <p class="original-text">
+                            <em>The robot uses numbers to help it learn, and you can too!</em>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="one-hot-encoding">
+                <h2>1. One-Hot Encoding: Telling the Robot the Right Answer</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>How do we tell the robot the right answer?</strong></p>
+                        <p class="original-text">
+                            <em>We use something called a <strong>vector</strong>. Don't worry, it's just a row of
+                                numbers!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p>Suppose you have three animals: a cat, a dog, and a rabbit. If the picture is a
+                            <strong>cat</strong>, then we write:</p>
+                        <p>$ \text{Cat: } 1, \quad \text{Dog: } 0, \quad \text{Rabbit: } 0 $</p>
+                        <p>So the correct answer (called <strong>one-hot encoding</strong>) is: $ [1, 0, 0] $</p>
+                        <p><em>One-hot</em> just means "only one is right!"</p>
+                    </div>
+                </div>
+
+            </section>
+
+            <section id="robot-guessing">
+                <h2>2. Robot Guessing (Softmax)</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>How does the robot guess?</strong></p>
+                        <p class="original-text">
+                            <em>The robot looks at the picture and gives us its best guess. For example:</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p>The robot gives us an answer: $[0.8, 0.15, 0.05]$</p>
+                        <p>Wait, what does that even mean? Why can't the robot just say what the drawing is?</p>
+                        <p>Well, these numbers show how confident the robot is about each option:</p>
+                        <ul>
+                            <li>0.8 → The robot is 80% sure it's a <strong>cat</strong></li>
+                            <li>0.15 → It's 15% sure it's a <strong>dog</strong></li>
+                            <li>0.05 → And only 5% sure it's a <strong>rabbit</strong></li>
+                        </ul>
+                        <p>So, even though the robot doesn’t say it directly, we can tell it's most confident that the
+                            drawing is a <strong>cat</strong>.</p><br>
+                        <p>It uses secret values called <strong>pre-activation score</strong>: $ ( z_1, z_2, z_3 ) $</p>
+                        <p>Each <strong>score</strong> is calculated like this: $ z_i = \sum_j w_{ji} h_j + b_i $</p>
+                        <p>Then the robot turns them into <strong>guesses</strong> using the <strong>softmax</strong>
+                            function: $ \hat{y}_i = \frac{e^{z_i}}{\sum_k e^{z_k}} $</p>
+                        <ul>
+                            <li>Cat: $ \hat{y}_{\text{cat}} = \frac{e^{z_{\text{cat}}}}{\sum_k e^{z_k}} $</li>
+                            <li>Dog: $ \hat{y}_{\text{dog}} = \frac{e^{z_{\text{dog}}}}{\sum_k e^{z_k}} $</li>
+                            <li>Rabbit: $ \hat{y}_{\text{rabbit}} = \frac{e^{z_{\text{rabbit}}}}{\sum_k e^{z_k}} $</li>
+                        </ul>
+                        <p>So our robot does these calculations and gives us the guesses (also called prediction): $
+                            [\hat{y}_{\text{cat}}, \hat{y}_{\text{dog}}, \hat{y}_{\text{rabbit}}] = [0.8, 0.15, 0.05] $
+                        </p>
+                        <br>
+                        <p><strong>What’s Happening in Softmax?</strong></p>
+                        <ul>
+                            <li>Make each logit bigger and positive using ( $e^{z_i}$ )</li>
+                            <li>Add them all up</li>
+                            <li>Divide each one by the total</li>
+                        </ul>
+                        <p>Now all guesses will be between 0 and 1 and add up to 1.</p>
+                    </div>
+                </div>
+
+            </section>
+
+            <section id="cross-entropy-loss">
+                <h2>3. Cross-Entropy Loss</h2>
+
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>How do we know how good the robot did?</strong></p>
+                        <p class="original-text">
+                            <em>If the true label is "cat" (so the one-hot vector is ([1, 0, 0])) and the robot guessed
+                                [0.8, 0.15, 0.05]</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p>We use a special math formula called <strong>cross-entropy loss</strong>:</p>
+
+                        <p style="margin: 1rem 0; font-size: 1.2rem;">
+                            $$ L = -\sum_i y_i \log(\hat{y}_i) $$
+                        </p>
+
+                        <p>Here, \( y_i \) is the original value and \( \hat{y}_i \) is what the robot guessed
+                            (predicted).</p>
+
+                        <ul>
+                            <li>For cat, the contribution is: \( 1 \times \log(0.8) \)</li>
+                            <li>For dog, the contribution is: \( 0 \times \log(0.15) \)</li>
+                            <li>For rabbit, the contribution is: \( 0 \times \log(0.05) \)</li>
+                        </ul>
+                        <p>For our example, the loss looks like:</p><br>
+
+                        <p><strong>$ \text{Loss} = - \left( 1 \cdot \log(0.8) + 0 \cdot \log(0.15) + 0 \cdot \log(0.05)
+                                \right) $</strong></p>
+                        <p>Which simplifies to: $ \text{Loss} = -\log(0.8) $</p><br>
+                        <p><strong>Here’s what this means, step by step:</strong></p>
+                        <ul>
+                            <li>We only care about the animal that's really in the picture (hence cat has 100%
+                                contribution, rest contribute 0%).</li>
+                            <li>We take the robot's guess for that animal and use log (which is a math way to make big
+                                numbers smaller).</li>
+                            <li><strong>Why the minus log?</strong> Because log of values less than 1 is negative, and
+                                we want the loss to be <strong>positive</strong> and close to 0 when the robot guesses
+                                well.</li>
+                            <li>The loss (L) tells us:
+                                <ul>
+                                    <li>If the robot is very sure and right, the number is small (good!)</li>
+                                    <li>If the robot is wrong, the number is big (not so good).</li>
+                                    <li>L = 0.001 is good but L = 32 is bad</li>
+                                    <li>So, this means we have to minimize the Loss (L)</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <p><em>Note: Log(1) is 0, so we want the robot to guess cat with value 1.</em></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="gradient-descent">
+                <h2>4. Gradient Calculations</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>How does the robot get better?</strong></p>
+                        <p class="original-text">
+                            <em>The robot learns by trying to make the error (loss) smaller using a process called
+                                <strong>gradient descent</strong>:</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <ol>
+                            <li>First, check how wrong the guess was (this is the <strong>cross-entropy loss</strong>).
+                            </li>
+                            <li>Then, figure out what caused the mistake (find how each part affected the error. This is
+                                called the <strong>gradient</strong>).</li>
+                            <li>Adjust the robot's internal dials (these are called <strong>weights</strong>) just a
+                                tiny bit.</li>
+                            <li>Try again with the new dials, hopefully the guess is better!</li>
+                        </ol>
+
+                        <svg width="640" height="320" xmlns="http://www.w3.org/2000/svg" style="margin: 1rem 0;">
+                            <defs>
+                                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="8" refY="3.5"
+                                    orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="red" />
+                                </marker>
+                            </defs>
+
+                            <!-- Hidden neurons -->
+                            <circle cx="120" cy="80" r="20" fill="#fff8dc" stroke="#aaa" />
+                            <text x="120" y="85" font-size="14" text-anchor="middle">h₁</text>
+
+                            <circle cx="120" cy="140" r="20" fill="#fff8dc" stroke="#aaa" />
+                            <text x="120" y="145" font-size="14" text-anchor="middle">h₂</text>
+
+                            <circle cx="120" cy="200" r="20" fill="#fff8dc" stroke="#aaa" />
+                            <text x="120" y="205" font-size="14" text-anchor="middle">h₃</text>
+
+                            <!-- Output neurons -->
+                            <circle cx="340" cy="80" r="20" fill="#e0f7fa" stroke="#aaa" />
+                            <text x="340" y="85" font-size="14" text-anchor="middle">z₁</text>
+
+                            <circle cx="340" cy="140" r="20" fill="#e0f7fa" stroke="#aaa" />
+                            <text x="340" y="145" font-size="14" text-anchor="middle">z₂</text>
+
+                            <circle cx="340" cy="200" r="20" fill="#e0f7fa" stroke="#aaa" />
+                            <text x="340" y="205" font-size="14" text-anchor="middle">z₃</text>
+
+                            <!-- Faded connections -->
+                            <line x1="138" y1="80" x2="320" y2="80" stroke="#ccc" />
+                            <line x1="138" y1="80" x2="320" y2="140" stroke="#ccc" />
+                            <line x1="138" y1="80" x2="320" y2="200" stroke="#ccc" />
+
+                            <line x1="138" y1="140" x2="320" y2="80" stroke="#ccc" />
+                            <line x1="138" y1="140" x2="320" y2="140" stroke="#ccc" />
+                            <line x1="138" y1="140" x2="320" y2="200" stroke="#ccc" />
+
+                            <line x1="138" y1="200" x2="320" y2="80" stroke="#ccc" />
+                            <line x1="138" y1="200" x2="320" y2="140" stroke="#ccc" />
+                            <line x1="138" y1="200" x2="320" y2="200" stroke="#ccc" />
+
+                            <!-- Highlight w21 -->
+                            <line x1="138" y1="140" x2="320" y2="80" stroke="red" stroke-width="2"
+                                marker-end="url(#arrowhead)" />
+                            <text x="200" y="110" fill="red" font-size="14">w₂₁</text>
+
+                            <!-- Softmax box -->
+                            <rect x="390" y="55" width="100" height="160" fill="#f0f8ff" stroke="#00a" rx="10"
+                                ry="10" />
+                            <text x="440" y="70" font-size="13" text-anchor="middle" fill="#00a">Softmax</text>
+
+                            <!-- Arrows into softmax -->
+                            <line x1="360" y1="80" x2="390" y2="80" stroke="#00a" marker-end="url(#arrowhead)" />
+                            <line x1="360" y1="140" x2="390" y2="140" stroke="#00a" marker-end="url(#arrowhead)" />
+                            <line x1="360" y1="200" x2="390" y2="200" stroke="#00a" marker-end="url(#arrowhead)" />
+
+                            <!-- Output from softmax -->
+                            <line x1="490" y1="80" x2="520" y2="80" stroke="#005DAA" />
+                            <line x1="490" y1="140" x2="520" y2="140" stroke="#005DAA" />
+                            <line x1="490" y1="200" x2="520" y2="200" stroke="#005DAA" />
+
+                            <text x="530" y="85" font-size="13" fill="#005DAA">(0.8) 80% cat</text>
+                            <text x="530" y="145" font-size="13" fill="#005DAA">(0.15) :15% dog</text>
+                            <text x="530" y="205" font-size="13" fill="#005DAA">(0.05) 5% rabbit</text>
+                        </svg>
+
+
+                        <p>Let’s zoom in on one tiny dial, called <strong>$w_{21}$</strong>.<br></p>
+                        <p>This weight connects the robot’s hidden thinking ($h_2$) to one of its final scores $z_1$,
+                            which helps decide how much the robot thinks it’s a <strong>cat</strong>.</p>
+                        <p>But here’s the twist: because we use a smart guessing function called
+                            <strong>softmax</strong>, changing just <strong>$z_1$</strong> changes <em>all</em> the
+                            final guesses and not just the one for cat, but also for dog and rabbit!</p>
+
+                        <br>
+                        <strong>Softmax Converts Scores into Probabilities:</strong>
+                        <ul>
+                            <li>$\hat{y}_1 = \dfrac{e^{z_1}}{e^{z_1} + e^{z_2} + e^{z_3}}$ → Guess for “cat”</li>
+                            <li>$\hat{y}_2 = \dfrac{e^{z_2}}{e^{z_1} + e^{z_2} + e^{z_3}}$ → Guess for “dog”</li>
+                            <li>$\hat{y}_3 = \dfrac{e^{z_3}}{e^{z_1} + e^{z_2} + e^{z_3}}$ → Guess for “rabbit”</li>
+                        </ul>
+
+                        <p>So we ask: <strong>How does changing this dial ($w_{21}$) change the robot’s final
+                                mistake?</strong></p>
+
+                        <p>We follow all the paths using the chain rule (a fancy way to track cause-and-effect):</p>
+
+                        <p>
+                            $$
+                            \frac{\partial L}{\partial w_{21}} =
+                            \left(
+                            \frac{\partial L}{\partial \hat{y}_1} \cdot \frac{\partial \hat{y}_1}{\partial z_1}
+                            +
+                            \frac{\partial L}{\partial \hat{y}_2} \cdot \frac{\partial \hat{y}_2}{\partial z_1}
+                            +
+                            \frac{\partial L}{\partial \hat{y}_3} \cdot \frac{\partial \hat{y}_3}{\partial z_1}
+                            \right)
+                            \cdot \frac{\partial z_1}{\partial w_{21}}
+                            $$
+                        </p>
+
+                        <h4>Differentiation Results: What Each Piece Means</h4>
+                        <ul style="line-height: 1.9; font-size: 1.05rem;">
+                            <li>
+                                <strong>\( z_1 = w_{21} \cdot h_2 + b_1 \)</strong> → so
+                                <strong>\( \frac{\partial z_1}{\partial w_{21}} = h_2 \)</strong>
+                            </li>
+
+                            <li style="margin-top: 0.8rem;">
+                                <strong>\( \frac{\partial \hat{y}_1}{\partial z_1} = \hat{y}_1 (1 - \hat{y}_1)
+                                    \)</strong> → Cat score increases cat guess
+                            </li>
+
+                            <li style="margin-top: 0.8rem;">
+                                <strong>\( \frac{\partial \hat{y}_k}{\partial z_1} = -\hat{y}_1 \cdot \hat{y}_k
+                                    \)</strong> for \( k \ne 1 \) → Cat score brings down other guesses
+                            </li>
+
+                            <li style="margin-top: 0.8rem;">
+                                <strong>\( \frac{\partial L}{\partial \hat{y}_k} = -\frac{y_k}{\hat{y}_k} \)</strong> →
+                                From cross-entropy loss (tells how wrong the robot was);
+                                \( y_k \) is the true label (0 or 1), and \( \hat{y}_k \) is the predicted probability
+                            </li>
+                        </ul>
+
+
+                        <h4>Final Result:</h4>
+                        <p>After plugging everything in and simplifying:</p>
+
+                        <p>
+                            $$
+                            \frac{\partial L}{\partial w_{21}} = (\hat{y}_1 - y_1) \cdot h_2
+                            $$
+                        </p>
+
+                        <ul>
+                            <li>$\hat{y}_1$ is the robot's guess for "cat"</li>
+                            <li>$y_1$ is the real answer: 1 if it’s a cat, 0 otherwise</li>
+                            <li>$h_2$ is the value from the hidden layer neuron</li>
+                        </ul>
+
+
+                        <h4>General Rule for Any Weight:</h4>
+                        <p>$$\frac{\partial L}{\partial w_{ji}} = h_j \cdot (\hat{y}_i - y_i)$$
+                        </p>
+                        <p><em>Gradient = (Hidden output × how wrong the guess was)</em></p><br>
+
+                        <h4>In Simple Words:</h4>
+                        <ul>
+                            <li>Check how off the guess was</li>
+                            <li>See which dial (weight) helped or hurt</li>
+                            <li>Nudge that dial a tiny bit to improve the next guess</li>
+                        </ul>
+
+                        <h4>Adjusting the Dial (Weight):</h4>
+
+                        <p style="font-size: 1.1rem; margin: 0.7rem 0;">
+                            The robot updates each dial (weight) using this rule:
+                        </p>
+
+                        <p style="font-size: 1.3rem; font-weight: bold; margin: 1rem 0; text-align: left;">
+                            \( w_{ji}^{\text{new}} = w_{ji}^{\text{old}} - \eta \cdot \frac{\partial L}{\partial w_{ji}}
+                            \)
+                        </p>
+
+                        <ul style="font-size: 1.05rem;">
+                            <li><strong>\( w_{ji}^{\text{old}} \)</strong> — the current dial value (from hidden neuron
+                                \( j \) to output \( i \))</li>
+                            <li><strong>\( \eta \)</strong> — the learning rate (how fast the robot adjusts)</li>
+                            <li><strong>\( \frac{\partial L}{\partial w_{ji}} \)</strong> — how much this dial
+                                contributed to the mistake (the gradient)</li>
+                        </ul>
+
+                        <p style="font-size: 0.95rem; font-style: italic; color: #555; margin-top: 0.5rem;">
+                            The robot tweaks the dial just a bit each time: learning from every mistake!
+                        </p>
+
+                    </div>
+                </div>
+            </section>
+
+            <footer style="margin-top:3rem;">
+                <p>
+                    © 2025 Saksham Lakhera •
+                    <a href="../../../index.html">Back to Home</a>
+                </p>
+            </footer>
+
+             <script type="module" src="../../../assets/js/main.js"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script>
+
+        </main>
+    </div>
+</body>
+
+</html>
