@@ -14,7 +14,8 @@
 .dark-mode a {
   color: #b3d1ff;
 }
-.dark-mode .side-nav-divider, .dark-mode .nav-divider {
+.dark-mode .side-nav-divider,
+.dark-mode .nav-divider {
   background: #444;
 }
 .btn-toggle {
@@ -24,26 +25,6 @@
   font-size: 1.1em;
   padding: 0.2em 0.5em;
   color: inherit;
-}
-/* ...existing code... */
-
-.container {
-  border-radius: 1.25em;
-
-}
-
-:root {
-  --sb-open: 350px;
-  --sb-closed: 56px;
-}
-
-.layout {
-  display: grid;
-  grid-template-columns: var(--sb-open) 1fr;
-  gap: 1.5rem;
-  min-height: 100vh;
-  background: var(--c-gray-100); /* Use variable */
-  transition: grid-template-columns 0.3s ease;
 }
 
 /* ---------- Sidebar --------------------------------------- */
@@ -131,7 +112,6 @@
 }
 .toc-list li {
   margin-bottom: 0.4rem;
-
 }
 .toc-list a {
   font-size: 0.93rem;
@@ -158,16 +138,6 @@ body.sidebar-collapsed .sidebar-header {
 }
 
 /* ---------- Main article pane ----------------------------- */
-.content {
-  /* Inherits card styles from base.css now */
-  max-width: clamp(800px, 70vw, 1200px);
-  margin: 0 auto;
-  line-height: 1.6;
-}
-
-.content pre {
-  margin-bottom: 1.5rem;
-}
 
 /* Shared list indentation */
 .content ul,

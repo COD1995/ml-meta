@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chapter 0: Prologue</title>
+
+    <!-- Global styles -->
+    <link rel="stylesheet" href="../../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../../assets/css/chapters.css" />
+
+    <!-- Library styles -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
+
+    <!-- MathJax global config (must come BEFORE MathJax) -->
+    <script src="../../../assets/js/mathjax-config.js"></script>
+
+    <!-- Library scripts (deferred) -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"
+    ></script>
+  </head>
+
+  <body>
+    <nav class="side-nav">
+      <div class="side-nav-controls">
+        <button
+          id="homeBtn"
+          class="btn-toggle"
+          aria-label="Home"
+          onclick="window.location.href='../../../index.html'"
+        >
+          🏠
+        </button>
+        <span class="nav-divider"></span>
+        <button
+          id="themeToggle"
+          class="btn-toggle"
+          aria-label="Toggle dark mode"
+        >
+          🌓
+        </button>
+      </div>
+      <hr class="side-nav-divider" />
+      <span class="toc-label">📚 Books</span>
+      <div class="toc-books">
+        <div class="toc-book dropdown" open>
+          <button
+            class="toc-book-title dropdown-toggle"
+            aria-expanded="true"
+            aria-controls="algorithms-chapters"
+          >
+            Algorithms (Dasgupta et al.)
+          </button>
+          <div class="toc-chapters dropdown-content" id="algorithms-chapters">
+            <div><a href="00-prologue.html">0. Prologue</a></div>
+            <div><a href="04-paths-in-graphs.html">4. Paths in Graphs</a></div>
+            <div>
+              <a href="05-greedy-algorithms.html">5. Greedy Algorithms</a>
+            </div>
+            <div>
+              <a href="06-dynamic-programming.html">6. Dynamic Programming</a>
+            </div>
+            <div>
+              <a href="07-linear-programming.html">7. Linear Programming</a>
+            </div>
+          </div>
+        </div>
+        <div class="toc-book dropdown">
+          <button
+            class="toc-book-title dropdown-toggle"
+            aria-expanded="false"
+            aria-controls="pattern-classification-chapters"
+          >
+            Pattern Classification (Duda et al.)
+          </button>
+          <div
+            class="toc-chapters dropdown-content"
+            id="pattern-classification-chapters"
+            hidden
+          >
+            <div>
+              <a
+                href="../../pattern-classification/chapters/01-introduction.html"
+                >1. Introduction</a
+              >
+            </div>
+            <div>
+              <a
+                href="../../pattern-classification/chapters/02-bayes-decision.html"
+                >2. Bayes Decision Theory</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slack-banner" style="margin-top: 1.5em">
+        <a
+          href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
+          id="slackButton"
+          target="_blank"
+          rel="noopener"
+          aria-label="Join our Slack Community"
+          data-tooltip="Join Community"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 122.8 122.8"
+            fill="#fff"
+            style="width: 1.5em; height: 1.5em; vertical-align: middle"
+          >
+            <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
+            <path
+              d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z"
+            />
+            <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
+            <path
+              d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z"
+            />
+            <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
+            <path
+              d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z"
+            />
+            <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
+            <path
+              d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z"
+            />
+          </svg>
+          <span style="margin-left: 0.5em; vertical-align: middle"
+            >Join our Slack</span
+          >
+        </a>
+      </div>
+    </nav>
+
+    <div class="container content">
+      <h1>Chapter 0: Prologue</h1>
+
+      <section id="intro-to-algorithms">
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em>
+                Look around you. Computers and networks are everywhere, enabling
+                an intricate web of complex human activities: education,
+                commerce, entertainment, research, manufacturing, health
+                management, human communication, even war. Of the two main
+                technological underpinnings of this amazing proliferation, one
+                is obvious: the breathtaking pace with which advances in
+                microelectronics and chip design have been bringing us faster
+                and faster hardware.
+              </em>
+            </p>
+            <p class="original-text">
+              <em>
+                This book tells the story of the other intellectual enterprise
+                that is crucially fueling the computer revolution: efficient
+                algorithms. It is a fascinating story.
+              </em>
+            </p>
+            <p class="original-text">
+              <em>Gather 'round and listen close.</em>
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This introduction highlights the two fundamental pillars driving
+              the modern computer age. While acknowledging the obvious and
+              significant role of ever-improving <strong>hardware</strong>, it
+              pivots to introduce the book's main subject:
+              <strong>efficient algorithms</strong>. The text positions
+              algorithms as the second, equally critical "intellectual
+              enterprise" behind the technological revolution, suggesting that
+              raw computational power alone is not enough. It frames the topic
+              as a compelling narrative to be explored.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="books-and-algorithms">
+        <h2>0.1 Books and algorithms</h2>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >Two ideas changed the world. In 1448 in the German city of
+                Mainz a goldsmith named Johann Gutenberg discovered a way to
+                print books by putting together movable metallic pieces.
+                Literacy spread, the Dark Ages ended, the human intellect was
+                liberated, science and technology triumphed, the Industrial
+                Revolution happened. Many historians say we owe all this to
+                typography. Imagine a world in which only an elite could read
+                these lines! But others insist that the key development was not
+                typography, but algorithms.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This paragraph contrasts two transformative innovations:
+              Gutenberg’s movable-type printing, which democratized reading and
+              fueled the Renaissance and Industrial Revolution, and the parallel
+              argument that the invention of systematic, mechanical
+              procedures—algorithms—was equally foundational to human progress.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >Today we are so used to writing numbers in decimal, that it is
+                easy to forget that Gutenberg would write the number 1448 as
+                MCDXLVIII. How do you add two Roman numerals? What is MCDXLVIII
+                + DCCCXII? (And just try to think about multiplying them.) Even
+                a clever man like Gutenberg probably only knew how to add and
+                subtract small numbers using his fingers; for anything more
+                complicated he had to consult an abacus specialist.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              Here the author highlights the awkwardness of pre-decimal
+              notation—Roman numerals—showing how cumbersome basic arithmetic
+              was before positional systems, and underscoring the need for more
+              efficient, rule-based calculation methods.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >The decimal system, invented in India around AD 600, was a
+                revolution in quantitative reasoning: using only 10 symbols,
+                even very large numbers could be written down compactly, and
+                arithmetic could be done efficiently on them by following
+                elementary steps. Nonetheless these ideas took a long time to
+                spread, hindered by traditional barriers of language, distance,
+                and ignorance. The most influential medium of transmission
+                turned out to be a textbook, written in Arabic in the ninth
+                century by a man who lived in Baghdad. Al-Khwarizmi laid out the
+                basic methods for adding, multiplying, and dividing numbers—even
+                extracting square roots and calculating digits of $\pi$. These
+                procedures were precise, unambiguous, mechanical, efficient,
+                correct—in short, they were algorithms, a term coined to honor
+                the wise man after the decimal system was finally adopted in
+                Europe, many centuries later.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This block traces the origin of the decimal place-value system to
+              India and its diffusion via Al-Khwarizmi’s ninth-century Arabic
+              treatise. It emphasizes how his clear, step-by-step methods
+              exemplify the definition of “algorithm”—a named tribute to his
+              influence.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >Since then, this decimal positional system and its numerical
+                algorithms have played an enormous role in Western civilization.
+                They enabled science and technology; they accelerated industry
+                and commerce. And when, much later, the computer was finally
+                designed, it explicitly embodied the positional system in its
+                bits and words and arithmetic unit. Scientists everywhere then
+                got busy developing more and more complex algorithms for all
+                kinds of problems and inventing novel applications—ultimately
+                changing the world.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              The final paragraph connects positional notation and algorithmic
+              procedures to the rise of modern computing and the explosion of
+              new algorithms across fields—demonstrating how those early ideas
+              underlie today’s technological world.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="enter-fibonacci">
+        <h2>0.2 Enter Fibonacci</h2>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >Al Khwarizmi's work could not have gained a foothold in the
+                West were it not for the efforts of one man: the 15th century
+                Italian mathematician Leonardo Fibonacci, who saw the potential
+                of the positional system and worked hard to develop it further
+                and propagandize it.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This paragraph credits Leonardo Fibonacci with championing the
+              Hindu–Arabic decimal system in Europe, showing how his advocacy
+              enabled Al Khwarizmi’s algorithms to take root in Western
+              mathematics.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >But today Fibonacci is most widely known for his famous
+                sequence of numbers<br />
+                $$ 0,1,1,2,3,5,8,13,21,34,\ldots, $$ each the sum of its two
+                immediate predecessors. More formally, the Fibonacci numbers
+                $F_{n}$ are generated by the simple rule $$ F_{n}=\begin{cases}
+                F_{n-1}+F_{n-2} & \text{if } n>1,\\ 1 & \text{if } n=1,\\ 0 &
+                \text{if } n=0. \end{cases} $$</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              Here we see the definition of the Fibonacci sequence: each term is
+              the sum of the two before it, with base cases $F_0=0$ and $F_1=1$.
+              This simple recurrence underpins a sequence famous across
+              mathematics and nature.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >No other sequence of numbers has been studied as extensively,
+                or applied to more fields: biology, demography, art,
+                architecture, music, to name just a few. And, together with the
+                powers of 2, it is computer science's favorite sequence.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This sentence emphasizes the ubiquity of Fibonacci numbers—from
+              natural phenomena like population growth to applications in art
+              and computer science—highlighting their broad appeal and utility.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >In fact, the Fibonacci numbers grow almost as fast as the
+                powers of 2: for example, $F_{30}$ is over a million, and
+                $F_{100}$ is already 21 digits long! In general,
+                $F_{n}\approx2^{0.694\,n}$ (see Exercise 0.3).</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This block compares the growth rate of $F_n$ to powers of 2,
+              noting that $F_{n}$ increases exponentially and giving the
+              approximation $F_{n}\approx2^{0.694n}$.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >But what is the precise value of $F_{100}$, or of $F_{200}$?
+                Fibonacci himself would surely have wanted to know such things.
+                To answer, we need an algorithm for computing the $n$th
+                Fibonacci number.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This paragraph motivates the need for an effective algorithm:
+              while the sequence grows quickly, we still desire exact values for
+              large $n$, which calls for a computational method.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="exponential-algorithm">
+        <h3>An exponential algorithm</h3>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >One idea is to slavishly implement the recursive definition of
+                $F_{n}$. Here is the resulting algorithm, in the "pseudocode"
+                notation used throughout this book:</em
+              >
+            </p>
+            <pre class="pseudocode" id="fib1-code">
+              \begin{algorithm}
+              \caption{fib1(\(n\))}
+              \begin{algorithmic}
+                \If{\(n = 0\)}\Return 0
+                \EndIf
+                \If{\(n = 1\)}\Return 1
+                \EndIf
+                \Return \Call{fib1}{\(n-1\)} + \Call{fib1}{\(n-2\)}
+              \end{algorithmic}
+              \end{algorithm}
+                </pre
+            >
+          </div>
+          <div class="explanation-text">
+            <p>
+              This pseudocode directly follows the mathematical definition, but
+              it leads to many repeated calls and exponential running time.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >Whenever we have an algorithm, there are three questions we
+                always ask about it:</em
+              >
+            </p>
+            <ol>
+              <li>Is it correct?</li>
+              <li>How much time does it take, as a function of \(n\)?</li>
+              <li>And can we do better?</li>
+            </ol>
+            <p class="original-text">
+              <em
+                >The first question is moot here, as this algorithm is precisely
+                Fibonacci's definition of \(F_{n}\). But the second demands an
+                answer. Let \(T(n)\) be the number of computer steps needed to
+                compute fib1\((n)\); what can we say about this function? For
+                starters, if \(n\) is less than 2, the procedure halts almost
+                immediately, after just a couple of steps. Therefore,</em
+              >
+            </p>
+
+            <p class="original-text">
+              <em>$$T(n) \leq 2 \text{ for } n \leq 1.$$</em>
+            </p>
+          </div>
+
+          <div class="explanation-text">
+            <p>
+              Here we introduce the cost function \(T(n)\) measuring how many
+              steps fib1 takes. We note that the trivial base cases \(n=0\) or
+              \(n=1\) each terminate in at most two operations, giving the bound
+              \(T(n)\le2\) for \(n\le1\).
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >For larger values of \(n\), there are two recursive invocations
+                of fib1, taking time \(T(n-1)\) and \(T(n-2)\), respectively,
+                plus three computer steps (checks on the value of \(n\) and a
+                final addition). Therefore,</em
+              >
+            </p>
+            <p class="original-text">
+              <em>$$T(n)=T(n-1)+T(n-2)+3 \text{ for } n>1.$$</em>
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This establishes the recurrence relation for \(T(n)\): each call
+              spawns two smaller calls and does a constant amount of extra work,
+              leading to an exponential-style recurrence.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >Compare this to the recurrence relation for \(F_{n}\): we
+                immediately see that \(T(n)\ge F_{n}\). This is very bad news:
+                the running time of the algorithm grows as fast as the Fibonacci
+                numbers! \(T(n)\) is exponential in \(n\), which implies that
+                the algorithm is impractically slow except for very small values
+                of \(n\).</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              By observing \(T(n)\ge F_{n}\), we conclude that fib1 runs in
+              exponential time—roughly proportional to the sequence itself—so it
+              quickly becomes unusable as \(n\) grows.
+            </p>
+          </div>
+        </div>
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >Let's be a little more concrete about just how bad exponential
+                time is. To compute \(F_{200}\), the fib1 algorithm executes
+                \(T(200)\ge F_{200}\ge2^{138}\) elementary computer steps. How
+                long this actually takes depends, of course, on the computer
+                used. At this time, the fastest computer in the world is the NEC
+                Earth Simulator, which clocks 40 trillion steps per second. Even
+                on this machine, fib1(200) would take at least \(2^{92}\)
+                seconds. This means that, if we start the computation today, it
+                would still be going long after the sun turns into a red giant
+                star.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This paragraph quantifies the impracticality: even the best
+              supercomputer would need on the order of \(2^{92}\) seconds—far
+              exceeding the lifespan of the Sun—to compute \(F_{200}\) by this
+              method.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >But technology is rapidly improving—computer speeds have been
+                doubling roughly every 18 months, a phenomenon sometimes called
+                Moore's law. With this extraordinary growth, perhaps fib1 will
+                run a lot faster on next year's machines. Let's see—the running
+                time of \(\operatorname{fib1}(n)\) is proportional to
+                \(2^{0.694n}\approx(1.6)^{n}\), so it takes 1.6 times longer to
+                compute \(F_{n+1}\) than \(F_{n}\). And under Moore's law,
+                computers get roughly 1.6 times faster each year. So if we can
+                reasonably compute \(F_{100}\) with this year's technology, then
+                next year we will manage \(F_{101}\). And the year after,
+                \(F_{102}\). And so on: just one more Fibonacci number every
+                year! Such is the curse of exponential time.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This connects the exponential growth of fib1’s runtime with
+              Moore’s law, showing that hardware improvements merely push the
+              boundary by one additional Fibonacci index per year—a trivial gain
+              against an exponential curve.
+            </p>
+          </div>
+        </div>
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >In short, our naive recursive algorithm is correct but
+                hopelessly inefficient. Can we do better?</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This closing sentence summarizes the takeaway: fib1 matches the
+              mathematical definition but fails in performance, motivating the
+              search for more efficient methods.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="polynomial-algorithm">
+        <h2>A polynomial algorithm</h2>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >Let's try to understand why fib1 is so slow. Figure 0.1 shows
+                the cascade of recursive invocations triggered by a single call
+                to fib1 $(n)$. Notice that many computations are repeated! A
+                more sensible scheme would store the intermediate results-the
+                values $F_{0}, F_{1}, \ldots, F_{n-1}$ as soon as they become
+                known.</em
+              >
+            </p>
+            <figure>
+              <img
+                src="https://cdn.mathpix.com/cropped/2025_02_23_3a11247f1955e7fedf87g-015.jpg?height=625&amp;width=939&amp;top_left_y=433&amp;top_left_x=550"
+                alt="Proliferation of recursive calls in fib1."
+                width="700"
+              />
+              <figcaption>
+                Figure 0.1: The proliferation of recursive calls in fib1.
+              </figcaption>
+            </figure>
+            <pre class="pseudocode" id="fib2-code">
+                \begin{algorithm}
+                \caption{fib2(\(n\))}
+                \begin{algorithmic}
+                  \If{\(n = 0\)}\Return 0
+                  \EndIf
+                  \State create array \(\texttt{f}[0\dots n]\)
+                  \State \(\texttt{f}[0] \gets 0\), \(\texttt{f}[1] \gets 1\)
+                  \For{\(i = 2\) \To \(n\)}
+                    \State \(\texttt{f}[i] \gets \texttt{f}[i-1] + \texttt{f}[i-2]\)
+                  \EndFor
+                  \Return \(\texttt{f}[n]\)
+                \end{algorithmic}
+                \end{algorithm}
+            </pre>
+            <p class="original-text">
+              <em
+                >As with fib1, the correctness of this algorithm is self-evident
+                because it directly uses the definition of $F_{n}$. How long
+                does it take? The inner loop consists of a single computer step
+                and is executed $n-1$ times. Therefore the number of computer
+                steps used by fib2 is linear in $n$. From exponential we are
+                down to polynomial, a huge breakthrough in running time. It is
+                now perfectly reasonable to compute $F_{200}$ or even
+                $F_{200,000} .{ }^{1}$ As we will see repeatedly throughout this
+                book, the right algorithm makes all the difference.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This bottom-up algorithm fills an array of size $n$, performing
+              one addition per entry, for an overall linear ($O(n)$) running
+              time instead of exponential.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="more-careful-analysis">
+        <h3>More careful analysis</h3>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >In our discussion so far, we have been counting the number of
+                basic computer steps executed by each algorithm and thinking of
+                these basic steps as taking a constant amount of time. This is a
+                very useful simplification. After all, a processor's instruction
+                set has a variety of basic primitives—branching, storing to
+                memory, comparing numbers, simple arithmetic, and so on—and
+                rather than distinguishing between these elementary operations,
+                it is far more convenient to lump them together into one
+                category.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This paragraph explains the common abstraction in algorithm
+              analysis where diverse machine instructions are all treated as
+              “constant-time” steps, simplifying runtime estimates by grouping
+              them into a single basic operation.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >But looking back at our treatment of Fibonacci algorithms, we
+                have been too liberal with what we consider a basic step. It is
+                reasonable to treat addition as a single computer step if small
+                numbers are being added, 32-bit numbers say. But the $n$th
+                Fibonacci number is about $0.694\,n$ bits long, and this can far
+                exceed 32 as $n$ grows. Arithmetic operations on arbitrarily
+                large numbers cannot possibly be performed in a single,
+                constant-time step. We need to audit our earlier running time
+                estimates and make them more honest.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This block highlights the flaw in the constant-time assumption: as
+              Fibonacci values grow, their bit-length increases, so operations
+              like addition actually take time proportional to the number of
+              bits, requiring a more accurate cost model.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >We will see in Chapter 1 that the addition of two $n$-bit
+                numbers takes time roughly proportional to $n$; this is not too
+                hard to understand if you think back to the grade-school
+                procedure for addition, which works on one digit at a time. Thus
+                fib1, which performs about $F_{n}$ additions, actually uses a
+                number of basic steps roughly proportional to $nF_{n}$.
+                Likewise, the number of steps taken by fib2 is proportional to
+                $n^{2}$, still polynomial in $n$ and therefore exponentially
+                superior to fib1. This correction to the running time analysis
+                does not diminish our breakthrough.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              Here we adjust our runtime estimates: multi-precision addition
+              costs $O(n)$ time, so fib1’s true cost is $Θ(nF_{n})$, while fib2
+              remains $Θ(n^{2})$, preserving the dramatic improvement from
+              exponential to polynomial time.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >But can we do even better than fib2? Indeed we can: see
+                Exercise 0.4.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This closing sentence sets up the next challenge: although fib2 is
+              polynomial, there are even faster algorithms for Fibonacci
+              numbers, which the reader can explore in the referenced exercise.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="big-o-notation">
+        <h2>0.3 Big-\(O\) notation</h2>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >We've just seen how sloppiness in the analysis of running times
+                can lead to an unacceptable level of inaccuracy in the result.
+                But the opposite danger is also present: it is possible to be
+                too precise. An insightful analysis is based on the right
+                simplifications.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This paragraph warns that while crude approximations can mislead,
+              excessive precision—including every minutiae—can also obscure the
+              essential behavior of an algorithm. The goal is to strike a
+              balance with the right level of simplification.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >Expressing running time in terms of basic computer steps is
+                already a simplification. After all, the time taken by one such
+                step depends crucially on the particular processor and even on
+                details such as caching strategy (as a result of which the
+                running time can differ subtly from one execution to the next).
+                Accounting for these architecture-specific minutiae is a
+                nightmarishly complex task and yields a result that does not
+                generalize from one computer to the next. It therefore makes
+                more sense to seek an uncluttered, machine-independent
+                characterization of an algorithm's efficiency. To this end, we
+                will always express running time by counting the number of basic
+                computer steps, as a function of the size of the input.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This block explains why we abstract away hardware
+              details—branching, memory access, arithmetic—into uniform “steps.”
+              By doing so, our analysis becomes portable and focuses on the
+              algorithm’s inherent complexity rather than machine
+              idiosyncrasies.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >And this simplification leads to another. Instead of reporting
+                that an algorithm takes, say, \(5n^{3} + 4n + 3\) steps on an
+                input of size \(n\), it is much simpler to leave out lower-order
+                terms such as \(4n\) and \(3\) (which become insignificant as
+                \(n\) grows), and even the detail of the coefficient \(5\) in
+                the leading term (computers will be five times faster in a few
+                years anyway), and just say that the algorithm takes time
+                \(O(n^{3})\) (pronounced “big oh of \(n^{3}\)”).</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              Here we see the rationale for dropping constants and lesser terms:
+              as \(n\) grows, lower-order contributions vanish, and hardware
+              speeds change over time. Big-\(O\) notation captures the dominant
+              term only.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >It is time to define this notation precisely. In what follows,
+                think of \(f(n)\) and \(g(n)\) as the running times of two
+                algorithms on inputs of size \(n\).</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This transition announces the formal definition and sets up
+              \(f(n)\) and \(g(n)\) as arbitrary time‐complexity functions for
+              comparison.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >Let \(f(n)\) and \(g(n)\) be functions from positive integers
+                to positive reals. We say \(f = O(g)\) (which means that “\(f\)
+                grows no faster than \(g\)”) if there is a constant \(c > 0\)
+                such that \(f(n) \le c \cdot g(n)\).</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This paragraph gives the precise Big-\(O\) definition: \(f(n)\) is
+              bounded above by a constant multiple of \(g(n)\) for sufficiently
+              large \(n\).
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >Saying \(f = O(g)\) is a very loose analog of “\(f \le g\).” It
+                differs from the usual notion of \(\le\) because of the constant
+                \(c\), so that for instance \(10n = O(n)\). This constant also
+                allows us to disregard what happens for small values of \(n\).
+                For example, suppose we are choosing between two algorithms for
+                a particular computational task. One takes \(f_{1}(n) = n^{2}\)
+                steps, while the other takes \(f_{2}(n) = 2n + 20\) steps
+                (Figure 0.2). Which is better? Well, this depends on the value
+                of \(n\). For \(n \le 5\), \(f_{1}\) is smaller; thereafter,
+                \(f_{2}\) is the clear winner. In this case, \(f_{2}\) scales
+                much better as \(n\) grows, and therefore it is superior.</em
+              >
+            </p>
+
+            <figure>
+              <img
+                src="https://cdn.mathpix.com/cropped/2025_02_23_3a11247f1955e7fedf87g-017.jpg?height=676&width=827&top_left_y=445&top_left_x=649"
+                alt=" Which running time is better?"
+                width="700"
+              />
+              <figcaption>Figure 0.2 Which running time is better?</figcaption>
+            </figure>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This example demonstrates how constants and lower-order terms
+              matter only for small \(n\). As \(n\) increases, the linear
+              algorithm \(f_{2}\) overtakes the quadratic \(f_{1}\), showing why
+              big-\(O\) focuses on asymptotic growth.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >This superiority is captured by the big-\(O\) notation: \(f_{2}
+                = O(f_{1})\), because \[ \frac{f_{2}(n)}{f_{1}(n)} = \frac{2n +
+                20}{n^{2}} \le 22 \quad\text{for all }n; \] on the other hand,
+                \(f_{1} \neq O(f_{2})\), since the ratio
+                \(\frac{f_{1}(n)}{f_{2}(n)} = \frac{n^{2}}{2n + 20}\) can get
+                arbitrarily large, and so no constant \(c\) will make the
+                definition work.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This block formalizes the comparison: \(f_{2}\) grows no faster
+              than \(f_{1}\) (hence \(f_{2}=O(f_{1})\)), but not vice versa,
+              because the quadratic term eventually dominates.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >Now another algorithm comes along, one that uses \(f_{3}(n) =
+                n+1\) steps. Is this better than \(f_{2}\)? Certainly, but only
+                by a constant factor. The discrepancy between \(f_{2}\) and
+                \(f_{3}\) is tiny compared to the huge gap between \(f_{1}\) and
+                \(f_{2}\). In order to stay focused on the big picture, we treat
+                functions as equivalent if they differ only by multiplicative
+                constants.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This paragraph introduces \(f_{3}\) to illustrate that two linear
+              functions differing by a constant are essentially the same in
+              big-\(O\) terms, reinforcing the idea of ignoring constant
+              factors.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >Returning to the definition of big-\(O\), we see that \(f_{2} =
+                O(f_{3})\): \[ \frac{f_{2}(n)}{f_{3}(n)} = \frac{2n + 20}{n+1}
+                \le 20, \] and of course \(f_{3} = O(f_{2})\), this time with
+                \(c = 1\). Just as \(O(\cdot)\) is an analog of \(\le\), we can
+                also define analogs of \(\ge\) and \(=\) as follows: \[
+                \begin{gathered} f = \Omega(g)\text{ means }g = O(f),\\ f =
+                \Theta(g)\text{ means }f = O(g)\text{ and }f = \Omega(g).
+                \end{gathered} \]</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This section extends the notation: \(\Omega\) captures lower
+              bounds (the reverse of \(O\)), and \(\Theta\) captures tight
+              bounds when both \(O\) and \(\Omega\) hold.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >In the preceding example, \(f_{2} = \Theta(f_{3})\) and \(f_{1}
+                = \Omega(f_{3})\). Big-\(O\) notation lets us focus on the big
+                picture. When faced with a complicated function like
+                \(3n^{2}+4n+5\), we just replace it with \(O(f(n))\), where
+                \(f(n)\) is as simple as possible. In this particular example
+                we'd use \(O(n^{2})\), because the quadratic portion of the sum
+                dominates the rest. Here are some commonsense rules that help
+                simplify functions by omitting dominated terms:</em
+              >
+            </p>
+            <ol class="original-text">
+              <li>
+                Multiplicative constants can be omitted:
+                <code>14n²</code> becomes <code>n²</code>.
+              </li>
+              <li>
+                <code>nᵃ</code> dominates <code>nᵇ</code> if
+                <code>a &gt; b</code>: for instance, <code>n²</code> dominates
+                <code>n</code>.
+              </li>
+              <li>
+                Any exponential dominates any polynomial:
+                <code>3ⁿ</code> dominates <code>n⁵</code> (it even dominates
+                <code>2ⁿ</code>).
+              </li>
+              <li>
+                Likewise, any polynomial dominates any logarithm:
+                <code>n</code> dominates <code>(log n)³</code>. This also means,
+                for example, that <code>n²</code> dominates
+                <code>n log n</code>.
+              </li>
+            </ol>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This final block applies the definitions to simplify real
+              expressions: we ignore constants, lower exponents, exponentials
+              over polynomials, and polynomials over logarithms—focusing only on
+              the dominant growth term.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="comments">
+        <script
+          src="https://utteranc.es/client.js"
+          repo="COD1995/ml-meta"
+          issue-term="pathname"
+          label="comment"
+          theme="github-light"
+          crossorigin="anonymous"
+          async
+        ></script>
+      </section>
+
+      <footer>
+        <p>
+          © 2025 Bob Guo • 
+          <a
+            href="https://github.com/COD1995/ml-meta"
+            target="_blank"
+            rel="noopener"
+          >
+            View on GitHub
+          </a>
+        </p>
+      </footer>
+    </div>
+    <script type="module" src="../../../assets/js/main.js"></script>
+    <script type="module" src="../../../assets/js/chapter-page.js"></script>
+  </body>
+</html>
