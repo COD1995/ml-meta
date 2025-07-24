@@ -73,123 +73,50 @@
 
       <nav>
         <!-- ─────────────── MATH FOUNDATIONS ─────────────── -->
-        <h2 id="math-foundations">🖇️ Mathematical Foundations</h2>
-        <ul class="nav-list">
-          <!-- Proof + Math Comprehension Papers ------------------------------------------------------- -->
-          <li class="nav-section">
-            <details>
-              <summary> In Simple Terms</summary>
-              <ul class="chapter-list">
-                <li>
-                  <a href="math-foundations/chapters/cross_entropy_gradient.html">
-                  Simplified Derivation of the Cross-Entropy Loss Gradient
-                  </a>
-                </li>
-                <!-- <li>
-                  <a href="papers/cv/2023-sam.html">
-                    SAM: Segment Anything Model (2023)
-                  </a>
-                </li>
-              </ul> -->
-            </details>
-          </li>
-        </ul>
-        <h2 id="books">📚 Books</h2>
-        <ul class="nav-list">
-          <!-- Algorithms -->
-          <li class="nav-section">
-            <details>
-              <summary>Algorithms (Dasgupta et al.)</summary>
-              <ul class="chapter-list">
-                <li>
-                  <a href="books/algorithms/index.html">📚 Book Directory</a>
-                </li>
-                <li>
-                  <a
-                    href="books/algorithms/chapters/04-paths-in-graphs.html"
-                  >
-                    Chapter&nbsp;4: Paths in Graphs
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="books/algorithms/chapters/05-greedy-algorithms.html"
-                  >
-                    Chapter&nbsp;5: Greedy Algorithms
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="books/algorithms/chapters/06-dynamic-programming.html"
-                  >
-                    Chapter&nbsp;6: Dynamic Programming
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="books/algorithms/chapters/07-linear-programming.html"
-                  >
-                    Chapter&nbsp;7: Linear Programming & Reductions
-                  </a>
-                </li>
-                <!-- …additional chapters… -->
-              </ul>
-            </details>
-          </li>
-          <!-- Pattern Classification -->
-          <li class="nav-section">
-            <details open>
-              <summary>Pattern Classification (Duda et al.)</summary>
-              <ul class="chapter-list">
-                <li>
-                  <a
-                    href="books/pattern-classification/chapters/01-introduction.html"
-                  >
-                    Chapter&nbsp;1: Introduction
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="books/pattern-classification/chapters/02-bayes-decision-theory.html"
-                  >
-                    Chapter&nbsp;2: Bayes Decision Theory
-                  </a>
-                </li>
-                <!-- …additional chapters… -->
-              </ul>
-            </details>
-          </li>
-          <!-- More Books -->
-        </ul>
-
-        <!-- ─────────────── PAPERS ─────────────── -->
-        <h2 id="papers">📄 Papers</h2>
-        <ul class="nav-list">
-          <!-- CV Papers ------------------------------------------------------- -->
-          <li class="nav-section">
-            <details>
-            <summary>Computer Vision Papers</summary>
-              <ul class="chapter-list">
-                <li>
-                  <a href="math-foundations/index.html">
-                    EXAMPLE: **Segment Anything Meets GPT (2024)**
-                  </a>
-                </li>
-              <!-- <ul class="chapter-list">
-                <li>
-                  <a href="papers/cv/2024-seg-gpt.html">
-                    Segment Anything Meets GPT (2024)
-                  </a>
-                </li>
-                <li>
-                  <a href="papers/cv/2023-sam.html">
-                    SAM: Segment Anything Model (2023)
-                  </a>
-                </li>
-              </ul> -->
-            </details>
-          </li>
-        </ul>
+        <div class="toc-books">
+          <div class="toc-book dropdown">
+            <button class="toc-book-title index-dropdown" aria-expanded="false" aria-controls="math-foundations-chapters">🖇️ Mathematical Foundations</button>
+            <div class="toc-chapters dropdown-content" id="math-foundations-chapters">
+              <div><a href="math-foundations/chapters/cross_entropy_gradient.html">Simplified Derivation of the Cross-Entropy Loss Gradient</a></div>
+            </div>
+          </div>
+          <hr class="main-nav-divider">
+          <div class="toc-book dropdown">
+            <button class="toc-book-title index-dropdown" aria-expanded="false" aria-controls="books-chapters">📚 Books</button>
+            <div class="toc-chapters dropdown-content" id="books-chapters">
+              <div class="toc-book dropdown">
+                <button class="toc-book-title dropdown" aria-expanded="false" aria-controls="algorithms-chapters">Algorithms (Dasgupta et al.)</button>
+                <div class="toc-chapters dropdown-content" id="algorithms-chapters">
+                  <div><a href="books/algorithms/index.html">📚 Book Directory</a></div>
+                   <!-- ─────────────── IMPORTANT AS MORE CHAPTERS ARE COMPLETED PLEASE REMOVE OVERRIDED CRIMSON INLINE STYLING ─────────────── -->
+                  <div><a href="" style="color: crimson;">0. Prologue</a></div>
+                  <div><a href="" style="color: crimson;">1. Algorithms with Numbers</a></div>
+                  <div><a href="" style="color: crimson;">2. Divide-and-Conquer Algorithms</a></div>
+                  <div><a href="" style="color: crimson;">3. Decompositons of Graphs</a></div>
+                  <div><a href="books/algorithms/chapters/04-paths-in-graphs.html" >4. Paths in Graphs</a></div>
+                  <div><a href="books/algorithms/chapters/05-greedy-algorithms.html">5. Greedy Algorithms</a></div>
+                  <div><a href="books/algorithms/chapters/06-dynamic-programming.html">6. Dynamic Programming</a></div>
+                  <div><a href="books/algorithms/chapters/07-linear-programming.html">7. Linear Programming & Reductions</a></div>
+                </div>
+              </div>
+              <div class="toc-book dropdown">
+                <button class="toc-book-title dropdown" aria-expanded="false" aria-controls="pattern-classification-chapters">Pattern Classification (Duda et al.)</button>
+                <div class="toc-chapters dropdown-content" id="pattern-classification-chapters" hidden>
+                  <div><a href="books/pattern-classification/chapters/01-introduction.html">1. Introduction</a></div>
+                  <div><a href="books/pattern-classification/chapters/02-bayes-decision-theory.html">2. Bayes Decision Theory</a></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="main-nav-divider">
+          <div class="toc-book dropdown">
+            <button class="toc-book-title index-dropdown" aria-expanded="false" aria-controls="papers-chapters">📄 Papers</button>
+            <div class="toc-chapters dropdown-content" id="papers-chapters" hidden>
+              <div><b>Computer Vision Papers</b></div>
+              <div><a href="math-foundations/index.html">EXAMPLE: <b>SegmentAnything Meets GPT (2024)</b></a></div>
+            </div>
+          </div>
+        </div>
       </nav>
 
       <!-- ✧ Main Contributors ------------------------------------------------ -->
@@ -249,7 +176,7 @@
             </figure>
 
             <p class="bio">
-              As a M.S. candidate in Mechanical Engineering, Kristopher Kodweis engineers intelligent computer vision systems designed to run efficiently on mobile platforms, enabling a new generation of smart and responsive applications. His engineering philosophy is uniquely shaped by a background in visual communication design and woodworking, instilling a deep focus on human-centered principles. This dual expertise allows him to create technology that is not only technically robust but also fundamentally intuitive, considering both the internal logic and the tangible user experience. Ultimately, he strives to create tools where complex AI becomes a seamless and natural extension of human capability, rendering its underlying complexity invisible and its operation effortless.
+              As a M.S. candidate in Mechanical Engineering, Kristopher Kodweis engineers intelligent computer vision systems for mobile platforms. His approach is shaped by a background in visual communication design, photography, and woodworking, focusing on innate human-centered principles. Kristopher creates technology that is robust and intuitive, aiming for AI tools that are seamless extensions of human capability.
             </p>
             <!-- No personal site yet – omit link -->
           </li>

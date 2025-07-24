@@ -151,6 +151,7 @@ code {
   padding: 1rem;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 .main-card figure {
   display: flex;
@@ -195,9 +196,19 @@ code {
 }
 .button-group {
   display: flex;
-  justify-content: center;
+  flex-direction: row;
   flex-wrap: wrap;
   gap: 1rem;
+  width: 100%;
+  justify-content: stretch;
+}
+.button-group a {
+  flex: 1 1 0;
+  min-width: 220px;
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: left;
 }
 
 /* Leaderboard section container (layout spacing only) ------- */
@@ -639,7 +650,7 @@ html.theme-dark .toc-chapters.dropdown-content {
 .toc-chapters.dropdown-content a {
   display: block;
   font-size: 0.9em;
-  padding: 0.32em 0.2em 0.32em 0;
+  padding: .32em .2em 0.32em 0;
   margin-left: 0;
   text-align: left;
 }
@@ -778,4 +789,84 @@ html.theme-dark .side-nav-divider {
 /* Add more space above the first nav link (title area) */
 .side-nav-divider + a:first-of-type {
   margin-top: .7rem;
+}
+/* Contribution Graph Heatmap */
+.contribution-graph {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto 2rem auto;
+  overflow: visible;
+  box-sizing: border-box;
+}
+
+.contribution-graph svg,
+.contribution-graph img {
+  width: 100%;
+  height: auto;
+  display: block;
+  max-width: 100%;
+}
+
+/* Main nav divider (thin horizontal rule) for Main index page navigation ------------------- */
+.main-nav-divider {
+  border: none;
+  border-top: 1px solid #ebebeb;
+  margin: 1.5rem 0;
+  width: 100%;
+  height: 1px;
+  background: none;
+}
+
+html.theme-dark .main-nav-divider {
+  border-top: 1px solid #4e5358;
+  background: #161b22 !important;
+}
+html.theme-dark .toc-books,
+html.theme-dark .toc-book {
+  background: #161b22 !important;
+}
+/* --- Index page dropdowns --- */
+.index-dropdown {
+  font-size: 1.5em;
+  font-weight: 500;
+  color: #23213a;
+  background: none;
+  border: 1px solid rgba(138, 138, 138, 0.2);
+  outline: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  text-align: left;
+  border-radius: 12px 12px 12px 12px;
+  padding-left: 2.3em;
+  padding-top: .95em;
+  padding-bottom: .7em;
+  transition: background 0.15s, box-shadow 0.15s;
+  position: relative;
+}
+.index-dropdown:focus,
+.index-dropdown:hover {
+  background: #e6e6e6;
+}
+.index-dropdown::before {
+  content: '\25B6'; /* right-pointing triangle */
+  display: inline-block;
+  position: absolute;
+  left: 1.05rem;
+  top: 1.8rem;
+  bottom: 1.8rem;
+  font-size: 0.82em;
+  line-height: 1;
+  transition: transform 0.18s cubic-bezier(.4,0,.2,1), color 0.18s;
+  color: #a08bbd;
+  opacity: 0.7;
+  
+}
+
+
+.toc-book[open] > .index-dropdown::before,
+.toc-book .index-dropdown[aria-expanded="true"]::before {
+  transform: rotate(90deg) scale(0.95);
+  color: #7a5fa3;
+  opacity: 0.85;
 }
