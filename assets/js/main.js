@@ -1,4 +1,5 @@
 
+
 /* assets/js/main.js
  * -------------------------------------------------------------
  * ① Build ToC (current + lazy‑remote)
@@ -129,5 +130,27 @@ document.addEventListener('DOMContentLoaded', function () {
       btn.setAttribute('aria-expanded', (!expanded).toString());
       dropdown.hidden = expanded;
     });
+  });
+});
+
+// Inject index-content.html into <nav> for local development
+document.addEventListener('DOMContentLoaded', function () {
+  const navs = document.querySelectorAll('nav');
+  navs.forEach(nav => {
+    // Only inject if nav contains the SSI comment
+    if (nav.innerHTML.includes('<!--#include file="index-content.html" -->')) {
+      fetch('index-content.html')
+        .then(res => res.text())
+        .then(html => {
+          // Replace the SSI comment with the loaded HTML
+          nav.innerHTML = nav.innerHTML.replace(
+            /<!--#include file="index-content.html" -->/,
+            html
+          );
+        })
+        .catch(err => {
+          nav.innerHTML += '<p class="error">Unable to load navigation.</p>';
+        });
+    }
   });
 });
