@@ -68,17 +68,35 @@ document.getElementById("lastUpdated").textContent = new Date(
 });
 
 // 3) Expand / Collapse all <details> blocks
-document
-  .getElementById("expandAll")
-  .addEventListener("click", () =>
-    document.querySelectorAll("details").forEach((d) => (d.open = true))
-  );
+// Expand/collapse for both <details> and dropdown sections
+function expandAllDropdowns() {
+  // Expand all <details>
+  document.querySelectorAll("details").forEach((d) => (d.open = true));
+  // Expand all dropdowns
+  document.querySelectorAll('.toc-book').forEach(function(book) {
+    book.setAttribute('open', '');
+    var btn = book.querySelector('.index-dropdown, .toc-book-title');
+    if (btn) btn.setAttribute('aria-expanded', 'true');
+    var chapters = book.querySelector('.toc-chapters');
+    if (chapters) chapters.removeAttribute('hidden');
+  });
+}
 
-document
-  .getElementById("collapseAll")
-  .addEventListener("click", () =>
-    document.querySelectorAll("details").forEach((d) => (d.open = false))
-  );
+function collapseAllDropdowns() {
+  // Collapse all <details>
+  document.querySelectorAll("details").forEach((d) => (d.open = false));
+  // Collapse all dropdowns
+  document.querySelectorAll('.toc-book').forEach(function(book) {
+    book.removeAttribute('open');
+    var btn = book.querySelector('.index-dropdown, .toc-book-title');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+    var chapters = book.querySelector('.toc-chapters');
+    if (chapters) chapters.setAttribute('hidden', '');
+  });
+}
+
+document.getElementById("expandAll").addEventListener("click", expandAllDropdowns);
+document.getElementById("collapseAll").addEventListener("click", collapseAllDropdowns);
 
 // 4) GitHub Contributions Heatmap
 (function(){
