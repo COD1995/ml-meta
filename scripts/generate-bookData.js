@@ -15,7 +15,7 @@ function getChapters(dir) {
   return fs.readdirSync(chaptersDir)
     .filter(f => f.endsWith('.html'))
     .map(f => ({
-      title: f.replace(/^(\d+[-_])?/, '').replace(/\.html$/, '').replace(/_/g, ' ').replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase()),
+      title: formatChapterTitle(f),
       href: path.relative(path.join(__dirname, '..'), path.join(chaptersDir, f)).replace(/\\/g, '/')
     }));
 }
@@ -37,9 +37,10 @@ fs.readdirSync(booksRoot).forEach(bookFolder => {
 });
 
 // Papers (static for now)
+// TODO: Replace with dynamic paper data or load from a config file
 const papers = [
-  { title: 'Computer Vision Papers', isHeader: true },
-  { title: 'EXAMPLE: SegmentAnything Meets GPT (2024)', href: 'math-foundations/index.html', isBold: true }
+  { title: 'Computer Vision Papers', isHeader: true }
+  // Add actual paper entries here or load from a configuration file
 ];
 
 const bookData = [
