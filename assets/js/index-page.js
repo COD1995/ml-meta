@@ -84,7 +84,7 @@ function generateMainContentHTML() {
   contentLinks.forEach(section => {
     const sectionTitle = section.id.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
     html += ` <div class="toc-book dropdown">\n`;
-    html += `   <button class="toc-book-title index-dropdown" aria-expanded="true" aria-controls="${section.id}-chapters" onclick="toggleDropdown('${section.id}-chapters', this)">${sectionTitle}</button>\n`;
+    html += `   <button class="toc-book-title index-dropdown" aria-expanded="true" aria-controls="${section.id}-chapters" onclick="toggleDropdown('${section.id}-chapters', this)" id="${sectionTitle}">${sectionTitle}</button>\n`;
     html += `   <div class="toc-chapters dropdown-content hidden" id="${section.id}-chapters">\n`;
 
     // Chapters directly under section
