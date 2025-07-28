@@ -1,5 +1,17 @@
 <div class="toc-books">
  <div class="toc-book dropdown">
+   <button class="toc-book-title index-dropdown" aria-expanded="true" aria-controls="math-foundations-chapters" onclick="toggleDropdown('math-foundations-chapters', this)">Math Foundations</button>
+   <div class="toc-chapters dropdown-content hidden" id="math-foundations-chapters">
+     <div class="toc-book dropdown">
+       <button class="toc-book-title dropdown-toggle" aria-expanded="true" aria-controls="math-foundations-in-simple-terms-chapters" onclick="toggleDropdown('math-foundations-in-simple-terms-chapters', this)">In Simple Terms</button>
+       <div class="toc-chapters dropdown-content hidden" id="math-foundations-in-simple-terms-chapters">
+         <div><a href="../math-foundations/in-simple-terms/cross_entropy_gradient.html">Cross Entropy Gradient</a></div>
+       </div>
+     </div>
+   </div>
+   <hr class="main-nav-divider">
+ </div>
+ <div class="toc-book dropdown">
    <button class="toc-book-title index-dropdown" aria-expanded="true" aria-controls="books-chapters" onclick="toggleDropdown('books-chapters', this)">Books</button>
    <div class="toc-chapters dropdown-content hidden" id="books-chapters">
      <div class="toc-book dropdown">
@@ -17,18 +29,6 @@
        <div class="toc-chapters dropdown-content hidden" id="books-pattern-classification-chapters">
          <div><a href="../books/pattern-classification/chapters/01-introduction.html">01 Introduction</a></div>
          <div><a href="../books/pattern-classification/chapters/02-bayes-decision-theory.html">02 Bayes Decision Theory</a></div>
-       </div>
-     </div>
-   </div>
-   <hr class="main-nav-divider">
- </div>
- <div class="toc-book dropdown">
-   <button class="toc-book-title index-dropdown" aria-expanded="true" aria-controls="math-foundations-chapters" onclick="toggleDropdown('math-foundations-chapters', this)">Math Foundations</button>
-   <div class="toc-chapters dropdown-content hidden" id="math-foundations-chapters">
-     <div class="toc-book dropdown">
-       <button class="toc-book-title dropdown-toggle" aria-expanded="true" aria-controls="math-foundations-in-simple-terms-chapters" onclick="toggleDropdown('math-foundations-in-simple-terms-chapters', this)">In Simple Terms</button>
-       <div class="toc-chapters dropdown-content hidden" id="math-foundations-in-simple-terms-chapters">
-         <div><a href="../math-foundations/in-simple-terms/cross_entropy_gradient.html">Cross Entropy Gradient</a></div>
        </div>
      </div>
    </div>

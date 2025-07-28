@@ -61,59 +61,30 @@
           🌓
         </button>
       </div>
-      <hr class="side-nav-divider" />
-      <span class="toc-label">📚 Books</span>
-      <div class="toc-books">
-        <div class="toc-book dropdown" open>
-          <button
-            class="toc-book-title dropdown-toggle"
-            aria-expanded="true"
-            aria-controls="algorithms-chapters"
-          >
-            Algorithms (Dasgupta et al.)
-          </button>
-          <div class="toc-chapters dropdown-content" id="algorithms-chapters">
-            <div><a href="00-prologue.html">0. Prologue</a></div>
-            <div><a href="04-paths-in-graphs.html">4. Paths in Graphs</a></div>
-            <div>
-              <a href="05-greedy-algorithms.html">5. Greedy Algorithms</a>
-            </div>
-            <div>
-              <a href="06-dynamic-programming.html">6. Dynamic Programming</a>
-            </div>
-            <div>
-              <a href="07-linear-programming.html">7. Linear Programming</a>
-            </div>
-          </div>
-        </div>
-        <div class="toc-book dropdown">
-          <button
-            class="toc-book-title dropdown-toggle"
-            aria-expanded="false"
-            aria-controls="pattern-classification-chapters"
-          >
-            Pattern Classification (Duda et al.)
-          </button>
-          <div
-            class="toc-chapters dropdown-content"
-            id="pattern-classification-chapters"
-            hidden
-          >
-            <div>
-              <a
-                href="../../pattern-classification/chapters/01-introduction.html"
-                >1. Introduction</a
-              >
-            </div>
-            <div>
-              <a
-                href="../../pattern-classification/chapters/02-bayes-decision-theory.html"
-                >2. Bayes Decision Theory</a
-              >
-            </div>
-          </div>
-        </div>
+    
       </div>
+        <hr class="side-nav-divider">
+        <span class="toc-label">📚 Books</span>
+        <div class="toc-books">
+          <div class="toc-book dropdown" open>
+            <button class="toc-book-title dropdown-toggle" aria-expanded="false" aria-controls="algorithms-chapters" onclick="toggleDropdown('algorithms-chapters', this)">Algorithms (Dasgupta et al.)</button>
+            <div class="toc-chapters dropdown-content" id="algorithms-chapters">
+              <div><a href="00-prologue.html">0. Prologue</a></div>
+              <div><a href="04-paths-in-graphs.html">4. Paths in Graphs</a></div>
+              <div><a href="05-greedy-algorithms.html">5. Greedy Algorithms</a></div>
+              <div><a href="06-dynamic-programming.html">6. Dynamic Programming</a></div>
+              <div><a href="07-linear-programming.html">7. Linear Programming</a></div>
+            </div>
+          </div>
+          <div class="toc-book dropdown">
+            <button class="toc-book-title dropdown-toggle" aria-expanded="false" aria-controls="pattern-classification-chapters" onclick="toggleDropdown('pattern-classification-chapters', this)">Pattern Classification (Duda et al.)</button>
+            <div class="toc-chapters dropdown-content" id="pattern-classification-chapters" hidden>
+              <div><a href="../../pattern-classification/chapters/01-introduction.html">1. Introduction</a></div>
+              <div><a href="../../pattern-classification/chapters/02-bayes-decision.html">2. Bayes Decision Theory</a></div>
+            </div>
+          </div>
+        </div>
+        <hr class="side-nav-divider">
       <div class="slack-banner">
         <a
           href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"

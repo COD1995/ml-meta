@@ -256,3 +256,14 @@ document.addEventListener('DOMContentLoaded', function () {
           '<p class="error">Unable to load contributor list 😢</p>';
       });
   }
+document.addEventListener('DOMContentLoaded', function() {
+  // Attach toggleDropdown to all buttons that need it
+  document.querySelectorAll('.dropdown-toggle, .index-dropdown').forEach(button => {
+    const contentId = button.getAttribute('aria-controls');
+    if (contentId) {
+      button.addEventListener('click', () => {
+        toggleDropdown(contentId, button);
+      });
+    }
+  });
+});

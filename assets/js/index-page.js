@@ -11,8 +11,8 @@ const papersRoot = path.resolve(projectRoot, 'papers');
 
 function getMainContentLinks() {
   const contentDirs = [
-    { id: 'books', path: booksRoot },
     { id: 'math-foundations', path: mathRoot },
+    { id: 'books', path: booksRoot },
     { id: 'papers', path: papersRoot }
   ];
   return contentDirs

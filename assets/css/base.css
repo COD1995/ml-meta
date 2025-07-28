@@ -598,7 +598,7 @@ html.theme-dark .toc-chapters a {
   display: flex;
   align-items: flex-start;
   width: 100%;
-  padding: 1.1em 1.2em 0.7em 2.1em;
+  padding: 1.3em .7em 0.7em 2.1em;
   font-size: 1em;
   font-weight: 500;
   background: none;
@@ -620,7 +620,7 @@ html.theme-dark .toc-chapters a {
   display: inline-block;
   position: absolute;
   left: .90rem;
-  top: 1.3rem;
+  top: 1.4rem;
   font-size: 0.82em;
   line-height: 1;
   transition: transform 0.18s cubic-bezier(.4,0,.2,1), color 0.18s;
