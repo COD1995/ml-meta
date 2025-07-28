@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>LoRA Fine-Tuning: Low-Rank Adaptation in Simple Terms</title>
+
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/chapters.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+    <!-- MathJax global config (must come BEFORE MathJax) -->
+    <script src="../../../assets/js/mathjax-config.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"></script>
+</head>
+
+<body>
+    <!-- Issue #35: Persistent Left Navbar -->
+     <nav class="side-nav">
+        <div class="side-nav-controls">
+          <button id="homeBtn" class="btn-toggle" aria-label="Home" onclick="window.location.href='../../index.html'">🏠</button>
+          <span class="nav-divider"></span>
+          <button id="themeToggle" class="btn-toggle" aria-label="Toggle dark mode">🌓</button>
+        </div>
+        <hr class="side-nav-divider">
+        <span class="toc-label">🧮 Math Foundations</span>
+        <div class="toc-books">
+          <div class="toc-book dropdown" open>
+            <button class="toc-book-title dropdown-toggle" aria-expanded="true" aria-controls="math-foundations-chapters">In Simple Terms</button>
+            <div class="toc-chapters dropdown-content" id="math-foundations-chapters">
+              <div><a href="cross_entropy_gradient.html">Cross-Entropy Gradient</a></div>
+              <div><a href="lora_fine_tuning.html" class="active">LoRA Fine-Tuning</a></div>
+              <!-- Add more math foundation chapters here as needed -->
+            </div>
+          </div>
+        </div>
+        <hr class="side-nav-divider">
+        <div class="slack-banner">
+          <a
+            href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
+            id="slackButton"
+            target="_blank"
+            rel="noopener"
+            aria-label="Join our Slack Community"
+            data-tooltip="Join Community"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 122.8 122.8"
+              fill="#fff"
+              style="width: 1.5em; height: 1.5em; vertical-align: middle;"
+            >
+              <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
+              <path d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z" />
+              <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
+              <path d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z" />
+              <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
+              <path d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z" />
+              <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
+              <path d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z" />
+            </svg>
+            <span style="margin-left: 0.5em; vertical-align: middle;">Join our Slack</span>
+          </a>
+        </div>
+      </nav>
+
+    <div class="container content">
+            <h1>LoRA Fine-Tuning: Low-Rank Adaptation</h1>
+
+            <p class="tagline">
+                An intuitive guide to efficiently adapting large AI models without breaking the bank on computational resources.
+            </p>
+
+            <section id="introduction">
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>Imagine you have a brilliant assistant who knows everything about the world.</strong>
+                        </p>
+                        <p class="original-text">
+                            <em>But you want to teach them something specific, like medical terminology, without erasing everything they already know!</em>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="what-is-lora">
+                <h2>1. What is LoRA? The Smart Way to Teach AI</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>How do we teach new skills to a massive AI model?</strong></p>
+                        <p class="original-text">
+                            <em>Instead of retraining the entire brain, we add small <strong>adapter modules</strong> that work alongside existing knowledge!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p>LoRA stands for <strong>Low-Rank Adaptation</strong>. Think of it like this:</p>
+                        <ul>
+                            <li>Your AI model has a huge "brain" with billions of connections (parameters)</li>
+                            <li>Instead of changing all these connections, LoRA adds tiny "specialist modules"</li>
+                            <li>These modules learn the new task while keeping the original brain frozen</li>
+                        </ul>
+                        <p><em>It's like adding a specialized toolbox to a master craftsman - they keep all their skills but gain new ones!</em></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="the-problem">
+                <h2>2. The Problem: Why Traditional Fine-tuning is Expensive</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>What's wrong with just updating everything?</strong></p>
+                        <p class="original-text">
+                            <em>Traditional fine-tuning is like rewiring your entire house just to add a new light switch!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p>Consider a large language model with <strong>7 billion parameters</strong>:</p>
+                        <ul>
+                            <li>🔥 You need to update ALL 7 billion numbers during training</li>
+                            <li>💰 Requires expensive, powerful GPUs (often multiple!)</li>
+                            <li>⏰ Takes days or weeks to train</li>
+                            <li>🧠 Needs massive amounts of memory</li>
+                            <li>⚠️ Risk of "forgetting" what the model originally knew</li>
+                        </ul>
+                        <p><strong>The cost can be tens of thousands of dollars just for one fine-tuning run!</strong></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="lora-solution">
+                <h2>3. LoRA's Clever Solution: Low-Rank Decomposition</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>How does LoRA make this affordable?</strong></p>
+                        <p class="original-text">
+                            <em>Instead of changing the original weights, LoRA approximates the changes using much smaller matrices!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p>Here's the mathematical magic:</p>
+                        
+                        <p>Instead of updating a large weight matrix $ W $ directly, LoRA represents the change $ \Delta W $ as:</p>
+                        <p style="margin: 1rem 0; font-size: 1.2rem; text-align: center;">
+                            $$ \Delta W = A \times B $$
+                        </p>
+                        
+                        <p>Where:</p>
+                        <ul>
+                            <li>$ A $ is a matrix of size $ (d \times r) $</li>
+                            <li>$ B $ is a matrix of size $ (r \times k) $</li>
+                            <li>$ r $ is the "rank" - a small number (typically 1-64)</li>
+                            <li>The original matrix $ W $ has size $ (d \times k) $</li>
+                        </ul>
+
+                        <p><strong>The key insight:</strong> $ r \ll \min(d,k) $, making $ A $ and $ B $ much smaller than $ W $!</p>
+
+                        <svg width="640" height="300" xmlns="http://www.w3.org/2000/svg" style="margin: 1rem 0;">
+                            <!-- Original large matrix -->
+                            <rect x="50" y="50" width="120" height="80" fill="#ffcccb" stroke="#ff6b6b" stroke-width="2"/>
+                            <text x="110" y="80" font-size="14" text-anchor="middle">Original W</text>
+                            <text x="110" y="95" font-size="12" text-anchor="middle">d × k</text>
+                            <text x="110" y="110" font-size="10" text-anchor="middle">(Frozen)</text>
+
+                            <!-- Equals sign -->
+                            <text x="200" y="95" font-size="20" text-anchor="middle">=</text>
+
+                            <!-- Matrix A -->
+                            <rect x="250" y="70" width="60" height="60" fill="#b3e5fc" stroke="#29b6f6" stroke-width="2"/>
+                            <text x="280" y="95" font-size="12" text-anchor="middle">A</text>
+                            <text x="280" y="108" font-size="10" text-anchor="middle">d × r</text>
+
+                            <!-- Multiplication sign -->
+                            <text x="330" y="95" font-size="16" text-anchor="middle">×</text>
+
+                            <!-- Matrix B -->
+                            <rect x="350" y="70" width="60" height="60" fill="#c8e6c9" stroke="#66bb6a" stroke-width="2"/>
+                            <text x="380" y="95" font-size="12" text-anchor="middle">B</text>
+                            <text x="380" y="108" font-size="10" text-anchor="middle">r × k</text>
+
+                            <!-- Plus sign -->
+                            <text x="440" y="95" font-size="20" text-anchor="middle">+</text>
+
+                            <!-- Original matrix again -->
+                            <rect x="470" y="50" width="120" height="80" fill="#fff3e0" stroke="#ffa726" stroke-width="2"/>
+                            <text x="530" y="80" font-size="14" text-anchor="middle">Updated W'</text>
+                            <text x="530" y="95" font-size="12" text-anchor="middle">W + ΔW</text>
+
+                            <!-- Parameter count comparison -->
+                            <text x="50" y="180" font-size="14" font-weight="bold">Parameter Comparison:</text>
+                            <text x="50" y="200" font-size="12">Original: d × k parameters</text>
+                            <text x="50" y="220" font-size="12">LoRA: d × r + r × k parameters</text>
+                            <text x="50" y="240" font-size="12" fill="#e74c3c">Reduction: ~97% fewer parameters!</text>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+
+            <section id="mathematical-details">
+                <h2>4. The Mathematics Behind LoRA</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>How does the math work exactly?</strong></p>
+                        <p class="original-text">
+                            <em>Let's break down the equations step by step!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p>The complete LoRA formula is:</p>
+                        <p style="margin: 1rem 0; font-size: 1.3rem; text-align: center;">
+                            $$ W' = W + \alpha \cdot (A \times B) $$
+                        </p>
+
+                        <p><strong>What each part means:</strong></p>
+                        <ul>
+                            <li>$ W' $ - The new, adapted weight matrix</li>
+                            <li>$ W $ - The original frozen weight matrix</li>
+                            <li>$ \alpha $ - A scaling factor (controls how much adaptation to apply)</li>
+                            <li>$ A \times B $ - The low-rank adaptation (what we actually train)</li>
+                        </ul>
+
+                        <p><strong>Parameter Reduction Example:</strong></p>
+                        <p>If the original matrix has 1,000,000 parameters (1000×1000), and we use rank r=16:</p>
+                        <ul>
+                            <li>Original parameters: $ 1000 \times 1000 = 1,000,000 $</li>
+                            <li>LoRA parameters: $ 1000 \times 16 + 16 \times 1000 = 32,000 $</li>
+                            <li><strong>Reduction: 97% fewer parameters!</strong></li>
+                        </ul>
+
+                        <p><strong>During Training:</strong></p>
+                        <ol>
+                            <li>Initialize $ A $ with random small values</li>
+                            <li>Initialize $ B $ with zeros (so initially $ \Delta W = 0 $)</li>
+                            <li>Only update $ A $ and $ B $ during training</li>
+                            <li>$ W $ stays completely frozen</li>
+                        </ol>
+                    </div>
+                </div>
+            </section>
+
+            <section id="practical-example">
+                <h2>5. Real-World Example: Medical Text Adaptation</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>Let's see LoRA in action!</strong></p>
+                        <p class="original-text">
+                            <em>Imagine adapting a general language model to understand medical terminology and context.</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p><strong>Scenario:</strong> You have a 7B parameter language model and want it to excel at medical tasks.</p>
+
+                        <p><strong>Traditional Fine-tuning:</strong></p>
+                        <ul>
+                            <li>💸 Update all 7 billion parameters</li>
+                            <li>🔥 Requires 8×A100 GPUs (~$80,000 in cloud costs)</li>
+                            <li>⏰ Takes 2-3 weeks</li>
+                            <li>⚠️ Risk of catastrophic forgetting</li>
+                        </ul>
+
+                        <p><strong>LoRA Fine-tuning:</strong></p>
+                        <ul>
+                            <li>✅ Add adapters with only 7 million parameters (0.1% of original)</li>
+                            <li>💰 Runs on a single consumer GPU (~$500 in cloud costs)</li>
+                            <li>⚡ Takes 2-3 days</li>
+                            <li>🛡️ Original knowledge preserved</li>
+                        </ul>
+
+                        <p><strong>The Process:</strong></p>
+                        <ol>
+                            <li><strong>Freeze</strong> the original 7B parameters</li>
+                            <li><strong>Add</strong> LoRA adapters to key layers (attention, feed-forward)</li>
+                            <li><strong>Train</strong> only the adapters on medical data</li>
+                            <li><strong>Deploy</strong> the combined model</li>
+                        </ol>
+
+                        <p><em>Result: A model that maintains its general language abilities while gaining medical expertise!</em></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="advantages">
+                <h2>6. Why LoRA is Revolutionary</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>What makes LoRA so special?</strong></p>
+                        <p class="original-text">
+                            <em>LoRA democratizes AI fine-tuning, making it accessible to researchers and companies without massive budgets!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p><strong>🔧 Modularity:</strong> Create different LoRA adapters for different tasks:</p>
+                        <ul>
+                            <li>Medical LoRA for healthcare applications</li>
+                            <li>Legal LoRA for contract analysis</li>
+                            <li>Creative LoRA for storytelling</li>
+                            <li>Code LoRA for programming assistance</li>
+                        </ul>
+
+                        <p><strong>🛡️ Preservation:</strong> The original model remains untouched:</p>
+                        <ul>
+                            <li>No risk of losing pre-trained knowledge</li>
+                            <li>Can always revert to the original model</li>
+                            <li>Multiple specialized versions from one base model</li>
+                        </ul>
+
+                        <p><strong>⚡ Efficiency Benefits:</strong></p>
+                        <ul>
+                            <li>97-99% reduction in trainable parameters</li>
+                            <li>10-100x faster training</li>
+                            <li>Runs on consumer hardware</li>
+                            <li>Significantly lower energy consumption</li>
+                        </ul>
+
+                        <p><strong>🌍 Accessibility:</strong></p>
+                        <ul>
+                            <li>Enables small research teams to compete with big tech</li>
+                            <li>Democratizes access to state-of-the-art AI</li>
+                            <li>Encourages innovation and experimentation</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="comments">
+                <script
+                    src="https://utteranc.es/client.js"
+                    repo="COD1995/ml-meta"
+                    issue-term="pathname"
+                    label="comment"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async
+                ></script>
+            </section>
+            
+            <footer>
+                <p>
+                    © 2025 Saksham Lakhera •
+                    <a href="../../../index.html">Back to Home</a>
+                </p>
+            </footer>
+
+             <script type="module" src="../../assets/js/main.js"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/highlight.js@11.9.0/lib/highlight.min.js"></script>
+
+            <script src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script>
+
+        </div>
+    </div>
+</body>
+
+</html>
