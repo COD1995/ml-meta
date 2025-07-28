@@ -1,30 +1,48 @@
-<section class="main-section">
-  <h2>Books</h2>
-  <a href="../books">Go to books</a>
-  <h3>Algorithms</h3>
-  <a href="../books/algorithms">Go to algorithms</a>
-  <h3>Pattern Classification</h3>
-  <a href="../books/pattern-classification">Go to pattern-classification</a>
-</section>
-
-<section class="main-section">
-  <h2>Math Foundations</h2>
-  <a href="../math-foundations">Go to math-foundations</a>
-  <ul>
-    <li><a href="../math-foundations/chapters/cross_entropy_gradient.html">Cross Entropy Gradient</a></li>
-  </ul>
-  <h3>Chapters</h3>
-  <a href="../math-foundations/chapters">Go to chapters</a>
-  <ul>
-    <li><a href="../math-foundations/chapters/cross_entropy_gradient.html">Cross Entropy Gradient</a></li>
-  </ul>
-</section>
-
-<section class="main-section">
-  <h2>Papers</h2>
-  <a href="../papers">Go to papers</a>
-  <ul>
-    <li><a href="../papers/index.html">Index</a></li>
-  </ul>
-</section>
-
+<div class="toc-books">
+ <div class="toc-book dropdown">
+   <button class="toc-book-title index-dropdown" aria-expanded="true" aria-controls="books-chapters" onclick="toggleDropdown('books-chapters', this)">Books</button>
+   <div class="toc-chapters dropdown-content hidden" id="books-chapters">
+     <div class="toc-book dropdown">
+       <button class="toc-book-title dropdown-toggle" aria-expanded="true" aria-controls="books-algorithms-chapters" onclick="toggleDropdown('books-algorithms-chapters', this)">Algorithms</button>
+       <div class="toc-chapters dropdown-content hidden" id="books-algorithms-chapters">
+         <div><a href="../books/algorithms/chapters/00-prologue.html">00 Prologue</a></div>
+         <div><a href="../books/algorithms/chapters/04-paths-in-graphs.html">04 Paths In Graphs</a></div>
+         <div><a href="../books/algorithms/chapters/05-greedy-algorithms.html">05 Greedy Algorithms</a></div>
+         <div><a href="../books/algorithms/chapters/06-dynamic-programming.html">06 Dynamic Programming</a></div>
+         <div><a href="../books/algorithms/chapters/07-linear-programming.html">07 Linear Programming</a></div>
+       </div>
+     </div>
+     <div class="toc-book dropdown">
+       <button class="toc-book-title dropdown-toggle" aria-expanded="true" aria-controls="books-pattern-classification-chapters" onclick="toggleDropdown('books-pattern-classification-chapters', this)">Pattern Classification</button>
+       <div class="toc-chapters dropdown-content hidden" id="books-pattern-classification-chapters">
+         <div><a href="../books/pattern-classification/chapters/01-introduction.html">01 Introduction</a></div>
+         <div><a href="../books/pattern-classification/chapters/02-bayes-decision-theory.html">02 Bayes Decision Theory</a></div>
+       </div>
+     </div>
+   </div>
+   <hr class="main-nav-divider">
+ </div>
+ <div class="toc-book dropdown">
+   <button class="toc-book-title index-dropdown" aria-expanded="true" aria-controls="math-foundations-chapters" onclick="toggleDropdown('math-foundations-chapters', this)">Math Foundations</button>
+   <div class="toc-chapters dropdown-content hidden" id="math-foundations-chapters">
+     <div class="toc-book dropdown">
+       <button class="toc-book-title dropdown-toggle" aria-expanded="true" aria-controls="math-foundations-in-simple-terms-chapters" onclick="toggleDropdown('math-foundations-in-simple-terms-chapters', this)">In Simple Terms</button>
+       <div class="toc-chapters dropdown-content hidden" id="math-foundations-in-simple-terms-chapters">
+         <div><a href="../math-foundations/in-simple-terms/cross_entropy_gradient.html">Cross Entropy Gradient</a></div>
+       </div>
+     </div>
+   </div>
+   <hr class="main-nav-divider">
+ </div>
+ <div class="toc-book dropdown">
+   <button class="toc-book-title index-dropdown" aria-expanded="true" aria-controls="papers-chapters" onclick="toggleDropdown('papers-chapters', this)">Papers</button>
+   <div class="toc-chapters dropdown-content hidden" id="papers-chapters">
+     <div class="toc-book dropdown">
+       <button class="toc-book-title dropdown-toggle" aria-expanded="true" aria-controls="papers-cv-research-chapters" onclick="toggleDropdown('papers-cv-research-chapters', this)">Cv Research</button>
+       <div class="toc-chapters dropdown-content hidden" id="papers-cv-research-chapters">
+       </div>
+     </div>
+   </div>
+   <hr class="main-nav-divider">
+ </div>
+</div>

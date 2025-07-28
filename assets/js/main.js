@@ -1,5 +1,3 @@
-
-
 /* assets/js/main.js
  * -------------------------------------------------------------
  * ① Build ToC (current + lazy‑remote)
@@ -105,33 +103,42 @@ if (themeToggle) {
 
 // Expand/collapse all logic (robust for all pages)
 function setAllDetails(open) {
+  // Handle <details> elements
   document.querySelectorAll('.nav-section details').forEach(d => d.open = open);
+
+  // Handle dropdowns
+  document.querySelectorAll('.dropdown-content').forEach(content => {
+    content.hidden = !open;
+  });
+  document.querySelectorAll('.index-dropdown, .toc-book-title, .dropdown-toggle').forEach(button => {
+    button.setAttribute('aria-expanded', open);
+  });
 }
+
 const expandAllBtn = document.getElementById('expandAll');
 const collapseAllBtn = document.getElementById('collapseAll');
+
 if (expandAllBtn) {
   expandAllBtn.addEventListener('click', () => setAllDetails(true));
 }
+
 if (collapseAllBtn) {
   collapseAllBtn.addEventListener('click', () => setAllDetails(false));
 }
 
 // --- Book/Chapter Dropdown Functionality for Custom Buttons ---
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelectorAll('.toc-book-title').forEach(function(btn) {
-    // Find the dropdown content (next sibling)
-    var dropdown = btn.nextElementSibling;
-    // Set initial aria-expanded
-    btn.setAttribute('aria-expanded', dropdown && !dropdown.hidden ? 'true' : 'false');
-    btn.addEventListener('click', function(e) {
-      e.preventDefault();
-      if (!dropdown) return;
-      var expanded = btn.getAttribute('aria-expanded') === 'true';
-      btn.setAttribute('aria-expanded', (!expanded).toString());
-      dropdown.hidden = expanded;
-    });
-  });
-});
+function toggleDropdown(contentId, button) {
+  const content = document.getElementById(contentId);
+  if (!content) return;
+
+  const isExpanded = button.getAttribute('aria-expanded') === 'true';
+  button.setAttribute('aria-expanded', !isExpanded);
+  content.hidden = isExpanded;
+}
+
+if (typeof window !== 'undefined') {
+  window.toggleDropdown = toggleDropdown;
+}
 
 // Inject index-content.html into <nav> for local development
 document.addEventListener('DOMContentLoaded', function () {
@@ -154,3 +161,98 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
+/* Main client-side behaviour
+   ------------------------------------------------------------ */
+
+  // 2) Last‑updated stamp
+  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    document.getElementById("lastUpdated").textContent = new Date(
+      document.lastModified
+    ).toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  }
+  
+  // 3) GitHub Contributions Heatmap
+  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    (function(){
+      // Load github-calendar CSS
+      const calendarCss = document.createElement('link');
+      calendarCss.rel = 'stylesheet';
+      calendarCss.href = 'https://cdn.jsdelivr.net/npm/github-calendar@latest/dist/github-calendar-responsive.css';
+      document.head.appendChild(calendarCss);
+  
+      // Load github-calendar JS
+      const script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/github-calendar@latest/dist/github-calendar.min.js';
+      script.onload = function() {
+        // Render the calendar for the repo owner (COD1995)
+        if (window.GitHubCalendar) {
+          GitHubCalendar("#github-heatmap", "COD1995", { responsive: true });
+        }
+      };
+      document.body.appendChild(script);
+    })();
+  }
+  
+  // 4) GitHub contributors
+  const owner = "COD1995",
+    repo = "ml-meta";
+  const key = "ghContribCache",
+    ttl = 24 * 60 * 60 * 1e3; // 24 h
+  
+  async function fetchContributors() {
+    const cached = JSON.parse(localStorage.getItem(key) || "{}");
+    if (cached.when && Date.now() - cached.when < ttl) return cached.data;
+  
+    const res = await fetch(
+      `https://api.github.com/repos/${owner}/${repo}/contributors`
+    );
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+    localStorage.setItem(key, JSON.stringify({ when: Date.now(), data }));
+    return data;
+  }
+  
+  /* Render Top‑10 with avatars + medals */
+  function renderContributors(list) {
+    const tbody = document.querySelector(".leaderboard-table tbody");
+    if (!tbody) return;
+  
+    const medals = ["🥇", "🥈", "🥉"];
+  
+    list
+      .sort((a, b) => b.contributions - a.contributions) // highest first
+      .slice(0, 10) // top‑10 only
+      .forEach((u, i) => {
+        const medal = medals[i] ? `<span class="medal">${medals[i]}</span>` : "";
+        tbody.insertAdjacentHTML(
+          "beforeend",
+          `<tr>
+             <td class="number">${i + 1}</td>
+             <td class="name">
+               <div class="name-cell">
+                 <img class="avatar" src="${u.avatar_url}&s=80" alt="${
+            u.login
+          } avatar">
+                 ${u.login}
+               </div>
+             </td>
+             <td class="points">${u.contributions}${medal}</td>
+           </tr>`
+        );
+      });
+  }
+  
+  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+    fetchContributors()
+      .then(renderContributors)
+      .catch((err) => {
+        console.error(err);
+        document.querySelector("#contributors").innerHTML =
+          '<p class="error">Unable to load contributor list 😢</p>';
+      });
+  }
