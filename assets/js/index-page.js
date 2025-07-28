@@ -1,119 +1,137 @@
 /* Landing‑page behaviour
    ------------------------------------------------------------ */
 
-// 1) GitHub contributors
-const owner = "COD1995",
-  repo = "ml-meta";
-const key = "ghContribCache",
-  ttl = 24 * 60 * 60 * 1e3; // 24 h
+// Node.js-specific code block: Only run if in Node.js environment
+let fs, path, projectRoot, booksRoot, mathRoot, papersRoot;
+if (typeof require !== 'undefined' && typeof module !== 'undefined') {
+  fs = require('fs');
+  path = require('path');
 
-async function fetchContributors() {
-  const cached = JSON.parse(localStorage.getItem(key) || "{}");
-  if (cached.when && Date.now() - cached.when < ttl) return cached.data;
+  projectRoot = path.resolve(__dirname, '../../');
+  booksRoot = path.resolve(projectRoot, 'books');
+  mathRoot = path.resolve(projectRoot, 'math-foundations');
+  papersRoot = path.resolve(projectRoot, 'papers');
+  // ... (move all Node.js code here, including getMainContentLinks, getChapters, generateMainContentHTML, and the script block at the end)
+  
+  function getMainContentLinks() {
+    const contentDirs = [
+      { id: 'math-foundations', path: mathRoot },
+      { id: 'books', path: booksRoot },
+      { id: 'papers', path: papersRoot }
+    ];
+    return contentDirs
+      .filter(dir => fs.existsSync(dir.path))
+      .map(dir => {
+        // List subdirectories (1st level only)
+        let subdirs = [];
+        let chapters = [];
+        try {
+          if (dir.id === 'books' || dir.id === 'math-foundations' || dir.id === 'papers') {
+            subdirs = fs.readdirSync(dir.path)
+              .filter(f => fs.statSync(path.join(dir.path, f)).isDirectory())
+              .map(sub => {
+                const subPath = path.join(dir.path, sub);
+                const chaptersPath = path.join(subPath, 'chapters');
+                const hasChaptersDir = fs.existsSync(chaptersPath) && fs.statSync(chaptersPath).isDirectory();
+                
+                return {
+                  name: sub,
+                  href: path.relative(path.join(__dirname, '..'), subPath).replace(/\\/g, '/'),
+                  chapters: getChapters(hasChaptersDir ? chaptersPath : subPath)
+                };
+              });
+          } else {
+            // For other sections, look for chapters directly or in a 'chapters' subdir
+            const chaptersDir = path.join(dir.path, 'chapters');
+            if (fs.existsSync(chaptersDir) && fs.statSync(chaptersDir).isDirectory()) {
+              chapters = getChapters(chaptersDir);
+            } else {
+              chapters = getChapters(dir.path);
+            }
+          }
+        } catch (e) {}
+        return {
+          id: dir.id,
+          href: path.relative(path.join(__dirname, '..'), dir.path).replace(/\\/g, '/'),
+          subdirs,
+          chapters
+        };
+      });
+  }
 
-  const res = await fetch(
-    `https://api.github.com/repos/${owner}/${repo}/contributors`
-  );
-  if (!res.ok) throw new Error(res.status);
-  const data = await res.json();
-  localStorage.setItem(key, JSON.stringify({ when: Date.now(), data }));
-  return data;
-}
+  /**
+   * Lists .html files in a directory as chapters.
+   * Returns: [{ href, title }]
+   */
+  function getChapters(dirPath) {
+    if (!fs.existsSync(dirPath)) return [];
+    return fs.readdirSync(dirPath)
+      .filter(f => f.endsWith('.html') && f !== 'index.html')
+      .map(f => {
+        const title = f.replace(/[-_]/g, ' ').replace(/\.html$/, '').replace(/\b\w/g, c => c.toUpperCase());
+        return {
+          href: path.relative(path.join(__dirname, '..'), path.join(dirPath, f)).replace(/\\/g, '/'),
+          title: title
+        };
+      });
+  }
 
-/* Render Top‑10 with avatars + medals */
-function renderContributors(list) {
-  const tbody = document.querySelector(".leaderboard-table tbody");
-  if (!tbody) return;
+  /**
+   * Generates HTML for main content sections, including subdirs and chapter links.
+   */
+  function generateMainContentHTML() {
+    const contentLinks = getMainContentLinks();
+    let html = '';
+    
+    html += `<div class="toc-books">\n`;
 
-  const medals = ["🥇", "🥈", "🥉"];
+    contentLinks.forEach(section => {
+      const sectionTitle = section.id.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      html += ` <div class="toc-book dropdown">\n`;
+      html += `   <button class="toc-book-title index-dropdown" aria-expanded="true" aria-controls="${section.id}-chapters" onclick="toggleDropdown('${section.id}-chapters', this)" id="${sectionTitle}">${sectionTitle}</button>\n`;
+      html += `   <div class="toc-chapters dropdown-content hidden" id="${section.id}-chapters">\n`;
 
-  list
-    .sort((a, b) => b.contributions - a.contributions) // highest first
-    .slice(0, 10) // top‑10 only
-    .forEach((u, i) => {
-      const medal = medals[i] ? `<span class="medal">${medals[i]}</span>` : "";
-      tbody.insertAdjacentHTML(
-        "beforeend",
-        `<tr>
-           <td class="number">${i + 1}</td>
-           <td class="name">
-             <div class="name-cell">
-               <img class="avatar" src="${u.avatar_url}&s=80" alt="${
-          u.login
-        } avatar">
-               ${u.login}
-             </div>
-           </td>
-           <td class="points">${u.contributions}${medal}</td>
-         </tr>`
-      );
+      // Chapters directly under section
+      if (section.chapters && section.chapters.length > 0) {
+        section.chapters.forEach(ch => {
+          html += `       <div><a href="${ch.href}">${ch.title}</a></div>\n`;
+        });
+      }
+
+      // Subdirectories
+      if (section.subdirs && section.subdirs.length > 0) {
+        section.subdirs.forEach(sub => {
+          const subTitle = sub.name.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+          html += `     <div class="toc-book dropdown">\n`;
+          html += `       <button class="toc-book-title dropdown-toggle" aria-expanded="true" aria-controls="${section.id}-${sub.name}-chapters" onclick="toggleDropdown('${section.id}-${sub.name}-chapters', this)">${subTitle}</button>\n`;
+          html += `       <div class="toc-chapters dropdown-content hidden" id="${section.id}-${sub.name}-chapters">\n`;
+
+          if (sub.chapters && sub.chapters.length > 0) {
+            sub.chapters.forEach(ch => {
+              html += `         <div><a href="${ch.href}">${ch.title}</a></div>\n`;
+            });
+          }
+          html += `       </div>\n`;
+          html += `     </div>\n`;
+        });
+      }
+
+      html += `   </div>\n`;
+      html += `   <hr class="main-nav-divider">\n`;
+      html += ` </div>\n`;
     });
+
+    html += `</div>\n`;
+    return html;
+  }
+
+  // --- AUTOMATION: Write generated HTML to index-content.html when run as a script ---
+  if (require.main === module) {
+    const outputPath = path.join(__dirname, '../../index-content.html');
+    const mainContentHTML = generateMainContentHTML();
+    fs.writeFileSync(outputPath, mainContentHTML);
+    console.log('index-content.html generated at', outputPath);
+  }
 }
-
-fetchContributors()
-  .then(renderContributors)
-  .catch((err) => {
-    console.error(err);
-    document.querySelector("#contributors").innerHTML =
-      '<p class="error">Unable to load contributor list 😢</p>';
-  });
-
-// 2) Last‑updated stamp
-document.getElementById("lastUpdated").textContent = new Date(
-  document.lastModified
-).toLocaleDateString(undefined, {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
-
-// 3) Expand / Collapse all <details> blocks
-// Expand/collapse for both <details> and dropdown sections
-function expandAllDropdowns() {
-  // Expand all <details>
-  document.querySelectorAll("details").forEach((d) => (d.open = true));
-  // Expand all dropdowns
-  document.querySelectorAll('.toc-book').forEach(function(book) {
-    book.setAttribute('open', '');
-    var btn = book.querySelector('.index-dropdown, .toc-book-title');
-    if (btn) btn.setAttribute('aria-expanded', 'true');
-    var chapters = book.querySelector('.toc-chapters');
-    if (chapters) chapters.removeAttribute('hidden');
-  });
 }
-
-function collapseAllDropdowns() {
-  // Collapse all <details>
-  document.querySelectorAll("details").forEach((d) => (d.open = false));
-  // Collapse all dropdowns
-  document.querySelectorAll('.toc-book').forEach(function(book) {
-    book.removeAttribute('open');
-    var btn = book.querySelector('.index-dropdown, .toc-book-title');
-    if (btn) btn.setAttribute('aria-expanded', 'false');
-    var chapters = book.querySelector('.toc-chapters');
-    if (chapters) chapters.setAttribute('hidden', '');
-  });
 }
-
-document.getElementById("expandAll").addEventListener("click", expandAllDropdowns);
-document.getElementById("collapseAll").addEventListener("click", collapseAllDropdowns);
-
-// 4) GitHub Contributions Heatmap
-(function(){
-  // Load github-calendar CSS
-  const calendarCss = document.createElement('link');
-  calendarCss.rel = 'stylesheet';
-  calendarCss.href = 'https://cdn.jsdelivr.net/npm/github-calendar@latest/dist/github-calendar-responsive.css';
-  document.head.appendChild(calendarCss);
-
-  // Load github-calendar JS
-  const script = document.createElement('script');
-  script.src = 'https://cdn.jsdelivr.net/npm/github-calendar@latest/dist/github-calendar.min.js';
-  script.onload = function() {
-    // Render the calendar for the repo owner (COD1995)
-    if (window.GitHubCalendar) {
-      GitHubCalendar("#github-heatmap", "COD1995", { responsive: true });
-    }
-  };
-  document.body.appendChild(script);
-})();
