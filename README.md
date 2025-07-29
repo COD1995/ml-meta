@@ -88,7 +88,7 @@ The project's interactivity is powered by a small set of client-side JavaScript 
 
 To increase collaborative efforts, we have provided a index-page.js script that will automatically update just the home page's main navigation. This will be built out to update sitewide navigation information. 
 
-Once you place your completed HTML file into its correct folder, go to the main project folder and run this in your CLI: `node assets/js/index-page.js`
+Once you place your completed HTML file into its correct folder, go to the main project folder and run this in your CLI's node.js environment: `node assets/js/index-page.js`
 
 This will update your local index-content.html to now include your entry updated and styled correctly. 
 
