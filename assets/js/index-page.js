@@ -52,7 +52,7 @@ function getMainContentLinks() {
       } catch (e) {}
       return {
         id: dir.id,
-        href: path.relative(path.join(__dirname, ''), dir.path).replace(/\\/g, '/'),
+        href: path.relative(path.join(__dirname, '..'), dir.path).replace(/\\/g, '/'),
         subdirs,
         chapters
       };
@@ -70,7 +70,7 @@ function getChapters(dirPath) {
     .map(f => {
       const title = f.replace(/[-_]/g, ' ').replace(/\.html$/, '').replace(/\b\w/g, c => c.toUpperCase());
       return {
-        href: path.relative(path.join(__dirname, '..'), path.join(dirPath, f)).replace(/\\/g, '/'),
+        href: path.relative(projectRoot, path.join(dirPath, f)).replace(/\\/g, '/'),
         title: title
       };
     });
