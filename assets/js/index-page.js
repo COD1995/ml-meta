@@ -36,7 +36,7 @@ function getMainContentLinks() {
               
               return {
                 name: sub,
-                href: path.relative(path.join(__dirname, ''), subPath).replace(/\\/g, ''),
+                href: path.relative(path.join(__dirname, '..'), subPath).replace(/\\/g, '/'),
                 chapters: getChapters(hasChaptersDir ? chaptersPath : subPath)
               };
             });
@@ -52,7 +52,7 @@ function getMainContentLinks() {
       } catch (e) {}
       return {
         id: dir.id,
-        href: path.relative(path.join(__dirname, ''), dir.path).replace(/\\/g, ''),
+        href: path.relative(path.join(__dirname, ''), dir.path).replace(/\\/g, '/'),
         subdirs,
         chapters
       };
