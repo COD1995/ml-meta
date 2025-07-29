@@ -83,3 +83,13 @@ The project's interactivity is powered by a small set of client-side JavaScript 
 
 * `assets/js/main.js`: This script runs on every chapter page. It scans the main content for `<h2>` and `<h3>` tags, automatically generates anchor IDs for them, and populates the Table of Contents (`#toc-list`) in the sidebar with corresponding links.
 * **Inline Scripts**: The HTML files contain small scripts to initialize and render **MathJax** and **pseudocode.js**, ensuring that mathematical formulas and algorithms are displayed correctly after the page content is loaded.
+
+## Adding New Content Pages
+
+To increase collaborative efforts, we have provided a index-page.js script that will automatically update just the home page's main navigation. This will be built out to update sitewide navigation information. 
+
+Once you place your completed HTML file into its correct folder, go to the main project folder and run this in your CLI: `node assets/js/index-page.js`
+
+This will update your local index-content.html to now include your entry updated and styled correctly. 
+
+## It is a requirement to perform these steps before a contributuion is accepted
