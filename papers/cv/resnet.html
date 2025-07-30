@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paper Summary: ResNet</title>
+</head>
+
+<body>
+
+<!-- Main content container -->
+<div class="content">
+
+  <!-- Paper header section -->
+  <div class="paper-info">
+    <h1>Deep Residual Learning for <br> Image Recognition</h1>
+    <div class="authors">Kaiming He, Xiangyu Zhang, Shaoqing Ren, Jian Sun</div>
+    <div class="affiliation">Microsoft Research [2015]</div>
+  </div>
+
+  <!-- Abstract section -->
+  <div class="abstract">
+    <p>The Deep Residual Learning paper by He et al. represents a watershed moment in deep learning, introducing a novel framework that fundamentally transformed how we approach training very deep neural networks. The authors address a critical paradox in deep learning: while deeper networks should theoretically provide better representation capabilities, they often become more difficult to train and may even perform worse than shallower counterparts.</p>
+
+    <p>Their solution, <i>residual learning with shortcut connections</i>, enables the training of networks with unprecedented depth (up to 152 layers) while achieving superior performance, culminating in winning first place in the ILSVRC 2015 classification competition with a 3.57% top-5 error rate.</p>
+  </div>
+
+  <!-- Degradation Problem section -->
+  <section>
+    <h2>The Degradation Problem</h2>
+    <p>The paper begins by identifying a counterintuitive phenomenon that had puzzled the deep learning community. While the importance of network depth for visual recognition tasks was well-established, simply stacking more layers did not guarantee better performance. The authors meticulously document the <i>degradation problem</i>, a situation where deeper networks exhibit higher training errors than their shallower counterparts, despite having theoretically larger solution spaces.</p>
+
+    <p>This degradation is not caused by overfitting, as evidenced by the fact that deeper networks show higher training error, not just validation error. The authors demonstrate this through controlled experiments on CIFAR-10, where a 56-layer plain network consistently performs worse than a 20-layer plain network during training.</p>
+  </section>
+
+  <!-- Residual Learning section -->
+  <section>
+    <h2>Residual Learning</h2>
+    <p>The core innovation of ResNets lies in reformulating the learning objective from direct mapping approximation to <i>residual mapping approximation</i>. Instead of expecting a few stacked layers to directly learn a desired underlying mapping H(x), the authors propose letting these layers learn a residual function F(x) := H(x) - x. The original mapping is then reconstructed as F(x) + x.</p>
+
+    <p>This reformulation is motivated by the hypothesis that it should be easier to optimize residual mappings than original mappings. In the extreme case where an identity mapping is optimal, it would be significantly easier for the network to learn to push the residual function F(x) toward zero than to learn identity mapping through multiple nonlinear transformations.</p>
+
+    <p>The mathematical formulation is expressed as <span class="math">y = F(x, {W<sub>i</sub>}) + x</span>, where x represents the input, y represents the output, and F(x, {W<sub>i</sub>}) represents the residual mapping to be learned by the stacked layers.</p>
+  </section>
+
+  <!-- Shortcut Connections section -->
+  <section>
+    <h2>Shortcut Connections</h2>
+    <p>The practical implementation of residual learning relies on <i>shortcut connections</i> (also called skip connections) that perform identity mapping. These connections literally skip one or more layers by directly adding the input to the output of the stacked layers through element-wise addition.</p>
+    <p>The elegance of this approach lies in its simplicity and efficiency. Identity shortcut connections introduce neither additional parameters nor computational complexity, making fair comparisons between plain and residual networks possible.</p>
+
+    <p>When input and output dimensions differ (such as when changing the number of channels or feature map sizes), the authors explore two options: zero-padding for dimension matching or using projection shortcuts with 1×1 convolutions.</p>
+  </section>
+
+  <!-- Architecture Design section -->
+  <section>
+    <h2>Architectural Innovations and Bottleneck Design</h2>
+    <p>For extremely deep networks (50+ layers), the authors introduce a <i>bottleneck design</i> that uses three layers instead of two for each residual block. This design employs 1×1, 3×3, and 1×1 convolutions, where the 1×1 layers reduce and then restore dimensions, leaving the 3×3 layer as a bottleneck with smaller input/output dimensions.</p>
+
+    <p>The authors systematically scale their architectures from 50 to 152 layers, with the 152-layer ResNet achieving lower complexity than VGG nets while being 8× deeper. This demonstrates that depth can be increased without proportional increases in computational cost when properly designed.</p>
+  </section>
+
+  <!-- Experimental Results section -->
+  <section>
+    <h2>Comprehensive Experimental Validation</h2>
+    <p>The paper provides extensive experimental validation across multiple datasets and tasks. On ImageNet classification, the results are particularly striking: while a 34-layer plain network performs worse than an 18-layer plain network, the 34-layer ResNet not only outperforms its 18-layer counterpart but also achieves 3.5% lower error than the 34-layer plain network.</p>
+
+    <div class="result-box">
+      <p>The scaling experiments reveal consistent patterns: ResNet-50, ResNet-101, and ResNet-152 all show progressive improvements in accuracy, with the 152-layer model achieving a single-model top-5 validation error of 4.49%, outperforming all previous ensemble results.</p>
+      <p>The ensemble of ResNets achieved 3.57% top-5 error on the ImageNet test set, winning first place in ILSVRC 2015.</p>
+    </div>
+  </section>
+
+  <!-- Analysis section -->
+  <section>
+    <h2>Analysis of Learned Representations</h2>
+    <p>The paper includes crucial analysis of what ResNets actually learn. By examining the standard deviations of layer responses, the authors demonstrate that ResNets generally have smaller responses than their plain counterparts, supporting their hypothesis that residual functions are closer to zero than non-residual functions.</p>
+
+    <p>This analysis reveals that deeper ResNets have progressively smaller magnitudes of responses, suggesting that individual layers in very deep networks tend to modify signals less dramatically. This behavior aligns with the theoretical motivation that identity mappings provide good preconditioning for optimization.</p>
+  </section>
+
+  <!-- Impact section -->
+  <section>
+    <h2>Significance and Impact</h2>
+    <p>The Deep Residual Learning paper represents a paradigm shift in neural network architecture design. By solving the degradation problem, it enabled the training of networks with unprecedented depth, fundamentally changing what was considered possible in deep learning.</p>
+
+    <div class="conclusion-box">
+      <p>The paper's impact extends far beyond its immediate technical contributions. ResNets became the backbone for countless subsequent architectures and applications, establishing shortcut connections as a fundamental design principle in deep learning. The work also highlights the importance of understanding optimization landscapes and how architectural choices can dramatically affect trainability.</p>
+    </div>
+  </section>
+
+<!-- AI Usage Disclosure -->
+<div style="text-align: center; margin-top: 2rem; font-size: 0.9rem; color: #000000; font-family: 'Inter Display', sans-serif;">
+  Made use of Perplexity AI for an effective summary and for UI refinement.<br>
+  Contributed by <a href="https://linkedin.com/in/waseemweb">Muhammad Waseem Thameem Ansari</a><br>
+  <a href="mailto:mthameem@buffalo.edu">mthameem@buffalo.edu</a> // UB #50606269
+</div>
+</div>
+
+<!-- Styles section -->
+<style>
+    /* Font imports */
+    @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,500;0,700;1,500;1,700&family=Inter+Display:wght@400;600&display=swap');
+  
+    /* Base styles */
+    .content {
+      font-family: 'Inter Display', sans-serif;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem;
+      background: #ffffff;
+      color: #000000;
+    }
+  
+    /* Typography styles */
+    .paper-info h1 {
+      font-family: 'Merriweather', serif;
+      font-weight: 700;
+      color: #0055aa;
+      line-height: 1.3;
+    }
+  
+    h2 {
+      font-family: 'Merriweather', serif;
+      font-weight: 700;
+      color: #000000;
+      line-height: 1.3;
+    }
+  
+    .paper-info h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+  
+    h2 {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      font-weight: 500;
+      font-style: italic;
+    }
+  
+    p {
+      margin-bottom: 1.5rem;
+      font-size: 1.125rem;
+    }
+  
+    /* Layout component styles */
+    .paper-info {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+  
+    .authors {
+      font-size: 1.25rem;
+      color: #333333;
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+  
+    .affiliation {
+      font-size: 1.1rem;
+      color: #333333;
+      font-weight: 600;
+    }
+  
+    section {
+      margin: 3.5rem 0;
+    }
+  
+    /* List styles */
+    ul {
+      margin-left: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+  
+    li {
+      margin-bottom: 1rem;
+    }
+  
+    /* Special element styles */
+    .abstract, .result-box, .conclusion-box {
+      padding: 2rem;
+      background: #ffffff;
+      border-radius: 12px;
+      border: 1px solid #0055aa;
+      margin: 2rem 0;
+    }
+  
+    .abstract {
+      padding: 2rem;
+      background: #0055aa;
+      border-radius: 12px;
+      margin: 2.5rem 0;
+      color: white;
+    }
+  
+    .result-box {
+      border-left: 5px solid #0055aa;
+    }
+  
+    .conclusion-box {
+      border-left: 5px solid #0055aa;
+    }
+  
+    .math {
+      font-family: 'Cambria Math', serif;
+    }
+  
+    /* Responsive styles */
+    @media (max-width: 768px) {
+      .content {
+        padding: 1.5rem;
+      }
+      .paper-info h1 {
+        font-size: 2rem;
+      }
+      h2 {
+        font-size: 1.75rem;
+      }
+      p {
+        font-size: 1.05rem;
+      }
+    }
+  </style>  
+
+</body>
+</html>
