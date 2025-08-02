@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>GPT-1: The Foundation of Modern AI Language Understanding</title>
+
+    <link rel="stylesheet" href="../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../assets/css/chapters.css" />
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
+
+    <!-- MathJax global config (must come BEFORE MathJax) -->
+    <script src="../../assets/js/mathjax-config.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+    <script defer src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"></script>
+</head>
+
+<body>
+    <!-- Issue #35: Persistent Left Navbar -->
+     <nav class="side-nav">
+        <div class="side-nav-controls">
+          <button id="homeBtn" class="btn-toggle" aria-label="Home" onclick="window.location.href='../../index.html'">🏠</button>
+          <span class="nav-divider"></span>
+          <button id="themeToggle" class="btn-toggle" aria-label="Toggle dark mode">🌓</button>
+        </div>
+        <hr class="side-nav-divider">
+        <span class="toc-label"> Papers</span>
+        <div class="toc-books">
+          <div class="toc-book dropdown" open>
+            <button class="toc-book-title dropdown-toggle" aria-expanded="true" aria-controls="training-research-chapters">Training Research</button>
+            <div class="toc-chapters dropdown-content" id="training-research-chapters">
+              <div><a href="gpt1_foundation.html" class="active">GPT-1: Foundation</a></div>
+              <div><a href="lora_fine_tuning.html">LoRA Fine-Tuning</a></div>
+              <!-- Add more training research chapters here as needed -->
+            </div>
+          </div>
+        </div>
+        <hr class="side-nav-divider">
+        <div class="slack-banner">
+          <a
+            href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
+            id="slackButton"
+            target="_blank"
+            rel="noopener"
+            aria-label="Join our Slack Community"
+            data-tooltip="Join Community"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 122.8 122.8"
+              fill="#fff"
+              style="width: 1.5em; height: 1.5em; vertical-align: middle;"
+            >
+              <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
+              <path d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z" />
+              <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
+              <path d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z" />
+              <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
+              <path d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z" />
+              <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
+              <path d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z" />
+            </svg>
+            <span style="margin-left: 0.5em; vertical-align: middle;">Join our Slack</span>
+          </a>
+        </div>
+      </nav>
+
+    <div class="container content">
+            <h1>GPT-1: The Foundation of Modern AI Language Understanding</h1>
+
+            <p class="tagline">
+                The revolutionary paper that launched the era of large language models and transformed AI from narrow tools to general language understanding.
+            </p>
+
+            <section id="introduction">
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>Imagine having to build a completely new car from scratch for every destination you want to visit.</strong>
+                        </p>
+                        <p class="original-text">
+                            <em>That's how AI language understanding worked before GPT-1 - every task needed its own specialized system!</em>
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="the-problem">
+                <h2>1. The Problem: Fragmented AI Language Systems</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>What was wrong with pre-GPT-1 AI systems?</strong></p>
+                        <p class="original-text">
+                            <em>Before 2018, each language task required completely separate systems with thousands of manually labeled examples!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p>The fundamental challenges were:</p>
+                        <ul>
+                            <li><strong>Task Isolation:</strong> Question answering, translation, and sentiment analysis required entirely different architectures</li>
+                            <li><strong>Expensive Data Requirements:</strong> Each system needed thousands of hand-labeled examples</li>
+                            <li><strong>Time-Intensive Development:</strong> Building each system from scratch took months</li>
+                            <li><strong>No Knowledge Transfer:</strong> A medical Q&A system couldn't help with legal document analysis</li>
+                        </ul>
+                        <p><em>It was like having a brilliant doctor who couldn't apply their knowledge to help with basic biology questions!</em></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="revolutionary-solution">
+                <h2>2. The Revolutionary Solution: Two-Stage Learning</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>How did GPT-1 solve this fundamental problem?</strong></p>
+                        <p class="original-text">
+                            <em>OpenAI introduced a two-stage approach inspired by human learning - general education followed by specialization!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p><strong>Stage 1: General Learning (Unsupervised Pre-training)</strong></p>
+                        <ul>
+                            <li>Trained on over 7,000 unpublished books spanning adventure, fantasy, and romance</li>
+                            <li>Single objective: predict the next word in a sentence</li>
+                            <li>Like a child learning to read by consuming diverse literature</li>
+                        </ul>
+
+                        <p><strong>Stage 2: Specialization (Supervised Fine-tuning)</strong></p>
+                        <ul>
+                            <li>Fine-tuned on specific tasks with small amounts of labeled data</li>
+                            <li>Like a medical student specializing in cardiology after mastering general biology</li>
+                            <li>Dramatically reduced data requirements for new tasks</li>
+                        </ul>
+
+                        <svg width="640" height="200" xmlns="http://www.w3.org/2000/svg" style="margin: 1rem 0;">
+                            <!-- Stage 1 -->
+                            <rect x="50" y="50" width="200" height="80" fill="#e3f2fd" stroke="#1976d2" stroke-width="2"/>
+                            <text x="150" y="75" font-size="14" text-anchor="middle" font-weight="bold">Stage 1: Pre-training</text>
+                            <text x="150" y="95" font-size="12" text-anchor="middle">7,000 books</text>
+                            <text x="150" y="110" font-size="12" text-anchor="middle">Predict next word</text>
+
+                            <!-- Arrow -->
+                            <path d="M 270 90 L 320 90" stroke="#333" stroke-width="2" marker-end="url(#arrowhead)"/>
+                            <defs>
+                                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                    <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+                                </marker>
+                            </defs>
+
+                            <!-- Stage 2 -->
+                            <rect x="340" y="50" width="200" height="80" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="2"/>
+                            <text x="440" y="75" font-size="14" text-anchor="middle" font-weight="bold">Stage 2: Fine-tuning</text>
+                            <text x="440" y="95" font-size="12" text-anchor="middle">Task-specific data</text>
+                            <text x="440" y="110" font-size="12" text-anchor="middle">Specialized performance</text>
+
+                            <!-- Benefits -->
+                            <text x="50" y="160" font-size="14" font-weight="bold">Key Benefits:</text>
+                            <text x="50" y="180" font-size="12">• General knowledge from Stage 1 transfers to all tasks</text>
+                            <text x="50" y="195" font-size="12">• Minimal labeled data needed for new tasks</text>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+
+            <section id="why-word-prediction">
+                <h2>3. Why Predicting Words Works: The Hidden Intelligence</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>How does simply predicting the next word create intelligence?</strong></p>
+                        <p class="original-text">
+                            <em>To predict words accurately, an AI must secretly learn grammar, context, and even common sense!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p>To predict the next word successfully, the model must understand:</p>
+                        
+                        <p><strong>Grammar:</strong></p>
+                        <p style="margin-left: 2rem; font-style: italic;">"The cat ___" → needs a verb (sat, ran, jumped)</p>
+
+                        <p><strong>Context:</strong></p>
+                        <p style="margin-left: 2rem; font-style: italic;">"It was raining, so she grabbed her ___" → umbrella</p>
+
+                        <p><strong>Common Sense:</strong></p>
+                        <p style="margin-left: 2rem; font-style: italic;">"After turning the key, the car ___" → started</p>
+
+                        <p><strong>Long-range Dependencies:</strong></p>
+                        <p style="margin-left: 2rem; font-style: italic;">"The doctor who treated my grandmother last year ___" → needs to connect back to "doctor"</p>
+
+                        <p>This simple objective forced the model to learn deep language patterns without explicit instruction, creating a foundation for understanding that could transfer to any language task.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="transformer-architecture">
+                <h2>4. Technical Innovation: The Transformer Architecture</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>What made GPT-1's "brain" different?</strong></p>
+                        <p class="original-text">
+                            <em>GPT-1 used the Transformer - reading entire sentences simultaneously rather than word-by-word!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p><strong>Key Architecture Specifications:</strong></p>
+                        <ul>
+                            <li><strong>12 layers</strong> of processing, each building deeper understanding</li>
+                            <li><strong>768-dimensional</strong> word representations capturing meaning in numerical form</li>
+                            <li><strong>12 attention heads</strong> examining word relationships from multiple perspectives</li>
+                            <li><strong>117 million parameters</strong> total (modest by today's standards)</li>
+                        </ul>
+
+                        <p><strong>The Attention Mechanism:</strong></p>
+                        <p>Think of attention as having 12 different ways to look at a sentence:</p>
+                        <ul>
+                            <li>One head might focus on grammar relationships</li>
+                            <li>Another might track the main subject across the sentence</li>
+                            <li>A third might identify emotional tone</li>
+                            <li>Each head learns to pay attention to different patterns</li>
+                        </ul>
+
+                        <p style="margin: 1rem 0; font-size: 1.2rem; text-align: center;">
+                            <strong>Parallel Processing vs Sequential:</strong>
+                        </p>
+                        <p style="text-align: center; font-style: italic;">
+                            Old LSTMs: Word → Word → Word → Word<br>
+                            Transformer: All words processed simultaneously
+                        </p>
+                        <p><em>Like the difference between reading a book one letter at a time versus seeing the whole page at once!</em></p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="input-problem">
+                <h2>5. Solving the Input Problem: Universal Format</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>How did GPT-1 handle different task formats?</strong></p>
+                        <p class="original-text">
+                            <em>Instead of building separate architectures, GPT-1 converted everything into sequences using delimiter tokens!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p>Different tasks have different input formats, but GPT-1 cleverly standardized them:</p>
+
+                        <p><strong>Question Answering:</strong></p>
+                        <p style="margin-left: 2rem; font-family: monospace; background: #f5f5f5; padding: 0.5rem;">
+                            [Document] $ [Question] $ [Answer Option]
+                        </p>
+
+                        <p><strong>Sentence Comparison:</strong></p>
+                        <p style="margin-left: 2rem; font-family: monospace; background: #f5f5f5; padding: 0.5rem;">
+                            [Sentence 1] $ [Sentence 2]
+                        </p>
+
+                        <p><strong>Text Classification:</strong></p>
+                        <p style="margin-left: 2rem; font-family: monospace; background: #f5f5f5; padding: 0.5rem;">
+                            [Text to classify]
+                        </p>
+
+                        <p><strong>Story Completion:</strong></p>
+                        <p style="margin-left: 2rem; font-family: monospace; background: #f5f5f5; padding: 0.5rem;">
+                            [Story beginning] $ [Ending option 1] | [Ending option 2] | [Ending option 3]
+                        </p>
+
+                        <p>This universal format was like having one adapter that works with any device - elegant and powerful!</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="remarkable-results">
+                <h2>6. Remarkable Results: State-of-the-Art Performance</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>How well did GPT-1 actually perform?</strong></p>
+                        <p class="original-text">
+                            <em>GPT-1 achieved state-of-the-art performance on 9 of 12 language understanding tasks - often beating specialized systems!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p><strong>Performance Improvements:</strong></p>
+                        <ul>
+                            <li><strong>Story Completion:</strong> 8.9% improvement over previous best</li>
+                            <li><strong>Reading Comprehension (RACE):</strong> 5.7% improvement</li>
+                            <li><strong>Textual Entailment:</strong> 1.5% improvement</li>
+                            <li><strong>Overall GLUE Benchmark:</strong> 72.8% vs. previous best of 68.9%</li>
+                        </ul>
+
+                        <p><strong>What Made This Remarkable:</strong></p>
+                        <ul>
+                            <li>GPT-1 often outperformed systems specifically designed for individual tasks</li>
+                            <li>Used the same architecture and approach across all tasks</li>
+                            <li>Required minimal task-specific labeled data</li>
+                            <li>Demonstrated that general language understanding was possible</li>
+                        </ul>
+
+                        <svg width="600" height="250" xmlns="http://www.w3.org/2000/svg" style="margin: 1rem 0;">
+                            <!-- Chart title -->
+                            <text x="300" y="25" font-size="16" font-weight="bold" text-anchor="middle">GPT-1 vs Previous Best Performance</text>
+                            
+                            <!-- Y-axis -->
+                            <line x1="60" y1="50" x2="60" y2="200" stroke="#333" stroke-width="2"/>
+                            <text x="55" y="55" font-size="10" text-anchor="end">100%</text>
+                            <text x="55" y="125" font-size="10" text-anchor="end">75%</text>
+                            <text x="55" y="195" font-size="10" text-anchor="end">50%</text>
+                            
+                            <!-- X-axis -->
+                            <line x1="60" y1="200" x2="550" y2="200" stroke="#333" stroke-width="2"/>
+                            
+                            <!-- Bars for different tasks -->
+                            <!-- Story Completion -->
+                            <rect x="80" y="120" width="30" height="80" fill="#ffcdd2"/>
+                            <rect x="120" y="95" width="30" height="105" fill="#c8e6c9"/>
+                            <text x="125" y="220" font-size="9" text-anchor="middle">Story</text>
+                            
+                            <!-- Reading Comprehension -->
+                            <rect x="180" y="125" width="30" height="75" fill="#ffcdd2"/>
+                            <rect x="220" y="110" width="30" height="90" fill="#c8e6c9"/>
+                            <text x="225" y="220" font-size="9" text-anchor="middle">Reading</text>
+                            
+                            <!-- Textual Entailment -->
+                            <rect x="280" y="130" width="30" height="70" fill="#ffcdd2"/>
+                            <rect x="320" y="125" width="30" height="75" fill="#c8e6c9"/>
+                            <text x="325" y="220" font-size="9" text-anchor="middle">Entailment</text>
+                            
+                            <!-- GLUE Overall -->
+                            <rect x="380" y="135" width="30" height="65" fill="#ffcdd2"/>
+                            <rect x="420" y="105" width="30" height="95" fill="#c8e6c9"/>
+                            <text x="425" y="220" font-size="9" text-anchor="middle">GLUE</text>
+                            
+                            <!-- Legend -->
+                            <rect x="470" y="70" width="15" height="15" fill="#ffcdd2"/>
+                            <text x="490" y="82" font-size="12">Previous Best</text>
+                            <rect x="470" y="90" width="15" height="15" fill="#c8e6c9"/>
+                            <text x="490" y="102" font-size="12">GPT-1</text>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+
+            <section id="emergent-abilities">
+                <h2>7. Surprising Emergent Abilities: Zero-Shot Learning</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>What unexpected abilities did GPT-1 develop?</strong></p>
+                        <p class="original-text">
+                            <em>Without explicit training, GPT-1 developed "zero-shot" capabilities that amazed researchers!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p>GPT-1 spontaneously developed abilities it was never directly taught:</p>
+
+                        <p><strong>😊 Sentiment Analysis:</strong></p>
+                        <ul>
+                            <li>Could distinguish positive from negative text just from reading books</li>
+                            <li>No explicit sentiment labels during training</li>
+                            <li>Learned emotional tone from narrative context</li>
+                        </ul>
+
+                        <p><strong>✅ Grammar Checking:</strong></p>
+                        <ul>
+                            <li>Developed intuitive sense of sentence correctness</li>
+                            <li>Could identify grammatical errors without grammar training</li>
+                            <li>Learned rules from exposure to well-written text</li>
+                        </ul>
+
+                        <p><strong>❓ Question Answering:</strong></p>
+                        <ul>
+                            <li>Could answer basic questions without question-answering training</li>
+                            <li>Learned to extract relevant information from context</li>
+                            <li>Demonstrated reading comprehension abilities</li>
+                        </ul>
+
+                        <p><strong>Why This Mattered:</strong></p>
+                        <p>This emergence of untrained abilities suggested that GPT-1 was learning fundamental language principles rather than just memorizing patterns. It was developing a genuine understanding of language structure and meaning.</p>
+
+                        <p style="font-style: italic; text-align: center; margin: 1rem 0; padding: 1rem; background: #f0f8ff; border-left: 4px solid #1976d2;">
+                            "The model learned to understand, not just to mimic."
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="key-insights">
+                <h2>8. Key Scientific Insights</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>What fundamental principles did GPT-1 reveal?</strong></p>
+                        <p class="original-text">
+                            <em>GPT-1 proved several crucial insights about AI learning that continue to drive modern research!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p><strong>🔄 Transfer Learning Works:</strong></p>
+                        <ul>
+                            <li>Each layer of the pre-trained model contained useful knowledge</li>
+                            <li>Transferring more layers consistently improved performance</li>
+                            <li>Demonstrated hierarchical learning from basic grammar to complex reasoning</li>
+                        </ul>
+
+                        <p><strong>🏗️ Architecture Matters:</strong></p>
+                        <ul>
+                            <li>Transformers outperformed older LSTM models by 5.6 points on average</li>
+                            <li>Proved that having the right "brain structure" is crucial</li>
+                            <li>Parallel processing beats sequential for language understanding</li>
+                        </ul>
+
+                        <p><strong>📚 Scale and Data Quality:</strong></p>
+                        <ul>
+                            <li>Training on books rather than shuffled sentences was important</li>
+                            <li>Long, coherent text taught the model to handle extended context</li>
+                            <li>Quality of training data matters as much as quantity</li>
+                        </ul>
+
+                        <p><strong>📈 The Mathematical Foundation:</strong></p>
+                        <p>The training objective was elegantly simple:</p>
+                        <p style="margin: 1rem 0; font-size: 1.2rem; text-align: center;">
+                            $$ \text{Maximize } P(\text{word} | \text{previous words}) $$
+                        </p>
+
+                        <p>For fine-tuning, they combined objectives:</p>
+                        <p style="margin: 1rem 0; font-size: 1.1rem; text-align: center;">
+                            $$ \text{Total Objective} = \text{Task Objective} + \lambda \times \text{Language Modeling} $$
+                        </p>
+
+                        <p>This balance maintained general language knowledge while learning specific tasks.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="historical-impact">
+                <h2>9. Historical Impact and Legacy</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>How did GPT-1 change the AI landscape?</strong></p>
+                        <p class="original-text">
+                            <em>GPT-1 launched the "large language model" era and established the blueprint for modern AI!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p><strong>Before GPT-1:</strong></p>
+                        <ul>
+                            <li>AI research was fragmented with different techniques for different problems</li>
+                            <li>Word embeddings showed promise but sentence-level understanding remained elusive</li>
+                            <li>Each breakthrough was task-specific and didn't generalize</li>
+                        </ul>
+
+                        <p><strong>After GPT-1:</strong></p>
+                        <p>Every major tech company began developing similar systems:</p>
+                        <ul>
+                            <li><strong>Google:</strong> BERT, T5, PaLM, Gemini</li>
+                            <li><strong>OpenAI:</strong> GPT-2, GPT-3, GPT-4, ChatGPT</li>
+                            <li><strong>Meta:</strong> LLaMA, LLaMA 2</li>
+                            <li><strong>Microsoft:</strong> Turing-NLG, Copilot</li>
+                            <li><strong>Anthropic:</strong> Claude models</li>
+                        </ul>
+
+                        <p><strong>Modern Applications Enabled:</strong></p>
+                        <ul>
+                            <li>🔍 Search engines with natural language understanding</li>
+                            <li>✍️ Writing assistants and content generation</li>
+                            <li>💻 Code completion and programming help</li>
+                            <li>🌐 Advanced translation systems</li>
+                            <li>🤖 Conversational AI and chatbots</li>
+                            <li>📚 Educational tutoring systems</li>
+                        </ul>
+
+                        <p><strong>The Paradigm Shift:</strong></p>
+                        <p>GPT-1 established the dominant paradigm in modern AI: <em>large-scale unsupervised pre-training followed by task-specific fine-tuning</em>. This approach transformed AI from a collection of narrow tools into the foundation for general language understanding we see today.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="conclusion">
+                <h2>10. Conclusion: The Foundation That Changed Everything</h2>
+                <div class="explanation-block">
+                    <div class="original-text-container">
+                        <p><strong>What is GPT-1's lasting legacy?</strong></p>
+                        <p class="original-text">
+                            <em>GPT-1 proved that revolutionary ideas can be elegantly simple - and that AI could learn like humans!</em>
+                        </p>
+                    </div>
+                    <div class="explanation-text">
+                        <p><strong>Key Achievements:</strong></p>
+                        <ul>
+                            <li>Demonstrated that general language abilities emerge from predicting text at scale</li>
+                            <li>Showed that AI systems could learn like humans - general knowledge first, then specialization</li>
+                            <li>Reduced development time and data requirements for new language tasks</li>
+                            <li>Made advanced AI accessible to smaller research teams and companies</li>
+                        </ul>
+
+                        <p><strong>Limitations That Drove Further Innovation:</strong></p>
+                        <ul>
+                            <li>Struggled on very small datasets (like the 2,490 examples for RTE task)</li>
+                            <li>Some specialized systems still outperformed it on specific tasks</li>
+                            <li>Model size was limited by 2018 computational constraints</li>
+                        </ul>
+
+                        <p><strong>The Core Insight:</strong></p>
+                        <p style="font-style: italic; text-align: center; margin: 2rem 0; padding: 1rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border-radius: 8px;">
+                            "By scaling up basic word prediction
