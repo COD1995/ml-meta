@@ -5,13 +5,7 @@
 }
 /* assets/css/layout.css */
 
-/* Page Container */
-.container {
-    width: 90%;
-    max-width: 850px;
-    margin: 0 auto;
-    padding: 0 1rem;
-}
+/* Page Container styles moved to assets/css/base.css */
 
 /* Header */
 header {
