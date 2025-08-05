@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Chapter 0: Prologue</title>
+
+    <!-- Global styles -->
+    <link rel="stylesheet" href="../../../assets/css/base.css" />
+    <link rel="stylesheet" href="../../../assets/css/chapters.css" />
+
+    <!-- Library styles -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
+
+    <!-- MathJax global config (must come BEFORE MathJax) -->
+    <script src="../../../assets/js/mathjax-config.js"></script>
+
+    <!-- Library scripts (deferred) -->
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"
+    ></script>
+  </head>
+
+  <body>
+    <nav class="side-nav">
+      <div class="side-nav-controls">
+        <button
+          id="homeBtn"
+          class="btn-toggle"
+          aria-label="Home"
+          onclick="window.location.href='../../../index.html'"
+        >
+          🏠
+        </button>
+        <span class="nav-divider"></span>
+        <button
+          id="themeToggle"
+          class="btn-toggle"
+          aria-label="Toggle dark mode"
+        >
+          🌓
+        </button>
+      </div>
+      <hr class="side-nav-divider" />
+      <span class="toc-label">📚 Books</span>
+      <div class="toc-books">
+        <div class="toc-book dropdown" open>
+          <button
+            class="toc-book-title dropdown-toggle"
+            aria-expanded="true"
+            aria-controls="algorithms-chapters"
+          >
+            Algorithms (Dasgupta et al.)
+          </button>
+          <div class="toc-chapters dropdown-content" id="algorithms-chapters">
+            <div><a href="00-prologue.html">0. Prologue</a></div>
+            <div>
+              <a href="01-algorithms-with-numbers.html"
+                >1. Algorithms with Numbers</a
+              >
+            </div>
+            <div><a href="04-paths-in-graphs.html">4. Paths in Graphs</a></div>
+            <div>
+              <a href="05-greedy-algorithms.html">5. Greedy Algorithms</a>
+            </div>
+            <div>
+              <a href="06-dynamic-programming.html">6. Dynamic Programming</a>
+            </div>
+            <div>
+              <a href="07-linear-programming.html">7. Linear Programming</a>
+            </div>
+          </div>
+        </div>
+        <div class="toc-book dropdown">
+          <button
+            class="toc-book-title dropdown-toggle"
+            aria-expanded="false"
+            aria-controls="pattern-classification-chapters"
+          >
+            Pattern Classification (Duda et al.)
+          </button>
+          <div
+            class="toc-chapters dropdown-content"
+            id="pattern-classification-chapters"
+            hidden
+          >
+            <div>
+              <a
+                href="../../pattern-classification/chapters/01-introduction.html"
+                >1. Introduction</a
+              >
+            </div>
+            <div>
+              <a
+                href="../../pattern-classification/chapters/02-bayes-decision-theory.html"
+                >2. Bayes Decision Theory</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slack-banner">
+        <a
+          href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
+          id="slackButton"
+          target="_blank"
+          rel="noopener"
+          aria-label="Join our Slack Community"
+          data-tooltip="Join Community"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 122.8 122.8"
+            fill="#fff"
+            style="width: 1.5em; height: 1.5em; vertical-align: middle"
+          >
+            <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
+            <path
+              d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z"
+            />
+            <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
+            <path
+              d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z"
+            />
+            <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
+            <path
+              d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z"
+            />
+            <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
+            <path
+              d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z"
+            />
+          </svg>
+          <span style="margin-left: 0.5em; vertical-align: middle"
+            >Join our Slack</span
+          >
+        </a>
+      </div>
+    </nav>
+
+    <div class="container content">
+      <h1>Chapter 1:Algorithms with numbers</h1>
+      <section id="factoring-primality">
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >One of the main themes of this chapter is the dramatic contrast
+                between two ancient problems that at first seem very
+                similar:</em
+              >
+            </p>
+            <ul>
+              <li>
+                <strong>Factoring:</strong> Given a number <code>N</code>,
+                express it as a product of its prime factors.
+              </li>
+              <li>
+                <strong>Primality:</strong> Given a number <code>N</code>,
+                determine whether it is a prime.
+              </li>
+            </ul>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This introduction highlights two foundational number‐theoretic
+              tasks—breaking a composite number into primes versus simply
+              checking if it’s prime—setting up the surprising gap in their
+              computational difficulty.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >Factoring is hard. Despite centuries of effort by some of the
+                world’s smartest mathematicians and computer scientists, the
+                fastest methods for factoring a number <code>N</code> take time
+                exponential in the number of bits of <code>N</code>.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This paragraph emphasizes that, to date, no algorithm faster than
+              exponential time is known for factoring large integers—making it a
+              famously difficult computational challenge.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >On the other hand, we shall soon see that we can efficiently
+                test whether <code>N</code> is prime! And (it gets even more
+                interesting) this strange disparity between the two intimately
+                related problems, one very hard and the other very easy, lies at
+                the heart of the technology that enables secure communication in
+                today’s global information environment.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              Here the author foreshadows that primality testing admits a
+              polynomial‐time solution, and that the gap between these two tasks
+              underpins public‐key cryptography and modern secure
+              communications.
+            </p>
+          </div>
+        </div>
+
+        <div class="explanation-block">
+          <div class="original-text-container">
+            <p class="original-text">
+              <em
+                >En route to these insights, we need to develop algorithms for a
+                variety of computational tasks involving numbers. We begin with
+                basic arithmetic, an especially appropriate starting point
+                because, as we know, the word algorithms originally applied only
+                to methods for these problems.</em
+              >
+            </p>
+          </div>
+          <div class="explanation-text">
+            <p>
+              This closing sentence explains that to understand factoring vs.
+              primality, we’ll first build up efficient arithmetic
+              routines—recalling that “algorithm” itself once referred only to
+              numerical methods.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section id="basic-arithmetic">
+        <h2>1.1 Basic arithmetic</h2>
+
+        <section id="addition">
+          <h3>1.1.1 Addition</h3>
+
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >We were so young when we learned the standard technique for
+                  addition that we would scarcely have thought to ask why it
+                  works. But let's go back now and take a closer look.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                This introduction reminds us that addition, though second
+                nature, has a precise underlying rationale—one we’ll now examine
+                step by step.
+              </p>
+            </div>
+          </div>
+
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >It is a basic property of decimal numbers that
+                  <strong
+                    >The sum of any three single-digit numbers is at most two
+                    digits long.</strong
+                  >
+                  Quick check: the sum is at most $9+9+9=27$, two digits long.
+                  In fact, this rule holds not just in decimal but in any base
+                  $b\ge2$ (Exercise 1.1). In binary, for instance, the maximum
+                  possible sum of three single-bit numbers is 3, which is a
+                  2-bit number.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                Because adding three digits can never exceed the base’s square,
+                each digit‐wise sum stays within two digits. This fact
+                generalizes across bases and underpins the carry mechanism.
+              </p>
+            </div>
+          </div>
+
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >This simple rule gives us a way to add two numbers in any
+                  base: align their right-hand ends, and then perform a single
+                  right-to-left pass in which the sum is computed digit by
+                  digit, maintaining the overflow as a carry. Since we know each
+                  individual sum is a two-digit number, the carry is always a
+                  single digit, and so at any given step, three single-digit
+                  numbers are added. Here's an example showing the addition
+                  <code>53+35</code> in binary.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                This describes the classic “digit-by-digit plus carry”
+                algorithm: add corresponding digits plus the incoming carry,
+                write down the least significant result, and carry the rest to
+                the next column.
+              </p>
+            </div>
+          </div>
+
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <figure>
+                <img
+                  src="../../../assets/images/algorithms/chpt_1_imgs/addition.png"
+                  alt="Binary addition of 53 and 35 with carries"
+                  width="700"
+                />
+                <figcaption>
+                  Figure 1.1: Binary addition of 53 and 35, illustrating carry
+                  propagation.
+                </figcaption>
+              </figure>
+            </div>
+            <div class="explanation-text">
+              <p>
+                This ASCII illustration shows each column’s sum and carry
+                propagation when adding <code>110101</code> (53) and
+                <code>100011</code> (35), yielding <code>1011000</code> (88).
+              </p>
+            </div>
+          </div>
+
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >Ordinarily we would spell out the algorithm in pseudocode,
+                  but in this case it is so familiar that we do not repeat it.
+                  Instead we move straight to analyzing its efficiency.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                Since the addition routine is universally known, we skip its
+                formal specification and focus on quantifying its runtime.
+              </p>
+            </div>
+          </div>
+
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >Given two binary numbers <code>x</code> and <code>y</code>,
+                  how long does our algorithm take to add them? This is the kind
+                  of question we shall persistently be asking throughout this
+                  book. We want the answer expressed as a function of the size
+                  of the input: the number of bits of <code>x</code> and
+                  <code>y</code>, the number of keystrokes needed to type them
+                  in.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                Here we introduce the key idea of input‐size analysis: runtime
+                expressed in terms of the number of bits in the operands.
+              </p>
+            </div>
+          </div>
+
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >Suppose <code>x</code> and <code>y</code> are each
+                  <code>n</code> bits long; in this chapter we will consistently
+                  use the letter <code>n</code> for the sizes of numbers. Then
+                  the sum of <code>x</code> and <code>y</code> is
+                  <code>n+1</code> bits at most, and each individual bit of this
+                  sum gets computed in a fixed amount of time. The total running
+                  time for the addition algorithm is therefore of the form
+                  <code>c<sub>0</sub> + c<sub>1</sub>n</code>, where
+                  <code>c<sub>0</sub></code> and <code>c<sub>1</sub></code> are
+                  some constants; in other words, it is linear. Instead of
+                  worrying about the precise values of
+                  <code>c<sub>0</sub></code> and <code>c<sub>1</sub></code
+                  >, we will focus on the big picture and denote the running
+                  time as <code>O(n)</code>.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                Since each of the <code>n+1</code> digit‐computations takes
+                constant time, the total cost grows proportionally to
+                <code>n</code>, yielding an <code>O(n)</code> algorithm.
+              </p>
+            </div>
+          </div>
+
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >Now that we have a working algorithm whose running time we
+                  know, our thoughts wander inevitably to the question of
+                  whether there is something even better. Is there a faster
+                  algorithm? (This is another persistent question.) For
+                  addition, the answer is easy: in order to add two
+                  <code>n</code>-bit numbers we must at least read them and
+                  write down the answer, and even that requires
+                  <code>n</code> operations. So the addition algorithm is
+                  optimal, up to multiplicative constants!</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                Because any algorithm must examine every input bit and output
+                bit, no method can beat <code>Θ(n)</code> time apart from
+                constant‐factor improvements—so our linear‐time addition is
+                asymptotically optimal.
+              </p>
+            </div>
+          </div>
+
+          <div class="explanation-block">
+            <div class="original-text-container">
+              <p class="original-text">
+                <em
+                  >Some readers may be confused at this point: Why
+                  <code>O(n)</code> operations? Isn't binary addition something
+                  that computers today perform by just one instruction? There
+                  are two answers. First, it is certainly true that in a single
+                  instruction we can add integers whose size in bits is within
+                  the word length of today's computers—32 perhaps. But, as will
+                  become apparent later in this chapter, it is often useful and
+                  necessary to handle numbers much larger than this, perhaps
+                  several thousand bits long. Adding and multiplying such large
+                  numbers on real computers is very much like performing the
+                  operations bit by bit. Second, when we want to understand
+                  algorithms, it makes sense to study even the basic algorithms
+                  that are encoded in the hardware of today's computers. In
+                  doing so, we shall focus on the bit complexity of the
+                  algorithm, the number of elementary operations on individual
+                  bits—because this accounting reflects the amount of hardware,
+                  transistors and wires, necessary for implementing the
+                  algorithm.</em
+                >
+              </p>
+            </div>
+            <div class="explanation-text">
+              <p>
+                This clarification distinguishes between machine‐word arithmetic
+                (constant‐time on fixed‐width registers) and arbitrary‐precision
+                arithmetic, where cost truly scales with bit length—motivating
+                our focus on bit‐level operations for algorithmic insight.
+              </p>
+            </div>
+          </div>
+        </section>
+      </section>
+
+      <section id="comments">
+        <script
+          src="https://utteranc.es/client.js"
+          repo="COD1995/ml-meta"
+          issue-term="pathname"
+          label="comment"
+          theme="github-light"
+          crossorigin="anonymous"
+          async
+        ></script>
+      </section>
+
+      <footer>
+        <p>
+          © 2025 Bob Guo • 
+          <a
+            href="https://github.com/COD1995/ml-meta"
+            target="_blank"
+            rel="noopener"
+          >
+            View on GitHub
+          </a>
+        </p>
+      </footer>
+    </div>
+    <script type="module" src="../../../assets/js/main.js"></script>
+    <script type="module" src="../../../assets/js/chapter-page.js"></script>
+  </body>
+</html>
