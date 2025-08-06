@@ -8,21 +8,21 @@ The platform is designed for a clean reading experience, with beautiful renderin
 
 ## ✨ Key Features
 
-* **Side-by-Side Explanations**: Presents original text in a distinct block next to a corresponding plain-language explanation, making complex topics easier to digest.
-* **Dynamic Table of Contents**: Each chapter page automatically generates a table of contents in the sidebar based on its sections, allowing for quick navigation.
-* **Professional Math & Code Rendering**: Utilizes **MathJax** for beautiful LaTeX mathematical notation and **pseudocode.js** for cleanly formatted algorithm blocks.
-* **Interactive Navigation**: The main page features collapsible sections for different books, and the chapter view provides persistent navigation.
-* **Integrated Comments**: Each chapter includes a comment section powered by **Utterances**, allowing readers to ask questions and discuss the material using their GitHub accounts.
-* **Responsive Design**: The layout is fully responsive and optimized for reading on desktops, tablets, and mobile devices.
+- **Side-by-Side Explanations**: Presents original text in a distinct block next to a corresponding plain-language explanation, making complex topics easier to digest.
+- **Dynamic Table of Contents**: Each chapter page automatically generates a table of contents in the sidebar based on its sections, allowing for quick navigation.
+- **Professional Math & Code Rendering**: Utilizes **MathJax** for beautiful LaTeX mathematical notation and **pseudocode.js** for cleanly formatted algorithm blocks.
+- **Interactive Navigation**: The main page features collapsible sections for different books, and the chapter view provides persistent navigation.
+- **Integrated Comments**: Each chapter includes a comment section powered by **Utterances**, allowing readers to ask questions and discuss the material using their GitHub accounts.
+- **Responsive Design**: The layout is fully responsive and optimized for reading on desktops, tablets, and mobile devices.
 
 ---
 
 ## 🛠️ Technologies Used
 
-* **Frontend**: HTML5, CSS3 (CSS Grid, Flexbox), Vanilla JavaScript
-* **Mathematical Typesetting**: [MathJax](https://www.mathjax.org/)
-* **Code Formatting**: [pseudocode.js](https://github.com/SaswatPadhi/pseudocode.js)
-* **Comments Engine**: [Utterances](https://utteranc.es/)
+- **Frontend**: HTML5, CSS3 (CSS Grid, Flexbox), Vanilla JavaScript
+- **Mathematical Typesetting**: [MathJax](https://www.mathjax.org/)
+- **Code Formatting**: [pseudocode.js](https://github.com/SaswatPadhi/pseudocode.js)
+- **Comments Engine**: [Utterances](https://utteranc.es/)
 
 ---
 
@@ -31,20 +31,24 @@ The platform is designed for a clean reading experience, with beautiful renderin
 To run a local copy of this project, you can use any simple local web server. No complex build steps are required.
 
 1.  **Clone the repository:**
+
     ```sh
     git clone [https://github.com/COD1995/ml-meta.git](https://github.com/COD1995/ml-meta.git)
     ```
 
 2.  **Navigate to the project directory:**
+
     ```sh
     cd ml-meta
     ```
 
 3.  **Start a local web server.**
     If you have Python 3 installed, you can use its built-in server:
+
     ```sh
     python -m http.server
     ```
+
     Alternatively, you can use the [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension for VS Code.
 
 4.  **Open the project in your browser:**
@@ -75,21 +79,20 @@ The project is organized with a straightforward file structure:
 └── index.html               # The main landing page of the site
 
 ```
+
 ---
 
 ## How It Works
 
 The project's interactivity is powered by a small set of client-side JavaScript files.
 
-* `assets/js/main.js`: This script runs on every chapter page. It scans the main content for `<h2>` and `<h3>` tags, automatically generates anchor IDs for them, and populates the Table of Contents (`#toc-list`) in the sidebar with corresponding links.
-* **Inline Scripts**: The HTML files contain small scripts to initialize and render **MathJax** and **pseudocode.js**, ensuring that mathematical formulas and algorithms are displayed correctly after the page content is loaded.
+- `assets/js/main.js`: This script runs on every chapter page. It scans the main content for `<h2>` and `<h3>` tags, automatically generates anchor IDs for them, and populates the Table of Contents (`#toc-list`) in the sidebar with corresponding links.
+- **Inline Scripts**: The HTML files contain small scripts to initialize and render **MathJax** and **pseudocode.js**, ensuring that mathematical formulas and algorithms are displayed correctly after the page content is loaded.
 
 ## Adding New Content Pages
 
-To increase collaborative efforts, we have provided a index-page.js script that will automatically update just the home page's main navigation. This will be built out to update sitewide navigation information. 
+To increase collaborative efforts, we have provided a index-page.js script that will automatically update just the home page's main navigation. This will be built out to update sitewide navigation information.
 
 Once you place your completed HTML file into its correct folder, go to the main project folder and run this in your CLI's node.js environment: `node assets/js/index-page.js`
 
-This will update your local index-content.html to now include your entry updated and styled correctly. 
-
-## It is a requirement to perform these steps before a contributuion is accepted
+This will update your local index-content.html to now include your entry updated and styled correctly.

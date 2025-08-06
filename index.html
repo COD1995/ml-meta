@@ -12,7 +12,7 @@
 
     <!-- Styles for the book list -->
     <link rel="stylesheet" href="assets/css/books.css" />
-    <link rel="stylesheet" href="assets/css/leaderboard.css"/>
+    <link rel="stylesheet" href="assets/css/leaderboard.css" />
   </head>
 
   <body>
@@ -20,19 +20,79 @@
     <nav class="side-nav">
       <!-- Button group for theme/expand/collapse toggle -->
       <div class="side-nav-controls">
-        <button id="themeToggle" class="btn-toggle" aria-label="Toggle dark mode" style="background: none; border: none; cursor: pointer; font-size: .9em; display: flex; align-items: center;">🌓</button>
-        <span class="nav-divider" style="display: inline-block; width: 1px; height: 1.5em; background: var(--border-color, #ddd); margin: 0"></span>
-        <button id="expandAll" class="btn-toggle" aria-label="Expand all sections" style="background: none; border: none; cursor: pointer; font-size: .9em; display: flex; align-items: center;">⬇️</button>
-        <span class="nav-divider" style="display: inline-block; width: 1px; height: 1.5em; background: var(--border-color, #ddd); margin: 0"></span>
-        <button id="collapseAll" class="btn-toggle" aria-label="Collapse all sections" style="background: none; border: none; cursor: pointer; font-size: .9em; display: flex; align-items: center;">⬆️</button>
+        <button
+          id="themeToggle"
+          class="btn-toggle"
+          aria-label="Toggle dark mode"
+          style="
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+          "
+        >
+          🌓
+        </button>
+        <span
+          class="nav-divider"
+          style="
+            display: inline-block;
+            width: 1px;
+            height: 1.5em;
+            background: var(--border-color, #ddd);
+            margin: 0;
+          "
+        ></span>
+        <button
+          id="expandAll"
+          class="btn-toggle"
+          aria-label="Expand all sections"
+          style="
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+          "
+        >
+          ⬇️
+        </button>
+        <span
+          class="nav-divider"
+          style="
+            display: inline-block;
+            width: 1px;
+            height: 1.5em;
+            background: var(--border-color, #ddd);
+            margin: 0;
+          "
+        ></span>
+        <button
+          id="collapseAll"
+          class="btn-toggle"
+          aria-label="Collapse all sections"
+          style="
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+          "
+        >
+          ⬆️
+        </button>
       </div>
-      <hr class="side-nav-divider">
+      <hr class="side-nav-divider" />
       <a href="#math-foundations">📐 Math Foundations</a>
       <a href="#books">📚 Books</a>
       <a href="#papers">📄 Papers</a>
       <a href="#main-contributors">🌟 Main Contributors</a>
       <a href="#call-for-contribution">🤝 Join the Community</a>
-      <hr class="side-nav-divider">
+      <hr class="side-nav-divider" />
       <!-- Slack banner below nav links -->
       <div class="slack-banner">
         <a
@@ -49,19 +109,27 @@
             fill="#fff"
           >
             <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
-            <path d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z" />
+            <path
+              d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z"
+            />
             <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
-            <path d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z" />
+            <path
+              d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z"
+            />
             <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
-            <path d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z" />
+            <path
+              d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z"
+            />
             <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
-            <path d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z" />
+            <path
+              d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z"
+            />
           </svg>
           <span>Join our Slack</span>
         </a>
       </div>
     </nav>
-    <div class="container" style="padding: .7rem 2.15rem; margin: 1.5rem auto;">
+    <div class="container" style="padding: 0.7rem 2.15rem; margin: 1.5rem auto">
       <header>
         <h1>Machine Learning Mastery</h1>
         <p class="tagline">
@@ -71,9 +139,8 @@
         </p>
       </header>
 
-      <nav>
-       <!-- Main content navigation generated by Node.js script -->
-       <!--#include file="index-content.html" -->
+      <nav id="mainNav">
+        <!-- Main content navigation generated by script -->
       </nav>
 
       <!-- ✧ Main Contributors ------------------------------------------------ -->
@@ -133,7 +200,13 @@
             </figure>
 
             <p class="bio">
-              As a M.S. candidate in Mechanical Engineering, Kristopher Kodweis engineers intelligent computer vision systems for mobile platforms. His approach is shaped by a background in visual communication design, photography, and woodworking, focusing on innate human-centered principles. Kristopher creates technology that is robust and intuitive, aiming for AI tools that are seamless extensions of human capability.
+              As a M.S. candidate in Mechanical Engineering, Kristopher Kodweis
+              engineers intelligent computer vision systems for mobile
+              platforms. His approach is shaped by a background in visual
+              communication design, photography, and woodworking, focusing on
+              innate human-centered principles. Kristopher creates technology
+              that is robust and intuitive, aiming for AI tools that are
+              seamless extensions of human capability.
             </p>
             <!-- No personal site yet – omit link -->
           </li>
@@ -148,8 +221,6 @@
           area for improvement? Feel free to open an issue on GitHub or join our
           community on Slack to discuss ideas.
         </p>
-
-        <p>Please read this carefully before contributing</p>
 
         <div id="github-heatmap"></div>
 
@@ -175,7 +246,19 @@
             target="_blank"
             rel="noopener"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" style="margin-right:0.5em; vertical-align:middle;"><path fill="#fff" d="M12 2C6.477 2 2 6.484 2 12.012c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.091-.646.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.254-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 7.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.747-1.025 2.747-1.025.546 1.378.202 2.396.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.579.688.481C19.138 20.188 22 16.437 22 12.012 22 6.484 17.523 2 12 2Z"/></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 24 24"
+              fill="none"
+              style="margin-right: 0.5em; vertical-align: middle"
+            >
+              <path
+                fill="#fff"
+                d="M12 2C6.477 2 2 6.484 2 12.012c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.091-.646.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.254-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 7.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.747-1.025 2.747-1.025.546 1.378.202 2.396.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.579.688.481C19.138 20.188 22 16.437 22 12.012 22 6.484 17.523 2 12 2Z"
+              />
+            </svg>
             Contribute
           </a>
           <a
@@ -192,7 +275,48 @@
             target="_blank"
             rel="noopener"
           >
-          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 122.8 122.8" style="margin-right:0.5em; vertical-align:middle;"><g><path fill="#ffffff" d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z"/><path fill="#ffffff" d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z"/><path fill="#ffffff" d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z"/><path fill="#ffffff" d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z"/><path fill="#ffffff" d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" /><path fill="#ffffff" d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z" /><path fill="#ffffff" d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" /><path fill="#ffffff" d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z" /></g></svg>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 122.8 122.8"
+              style="margin-right: 0.5em; vertical-align: middle"
+            >
+              <g>
+                <path
+                  fill="#ffffff"
+                  d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z"
+                />
+                <path
+                  fill="#ffffff"
+                  d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z"
+                />
+                <path
+                  fill="#ffffff"
+                  d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z"
+                />
+                <path
+                  fill="#ffffff"
+                  d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z"
+                />
+                <path
+                  fill="#ffffff"
+                  d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z"
+                />
+                <path
+                  fill="#ffffff"
+                  d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z"
+                />
+                <path
+                  fill="#ffffff"
+                  d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z"
+                />
+                <path
+                  fill="#ffffff"
+                  d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z"
+                />
+              </g>
+            </svg>
             Join our Slack
           </a>
         </div>
@@ -215,6 +339,8 @@
       </footer>
     </div>
 
+    <script src="assets/js/main-nav-data.js" defer></script>
+    <script src="assets/js/build-main-nav.js" defer></script>
     <script src="assets/js/main.js" defer></script>
   </body>
 </html>
