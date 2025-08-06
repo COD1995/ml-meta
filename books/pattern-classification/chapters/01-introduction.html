@@ -10,292 +10,816 @@
     <link rel="stylesheet" href="../../../assets/css/chapters.css" />
 
     <!-- Library styles -->
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
 
     <!-- MathJax global config (must come BEFORE MathJax) -->
     <script src="../../../assets/js/mathjax-config.js"></script>
 
     <!-- Library scripts (deferred) -->
-    <script defer
-            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script defer
-            src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"></script>
-    <script defer
-            src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
-    <script defer
-            src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"
+    ></script>
   </head>
 
   <body>
     <nav class="side-nav">
-        <div class="side-nav-controls">
-          <button id="homeBtn" class="btn-toggle" aria-label="Home" onclick="window.location.href='../../../index.html'">🏠</button>
-          <span class="nav-divider"></span>
-          <button id="themeToggle" class="btn-toggle" aria-label="Toggle dark mode">🌓</button>
-        </div>
-        <hr class="side-nav-divider">
-        <!-- everything below is built by build-side-nav.js -->
-        <div id="bookNav"></div>
-        <hr class="side-nav-divider">
-        <div class="slack-banner">
-          <a
-            href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
-            id="slackButton"
-            target="_blank"
-            rel="noopener"
-            aria-label="Join our Slack Community"
-            data-tooltip="Join Community"
+      <div class="side-nav-controls">
+        <button
+          id="homeBtn"
+          class="btn-toggle"
+          aria-label="Home"
+          onclick="location.href='../../../index.html'"
+        >
+          🏠
+        </button>
+        <span class="nav-divider"></span>
+        <button
+          id="themeToggle"
+          class="btn-toggle"
+          aria-label="Toggle dark mode"
+        >
+          🌓
+        </button>
+      </div>
+
+      <hr class="side-nav-divider" />
+
+      <!-- everything below is built by build-side-nav.js -->
+      <div id="bookNav"></div>
+
+      <hr class="side-nav-divider" />
+
+      <!-- Slack banner (unchanged) -->
+      <div class="slack-banner">
+        <a
+          href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
+          id="slackButton"
+          target="_blank"
+          rel="noopener"
+          aria-label="Join our Slack Community"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 122.8 122.8"
+            fill="#fff"
+            style="width: 1.5em; height: 1.5em; vertical-align: middle"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 122.8 122.8"
-              fill="#fff"
-              style="width: 1.5em; height: 1.5em; vertical-align: middle;"
+            <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
+            <path
+              d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z"
+            />
+            <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
+            <path
+              d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z"
+            />
+            <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
+            <path
+              d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z"
+            />
+            <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
+            <path
+              d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z"
+            />
+          </svg>
+          <span style="margin-left: 0.5em; vertical-align: middle"
+            >Join our Slack</span
+          >
+        </a>
+      </div>
+    </nav>
+    <!-- Main content -->
+    <div class="container content">
+      <h1>
+        <strong>Chapter 1: Introduction to Pattern Classification</strong>
+      </h1>
+      <div class="explanation-block">
+        <div class="original-text-container">
+          <p class="original-text">
+            <em
+              >The case with which we recognize a face, understand spoken words,
+              read handwritten characters, identify our car keys in our pocket
+              by feel, and decide whether an apple is ripe by its smell belies
+              the astoundingly complex processes that underlie these acts of
+              pattern recognition. Pattern recognition—the act of taking in raw
+              data and making an action based on the category of the
+              patterns—has been critical for our survival, and over the past
+              tens of millions of years we have evolved highly sophisticated
+              neural and cognitive systems for such tasks.</em
             >
-              <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
-              <path d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z" />
-              <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
-              <path d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z" />
-              <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
-              <path d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z" />
-              <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
-              <path d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z" />
-            </svg>
-            <span style="margin-left: 0.5em; vertical-align: middle;">Join our Slack</span>
-          </a>
+          </p>
         </div>
-      </nav>
-        <!-- Main content -->
-      <div class="container content">
-            <h1><strong>Chapter 1: Introduction to Pattern Classification</strong></h1>
-            <div class="explanation-block">
-                <div class="original-text-container">
-                    <p class="original-text"><em>The case with which we recognize a face, understand spoken words, read handwritten characters, identify our car keys in our pocket by feel, and decide whether an apple is ripe by its smell belies the astoundingly complex processes that underlie these acts of pattern recognition. Pattern recognition—the act of taking in raw data and making an action based on the category of the patterns—has been critical for our survival, and over the past tens of millions of years we have evolved highly sophisticated neural and cognitive systems for such tasks.</em></p>
-                </div>
-                <div class="explanation">
-                    <p>This introductory paragraph sets the stage for the book, highlighting the seemingly effortless nature of human pattern recognition in everyday tasks. It then defines pattern recognition as the process of interpreting raw data to categorize patterns and emphasizes its evolutionary importance for survival, leading to the development of complex neural and cognitive systems in humans.</p>
-                </div>
-            </div>
+        <div class="explanation">
+          <p>
+            This introductory paragraph sets the stage for the book,
+            highlighting the seemingly effortless nature of human pattern
+            recognition in everyday tasks. It then defines pattern recognition
+            as the process of interpreting raw data to categorize patterns and
+            emphasizes its evolutionary importance for survival, leading to the
+            development of complex neural and cognitive systems in humans.
+          </p>
+        </div>
+      </div>
 
-            <div class="explanation-block">
-                <div class="original-text-container">
-                    <p><strong>Machine Perception</strong></p>
-                    <p class="original-text"><em>It is natural that we should seek to design and build machines that can recognize patterns. From automated speech recognition, fingerprint identification, optical character recognition, DNA sequence identification, and much more, it is clear that reliable, accurate pattern recognition by machine would be immensely useful. Moreover, in solving the myriad problems required to build such systems, we gain deeper understanding and appreciation for pattern recognition systems in the natural world—most particularly in humans. For some problems such as speech and visual recognition, our design efforts may in fact be influenced by knowledge of how these are solved in nature, both in the algorithms we employ and in the design of special-purpose hardware.</em></p>
-                </div>
-                <div class="explanation">
-                    <p>This paragraph explains the motivation behind designing machines capable of pattern recognition. It lists several applications where machine-based pattern recognition is highly beneficial, such as automated speech recognition and fingerprint identification. Furthermore, it suggests that the process of building these systems can enhance our understanding of natural pattern recognition systems, particularly in humans. The text also notes that our design choices for machine perception, especially in areas like speech and visual recognition, might be influenced by how these problems are naturally solved and by the development of specialized hardware.</p>
-                </div>
-            </div>
+      <div class="explanation-block">
+        <div class="original-text-container">
+          <p><strong>Machine Perception</strong></p>
+          <p class="original-text">
+            <em
+              >It is natural that we should seek to design and build machines
+              that can recognize patterns. From automated speech recognition,
+              fingerprint identification, optical character recognition, DNA
+              sequence identification, and much more, it is clear that reliable,
+              accurate pattern recognition by machine would be immensely useful.
+              Moreover, in solving the myriad problems required to build such
+              systems, we gain deeper understanding and appreciation for pattern
+              recognition systems in the natural world—most particularly in
+              humans. For some problems such as speech and visual recognition,
+              our design efforts may in fact be influenced by knowledge of how
+              these are solved in nature, both in the algorithms we employ and
+              in the design of special-purpose hardware.</em
+            >
+          </p>
+        </div>
+        <div class="explanation">
+          <p>
+            This paragraph explains the motivation behind designing machines
+            capable of pattern recognition. It lists several applications where
+            machine-based pattern recognition is highly beneficial, such as
+            automated speech recognition and fingerprint identification.
+            Furthermore, it suggests that the process of building these systems
+            can enhance our understanding of natural pattern recognition
+            systems, particularly in humans. The text also notes that our design
+            choices for machine perception, especially in areas like speech and
+            visual recognition, might be influenced by how these problems are
+            naturally solved and by the development of specialized hardware.
+          </p>
+        </div>
+      </div>
 
-            <div class="explanation-block">
-                <div class="original-text-container">
-                    <p><strong>An Intuitive Model: Fish Sorting</strong></p>
-                    <p class="original-text"><em>To illustrate the complexity of some of the types of problems involved, let us consider the following imaginary and somewhat fanciful example. Suppose that a fish-packing plant wants to automate the process of sorting incoming fish on a conveyor belt according to species. As a pilot project it is decided to try to separate sea bass from salmon using optical sensing. We set up a camera, take some sample images, and begin to note several physical features: between the two types of fish, length, lightness, width, number and shape of fins, position of the mouth, and so on—and these suggest features to explore for use in our classifier. We also notice noise or variations in the images—variations in lighting, position of the fish on the conveyor, even “state” due to the electronics of the camera itself.</em></p>
-                </div>
-                <div class="explanation">
-                    <p>This section introduces a simple, illustrative example of fish sorting to highlight the complexities of pattern recognition. Here's a breakdown:</p>
-                    <ul>
-                        <li>**Problem:** Automating the sorting of sea bass and salmon on a conveyor belt using optical sensing.</li>
-                        <li>**Initial Observations:** Several physical features are noted that differentiate the two fish types, including:
-                            <ul>
-                                <li>Length</li>
-                                <li>Lightness</li>
-                                <li>Width</li>
-                                <li>Number and shape of fins</li>
-                                <li>Position of the mouth</li>
-                            </ul>
-                        </li>
-                        <li>**Challenges (Noise/Variations):** The example also acknowledges real-world complications that introduce variability into the image data, such as:
-                            <ul>
-                                <li>Variations in lighting</li>
-                                <li>Changes in the fish's position on the conveyor</li>
-                                <li>Electronic "state" of the camera</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <p>These observations lead to the idea of using these features for a classifier, while also recognizing the presence of noise that must be accounted for.</p>
-                </div>
-            </div>
+      <div class="explanation-block">
+        <div class="original-text-container">
+          <p><strong>An Intuitive Model: Fish Sorting</strong></p>
+          <p class="original-text">
+            <em
+              >To illustrate the complexity of some of the types of problems
+              involved, let us consider the following imaginary and somewhat
+              fanciful example. Suppose that a fish-packing plant wants to
+              automate the process of sorting incoming fish on a conveyor belt
+              according to species. As a pilot project it is decided to try to
+              separate sea bass from salmon using optical sensing. We set up a
+              camera, take some sample images, and begin to note several
+              physical features: between the two types of fish, length,
+              lightness, width, number and shape of fins, position of the mouth,
+              and so on—and these suggest features to explore for use in our
+              classifier. We also notice noise or variations in the
+              images—variations in lighting, position of the fish on the
+              conveyor, even “state” due to the electronics of the camera
+              itself.</em
+            >
+          </p>
+        </div>
+        <div class="explanation">
+          <p>
+            This section introduces a simple, illustrative example of fish
+            sorting to highlight the complexities of pattern recognition. Here's
+            a breakdown:
+          </p>
+          <ul>
+            <li>
+              **Problem:** Automating the sorting of sea bass and salmon on a
+              conveyor belt using optical sensing.
+            </li>
+            <li>
+              **Initial Observations:** Several physical features are noted that
+              differentiate the two fish types, including:
+              <ul>
+                <li>Length</li>
+                <li>Lightness</li>
+                <li>Width</li>
+                <li>Number and shape of fins</li>
+                <li>Position of the mouth</li>
+              </ul>
+            </li>
+            <li>
+              **Challenges (Noise/Variations):** The example also acknowledges
+              real-world complications that introduce variability into the image
+              data, such as:
+              <ul>
+                <li>Variations in lighting</li>
+                <li>Changes in the fish's position on the conveyor</li>
+                <li>Electronic "state" of the camera</li>
+              </ul>
+            </li>
+          </ul>
+          <p>
+            These observations lead to the idea of using these features for a
+            classifier, while also recognizing the presence of noise that must
+            be accounted for.
+          </p>
+        </div>
+      </div>
 
-            <div class="explanation-block">
-                <div class="original-text-container">
-                    <p><strong>Preprocessing and Feature Extraction in Fish Sorting</strong></p>
-                    <p class="original-text"><em>Given that there may be differences between the population of sea bass and that of salmon, we view them as having different models—different descriptions, which are typically mathematical in form. The overarching goal and approach in pattern classification is to hypothesis the class of these models, process the sensed data to eliminate noise (not due to the models), and for any sensed pattern choose the model that correspond best. Any techniques that further this aim should be in the conceptual toolbox of the designer of pattern recognition systems.</em></p>
-                    <p class="original-text"><em>Our prototype system to perform this very specific task might well have the form shown in Fig. 1.1. First the camera captures an image of the fish. Next, the camera’s signals are preprocessed to simplify subsequent operations, without losing relevant information. In particular, we might use a segmentation operation in which the images of different fish are somehow isolated from one another and from the background. The information from a single fish is then sent to a feature extractor, whose purpose is to reduce the data by measuring certain “features” or “properties.”</em></p>
-                </div>
-                <div class="explanation">
-                    <p>This paragraph introduces the concepts of "models" for different fish populations (sea bass vs. salmon) and outlines the general approach in pattern classification. It emphasizes the need to hypothesize class models, process data to remove noise, and select the best corresponding model for a given pattern. The text then describes the initial stages of a prototype fish sorting system, as depicted in Fig. 1.1:</p>
-                    <ol>
-                        <li>**Image Capture:** A camera captures an image of the fish.</li>
-                        <li>**Preprocessing:** The camera's signals undergo preprocessing to simplify subsequent operations. This includes:
-                            <ul>
-                                <li>**Segmentation:** Isolating images of individual fish from each other and from the background.</li>
-                            </ul>
-                        </li>
-                        <li>**Feature Extraction:** The segmented information from a single fish is then passed to a feature extractor. The purpose of this step is to reduce the amount of data by measuring specific "features" or "properties" of the fish that are relevant for classification.</li>
-                    </ol>
-                    <figure>
-                        <img src="http://googleusercontent.com/file_content/0" alt="Figure 1.1: The objects to be classified are first sensed by a transducer (camera), whose signals are preprocessed. Next the features are extracted and finally the classification is emitted, here either “salmon” or “sea bass”. Although the information flow is shown going from left to right, the classification can be thought of as applying Bayesian decision theory, or some other sophisticated method of classification.">
-                        <figcaption>Figure 1.1: The objects to be classified are first sensed by a transducer (camera), whose signals are preprocessed. Next the features are extracted and finally the classification is emitted, here either “salmon” or “sea bass”. Although the information flow is shown going from left to right, the classification can be thought of as applying Bayesian decision theory, or some other sophisticated method of classification.</figcaption>
-                    </figure>
-                </div>
-            </div>
+      <div class="explanation-block">
+        <div class="original-text-container">
+          <p>
+            <strong
+              >Preprocessing and Feature Extraction in Fish Sorting</strong
+            >
+          </p>
+          <p class="original-text">
+            <em
+              >Given that there may be differences between the population of sea
+              bass and that of salmon, we view them as having different
+              models—different descriptions, which are typically mathematical in
+              form. The overarching goal and approach in pattern classification
+              is to hypothesis the class of these models, process the sensed
+              data to eliminate noise (not due to the models), and for any
+              sensed pattern choose the model that correspond best. Any
+              techniques that further this aim should be in the conceptual
+              toolbox of the designer of pattern recognition systems.</em
+            >
+          </p>
+          <p class="original-text">
+            <em
+              >Our prototype system to perform this very specific task might
+              well have the form shown in Fig. 1.1. First the camera captures an
+              image of the fish. Next, the camera’s signals are preprocessed to
+              simplify subsequent operations, without losing relevant
+              information. In particular, we might use a segmentation operation
+              in which the images of different fish are somehow isolated from
+              one another and from the background. The information from a single
+              fish is then sent to a feature extractor, whose purpose is to
+              reduce the data by measuring certain “features” or
+              “properties.”</em
+            >
+          </p>
+        </div>
+        <div class="explanation">
+          <p>
+            This paragraph introduces the concepts of "models" for different
+            fish populations (sea bass vs. salmon) and outlines the general
+            approach in pattern classification. It emphasizes the need to
+            hypothesize class models, process data to remove noise, and select
+            the best corresponding model for a given pattern. The text then
+            describes the initial stages of a prototype fish sorting system, as
+            depicted in Fig. 1.1:
+          </p>
+          <ol>
+            <li>**Image Capture:** A camera captures an image of the fish.</li>
+            <li>
+              **Preprocessing:** The camera's signals undergo preprocessing to
+              simplify subsequent operations. This includes:
+              <ul>
+                <li>
+                  **Segmentation:** Isolating images of individual fish from
+                  each other and from the background.
+                </li>
+              </ul>
+            </li>
+            <li>
+              **Feature Extraction:** The segmented information from a single
+              fish is then passed to a feature extractor. The purpose of this
+              step is to reduce the amount of data by measuring specific
+              "features" or "properties" of the fish that are relevant for
+              classification.
+            </li>
+          </ol>
+          <figure>
+            <img
+              src="http://googleusercontent.com/file_content/0"
+              alt="Figure 1.1: The objects to be classified are first sensed by a transducer (camera), whose signals are preprocessed. Next the features are extracted and finally the classification is emitted, here either “salmon” or “sea bass”. Although the information flow is shown going from left to right, the classification can be thought of as applying Bayesian decision theory, or some other sophisticated method of classification."
+            />
+            <figcaption>
+              Figure 1.1: The objects to be classified are first sensed by a
+              transducer (camera), whose signals are preprocessed. Next the
+              features are extracted and finally the classification is emitted,
+              here either “salmon” or “sea bass”. Although the information flow
+              is shown going from left to right, the classification can be
+              thought of as applying Bayesian decision theory, or some other
+              sophisticated method of classification.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
 
-            <div class="explanation-block">
-                <div class="original-text-container">
-                    <p><strong>Training Samples and Choosing Features (Length)</strong></p>
-                    <p class="original-text"><em>The preprocessor might automatically adjust for average light level, or threshold the image to remove the background of the conveyor belt, and so forth. For the moment, let us pass over how the images of the fish might be segmented and consider how the feature extractor and classifier might be designed. Suppose somebody at the fish plant tells us that a sea bass is generally longer than a salmon. Then, these give us our tentative models for the fish. Sea bass have some typical length, and this is longer than that of salmon. Then length becomes an obvious feature, and we might attempt to classify the fish merely by seeing whether or not the length of a fish exceeds some critical value $l^*$. To do so, we would need to obtain design or training samples of the different types of fish, make length measurements, and inspect the results.</em></p>
-                    <p class="original-text"><em>Suppose that we do this and obtain the histograms shown in Fig. 1.2. These disappointing histograms bear out the statement that sea bass are somewhat longer than salmon, on average, but it is clear that this single criterion is quite poor; no matter how we choose $l^*$, we cannot reliably separate sea bass from salmon by length alone.</em></p>
-                </div>
-                <div class="explanation">
-                    <p>This paragraph focuses on the practical steps of designing a classifier, moving from image preprocessing to selecting relevant features for classification. Here's a breakdown of the key points:</p>
-                    <ul>
-                        <li>**Preprocessor Functions:** The preprocessor performs tasks like adjusting for light levels and removing background noise to prepare images for further analysis.</li>
-                        <li>**Feature Selection (Length):** Based on anecdotal evidence that sea bass are generally longer than salmon, length is chosen as a potential feature for classification. This suggests a simple classification rule: if a fish's length exceeds a critical value ($l^*$), classify it as sea bass; otherwise, as salmon.</li>
-                        <li>**Training Samples:** To determine an effective $l^*$, the need for "design or training samples" is introduced. This involves collecting data (fish images), measuring their lengths, and analyzing the results.</li>
-                        <li>**Limitations of Length as a Feature:** The paragraph then presents the results of this analysis, referring to histograms in Fig. 1.2. These histograms show that while sea bass are indeed longer on average, there's significant overlap in the length distributions, making length alone an unreliable criterion for separating the two fish types. This highlights the challenge of feature selection when there's variability and overlap between classes.</li>
-                    </ul>
-                    <figure>
-                        <img src="http://googleusercontent.com/file_content/3" alt="Figure 1.2: Histograms for the length feature for the two categories. No single threshold value of the length will serve to unambiguously discriminate between the two categories; using length alone, we will have some errors. The value l* marked will lead to the smallest number of errors, on average.">
-                        <figcaption>Figure 1.2: Histograms for the length feature for the two categories. No single threshold value of the length will serve to unambiguously discriminate between the two categories; using length alone, we will have some errors. The value $l^*$ marked will lead to the smallest number of errors, on average.</figcaption>
-                    </figure>
-                </div>
-            </div>
+      <div class="explanation-block">
+        <div class="original-text-container">
+          <p>
+            <strong>Training Samples and Choosing Features (Length)</strong>
+          </p>
+          <p class="original-text">
+            <em
+              >The preprocessor might automatically adjust for average light
+              level, or threshold the image to remove the background of the
+              conveyor belt, and so forth. For the moment, let us pass over how
+              the images of the fish might be segmented and consider how the
+              feature extractor and classifier might be designed. Suppose
+              somebody at the fish plant tells us that a sea bass is generally
+              longer than a salmon. Then, these give us our tentative models for
+              the fish. Sea bass have some typical length, and this is longer
+              than that of salmon. Then length becomes an obvious feature, and
+              we might attempt to classify the fish merely by seeing whether or
+              not the length of a fish exceeds some critical value $l^*$. To do
+              so, we would need to obtain design or training samples of the
+              different types of fish, make length measurements, and inspect the
+              results.</em
+            >
+          </p>
+          <p class="original-text">
+            <em
+              >Suppose that we do this and obtain the histograms shown in Fig.
+              1.2. These disappointing histograms bear out the statement that
+              sea bass are somewhat longer than salmon, on average, but it is
+              clear that this single criterion is quite poor; no matter how we
+              choose $l^*$, we cannot reliably separate sea bass from salmon by
+              length alone.</em
+            >
+          </p>
+        </div>
+        <div class="explanation">
+          <p>
+            This paragraph focuses on the practical steps of designing a
+            classifier, moving from image preprocessing to selecting relevant
+            features for classification. Here's a breakdown of the key points:
+          </p>
+          <ul>
+            <li>
+              **Preprocessor Functions:** The preprocessor performs tasks like
+              adjusting for light levels and removing background noise to
+              prepare images for further analysis.
+            </li>
+            <li>
+              **Feature Selection (Length):** Based on anecdotal evidence that
+              sea bass are generally longer than salmon, length is chosen as a
+              potential feature for classification. This suggests a simple
+              classification rule: if a fish's length exceeds a critical value
+              ($l^*$), classify it as sea bass; otherwise, as salmon.
+            </li>
+            <li>
+              **Training Samples:** To determine an effective $l^*$, the need
+              for "design or training samples" is introduced. This involves
+              collecting data (fish images), measuring their lengths, and
+              analyzing the results.
+            </li>
+            <li>
+              **Limitations of Length as a Feature:** The paragraph then
+              presents the results of this analysis, referring to histograms in
+              Fig. 1.2. These histograms show that while sea bass are indeed
+              longer on average, there's significant overlap in the length
+              distributions, making length alone an unreliable criterion for
+              separating the two fish types. This highlights the challenge of
+              feature selection when there's variability and overlap between
+              classes.
+            </li>
+          </ul>
+          <figure>
+            <img
+              src="http://googleusercontent.com/file_content/3"
+              alt="Figure 1.2: Histograms for the length feature for the two categories. No single threshold value of the length will serve to unambiguously discriminate between the two categories; using length alone, we will have some errors. The value l* marked will lead to the smallest number of errors, on average."
+            />
+            <figcaption>
+              Figure 1.2: Histograms for the length feature for the two
+              categories. No single threshold value of the length will serve to
+              unambiguously discriminate between the two categories; using
+              length alone, we will have some errors. The value $l^*$ marked
+              will lead to the smallest number of errors, on average.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
 
-            <div class="explanation-block">
-                <div class="original-text-container">
-                    <p><strong>Considering Lightness and Decision Boundary</strong></p>
-                    <p class="original-text"><em>Disgruntled, but undeterred by these unpromising results, we go to another feature, namely the average lightness of the fish scales. Now we are very careful to eliminate variations in illumination, because we can only measure the mean, and corrupt our new classifier. The resulting histograms and critical values are shown in Fig. 1.3. We are much more satisfactory. The classes are much better separated.</em></p>
-                    <p class="original-text"><em>So far we have tacitly assumed that the consequences of our actions are equally costly. Deciding that the fish was a sea bass when in fact it was a salmon was just as undesirable as the converse. Such a symmetry in the cost is often, but not invariably, the case. For instance, in a fish-packing company we may know that our customers rarely accept occasional pieces of true salmon in their cans labeled “sea bass”, but they object vigorously if a piece of sea bass appears in their cans labeled “salmon.” If we want to stay in business, we should adjust our decisions to avoid antagonizing our customers, even if it means that more salmon makes its way into the cans of sea bass.</em></p>
-                </div>
-                <div class="explanation">
-                    <p>This paragraph describes the exploration of a second feature, lightness, after the limited success with length, and introduces the concept of misclassification costs.</p>
-                    <ul>
-                        <li>**New Feature: Lightness:** After length proves insufficient, the average lightness of fish scales is considered. Importance is placed on controlling external factors like illumination to ensure accurate measurements.</li>
-                        <li>**Improved Separation:** The histograms in Fig. 1.3 show that lightness provides much better separation between the two fish classes compared to length.</li>
-                        <li>**Misclassification Costs:** The text then introduces the critical concept of unequal costs for different types of errors (misclassifications). It explains that incorrectly classifying a salmon as sea bass might have different, potentially more severe, business consequences than classifying a sea bass as salmon. This highlights that a "perfect" classifier (one with zero errors) isn't always the sole objective; instead, a classifier should be optimized considering the real-world costs associated with different types of mistakes. This is a crucial practical consideration in pattern recognition.</li>
-                    </ul>
-                    <figure>
-                        <img src="http://googleusercontent.com/file_content/1" alt="Figure 1.3: Histograms for the lightness feature for the two categories. No single threshold value x* (decision boundary) will serve to unambiguously discriminate between the two categories; using lightness alone, we will have some errors. The value x* marked will lead to the smallest number of errors, on average.">
-                        <figcaption>Figure 1.3: Histograms for the lightness feature for the two categories. No single threshold value $x^*$ (decision boundary) will serve to unambiguously discriminate between the two categories; using lightness alone, we will have some errors. The value $x^*$ marked will lead to the smallest number of errors, on average.</figcaption>
-                    </figure>
-                </div>
-            </div>
+      <div class="explanation-block">
+        <div class="original-text-container">
+          <p><strong>Considering Lightness and Decision Boundary</strong></p>
+          <p class="original-text">
+            <em
+              >Disgruntled, but undeterred by these unpromising results, we go
+              to another feature, namely the average lightness of the fish
+              scales. Now we are very careful to eliminate variations in
+              illumination, because we can only measure the mean, and corrupt
+              our new classifier. The resulting histograms and critical values
+              are shown in Fig. 1.3. We are much more satisfactory. The classes
+              are much better separated.</em
+            >
+          </p>
+          <p class="original-text">
+            <em
+              >So far we have tacitly assumed that the consequences of our
+              actions are equally costly. Deciding that the fish was a sea bass
+              when in fact it was a salmon was just as undesirable as the
+              converse. Such a symmetry in the cost is often, but not
+              invariably, the case. For instance, in a fish-packing company we
+              may know that our customers rarely accept occasional pieces of
+              true salmon in their cans labeled “sea bass”, but they object
+              vigorously if a piece of sea bass appears in their cans labeled
+              “salmon.” If we want to stay in business, we should adjust our
+              decisions to avoid antagonizing our customers, even if it means
+              that more salmon makes its way into the cans of sea bass.</em
+            >
+          </p>
+        </div>
+        <div class="explanation">
+          <p>
+            This paragraph describes the exploration of a second feature,
+            lightness, after the limited success with length, and introduces the
+            concept of misclassification costs.
+          </p>
+          <ul>
+            <li>
+              **New Feature: Lightness:** After length proves insufficient, the
+              average lightness of fish scales is considered. Importance is
+              placed on controlling external factors like illumination to ensure
+              accurate measurements.
+            </li>
+            <li>
+              **Improved Separation:** The histograms in Fig. 1.3 show that
+              lightness provides much better separation between the two fish
+              classes compared to length.
+            </li>
+            <li>
+              **Misclassification Costs:** The text then introduces the critical
+              concept of unequal costs for different types of errors
+              (misclassifications). It explains that incorrectly classifying a
+              salmon as sea bass might have different, potentially more severe,
+              business consequences than classifying a sea bass as salmon. This
+              highlights that a "perfect" classifier (one with zero errors)
+              isn't always the sole objective; instead, a classifier should be
+              optimized considering the real-world costs associated with
+              different types of mistakes. This is a crucial practical
+              consideration in pattern recognition.
+            </li>
+          </ul>
+          <figure>
+            <img
+              src="http://googleusercontent.com/file_content/1"
+              alt="Figure 1.3: Histograms for the lightness feature for the two categories. No single threshold value x* (decision boundary) will serve to unambiguously discriminate between the two categories; using lightness alone, we will have some errors. The value x* marked will lead to the smallest number of errors, on average."
+            />
+            <figcaption>
+              Figure 1.3: Histograms for the lightness feature for the two
+              categories. No single threshold value $x^*$ (decision boundary)
+              will serve to unambiguously discriminate between the two
+              categories; using lightness alone, we will have some errors. The
+              value $x^*$ marked will lead to the smallest number of errors, on
+              average.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
 
-            <div class="explanation-block">
-                <div class="original-text-container">
-                    <p><strong>Decision Theory and Two-Feature Classification</strong></p>
-                    <p class="original-text"><em>sea bass. In this case, then, we should move our decision boundary to smaller values of lightness, thereby reducing the number of sea bass that are classified as salmon (Fig. 1.3). The more our customers object to getting sea bass with their salmon (i.e., the more costly this type of error) the lower we should set the decision threshold $x^*$ in Fig. 1.3.</em></p>
-                    <p class="original-text"><em>Such considerations suggest that there is an overall single cost associated with our decision, and our true task is to make a decision rule $x^*$ (or a decision boundary) so as to minimize our total cost. This is the central task of decision theory, of which pattern classification is perhaps the most important subfield.</em></p>
-                    <p class="original-text"><em>Even if we know all features associated with our decisions and choose the optimal critical value $x^*$ we may be dissatisfied with the resulting performance. Our first impulse might be to seek yet a different feature on which to separate the fish. Let us suppose, however, that no other single visual feature yields better performance than that based on lightness. To improve recognition, then, we must resort to the use of more than one feature at a time.</em></p>
-                    <p class="original-text"><em>In our search for other features, we might try to capitalize on the observation that sea bass are typically wider than salmon. Now we have two features for classifying fish—the lightness $x_1$ and the width $x_2$. If we ignore how these features might be measured in practice, we realize that the feature extractor has thus reduced the image of each fish to a point in feature vector $\mathbf{x}$ in a two-dimensional feature space, where $(x_1, x_2)$ are the coordinates of that point.</em></p>
-                    <p>$$
-                    \begin{pmatrix}
-                    x_1 \\
-                    x_2
-                    \end{pmatrix}
-                    $$</p>
-                </div>
-                <div class="explanation">
-                    <p>This section delves into decision theory and the necessity of using multiple features for robust classification, particularly when misclassification costs are asymmetric. Here's a step-by-step breakdown:</p>
-                    <ul>
-                        <li>**Adjusting Decision Boundary (Cost-Sensitive):** If classifying sea bass as salmon is more costly, the decision boundary ($x^*$) for lightness (as shown in Fig. 1.3) should be shifted towards smaller lightness values. This means classifying fewer fish as sea bass, even if it increases the number of salmon misclassified as sea bass, to reduce the more expensive error.</li>
-                        <li>**Decision Theory's Role:** This scenario highlights that the true objective is to define a decision rule (like $x^*$) that minimizes the *total cost* of misclassifications, not just the raw error rate. This is the central problem addressed by decision theory, a crucial subfield of pattern classification.</li>
-                        <li>**Limitations of Single Features:** Even with optimal single-feature performance, the results might still be unsatisfactory. This prompts the search for additional features.</li>
-                        <li>**Moving to Multiple Features (Lightness and Width):** The observation that sea bass are typically wider than salmon leads to considering "width" ($x_2$) as a second feature, alongside "lightness" ($x_1$).</li>
-                        <li>**Feature Vector and Feature Space:** The text explains that the feature extractor effectively transforms each fish image into a "feature vector" $\mathbf{x} = (x_1, x_2)$ in a two-dimensional "feature space." This allows for a more comprehensive representation of the fish based on multiple properties.</li>
-                    </ul>
-                    <p>The mathematical notation for the feature vector is presented as:
-                    $$
-                    \mathbf{x} = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix}
-                    $$</p>
-                </div>
-            </div>
+      <div class="explanation-block">
+        <div class="original-text-container">
+          <p><strong>Decision Theory and Two-Feature Classification</strong></p>
+          <p class="original-text">
+            <em
+              >sea bass. In this case, then, we should move our decision
+              boundary to smaller values of lightness, thereby reducing the
+              number of sea bass that are classified as salmon (Fig. 1.3). The
+              more our customers object to getting sea bass with their salmon
+              (i.e., the more costly this type of error) the lower we should set
+              the decision threshold $x^*$ in Fig. 1.3.</em
+            >
+          </p>
+          <p class="original-text">
+            <em
+              >Such considerations suggest that there is an overall single cost
+              associated with our decision, and our true task is to make a
+              decision rule $x^*$ (or a decision boundary) so as to minimize our
+              total cost. This is the central task of decision theory, of which
+              pattern classification is perhaps the most important subfield.</em
+            >
+          </p>
+          <p class="original-text">
+            <em
+              >Even if we know all features associated with our decisions and
+              choose the optimal critical value $x^*$ we may be dissatisfied
+              with the resulting performance. Our first impulse might be to seek
+              yet a different feature on which to separate the fish. Let us
+              suppose, however, that no other single visual feature yields
+              better performance than that based on lightness. To improve
+              recognition, then, we must resort to the use of more than one
+              feature at a time.</em
+            >
+          </p>
+          <p class="original-text">
+            <em
+              >In our search for other features, we might try to capitalize on
+              the observation that sea bass are typically wider than salmon. Now
+              we have two features for classifying fish—the lightness $x_1$ and
+              the width $x_2$. If we ignore how these features might be measured
+              in practice, we realize that the feature extractor has thus
+              reduced the image of each fish to a point in feature vector
+              $\mathbf{x}$ in a two-dimensional feature space, where $(x_1,
+              x_2)$ are the coordinates of that point.</em
+            >
+          </p>
+          <p>$$ \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} $$</p>
+        </div>
+        <div class="explanation">
+          <p>
+            This section delves into decision theory and the necessity of using
+            multiple features for robust classification, particularly when
+            misclassification costs are asymmetric. Here's a step-by-step
+            breakdown:
+          </p>
+          <ul>
+            <li>
+              **Adjusting Decision Boundary (Cost-Sensitive):** If classifying
+              sea bass as salmon is more costly, the decision boundary ($x^*$)
+              for lightness (as shown in Fig. 1.3) should be shifted towards
+              smaller lightness values. This means classifying fewer fish as sea
+              bass, even if it increases the number of salmon misclassified as
+              sea bass, to reduce the more expensive error.
+            </li>
+            <li>
+              **Decision Theory's Role:** This scenario highlights that the true
+              objective is to define a decision rule (like $x^*$) that minimizes
+              the *total cost* of misclassifications, not just the raw error
+              rate. This is the central problem addressed by decision theory, a
+              crucial subfield of pattern classification.
+            </li>
+            <li>
+              **Limitations of Single Features:** Even with optimal
+              single-feature performance, the results might still be
+              unsatisfactory. This prompts the search for additional features.
+            </li>
+            <li>
+              **Moving to Multiple Features (Lightness and Width):** The
+              observation that sea bass are typically wider than salmon leads to
+              considering "width" ($x_2$) as a second feature, alongside
+              "lightness" ($x_1$).
+            </li>
+            <li>
+              **Feature Vector and Feature Space:** The text explains that the
+              feature extractor effectively transforms each fish image into a
+              "feature vector" $\mathbf{x} = (x_1, x_2)$ in a two-dimensional
+              "feature space." This allows for a more comprehensive
+              representation of the fish based on multiple properties.
+            </li>
+          </ul>
+          <p>
+            The mathematical notation for the feature vector is presented as: $$
+            \mathbf{x} = \begin{pmatrix} x_1 \\ x_2 \end{pmatrix} $$
+          </p>
+        </div>
+      </div>
 
-            <div class="explanation-block">
-                <div class="original-text-container">
-                    <p><strong>Decision Boundary in a 2D Feature Space</strong></p>
-                    <p class="original-text"><em>Our problem now is to partition the feature space into two regions, where for all points in one region we will call the fish a sea bass, and for all points in the other we call it a salmon. Suppose that we measure the feature vectors for our samples and obtain the scattering of points shown in Fig. 1.4. This plot suggests the following rule: we separate the fish by classifying the fish as sea bass if its feature vector falls above the decision boundary shown, and as salmon otherwise.</em></p>
-                    <p class="original-text"><em>This raw approach to do a good job of separating our samples and suggests that perhaps incorporating yet more features would be desirable. Besides the lightness and width, we might include some shape parameter, such as the vertex angle of the dorsal fin, or the placement of the eyes (as expressed as a proportion of the mouth-to-dorsal distance) and so on. How do we know beforehand which of these features will work best? Some features might be redundant. For instance, if the true color of all fish correlated perfectly with width, then classification performance need not be improved if we also include eye color as a feature. Even if it is difficult or computationally costly, obtaining new features is of no concern; might we not have too many features—is there some “curse” for working in very high dimensions?</em></p>
-                </div>
-                <div class="explanation">
-                    <p>This paragraph explains how the problem of classification transforms into partitioning a multi-dimensional feature space and raises important questions about feature selection and dimensionality. Here's a step-by-step breakdown:</p>
-                    <ul>
-                        <li>**Partitioning Feature Space:** With two features (lightness and width), the classification problem becomes one of dividing a two-dimensional "feature space" into distinct regions. One region corresponds to "sea bass" and the other to "salmon."</li>
-                        <li>**Decision Boundary:** Figure 1.4 illustrates how a linear "decision boundary" (a straight line in this 2D space) can be used to separate the two classes based on their feature vectors. A fish is classified based on which side of the boundary its feature vector falls.</li>
-                        <li>**Desire for More Features:** The initial success with two features suggests that adding even more features might improve classification. Examples of potential additional features include:
-                            <ul>
-                                <li>Vertex angle of the dorsal fin.</li>
-                                <li>Placement of eyes (e.g., as a proportion of mouth-to-dorsal distance).</li>
-                            </ul>
-                        </li>
-                        <li>**Challenges of Feature Selection and High Dimensionality:** The paragraph then raises critical questions:
-                            <ul>
-                                <li>**Feature Effectiveness:** How can we know in advance which features will be most effective?</li>
-                                <li>**Redundancy:** Some features might be redundant (e.g., if true color perfectly correlates with width, adding eye color might not improve performance).</li>
-                                <li>**"Curse" of High Dimensions:** The text implicitly introduces the "curse of dimensionality," questioning if having "too many features" (working in "very high dimensions") can actually be detrimental or computationally costly.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                    <figure>
-                        <img src="http://googleusercontent.com/file_content/2" alt="Figure 1.4: The two features of lightness and width for sea bass and salmon. The dark line could serve as a decision boundary of our classifier. Overall classification error on the data shown is lower than if we use only one feature as in Fig. 1.3, but there will still be some errors.">
-                        <figcaption>Figure 1.4: The two features of lightness and width for sea bass and salmon. The dark line could serve as a decision boundary of our classifier. Overall classification error on the data shown is lower than if we use only one feature as in Fig. 1.3, but there will still be some errors.</figcaption>
-                    </figure>
-                </div>
-            </div>
+      <div class="explanation-block">
+        <div class="original-text-container">
+          <p><strong>Decision Boundary in a 2D Feature Space</strong></p>
+          <p class="original-text">
+            <em
+              >Our problem now is to partition the feature space into two
+              regions, where for all points in one region we will call the fish
+              a sea bass, and for all points in the other we call it a salmon.
+              Suppose that we measure the feature vectors for our samples and
+              obtain the scattering of points shown in Fig. 1.4. This plot
+              suggests the following rule: we separate the fish by classifying
+              the fish as sea bass if its feature vector falls above the
+              decision boundary shown, and as salmon otherwise.</em
+            >
+          </p>
+          <p class="original-text">
+            <em
+              >This raw approach to do a good job of separating our samples and
+              suggests that perhaps incorporating yet more features would be
+              desirable. Besides the lightness and width, we might include some
+              shape parameter, such as the vertex angle of the dorsal fin, or
+              the placement of the eyes (as expressed as a proportion of the
+              mouth-to-dorsal distance) and so on. How do we know beforehand
+              which of these features will work best? Some features might be
+              redundant. For instance, if the true color of all fish correlated
+              perfectly with width, then classification performance need not be
+              improved if we also include eye color as a feature. Even if it is
+              difficult or computationally costly, obtaining new features is of
+              no concern; might we not have too many features—is there some
+              “curse” for working in very high dimensions?</em
+            >
+          </p>
+        </div>
+        <div class="explanation">
+          <p>
+            This paragraph explains how the problem of classification transforms
+            into partitioning a multi-dimensional feature space and raises
+            important questions about feature selection and dimensionality.
+            Here's a step-by-step breakdown:
+          </p>
+          <ul>
+            <li>
+              **Partitioning Feature Space:** With two features (lightness and
+              width), the classification problem becomes one of dividing a
+              two-dimensional "feature space" into distinct regions. One region
+              corresponds to "sea bass" and the other to "salmon."
+            </li>
+            <li>
+              **Decision Boundary:** Figure 1.4 illustrates how a linear
+              "decision boundary" (a straight line in this 2D space) can be used
+              to separate the two classes based on their feature vectors. A fish
+              is classified based on which side of the boundary its feature
+              vector falls.
+            </li>
+            <li>
+              **Desire for More Features:** The initial success with two
+              features suggests that adding even more features might improve
+              classification. Examples of potential additional features include:
+              <ul>
+                <li>Vertex angle of the dorsal fin.</li>
+                <li>
+                  Placement of eyes (e.g., as a proportion of mouth-to-dorsal
+                  distance).
+                </li>
+              </ul>
+            </li>
+            <li>
+              **Challenges of Feature Selection and High Dimensionality:** The
+              paragraph then raises critical questions:
+              <ul>
+                <li>
+                  **Feature Effectiveness:** How can we know in advance which
+                  features will be most effective?
+                </li>
+                <li>
+                  **Redundancy:** Some features might be redundant (e.g., if
+                  true color perfectly correlates with width, adding eye color
+                  might not improve performance).
+                </li>
+                <li>
+                  **"Curse" of High Dimensions:** The text implicitly introduces
+                  the "curse of dimensionality," questioning if having "too many
+                  features" (working in "very high dimensions") can actually be
+                  detrimental or computationally costly.
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <figure>
+            <img
+              src="http://googleusercontent.com/file_content/2"
+              alt="Figure 1.4: The two features of lightness and width for sea bass and salmon. The dark line could serve as a decision boundary of our classifier. Overall classification error on the data shown is lower than if we use only one feature as in Fig. 1.3, but there will still be some errors."
+            />
+            <figcaption>
+              Figure 1.4: The two features of lightness and width for sea bass
+              and salmon. The dark line could serve as a decision boundary of
+              our classifier. Overall classification error on the data shown is
+              lower than if we use only one feature as in Fig. 1.3, but there
+              will still be some errors.
+            </figcaption>
+          </figure>
+        </div>
+      </div>
 
-            <div class="explanation-block">
-                <div class="original-text-container">
-                    <p><strong>Generalization and Model Complexity</strong></p>
-                    <p class="original-text"><em>Suppose that other features are too expensive to measure, or provide little improvement (or possibly even degrade the performance) for the approach described above, and that we are forced to make our decision based on the two features in Fig. 1.4. If our models were extremely complicated, our classifier would have a decision boundary more complex than the simple straight line. In that case, all the training patterns would be separated perfectly, as shown in Fig. 1.5. With such a “solution,” though, our satisfaction would be premature because the central aim is designing a classifier that suggests actions when presented with novel patterns, that is, fish not yet seen. This is the issue of generalization: it is unlikely that the complex decision boundary in Fig. 1.5 would provide good generalization—it seems to be “tuned” to the particular training sample, rather than truly underlying characteristics or true model of all the sea bass and salmon that will have to be separated.</em></p>
-                    <p class="original-text"><em>Naturally, one approach would be to get more training samples for obtaining a better estimate of the true underlying characteristics, for instance the probability distributions of the categories. In some pattern recognition problems, however, the amount of such data we can obtain easily is often quite limited. Even with a large amount of training data in our two-feature problem, even though we have followed the approach in Fig. 1.5 our classifier would give a horrendously complicated decision boundary—one that would be unlikely to be as well as novel patterns.</em></p>
-                    <p class="original-text"><em>Rather then, we might seek to “simplify” the recognized motivated by a belief that the underlying models will not require a decision boundary that is as complex as that in Fig. 1.5. Indeed, we might be satisfied with the slightly poorer performance on the training samples if it means that our classifier will have better performance.</em></p>
-                </div>
-                <div class="explanation">
-                    <p>This paragraph delves into the critical concept of "generalization" in pattern classification, particularly the pitfalls of overly complex models that fit training data too closely but perform poorly on new, unseen data.</p>
-                    <ul>
-                        <li>**Constraint on Features:** The scenario assumes that adding more features is either too costly or doesn't improve (or even degrades) performance, forcing reliance on the two existing features (lightness and width).</li>
-                        <li>**Overly Complex Models and Perfect Training Fit:** The text introduces the idea of a highly complex decision boundary (e.g., as in Fig. 1.5) that can perfectly separate *all* training patterns.</li>
-                        <li>**The Problem of Generalization:** The core issue is then highlighted: while such a complex boundary achieves perfect accuracy on the training data, it is unlikely to "generalize" well to new, unseen fish. This is because the complex boundary is "tuned" to the specific training samples, rather than capturing the true, underlying characteristics of sea bass and salmon populations. This phenomenon is known as *overfitting*.</li>
-                        <li>**Solutions and Trade-offs:**
-                            <ul>
-                                <li>**More Training Data:** One natural approach to improve generalization is to obtain more training samples to better estimate the true underlying characteristics (e.g., probability distributions). However, the text acknowledges that this is often difficult or limited in practice.</li>
-                                <li>**Simplifying the Model (Underfitting vs. Overfitting):** Even with abundant data, an overly complex model might still lead to a "horrendously complicated decision boundary" that performs poorly on novel patterns. This leads to the crucial insight that a simpler model, even if it performs slightly worse on the *training* data, can lead to much better *generalization* performance on unseen data. This is a fundamental trade-off in machine learning between bias and variance, or underfitting and overfitting.</li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+      <div class="explanation-block">
+        <div class="original-text-container">
+          <p><strong>Generalization and Model Complexity</strong></p>
+          <p class="original-text">
+            <em
+              >Suppose that other features are too expensive to measure, or
+              provide little improvement (or possibly even degrade the
+              performance) for the approach described above, and that we are
+              forced to make our decision based on the two features in Fig. 1.4.
+              If our models were extremely complicated, our classifier would
+              have a decision boundary more complex than the simple straight
+              line. In that case, all the training patterns would be separated
+              perfectly, as shown in Fig. 1.5. With such a “solution,” though,
+              our satisfaction would be premature because the central aim is
+              designing a classifier that suggests actions when presented with
+              novel patterns, that is, fish not yet seen. This is the issue of
+              generalization: it is unlikely that the complex decision boundary
+              in Fig. 1.5 would provide good generalization—it seems to be
+              “tuned” to the particular training sample, rather than truly
+              underlying characteristics or true model of all the sea bass and
+              salmon that will have to be separated.</em
+            >
+          </p>
+          <p class="original-text">
+            <em
+              >Naturally, one approach would be to get more training samples for
+              obtaining a better estimate of the true underlying
+              characteristics, for instance the probability distributions of the
+              categories. In some pattern recognition problems, however, the
+              amount of such data we can obtain easily is often quite limited.
+              Even with a large amount of training data in our two-feature
+              problem, even though we have followed the approach in Fig. 1.5 our
+              classifier would give a horrendously complicated decision
+              boundary—one that would be unlikely to be as well as novel
+              patterns.</em
+            >
+          </p>
+          <p class="original-text">
+            <em
+              >Rather then, we might seek to “simplify” the recognized motivated
+              by a belief that the underlying models will not require a decision
+              boundary that is as complex as that in Fig. 1.5. Indeed, we might
+              be satisfied with the slightly poorer performance on the training
+              samples if it means that our classifier will have better
+              performance.</em
+            >
+          </p>
+        </div>
+        <div class="explanation">
+          <p>
+            This paragraph delves into the critical concept of "generalization"
+            in pattern classification, particularly the pitfalls of overly
+            complex models that fit training data too closely but perform poorly
+            on new, unseen data.
+          </p>
+          <ul>
+            <li>
+              **Constraint on Features:** The scenario assumes that adding more
+              features is either too costly or doesn't improve (or even
+              degrades) performance, forcing reliance on the two existing
+              features (lightness and width).
+            </li>
+            <li>
+              **Overly Complex Models and Perfect Training Fit:** The text
+              introduces the idea of a highly complex decision boundary (e.g.,
+              as in Fig. 1.5) that can perfectly separate *all* training
+              patterns.
+            </li>
+            <li>
+              **The Problem of Generalization:** The core issue is then
+              highlighted: while such a complex boundary achieves perfect
+              accuracy on the training data, it is unlikely to "generalize" well
+              to new, unseen fish. This is because the complex boundary is
+              "tuned" to the specific training samples, rather than capturing
+              the true, underlying characteristics of sea bass and salmon
+              populations. This phenomenon is known as *overfitting*.
+            </li>
+            <li>
+              **Solutions and Trade-offs:**
+              <ul>
+                <li>
+                  **More Training Data:** One natural approach to improve
+                  generalization is to obtain more training samples to better
+                  estimate the true underlying characteristics (e.g.,
+                  probability distributions). However, the text acknowledges
+                  that this is often difficult or limited in practice.
+                </li>
+                <li>
+                  **Simplifying the Model (Underfitting vs. Overfitting):** Even
+                  with abundant data, an overly complex model might still lead
+                  to a "horrendously complicated decision boundary" that
+                  performs poorly on novel patterns. This leads to the crucial
+                  insight that a simpler model, even if it performs slightly
+                  worse on the *training* data, can lead to much better
+                  *generalization* performance on unseen data. This is a
+                  fundamental trade-off in machine learning between bias and
+                  variance, or underfitting and overfitting.
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
 
       <section id="comments">
-          <script
-            src="https://utteranc.es/client.js"
-            repo="COD1995/ml-meta"
-            issue-term="pathname"
-            label="comment"
-            theme="github-light"
-            crossorigin="anonymous"
-            async
-          ></script>
+        <script
+          src="https://utteranc.es/client.js"
+          repo="COD1995/ml-meta"
+          issue-term="pathname"
+          label="comment"
+          theme="github-light"
+          crossorigin="anonymous"
+          async
+        ></script>
       </section>
 
-        <footer>
-          <p>
-            © 2025 Kristopher Kodweis •
-            <a href="YOUR_GITHUB_LINK" target="_blank" rel="noopener">
-              View on GitHub
-            </a>
-          </p>
-        </footer>
+      <footer>
+        <p>
+          © 2025 Kristopher Kodweis •
+          <a href="YOUR_GITHUB_LINK" target="_blank" rel="noopener">
+            View on GitHub
+          </a>
+        </p>
+      </footer>
     </div>
-
-    
-    
 
     <script type="module" src="../../../assets/js/main.js"></script>
     <script type="module" src="../../../assets/js/chapter-page.js"></script>
+
+    <!-- 1️⃣ auto‑generated by the build script (local to this folder) -->
+    <script src="book-data.js"></script>
+
+    <!-- 2️⃣ builds the sidebar & mini‑TOC in the browser -->
+    <script type="module" src="../../../assets/js/build-side-nav.js"></script>
   </body>
 </html>
