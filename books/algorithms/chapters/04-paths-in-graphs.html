@@ -30,63 +30,71 @@
   </head>
 
   <body>
-      <nav class="side-nav">
-        <div class="side-nav-controls">
-          <button id="homeBtn" class="btn-toggle" aria-label="Home" onclick="window.location.href='../../../index.html'">🏠</button>
-          <span class="nav-divider"></span>
-          <button id="themeToggle" class="btn-toggle" aria-label="Toggle dark mode">🌓</button>
-        </div>
-       
-      <hr class="side-nav-divider">
-      <span class="toc-label">📚 Books</span>
-        <div class="toc-books">
-          <div class="toc-book dropdown">
-            <button class="toc-book-title dropdown-toggle" aria-expanded="true" aria-controls="algorithms-chapters" onclick="toggleDropdown('algorithms-chapters', this)">Algorithms (Dasgupta et al.)</button>
-            <div class="toc-chapters dropdown-content" id="algorithms-chapters">
-              <div><a href="00-prologue.html">0. Prologue</a></div>
-              <div><a href="04-paths-in-graphs.html">4. Paths in Graphs</a></div>
-              <div><a href="05-greedy-algorithms.html">5. Greedy Algorithms</a></div>
-              <div><a href="06-dynamic-programming.html">6. Dynamic Programming</a></div>
-              <div><a href="07-linear-programming.html">7. Linear Programming</a></div>
-            </div>
-          </div>
-          <div class="toc-book dropdown">
-            <button class="toc-book-title dropdown-toggle" aria-expanded="false" aria-controls="pattern-classification-chapters" onclick="toggleDropdown('pattern-classification-chapters', this)">Pattern Classification (Duda et al.)</button>
-            <div class="toc-chapters dropdown-content" id="pattern-classification-chapters" hidden>
-              <div><a href="../../pattern-classification/chapters/01-introduction.html">1. Introduction</a></div>
-              <div><a href="../../pattern-classification/chapters/02-bayes-decision-theory.html">2. Bayes Decision Theory</a></div>
-            </div>
-          </div>
-        </div>
-        <hr class="side-nav-divider">
-        <div class="slack-banner">
-          <a
-            href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
-            id="slackButton"
-            target="_blank"
-            rel="noopener"
-            aria-label="Join our Slack Community"
-            data-tooltip="Join Community"
+    <nav class="side-nav">
+      <div class="side-nav-controls">
+        <button
+          id="homeBtn"
+          class="btn-toggle"
+          aria-label="Home"
+          onclick="location.href='../../../index.html'"
+        >
+          🏠
+        </button>
+        <span class="nav-divider"></span>
+        <button
+          id="themeToggle"
+          class="btn-toggle"
+          aria-label="Toggle dark mode"
+        >
+          🌓
+        </button>
+      </div>
+
+      <hr class="side-nav-divider" />
+
+      <!-- everything below is built by build-side-nav.js -->
+      <div id="bookNav"></div>
+
+      <hr class="side-nav-divider" />
+
+      <!-- Slack banner (unchanged) -->
+      <div class="slack-banner">
+        <a
+          href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
+          id="slackButton"
+          target="_blank"
+          rel="noopener"
+          aria-label="Join our Slack Community"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 122.8 122.8"
+            fill="#fff"
+            style="width: 1.5em; height: 1.5em; vertical-align: middle"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 122.8 122.8"
-              fill="#fff"
-              style="width: 1.5em; height: 1.5em; vertical-align: middle;"
-            >
-              <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
-              <path d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z" />
-              <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
-              <path d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z" />
-              <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
-              <path d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z" />
-              <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
-              <path d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z" />
-            </svg>
-            <span style="margin-left: 0.5em; vertical-align: middle;">Join our Slack</span>
-          </a>
-        </div>
-      </nav>
+            <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
+            <path
+              d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z"
+            />
+            <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
+            <path
+              d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z"
+            />
+            <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
+            <path
+              d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z"
+            />
+            <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
+            <path
+              d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z"
+            />
+          </svg>
+          <span style="margin-left: 0.5em; vertical-align: middle"
+            >Join our Slack</span
+          >
+        </a>
+      </div>
+    </nav>
     <div class="container content">
       
         <h1>Chapter 4: Paths in Graphs</h1>
@@ -417,5 +425,10 @@
 
     <script type="module" src="../../../assets/js/main.js"></script>
     <script type="module" src="../../../assets/js/chapter-page.js"></script>
+        <!-- 1️⃣ auto‑generated by the build script (local to this folder) -->
+    <script src="book-data.js"></script>
+
+    <!-- 2️⃣ builds the sidebar & mini‑TOC in the browser -->
+    <script type="module" src="../../../assets/js/build-side-nav.js"></script>
   </body>
 </html>

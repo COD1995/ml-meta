@@ -34,7 +34,9 @@ document.addEventListener("DOMContentLoaded", () => {
     btn.setAttribute("aria-expanded", "false");
     const listId = `${slug}-chapters`;
     btn.setAttribute("aria-controls", listId);
-    btn.onclick = () => toggleDropdown(listId, btn);
+
+    const isCurrent = location.pathname.endsWith(ch.href);
+    btn.onclick = () => toggleDropdown(listId, btn, isCurrent ? null : ch);
 
     /* inner container for headings */
     const inner = document.createElement("div");
@@ -42,7 +44,6 @@ document.addEventListener("DOMContentLoaded", () => {
     inner.id = listId;
 
     /* If this is the current page, mark active & inject headings */
-    const isCurrent = location.pathname.endsWith(ch.href);
     if (isCurrent) {
       btn.classList.add("active");
       btn.setAttribute("aria-expanded", "true");
@@ -51,28 +52,11 @@ document.addEventListener("DOMContentLoaded", () => {
       inner.hidden = true; // collapsed by default
     }
 
-    /* Add link to open the chapter when button text clicked */
-    btn.addEventListener("click", (e) => {
-      // stop double navigation if dropdown only toggled
-      if (e.target.tagName.toLowerCase() === "button" && !isCurrent) {
-        window.location.href = ch.href;
-      }
-    });
-
     /* assemble */
     bookDiv.appendChild(btn);
     bookDiv.appendChild(inner);
     booksWrap.appendChild(bookDiv);
   });
-
-  /* ── Theme toggle (unchanged) ───────────────────────────────── */
-  const themeBtn = document.getElementById("themeToggle");
-  if (themeBtn) {
-    themeBtn.addEventListener("click", () => {
-      document.documentElement.classList.toggle("theme-dark");
-      document.documentElement.classList.toggle("theme-light");
-    });
-  }
 });
 
 /* ────────────────────────── helpers ──────────────────────────── */
@@ -87,9 +71,48 @@ function injectHeadings(container) {
   });
 }
 
-function toggleDropdown(id, btn) {
+function injectRemoteHeadings(container, path) {
+  container.dataset.loaded = "loading";
+  container.innerHTML = "<div><em>Loading...</em></div>";
+
+  fetch(path)
+    .then((response) => {
+      if (!response.ok) throw new Error(`HTTP error ${response.status}`);
+      return response.text();
+    })
+    .then((html) => {
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
+      const heads = [...doc.querySelectorAll(".content h2, .content h3")];
+
+      container.innerHTML = ""; // clear loading
+      heads.forEach((h) => {
+        if (!h.id) h.id = slugify(h.textContent);
+        const row = document.createElement("div");
+        row.innerHTML = `<a href="${path}#${h.id}">${h.textContent}</a>`;
+        container.appendChild(row);
+      });
+      if (heads.length === 0) {
+        container.innerHTML = "<div><em>No headings found.</em></div>";
+      }
+      container.dataset.loaded = "true";
+    })
+    .catch((err) => {
+      console.error(`Failed to fetch ${path}:`, err);
+      container.innerHTML = "<div>Error loading headings.</div>";
+      delete container.dataset.loaded; // allow retry
+    });
+}
+
+function toggleDropdown(id, btn, chapter = null) {
   const box = document.getElementById(id);
   if (!box) return;
+
+  const isCurrent = !chapter;
+  if (!isCurrent && box.hidden && !box.dataset.loaded) {
+    injectRemoteHeadings(box, chapter.href);
+  }
+
   const isOpen = !box.hidden;
   box.hidden = isOpen;
   btn.setAttribute("aria-expanded", (!isOpen).toString());

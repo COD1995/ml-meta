@@ -10,291 +10,313 @@
     <link rel="stylesheet" href="../../../assets/css/chapters.css" />
 
     <!-- Library styles -->
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
 
     <!-- MathJax global config (must come BEFORE MathJax) -->
     <script src="../../../assets/js/mathjax-config.js"></script>
 
     <!-- Library scripts (deferred) -->
-    <script defer
-            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script defer
-            src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"></script>
-    <script defer
-            src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
-    <script defer
-            src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"
+    ></script>
   </head>
 
   <body>
     <nav class="side-nav">
-        <div class="side-nav-controls">
-          <button id="homeBtn" class="btn-toggle" aria-label="Home" onclick="window.location.href='../../../index.html'">🏠</button>
-          <span class="nav-divider"></span>
-          <button id="themeToggle" class="btn-toggle" aria-label="Toggle dark mode">🌓</button>
-        </div>
-        <hr class="side-nav-divider">
-        <span class="toc-label">📚 Books</span>
-        <div class="toc-books">
-          <div class="toc-book dropdown">
-            <button class="toc-book-title dropdown-toggle" aria-expanded="false" aria-controls="algorithms-chapters" onclick="toggleDropdown('algorithms-chapters', this)">Algorithms (Dasgupta et al.)</button>
-            <div class="toc-chapters dropdown-content" id="algorithms-chapters">
-              <div><a href="00-prologue.html">0. Prologue</a></div>
-              <div><a href="04-paths-in-graphs.html">4. Paths in Graphs</a></div>
-              <div><a href="05-greedy-algorithms.html">5. Greedy Algorithms</a></div>
-              <div><a href="06-dynamic-programming.html">6. Dynamic Programming</a></div>
-              <div><a href="07-linear-programming.html">7. Linear Programming</a></div>
-            </div>
-          </div>
-          <div class="toc-book dropdown">
-            <button class="toc-book-title dropdown-toggle" aria-expanded="false" aria-controls="pattern-classification-chapters" onclick="toggleDropdown('pattern-classification-chapters', this)">Pattern Classification (Duda et al.)</button>
-            <div class="toc-chapters dropdown-content" id="pattern-classification-chapters" hidden>
-              <div><a href="../../pattern-classification/chapters/01-introduction.html">1. Introduction</a></div>
-              <div><a href="../../pattern-classification/chapters/02-bayes-decision-theory.html">2. Bayes Decision Theory</a></div>
-            </div>
-          </div>
-        </div>
-        <hr class="side-nav-divider">
-        <div class="slack-banner">
-          <a
-            href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
-            id="slackButton"
-            target="_blank"
-            rel="noopener"
-            aria-label="Join our Slack Community"
-            data-tooltip="Join Community"
+      <div class="side-nav-controls">
+        <button
+          id="homeBtn"
+          class="btn-toggle"
+          aria-label="Home"
+          onclick="location.href='../../../index.html'"
+        >
+          🏠
+        </button>
+        <span class="nav-divider"></span>
+        <button
+          id="themeToggle"
+          class="btn-toggle"
+          aria-label="Toggle dark mode"
+        >
+          🌓
+        </button>
+      </div>
+
+      <hr class="side-nav-divider" />
+
+      <!-- everything below is built by build-side-nav.js -->
+      <div id="bookNav"></div>
+
+      <hr class="side-nav-divider" />
+
+      <!-- Slack banner (unchanged) -->
+      <div class="slack-banner">
+        <a
+          href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
+          id="slackButton"
+          target="_blank"
+          rel="noopener"
+          aria-label="Join our Slack Community"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 122.8 122.8"
+            fill="#fff"
+            style="width: 1.5em; height: 1.5em; vertical-align: middle"
           >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 122.8 122.8"
-              fill="#fff"
-              style="width: 1.5em; height: 1.5em; vertical-align: middle;"
-            >
-              <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
-              <path d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z" />
-              <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
-              <path d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z" />
-              <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
-              <path d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z" />
-              <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
-              <path d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z" />
-            </svg>
-            <span style="margin-left: 0.5em; vertical-align: middle;">Join our Slack</span>
-          </a>
-        </div>
-      </nav>
-      
+            <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
+            <path
+              d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z"
+            />
+            <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
+            <path
+              d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z"
+            />
+            <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
+            <path
+              d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z"
+            />
+            <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
+            <path
+              d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z"
+            />
+          </svg>
+          <span style="margin-left: 0.5em; vertical-align: middle"
+            >Join our Slack</span
+          >
+        </a>
+      </div>
+    </nav>
+
     <div class="container content">
+      <h1>Chapter 7: Linear Programming and Reductions</h1>
 
-        <h1>Chapter 7: Linear Programming and Reductions</h1>
+      <section>
+        <h2>7.1 An Introduction to Linear Programming</h2>
+        <p>
+          This chapter provides a comprehensive look at linear programming, a
+          powerful tool for solving optimization problems.
+        </p>
+        <p>
+          Linear programming is presented as a method for solving optimization
+          tasks where one must find the best possible outcome (e.g., maximizing
+          profit or minimizing cost) given a set of constraints. Both the
+          objective and the constraints must be linear functions.
+        </p>
 
-        <section>
-          <h2>7.1 An Introduction to Linear Programming</h2>
-          <p>
-            This chapter provides a comprehensive look at linear programming, a
-            powerful tool for solving optimization problems.
-          </p>
-          <p>
-            Linear programming is presented as a method for solving optimization
-            tasks where one must find the best possible outcome (e.g.,
-            maximizing profit or minimizing cost) given a set of constraints.
-            Both the objective and the constraints must be linear functions.
-          </p>
+        <h3>Profit Maximization Example</h3>
+        <p>
+          A simple problem about a chocolatier deciding how much of two products
+          to make is used to introduce the core concepts. The goal is to
+          maximize profit, subject to linear constraints like demand and labor.
+          The set of valid solutions forms a convex polygon, and the optimal
+          solution is always found at one of its vertices. The
+          <strong>simplex method</strong> is introduced as an algorithm that
+          finds this optimal vertex by starting at one vertex and moving along
+          edges to neighbors with better objective values until it can no longer
+          improve.
+        </p>
 
-          <h3>Profit Maximization Example</h3>
-          <p>
-            A simple problem about a chocolatier deciding how much of two
-            products to make is used to introduce the core concepts. The goal is
-            to maximize profit, subject to linear constraints like demand and
-            labor. The set of valid solutions forms a convex polygon, and the
-            optimal solution is always found at one of its vertices. The
-            <strong>simplex method</strong> is introduced as an algorithm that
-            finds this optimal vertex by starting at one vertex and moving along
-            edges to neighbors with better objective values until it can no
-            longer improve.
-          </p>
+        <h3>Extending the Example</h3>
+        <p>
+          The problem is expanded to three dimensions, where the feasible region
+          becomes a polyhedron, but the simplex method's logic of moving between
+          vertices remains the same. This leads to the concept of
+          <strong>duality</strong>, a key idea where a certificate of optimality
+          can be found by creating a new linear program (the dual) whose
+          solution provides a bound on the original (primal) problem's solution.
+        </p>
 
-          <h3>Extending the Example</h3>
-          <p>
-            The problem is expanded to three dimensions, where the feasible
-            region becomes a polyhedron, but the simplex method's logic of
-            moving between vertices remains the same. This leads to the concept
-            of <strong>duality</strong>, a key idea where a certificate of
-            optimality can be found by creating a new linear program (the dual)
-            whose solution provides a bound on the original (primal) problem's
-            solution.
-          </p>
+        <h3>Further Applications</h3>
+        <p>
+          The chapter demonstrates the versatility of linear programming with
+          two more examples: a complex
+          <strong>production planning</strong> problem for a carpet company
+          dealing with seasonal demand, and an
+          <strong>optimum bandwidth allocation</strong> problem in a network.
+          These examples show how to translate real-world problems into the
+          formal language of variables, constraints, and objectives.
+        </p>
 
-          <h3>Further Applications</h3>
-          <p>
-            The chapter demonstrates the versatility of linear programming with
-            two more examples: a complex
-            <strong>production planning</strong> problem for a carpet company
-            dealing with seasonal demand, and an
-            <strong>optimum bandwidth allocation</strong> problem in a network.
-            These examples show how to translate real-world problems into the
-            formal language of variables, constraints, and objectives.
-          </p>
+        <h3>Reductions and Standard Form</h3>
+        <p>
+          The concept of a <strong>reduction</strong> is formalized, showing how
+          an algorithm for one problem can be used to solve another. It's shown
+          that all linear programs can be converted into a
+          <strong>standard form</strong> (minimizing an objective, with equality
+          constraints and non-negative variables) through simple
+          transformations, which simplifies solving them.
+        </p>
+      </section>
 
-          <h3>Reductions and Standard Form</h3>
-          <p>
-            The concept of a <strong>reduction</strong> is formalized, showing
-            how an algorithm for one problem can be used to solve another. It's
-            shown that all linear programs can be converted into a
-            <strong>standard form</strong> (minimizing an objective, with
-            equality constraints and non-negative variables) through simple
-            transformations, which simplifies solving them.
-          </p>
-        </section>
+      <section>
+        <h2>7.2 Flows in Networks</h2>
+        <p>
+          This section explores the <strong>maximum flow problem</strong>: how
+          to ship the most material from a source node <em>s</em> to a sink node
+          <em>t</em> in a network where edges have capacity limits.
+        </p>
 
-        <section>
-          <h2>7.2 Flows in Networks</h2>
-          <p>
-            This section explores the <strong>maximum flow problem</strong>: how
-            to ship the most material from a source node <em>s</em> to a sink
-            node <em>t</em> in a network where edges have capacity limits.
-          </p>
+        <h3>LP Formulation and the Algorithm</h3>
+        <p>
+          This problem is a classic example of a linear program. The simplex
+          algorithm, when applied to max-flow, has an intuitive interpretation:
+          it repeatedly finds a path from <em>s</em> to <em>t</em> and pushes
+          more flow along it. To handle cases where an early path choice might
+          block a better one, the algorithm uses a
+          <strong>residual graph</strong>. This graph represents the remaining
+          capacity on edges and includes reverse edges that allow the algorithm
+          to "undo" or cancel previous flow, enabling it to find the true
+          optimal solution.
+        </p>
 
-          <h3>LP Formulation and the Algorithm</h3>
-          <p>
-            This problem is a classic example of a linear program. The simplex
-            algorithm, when applied to max-flow, has an intuitive
-            interpretation: it repeatedly finds a path from <em>s</em> to
-            <em>t</em> and pushes more flow along it. To handle cases where an
-            early path choice might block a better one, the algorithm uses a
-            <strong>residual graph</strong>. This graph represents the remaining
-            capacity on edges and includes reverse edges that allow the
-            algorithm to "undo" or cancel previous flow, enabling it to find the
-            true optimal solution.
-          </p>
+        <h3>Max-Flow Min-Cut Theorem</h3>
+        <p>
+          A powerful concept, the <strong>s-t cut</strong>, is introduced. A cut
+          is a partition of the vertices into two sets, one containing
+          <em>s</em> and the other <em>t</em>. The capacity of the cut is the
+          total capacity of edges crossing from the <em>s</em> side to the
+          <em>t</em> side, which provides an upper bound on any possible flow.
+          The celebrated <strong>max-flow min-cut theorem</strong> states that
+          the maximum possible flow is exactly equal to the capacity of the
+          minimum possible cut. The algorithm automatically finds this minimum
+          cut, which serves as a certificate of optimality.
+        </p>
+      </section>
 
-          <h3>Max-Flow Min-Cut Theorem</h3>
-          <p>
-            A powerful concept, the <strong>s-t cut</strong>, is introduced. A
-            cut is a partition of the vertices into two sets, one containing
-            <em>s</em> and the other <em>t</em>. The capacity of the cut is the
-            total capacity of edges crossing from the <em>s</em> side to the
-            <em>t</em> side, which provides an upper bound on any possible flow.
-            The celebrated <strong>max-flow min-cut theorem</strong> states that
-            the maximum possible flow is exactly equal to the capacity of the
-            minimum possible cut. The algorithm automatically finds this minimum
-            cut, which serves as a certificate of optimality.
-          </p>
-        </section>
+      <section>
+        <h2>7.3 Bipartite Matching</h2>
+        <p>
+          This section shows how to solve the problem of finding a
+          <strong>perfect matching</strong> in a bipartite graph (for instance,
+          pairing boys and girls who like each other). The problem is reduced to
+          max-flow by constructing a special network. A key insight is that
+          because max-flow with integer capacities yields an integer solution,
+          the result of the reduction correctly corresponds to a valid matching.
+        </p>
+      </section>
 
-        <section>
-          <h2>7.3 Bipartite Matching</h2>
-          <p>
-            This section shows how to solve the problem of finding a
-            <strong>perfect matching</strong> in a bipartite graph (for
-            instance, pairing boys and girls who like each other). The problem
-            is reduced to max-flow by constructing a special network. A key
-            insight is that because max-flow with integer capacities yields an
-            integer solution, the result of the reduction correctly corresponds
-            to a valid matching.
-          </p>
-        </section>
+      <section>
+        <h2>7.4 Duality</h2>
+        <p>
+          Duality is revisited as a general principle of linear programming. For
+          any maximization LP (the primal), there is a corresponding
+          minimization LP (the dual). A feasible solution to the dual provides a
+          bound on the optimal value of the primal. The
+          <strong>Duality Theorem</strong> states that their optimal values are,
+          in fact, identical.
+        </p>
+      </section>
 
-        <section>
-          <h2>7.4 Duality</h2>
-          <p>
-            Duality is revisited as a general principle of linear programming.
-            For any maximization LP (the primal), there is a corresponding
-            minimization LP (the dual). A feasible solution to the dual provides
-            a bound on the optimal value of the primal. The
-            <strong>Duality Theorem</strong> states that their optimal values
-            are, in fact, identical.
-          </p>
-        </section>
+      <section>
+        <h2>7.5 Zero-Sum Games</h2>
+        <p>
+          Linear programming is applied to game theory, specifically two-player
+          <strong>zero-sum games</strong>. By using
+          <strong>mixed strategies</strong> (probabilities for choosing moves),
+          players aim to optimize their expected payoff. A player's problem of
+          finding their best defensive strategy can be formulated as a linear
+          program. The problems for the maximizing and minimizing players turn
+          out to be duals of each other, proving the famous
+          <strong>min-max theorem</strong>: there is always an optimal mixed
+          strategy for both players, and the expected outcome is the same
+          regardless of which player "announces" their strategy first.
+        </p>
+      </section>
 
-        <section>
-          <h2>7.5 Zero-Sum Games</h2>
-          <p>
-            Linear programming is applied to game theory, specifically
-            two-player
-            <strong>zero-sum games</strong>. By using
-            <strong>mixed strategies</strong> (probabilities for choosing
-            moves), players aim to optimize their expected payoff. A player's
-            problem of finding their best defensive strategy can be formulated
-            as a linear program. The problems for the maximizing and minimizing
-            players turn out to be duals of each other, proving the famous
-            <strong>min-max theorem</strong>: there is always an optimal mixed
-            strategy for both players, and the expected outcome is the same
-            regardless of which player "announces" their strategy first.
-          </p>
-        </section>
+      <section>
+        <h2>7.6 The Simplex Algorithm</h2>
+        <p>
+          This section details the workings of the simplex algorithm in
+          high-dimensional spaces.
+        </p>
 
-        <section>
-          <h2>7.6 The Simplex Algorithm</h2>
-          <p>
-            This section details the workings of the simplex algorithm in
-            high-dimensional spaces.
-          </p>
+        <h3>Vertices and the Algorithm</h3>
+        <p>
+          In <em>n</em> dimensions, a <strong>vertex</strong> is a point defined
+          by <em>n</em> tight inequality constraints, and
+          <strong>neighbors</strong> are vertices that share <em>n-1</em> of
+          these tight constraints. Simplex moves from vertex to vertex. At any
+          vertex, it can transform the LP into a local coordinate system where
+          that vertex is the origin. From the origin, it's easy to see if an
+          improvement is possible and in which direction to move. This process
+          repeats until no further improvement can be made.
+        </p>
 
-          <h3>Vertices and the Algorithm</h3>
-          <p>
-            In <em>n</em> dimensions, a <strong>vertex</strong> is a point
-            defined by <em>n</em> tight inequality constraints, and
-            <strong>neighbors</strong> are vertices that share <em>n-1</em> of
-            these tight constraints. Simplex moves from vertex to vertex. At any
-            vertex, it can transform the LP into a local coordinate system where
-            that vertex is the origin. From the origin, it's easy to see if an
-            improvement is possible and in which direction to move. This process
-            repeats until no further improvement can be made.
-          </p>
+        <h3>Practical Issues and History</h3>
+        <p>
+          The chapter addresses loose ends like finding a starting vertex,
+          handling degenerate vertices, and detecting when an LP is unbounded.
+          Although simplex can take exponential time in the worst case, it is
+          highly efficient in practice. The chapter also briefly mentions the
+          history of other polynomial-time algorithms like the
+          <strong>ellipsoid method</strong> and
+          <strong>interior-point methods</strong>.
+        </p>
+      </section>
 
-          <h3>Practical Issues and History</h3>
-          <p>
-            The chapter addresses loose ends like finding a starting vertex,
-            handling degenerate vertices, and detecting when an LP is unbounded.
-            Although simplex can take exponential time in the worst case, it is
-            highly efficient in practice. The chapter also briefly mentions the
-            history of other polynomial-time algorithms like the
-            <strong>ellipsoid method</strong> and
-            <strong>interior-point methods</strong>.
-          </p>
-        </section>
+      <section>
+        <h2>7.7 Postscript: Circuit Evaluation</h2>
+        <p>
+          The chapter concludes by showing the ultimate power of linear
+          programming: any problem that can be solved in polynomial time can be
+          reduced to it. This is demonstrated by reducing the
+          <strong>CIRCUIT VALUE</strong> problem to a linear program. Since any
+          polynomial-time algorithm can be described by a polynomial-size
+          circuit, this implies that all problems in P reduce to linear
+          programming.
+        </p>
+      </section>
 
-        <section>
-          <h2>7.7 Postscript: Circuit Evaluation</h2>
-          <p>
-            The chapter concludes by showing the ultimate power of linear
-            programming: any problem that can be solved in polynomial time can
-            be reduced to it. This is demonstrated by reducing the
-            <strong>CIRCUIT VALUE</strong> problem to a linear program. Since
-            any polynomial-time algorithm can be described by a polynomial-size
-            circuit, this implies that all problems in P reduce to linear
-            programming.
-          </p>
-        </section>
+      <section id="comments">
+        <script
+          src="https://utteranc.es/client.js"
+          repo="COD1995/ml-meta"
+          issue-term="pathname"
+          label="comment"
+          theme="github-light"
+          crossorigin="anonymous"
+          async
+        ></script>
+      </section>
 
-        <section id="comments">
-          <script
-            src="https://utteranc.es/client.js"
-            repo="COD1995/ml-meta"
-            issue-term="pathname"
-            label="comment"
-            theme="github-light"
-            crossorigin="anonymous"
-            async
-          ></script>
-        </section>
-
-        
-        <footer>
-          <p>
-            © 2025 Kristopher Kodweis • 
-            <a href="YOUR_GITHUB_LINK" target="_blank" rel="noopener">
-              View on GitHub
-            </a>
-          </p>
-        </footer>
+      <footer>
+        <p>
+          © 2025 Kristopher Kodweis • 
+          <a href="YOUR_GITHUB_LINK" target="_blank" rel="noopener">
+            View on GitHub
+          </a>
+        </p>
+      </footer>
     </div>
 
     <script type="module" src="../../../assets/js/main.js"></script>
     <script type="module" src="../../../assets/js/chapter-page.js"></script>
+
+    <!-- 1️⃣ auto‑generated by the build script (local to this folder) -->
+    <script src="book-data.js"></script>
+
+    <!-- 2️⃣ builds the sidebar & mini‑TOC in the browser -->
+    <script type="module" src="../../../assets/js/build-side-nav.js"></script>
   </body>
 </html>

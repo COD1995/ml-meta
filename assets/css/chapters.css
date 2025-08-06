@@ -278,6 +278,9 @@ p.original-text {
 }
 
 /* ---------- dark mode tweaks ------------------------------ */
+html.theme-dark .side-nav .toc-label {
+  color: #c9d1d9 !important;
+}
 html.theme-dark .side-nav .toc-books {
   background: #161b22;
   border-color: #30363d;
