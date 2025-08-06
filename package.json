@@ -1,0 +1,7 @@
+{
+  "name": "ml‑meta‑site",
+  "version": "1.0.0",
+  "scripts": {
+    "build:data": "node scripts/generate-book-data.js"
+  }
+}

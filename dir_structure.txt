@@ -1,0 +1,54 @@
+.
+├── assets
+│   ├── css
+│   │   ├── base.css
+│   │   ├── book-page.css
+│   │   ├── books.css
+│   │   ├── chapters.css
+│   │   ├── layout.css
+│   │   └── leaderboard.css
+│   ├── images
+│   │   ├── algorithms
+│   │   │   ├── chpt_1_imgs
+│   │   │   └── chpt_4_imgs
+│   │   └── author_profiles
+│   │       ├── jg.jpeg
+│   │       └── kk.jpeg
+│   ├── js
+│   │   ├── build-side-nav.js
+│   │   ├── chapter-page.js
+│   │   ├── index-page.js
+│   │   ├── main.js
+│   │   └── mathjax-config.js
+│   └── templates
+│       └── chapter_page_template.html
+├── books
+│   ├── algorithms
+│   │   └── chapters
+│   │       ├── 00-prologue.html
+│   │       ├── 01-algorithms-with-numbers.html
+│   │       ├── 04-paths-in-graphs.html
+│   │       ├── 05-greedy-algorithms.html
+│   │       ├── 06-dynamic-programming.html
+│   │       └── 07-linear-programming.html
+│   └── pattern-classification
+│       └── chapters
+│           ├── 01-introduction.html
+│           └── 02-bayes-decision-theory.html
+├── dir_structure.txt
+├── index-content.html
+├── index.html
+├── math-foundations
+│   ├── in-simple-terms
+│   │   └── cross_entropy_gradient.html
+│   └── index.html
+├── package.json
+├── papers
+│   ├── cv
+│   └── training-research
+│       └── lora_fine_tuning.html
+├── README.md
+└── scripts
+    └── generate-book-data.js
+
+21 directories, 31 files

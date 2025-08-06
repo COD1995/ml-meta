@@ -1,22 +1,29 @@
 /* assets/js/main.js
  * -------------------------------------------------------------
- * ① Build ToC (current + lazy‑remote)
- * ② Handle sidebar collapse
+ * ① Build page & remote ToCs
+ * ② Sidebar collapse + dark / light theme switcher
+ * ③ Misc: expand‑all, dropdown helper, GitHub widgets …
  * ---------------------------------------------------------- */
 
+/* ────────────────────────────────────────────────────────────
+   Tiny utilities
+   ---------------------------------------------------------- */
 const headingSelector = "main.content h2, main.content h3";
 
-function slugify(str) {
-  return str
+const slugify = (str) =>
+  str
     .trim()
     .toLowerCase()
     .replace(/[^\w]+/g, "-");
-}
-function ensureId(el) {
+
+const ensureId = (el) => {
   if (!el.id) el.id = slugify(el.textContent);
   return el.id;
-}
+};
 
+/* ────────────────────────────────────────────────────────────
+   Build a <ul> list of headings for a document (self or remote)
+   ---------------------------------------------------------- */
 function buildList(doc, ul, prefix = "") {
   const frag = document.createDocumentFragment();
   doc.querySelectorAll(headingSelector).forEach((h) => {
@@ -31,12 +38,12 @@ function buildList(doc, ul, prefix = "") {
   ul.append(frag);
 }
 
-/* ToC for THIS page ---------------------------------------- */
+/* ───────── ToC for CURRENT page ───────── */
 document
   .querySelectorAll('ul.toc-list[data-src="self"]')
   .forEach((ul) => buildList(document, ul));
 
-/* Lazy‑load ToCs for other chapters ------------------------- */
+/* ───────── Lazy‑load ToCs for OTHER chapters ───────── */
 document
   .querySelectorAll('ul.toc-list[data-src]:not([data-src="self"])')
   .forEach((ul) => {
@@ -61,209 +68,215 @@ document
     );
   });
 
-/* Sidebar toggle ------------------------------------------- */
-document.getElementById("sidebarToggle")?.addEventListener("click", () => {
+/* ────────────────────────────────────────────────────────────
+   Sidebar collapse / expand (desktop & mobile)
+   ---------------------------------------------------------- */
+const sidebarToggleBtn = document.getElementById("sidebarToggle");
+sidebarToggleBtn?.addEventListener("click", () => {
   const body = document.body;
   const collapsed = body.classList.toggle("sidebar-collapsed");
-  document
-    .getElementById("sidebarToggle")
-    .setAttribute("aria-expanded", (!collapsed).toString());
+  sidebarToggleBtn.setAttribute("aria-expanded", (!collapsed).toString());
 });
 
-// Theme toggle logic (robust for all pages)
-const themeToggle = document.getElementById('themeToggle');
-const root = document.documentElement;
+/* ─────────────  THEME SWITCHER – final  ───────────── */
+document.addEventListener("DOMContentLoaded", () => {
+  const root = document.documentElement;
+  const button = document.getElementById("themeToggle");
+  const KEY = "pref-theme"; // storage key
 
-function setTheme(theme) {
-  root.classList.remove('theme-light', 'theme-dark');
-  root.classList.add(theme);
-  localStorage.setItem('theme', theme);
-  if (themeToggle) {
-    themeToggle.textContent = theme === 'theme-dark' ? '🌙' : '🌞';
-  }
-}
+  const apply = (mode) => {
+    // remove both, then add the requested one
+    root.classList.remove("theme-light", "theme-dark");
+    root.classList.add(`theme-${mode}`);
 
-(function() {
-  const saved = localStorage.getItem('theme');
-  if (saved) {
-    setTheme(saved);
-  } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-    setTheme('theme-dark');
+    // legacy body classes for old rules
+    document.body.classList.toggle("dark-mode", mode === "dark");
+    document.body.classList.toggle("light-mode", mode === "light");
+
+    localStorage.setItem(KEY, mode);
+    if (button) button.textContent = mode === "dark" ? "🌙" : "🌞";
+  };
+
+  /* 1 ⃣  initial state — stored pref ¦ system default */
+  const stored = localStorage.getItem(KEY);
+  if (stored === "dark" || stored === "light") {
+    apply(stored);
   } else {
-    setTheme('theme-light');
+    apply(
+      matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
+    );
   }
-})();
 
-if (themeToggle) {
-  themeToggle.addEventListener('click', () => {
-    const isDark = root.classList.contains('theme-dark');
-    setTheme(isDark ? 'theme-light' : 'theme-dark');
+  /* 2 ⃣  switch on click */
+  button?.addEventListener("click", () => {
+    apply(root.classList.contains("theme-dark") ? "light" : "dark");
   });
-}
+});
 
-// Expand/collapse all logic (robust for all pages)
+/* ────────────────────────────────────────────────────────────
+   Expand‑all / collapse‑all (index page only)
+   ---------------------------------------------------------- */
 function setAllDetails(open) {
-  // Handle <details> elements
-  document.querySelectorAll('.nav-section details').forEach(d => d.open = open);
+  /* <details> elements */
+  document
+    .querySelectorAll(".nav-section details")
+    .forEach((d) => (d.open = open));
 
-  // Handle dropdowns
-  document.querySelectorAll('.dropdown-content').forEach(content => {
-    content.hidden = !open;
-  });
-  document.querySelectorAll('.index-dropdown, .toc-book-title, .dropdown-toggle').forEach(button => {
-    button.setAttribute('aria-expanded', open);
-  });
+  /* dropdowns built with custom helper */
+  document
+    .querySelectorAll(".dropdown-content")
+    .forEach((c) => (c.hidden = !open));
+  document
+    .querySelectorAll(".index-dropdown, .toc-book-title, .dropdown-toggle")
+    .forEach((btn) => btn.setAttribute("aria-expanded", open));
 }
 
-const expandAllBtn = document.getElementById('expandAll');
-const collapseAllBtn = document.getElementById('collapseAll');
+document
+  .getElementById("expandAll")
+  ?.addEventListener("click", () => setAllDetails(true));
+document
+  .getElementById("collapseAll")
+  ?.addEventListener("click", () => setAllDetails(false));
 
-if (expandAllBtn) {
-  expandAllBtn.addEventListener('click', () => setAllDetails(true));
-}
-
-if (collapseAllBtn) {
-  collapseAllBtn.addEventListener('click', () => setAllDetails(false));
-}
-
-// --- Book/Chapter Dropdown Functionality for Custom Buttons ---
+/* ────────────────────────────────────────────────────────────
+   Custom dropdown buttons (books / index page)
+   ---------------------------------------------------------- */
 function toggleDropdown(contentId, button) {
   const content = document.getElementById(contentId);
   if (!content) return;
-
-  const isExpanded = button.getAttribute('aria-expanded') === 'true';
-  button.setAttribute('aria-expanded', !isExpanded);
+  const isExpanded = button.getAttribute("aria-expanded") === "true";
+  button.setAttribute("aria-expanded", (!isExpanded).toString());
   content.hidden = isExpanded;
 }
+window.toggleDropdown = toggleDropdown; // needed for inline onclick="…"
 
-if (typeof window !== 'undefined') {
-  window.toggleDropdown = toggleDropdown;
-}
+/* attach to any button that wasn't wired inline */
+document.addEventListener("DOMContentLoaded", () => {
+  document
+    .querySelectorAll(".dropdown-toggle, .index-dropdown")
+    .forEach((btn) => {
+      const id = btn.getAttribute("aria-controls");
+      if (id) btn.addEventListener("click", () => toggleDropdown(id, btn));
+    });
+});
 
-// Inject index-content.html into <nav> for local development
-document.addEventListener('DOMContentLoaded', function () {
-  const navs = document.querySelectorAll('nav');
-  navs.forEach(nav => {
-    // Only inject if nav contains the SSI comment
-    if (nav.innerHTML.includes('<!--#include file="index-content.html" -->')) {
-      fetch('index-content.html')
-        .then(res => res.text())
-        .then(html => {
-          // Replace the SSI comment with the loaded HTML
-          nav.innerHTML = nav.innerHTML.replace(
-            /<!--#include file="index-content.html" -->/,
-            html
-          );
-        })
-        .catch(err => {
-          nav.innerHTML += '<p class="error">Unable to load navigation.</p>';
-        });
-    }
+/* ────────────────────────────────────────────────────────────
+   Inject ‘index-content.html’ server‑side‑include when running
+   locally (so dev build matches prod)
+   ---------------------------------------------------------- */
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll("nav").forEach((nav) => {
+    if (!nav.innerHTML.includes('<!--#include file="index-content.html" -->'))
+      return;
+    fetch("index-content.html")
+      .then((r) => r.text())
+      .then((html) => {
+        nav.innerHTML = nav.innerHTML.replace(
+          /<!--#include file="index-content.html" -->/,
+          html
+        );
+      })
+      .catch(() => {
+        nav.insertAdjacentHTML(
+          "beforeend",
+          '<p class="error">Unable to load navigation.</p>'
+        );
+      });
   });
 });
 
-/* Main client-side behaviour
-   ------------------------------------------------------------ */
-
-  // 2) Last‑updated stamp
-  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-    document.getElementById("lastUpdated").textContent = new Date(
-      document.lastModified
-    ).toLocaleDateString(undefined, {
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    });
-  }
-  
-  // 3) GitHub Contributions Heatmap
-  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
-    (function(){
-      // Load github-calendar CSS
-      const calendarCss = document.createElement('link');
-      calendarCss.rel = 'stylesheet';
-      calendarCss.href = 'https://cdn.jsdelivr.net/npm/github-calendar@latest/dist/github-calendar-responsive.css';
-      document.head.appendChild(calendarCss);
-  
-      // Load github-calendar JS
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/github-calendar@latest/dist/github-calendar.min.js';
-      script.onload = function() {
-        // Render the calendar for the repo owner (COD1995)
-        if (window.GitHubCalendar) {
-          GitHubCalendar("#github-heatmap", "COD1995", { responsive: true });
-        }
-      };
-      document.body.appendChild(script);
-    })();
-  }
-  
-  // 4) GitHub contributors
-  const owner = "COD1995",
-    repo = "ml-meta";
-  const key = "ghContribCache",
-    ttl = 24 * 60 * 60 * 1e3; // 24 h
-  
-  async function fetchContributors() {
-    const cached = JSON.parse(localStorage.getItem(key) || "{}");
-    if (cached.when && Date.now() - cached.when < ttl) return cached.data;
-  
-    const res = await fetch(
-      `https://api.github.com/repos/${owner}/${repo}/contributors`
+/* ────────────────────────────────────────────────────────────
+   Misc extras: last‑modified stamp, GitHub heat‑map, contributor
+   leaderboard (runs only where matching elements exist)
+   ---------------------------------------------------------- */
+document.addEventListener("DOMContentLoaded", () => {
+  /* 1) “Last updated” */
+  const last = document.getElementById("lastUpdated");
+  if (last) {
+    last.textContent = new Date(document.lastModified).toLocaleDateString(
+      undefined,
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
     );
-    if (!res.ok) throw new Error(res.status);
-    const data = await res.json();
-    localStorage.setItem(key, JSON.stringify({ when: Date.now(), data }));
-    return data;
   }
-  
-  /* Render Top‑10 with avatars + medals */
-  function renderContributors(list) {
-    const tbody = document.querySelector(".leaderboard-table tbody");
-    if (!tbody) return;
-  
-    const medals = ["🥇", "🥈", "🥉"];
-  
-    list
-      .sort((a, b) => b.contributions - a.contributions) // highest first
-      .slice(0, 10) // top‑10 only
-      .forEach((u, i) => {
-        const medal = medals[i] ? `<span class="medal">${medals[i]}</span>` : "";
-        tbody.insertAdjacentHTML(
-          "beforeend",
-          `<tr>
-             <td class="number">${i + 1}</td>
-             <td class="name">
-               <div class="name-cell">
-                 <img class="avatar" src="${u.avatar_url}&s=80" alt="${
-            u.login
-          } avatar">
-                 ${u.login}
-               </div>
-             </td>
-             <td class="points">${u.contributions}${medal}</td>
-           </tr>`
-        );
-      });
+
+  /* 2) GitHub contribution heat‑map */
+  if (document.getElementById("github-heatmap")) {
+    const css = document.createElement("link");
+    css.rel = "stylesheet";
+    css.href =
+      "https://cdn.jsdelivr.net/npm/github-calendar@latest/dist/github-calendar-responsive.css";
+    document.head.appendChild(css);
+
+    const script = document.createElement("script");
+    script.src =
+      "https://cdn.jsdelivr.net/npm/github-calendar@latest/dist/github-calendar.min.js";
+    script.onload = () =>
+      window.GitHubCalendar &&
+      GitHubCalendar("#github-heatmap", "COD1995", { responsive: true });
+    document.body.appendChild(script);
   }
-  
-  if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+
+  /* 3) GitHub contributor leaderboard */
+  if (document.querySelector(".leaderboard-table tbody")) {
+    const owner = "COD1995",
+      repo = "ml-meta",
+      key = "ghContribCache",
+      ttl = 24 * 60 * 60 * 1000; // 24 h
+
+    const fetchContributors = async () => {
+      const cached = JSON.parse(localStorage.getItem(key) || "{}");
+      if (cached.when && Date.now() - cached.when < ttl) return cached.data;
+      const res = await fetch(
+        `https://api.github.com/repos/${owner}/${repo}/contributors`
+      );
+      if (!res.ok) throw new Error(res.status);
+      const data = await res.json();
+      localStorage.setItem(key, JSON.stringify({ when: Date.now(), data }));
+      return data;
+    };
+
+    const renderContributors = (list) => {
+      const tbody = document.querySelector(".leaderboard-table tbody");
+      if (!tbody) return;
+      const medals = ["🥇", "🥈", "🥉"];
+      list
+        .sort((a, b) => b.contributions - a.contributions)
+        .slice(0, 10)
+        .forEach((u, i) => {
+          const medal = medals[i]
+            ? `<span class="medal">${medals[i]}</span>`
+            : "";
+          tbody.insertAdjacentHTML(
+            "beforeend",
+            `<tr>
+              <td class="number">${i + 1}</td>
+              <td class="name">
+                <div class="name-cell">
+                  <img class="avatar" src="${u.avatar_url}&s=80" alt="${
+              u.login
+            } avatar">
+                  ${u.login}
+                </div>
+              </td>
+              <td class="points">${u.contributions}${medal}</td>
+            </tr>`
+          );
+        });
+    };
+
     fetchContributors()
       .then(renderContributors)
-      .catch((err) => {
-        console.error(err);
-        document.querySelector("#contributors").innerHTML =
-          '<p class="error">Unable to load contributor list 😢</p>';
+      .catch(() => {
+        document
+          .querySelector("#contributors")
+          ?.insertAdjacentHTML(
+            "beforeend",
+            '<p class="error">Unable to load contributor list 😢</p>'
+          );
       });
   }
-document.addEventListener('DOMContentLoaded', function() {
-  // Attach toggleDropdown to all buttons that need it
-  document.querySelectorAll('.dropdown-toggle, .index-dropdown').forEach(button => {
-    const contentId = button.getAttribute('aria-controls');
-    if (contentId) {
-      button.addEventListener('click', () => {
-        toggleDropdown(contentId, button);
-      });
-    }
-  });
 });
