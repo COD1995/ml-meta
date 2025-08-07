@@ -12,8 +12,12 @@ A community-driven, web-based educational platform that presents complex compute
 ### 📖 Innovative Learning Experience
 
 - **Side-by-Side Explanations**: Original academic text displayed alongside plain-language explanations, making complex topics digestible
-- **Interactive Navigation**: Multi-level navigation with collapsible sections, expandable chapters, and auto-generated table of contents
-- **Dynamic Content Organization**: Context-aware navigation that highlights current chapters and provides lazy-loaded TOCs
+- **Enhanced Interactive Navigation**: Redesigned multi-level navigation with:
+  - Collapsible sections with smooth animations
+  - Auto-generated table of contents with proper hierarchy
+  - Context-aware chapter highlighting
+  - Improved arrow indicators and clean typography
+- **Dynamic Content Organization**: Smart navigation that highlights current chapters and provides lazy-loaded TOCs for optimal performance
 
 ### 🎨 Professional Rendering
 
@@ -51,44 +55,58 @@ A community-driven, web-based educational platform that presents complex compute
 
 ### Prerequisites
 
-- Node.js (for build scripts)
+- **Node.js 14+** (required for build scripts and TOC generation)
 - Any modern web browser
-- (Optional) Python 3 or VS Code with Live Server extension
+- (Optional) Python 3 for alternative dev server
 
-### Installation
+### Quick Start
 
-1. **Clone the repository:**
+1. **Clone and setup:**
 
    ```bash
    git clone https://github.com/COD1995/ml-meta.git
    cd ml-meta
+   npm install  # Install dependencies (if any)
    ```
 
-2. **Generate navigation data (optional, if adding new content):**
+2. **Build and serve (recommended):**
 
    ```bash
+   npm run serve
+   ```
+
+   This command will:
+   - Generate all navigation data and TOC
+   - Start development server on http://localhost:8000
+   - Automatically open your browser
+
+### Manual Setup
+
+If you prefer step-by-step control:
+
+1. **Generate TOC and navigation:**
+
+   ```bash
+   # Build everything
+   npm run build
+
+   # Or run individually:
    npm run build:data  # Generate book chapter lists
    npm run build:nav   # Generate main navigation structure
    ```
 
-3. **Start a local web server:**
-
-   Using Python:
+2. **Start development server:**
 
    ```bash
-   python -m http.server 8000
+   # Using Python (default)
+   npm run dev
+
+   # OR using Node.js
+   npm run dev:node
    ```
 
-   Or using Node.js:
-
-   ```bash
-   npx http-server
-   ```
-
-   Or use the [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) extension in VS Code
-
-4. **Open in browser:**
-   Navigate to `http://localhost:8000`
+3. **Open browser:**
+   Navigate to http://localhost:8000
 
 ---
 
@@ -179,6 +197,20 @@ These scripts:
 - Generate JavaScript data files for browser consumption
 - Maintain hierarchical navigation structure
 
+### Available Scripts
+
+| Command | Description |
+|---------|-------------|
+| `npm run serve` | **Recommended**: Build everything and start server |
+| `npm run build` | Generate all navigation data and TOC |
+| `npm run build:data` | Generate book chapter data only |
+| `npm run build:nav` | Generate main navigation structure only |
+| `npm run dev` | Start Python development server |
+| `npm run dev:node` | Start Node.js development server |
+| `npm run clean` | Clean temporary files |
+| `npm run backup` | Backup original CSS/JS files |
+| `npm run restore` | Restore from backup |
+
 ---
 
 ## 📝 Adding New Content
@@ -221,6 +253,40 @@ These scripts:
 
 1. Place HTML files in the appropriate directory (`/math-foundations/` or `/papers/`)
 2. Run `npm run build:nav` to update the main navigation
+
+---
+
+## 🔧 Troubleshooting
+
+### TOC Not Showing/Updating
+
+If the table of contents isn't appearing or showing outdated information:
+
+```bash
+# Regenerate navigation data
+npm run build
+
+# Clear browser cache and refresh
+# Or try incognito/private mode
+```
+
+### Server Won't Start
+
+- **Python not found**: Install Python 3 or use `npm run dev:node`
+- **Port 8000 busy**: Kill existing processes or change port
+- **Permission issues**: Check file permissions in project directory
+
+### Navigation Not Working
+
+- Ensure build scripts have run: `npm run build`
+- Check browser console for JavaScript errors
+- Verify HTML structure matches expected format
+
+### Content Not Loading
+
+- Check that HTML files are in correct directory structure
+- Verify file naming follows `XX-chapter-name.html` pattern
+- Ensure build scripts completed successfully
 
 ---
 
