@@ -1,91 +1,178 @@
 /* assets/css/leaderboard.css
- * Simple card‑style leaderboard with medals for top‑3
+ * Clean, modern leaderboard design
  * -------------------------------------------------- */
 
 .leaderboard-panel {
-  width: 100%; /* fill the container */
-  max-width: none; /* remove the 640 px cap */
-  margin: 2.5rem 0; /* align left & right with container padding */
-  background: transparent;
-  border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(27, 31, 35, 0.08);
-  overflow: hidden;
+  width: 100%;
+  max-width: none;
+  margin: 2.5rem 0;
+  background: #fff;
+  border: 1px solid #e1e8ed;
   font-family: "Rubik", sans-serif;
 }
 
 /* Title */
 .leaderboard-title {
-  background: var(--c-purple-600);
+  background: #4f46e5;
   color: #fff;
-  font-size: 1.2rem;
+  font-size: 1.25rem;
   font-weight: 600;
   text-align: center;
-  padding: 1rem 1.5rem;
+  padding: 1.25rem;
+  margin: 0;
 }
 
-/* Table basics */
+/* Table */
 .leaderboard-table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed;
-  color: #141a39;
-}
-.leaderboard-table th,
-.leaderboard-table td {
-  padding: 0.9rem 1.5rem;
-  font-size: 1rem;
-}
-.leaderboard-table th {
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--c-gray-700);
-  background: transparent;
+  background: #fff;
 }
 
-/* Columns */
+.leaderboard-table th {
+  padding: 1rem 1.5rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #6b7280;
+  background: #f9fafb;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+
+.leaderboard-table td {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #f3f4f6;
+  vertical-align: middle;
+}
+
+/* Column alignment */
 .number {
-  width: 3rem;
+  width: 4rem;
   text-align: center;
   font-weight: 700;
+  color: #374151;
 }
+
 .name {
   text-align: left;
 }
+
 .points {
   text-align: right;
-  font-weight: 700;
+  font-weight: 600;
+  color: #374151;
 }
 
-/* Zebra rows */
-.leaderboard-table tbody tr:nth-child(odd) {
-  background: transparent;
+/* Top 3 highlighting */
+.leaderboard-table tbody tr:nth-child(1) {
+  background: #fef3c7;
 }
 
-/* Hover highlight */
+.leaderboard-table tbody tr:nth-child(1) .number {
+  color: #d97706;
+  font-weight: 800;
+}
+
+.leaderboard-table tbody tr:nth-child(2) {
+  background: #f3f4f6;
+}
+
+.leaderboard-table tbody tr:nth-child(2) .number {
+  color: #6b7280;
+  font-weight: 800;
+}
+
+.leaderboard-table tbody tr:nth-child(3) {
+  background: #fde2e8;
+}
+
+.leaderboard-table tbody tr:nth-child(3) .number {
+  color: #dc2626;
+  font-weight: 800;
+}
+
+/* Hover effects */
 .leaderboard-table tbody tr:hover {
-  background: transparent;
-  box-shadow: inset 0 0 0 999px rgba(0, 0, 0, 0.03);
+  background: #f0f9ff;
 }
 
-/* Medal emoji size */
-.medal {
-  font-size: 1.4rem;
-  margin-left: 0.4rem;
+.leaderboard-table tbody tr:nth-child(1):hover {
+  background: #fbbf24;
 }
 
-/* Avatar inside the “Contributor” cell ---------------------- */
+.leaderboard-table tbody tr:nth-child(2):hover {
+  background: #d1d5db;
+}
+
+.leaderboard-table tbody tr:nth-child(3):hover {
+  background: #f87171;
+}
+
+/* Avatar */
 .avatar {
-  width: 36px;
-  height: 36px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   margin-right: 0.75rem;
-  flex-shrink: 0;
+  border: 2px solid #e5e7eb;
 }
 
 .name-cell {
   display: flex;
   align-items: center;
+  font-weight: 500;
   gap: 0.5rem;
-  white-space: nowrap; /* keep username on one line */
+}
+
+/* Medal */
+.medal {
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+}
+
+/* Dark mode */
+[data-theme="dark"] .leaderboard-panel {
+  background: #1f2937;
+  border-color: #374151;
+}
+
+[data-theme="dark"] .leaderboard-table {
+  background: #1f2937;
+  color: #f9fafb;
+}
+
+[data-theme="dark"] .leaderboard-table th {
+  background: #374151;
+  color: #d1d5db;
+  border-bottom-color: #4b5563;
+}
+
+[data-theme="dark"] .leaderboard-table td {
+  border-bottom-color: #374151;
+}
+
+[data-theme="dark"] .number,
+[data-theme="dark"] .points {
+  color: #f9fafb;
+}
+
+[data-theme="dark"] .leaderboard-table tbody tr:nth-child(1) {
+  background: #451a03;
+}
+
+[data-theme="dark"] .leaderboard-table tbody tr:nth-child(2) {
+  background: #374151;
+}
+
+[data-theme="dark"] .leaderboard-table tbody tr:nth-child(3) {
+  background: #4c1d24;
+}
+
+[data-theme="dark"] .leaderboard-table tbody tr:hover {
+  background: #1e40af;
+}
+
+[data-theme="dark"] .avatar {
+  border-color: #4b5563;
 }
