@@ -30,7 +30,21 @@ document.addEventListener("DOMContentLoaded", () => {
     /* button (chapter title) */
     const btn = document.createElement("button");
     btn.className = "toc-book-title dropdown-toggle";
-    btn.textContent = ch.title;
+    
+    // Add indicator span
+    const indicator = document.createElement("span");
+    indicator.className = "chapter-indicator";
+    indicator.textContent = "+";
+    indicator.style.marginRight = "0.5rem";
+    indicator.style.fontFamily = "monospace";
+    indicator.style.fontWeight = "bold";
+    
+    // Add chapter title text
+    const titleText = document.createElement("span");
+    titleText.textContent = ch.title;
+    
+    btn.appendChild(indicator);
+    btn.appendChild(titleText);
     btn.setAttribute("aria-expanded", "false");
     const listId = `${slug}-chapters`;
     btn.setAttribute("aria-controls", listId);
@@ -48,6 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.classList.add("active");
       btn.setAttribute("aria-expanded", "true");
       inner.classList.add("show");
+      indicator.textContent = "−"; // Show minus for expanded state
       injectHeadings(inner);
     } else {
       inner.classList.add("hidden"); // collapsed by default
@@ -117,16 +132,21 @@ function toggleDropdown(id, btn, chapter = null) {
     injectRemoteHeadings(box, chapter.href);
   }
 
+  // Find the indicator span
+  const indicator = btn.querySelector('.chapter-indicator');
+  
   if (isCurrentlyVisible) {
     // Hide dropdown
     box.classList.add('hidden');
     box.classList.remove('show');
     btn.setAttribute("aria-expanded", "false");
+    if (indicator) indicator.textContent = "+";
   } else {
     // Show dropdown
     box.classList.remove('hidden');
     box.classList.add('show');
     btn.setAttribute("aria-expanded", "true");
+    if (indicator) indicator.textContent = "−";
   }
 }
 

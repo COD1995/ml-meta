@@ -257,7 +257,7 @@ p.original-text {
   font-size: 0.875rem;
   background: none;
   border: none;
-  padding: 0.2rem 1rem 0.1rem 1rem;
+  padding: 0.2rem 0.75rem 0.1rem 0.75rem;
   cursor: pointer;
   color: #374151;
   transition: all 0.15s ease;
@@ -274,10 +274,22 @@ p.original-text {
   font-weight: 600;
 }
 
-/* No indicators in side nav chapters */
-.side-nav .toc-book-title::before,
-.side-nav .toc-book-title::after {
-  display: none !important;
+/* Style for chapter indicators added via JavaScript */
+.side-nav .chapter-indicator {
+  color: #6b7280;
+  display: inline-block;
+  width: 1rem;
+  text-align: center;
+}
+
+/* Normal spacing between collapsed chapters */
+.side-nav .toc-book {
+  margin-bottom: 0.5rem;
+}
+
+/* Reduce gap only when chapter is expanded */
+.side-nav .toc-book:has(.toc-chapters.dropdown-content.show) {
+  margin-bottom: 0.1rem;
 }
 
 /* Chapter sections - clean hierarchy */
@@ -295,7 +307,7 @@ p.original-text {
 
 .side-nav .toc-chapters.dropdown-content a {
   display: block;
-  padding: 0.15rem 1rem 0.15rem 1.5rem;
+  padding: 0.15rem 0.1rem 0.15rem 0.3rem;
   font-size: 0.8125rem;
   font-weight: 400;
   color: #6b7280;
@@ -343,7 +355,10 @@ html.theme-dark .side-nav .toc-book-title.active {
   color: #c7d2fe;
 }
 
-/* No indicators in dark mode either */
+/* Dark mode indicators */
+html.theme-dark .side-nav .chapter-indicator {
+  color: #9ca3af;
+}
 
 html.theme-dark .side-nav .toc-chapters.dropdown-content a {
   color: #9ca3af;
