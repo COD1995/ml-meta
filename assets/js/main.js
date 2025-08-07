@@ -1,282 +1,366 @@
-/* assets/js/main.js
- * -------------------------------------------------------------
- * ① Build page & remote ToCs
- * ② Sidebar collapse + dark / light theme switcher
- * ③ Misc: expand‑all, dropdown helper, GitHub widgets …
- * ---------------------------------------------------------- */
+/**
+ * Main application entry point
+ * Coordinates all modules and handles legacy compatibility
+ */
 
-/* ────────────────────────────────────────────────────────────
-   Tiny utilities
-   ---------------------------------------------------------- */
-const headingSelector = "main.content h2, main.content h3";
+import utils from './utils.js';
+import theme from './theme.js';
+import navigation from './navigation.js';
+import toc from './toc.js';
 
-const slugify = (str) =>
-  str
-    .trim()
-    .toLowerCase()
-    .replace(/[^\w]+/g, "-");
+// Import individual functions we need
+const { $, $$, on, fetchWithTimeout, getStorageItem, setStorageItem, formatRelativeTime, domReady } = utils;
 
-const ensureId = (el) => {
-  if (!el.id) el.id = slugify(el.textContent);
-  return el.id;
-};
-
-/* ────────────────────────────────────────────────────────────
-   Build a <ul> list of headings for a document (self or remote)
-   ---------------------------------------------------------- */
-function buildList(doc, ul, prefix = "") {
-  const frag = document.createDocumentFragment();
-  doc.querySelectorAll(headingSelector).forEach((h) => {
-    const li = document.createElement("li");
-    li.className = h.tagName.toLowerCase();
-    const a = document.createElement("a");
-    a.href = `${prefix}#${ensureId(h)}`;
-    a.textContent = h.textContent;
-    li.append(a);
-    frag.append(li);
-  });
-  ul.append(frag);
-}
-
-/* ───────── ToC for CURRENT page ───────── */
-document
-  .querySelectorAll('ul.toc-list[data-src="self"]')
-  .forEach((ul) => buildList(document, ul));
-
-/* ───────── Lazy‑load ToCs for OTHER chapters ───────── */
-document
-  .querySelectorAll('ul.toc-list[data-src]:not([data-src="self"])')
-  .forEach((ul) => {
-    const src = ul.dataset.src;
-    const details = ul.closest("details");
-    if (!details || !src) return;
-
-    details.addEventListener(
-      "toggle",
-      async () => {
-        if (!details.open || ul.childElementCount) return;
-        try {
-          const html = await (await fetch(src)).text();
-          const doc = new DOMParser().parseFromString(html, "text/html");
-          buildList(doc, ul, src);
-        } catch (e) {
-          console.error("ToC fetch error", e);
-          ul.innerHTML = "<li><em>Unable to load ToC</em></li>";
-        }
-      },
-      { once: true }
-    );
-  });
-
-/* ────────────────────────────────────────────────────────────
-   Sidebar collapse / expand (desktop & mobile)
-   ---------------------------------------------------------- */
-const sidebarToggleBtn = document.getElementById("sidebarToggle");
-sidebarToggleBtn?.addEventListener("click", () => {
-  const body = document.body;
-  const collapsed = body.classList.toggle("sidebar-collapsed");
-  sidebarToggleBtn.setAttribute("aria-expanded", (!collapsed).toString());
-});
-
-/* ─────────────  THEME SWITCHER – final  ───────────── */
-document.addEventListener("DOMContentLoaded", () => {
-  const root = document.documentElement;
-  const button = document.getElementById("themeToggle");
-  const KEY = "pref-theme"; // storage key
-
-  const apply = (mode) => {
-    // remove both, then add the requested one
-    root.classList.remove("theme-light", "theme-dark");
-    root.classList.add(`theme-${mode}`);
-
-    // legacy body classes for old rules
-    document.body.classList.toggle("dark-mode", mode === "dark");
-    document.body.classList.toggle("light-mode", mode === "light");
-
-    localStorage.setItem(KEY, mode);
-    if (button) button.textContent = mode === "dark" ? "🌙" : "🌞";
-  };
-
-  /* 1 ⃣  initial state — stored pref ¦ system default */
-  const stored = localStorage.getItem(KEY);
-  if (stored === "dark" || stored === "light") {
-    apply(stored);
-  } else {
-    apply(
-      matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"
-    );
+/**
+ * Main application class
+ */
+class MLMetaApp {
+  constructor() {
+    this.contributors = [];
+    this.lastUpdate = null;
+    this.initialized = false;
   }
 
-  /* 2 ⃣  switch on click */
-  button?.addEventListener("click", () => {
-    apply(root.classList.contains("theme-dark") ? "light" : "dark");
-  });
-});
+  /**
+   * Initialize the application
+   */
+  async init() {
+    if (this.initialized) return;
+    
+    try {
+      // Wait for DOM to be ready
+      await domReady();
+      
+      // Initialize all modules
+      await this.initializeModules();
+      
+      // Setup legacy compatibility
+      this.setupLegacyCompatibility();
+      
+      // Load dynamic content
+      await this.loadDynamicContent();
+      
+      this.initialized = true;
+      console.log('ML-Meta application initialized successfully');
+    } catch (error) {
+      console.error('Failed to initialize application:', error);
+    }
+  }
 
-/* ────────────────────────────────────────────────────────────
-   Expand‑all / collapse‑all (index page only)
-   ---------------------------------------------------------- */
-function setAllDetails(open) {
-  /* <details> elements */
-  document
-    .querySelectorAll(".nav-section details")
-    .forEach((d) => (d.open = open));
+  /**
+   * Initialize all modules
+   */
+  async initializeModules() {
+    // Theme system is auto-initialized
+    // Navigation system is auto-initialized  
+    // TOC system is auto-initialized
+    
+    // Additional initialization
+    this.setupLastUpdated();
+    this.setupContributors();
+    this.setupExpandCollapse();
+  }
 
-  /* dropdowns built with custom helper */
-  document
-    .querySelectorAll(".dropdown-content")
-    .forEach((c) => (c.hidden = !open));
-  document
-    .querySelectorAll(".index-dropdown, .toc-book-title, .dropdown-toggle")
-    .forEach((btn) => btn.setAttribute("aria-expanded", open));
-}
+  /**
+   * Setup legacy compatibility for existing code
+   */
+  setupLegacyCompatibility() {
+    // Expose necessary functions to global scope for legacy code
+    // Note: toggleDropdown is now defined directly in navigation.js as a global function
+    
+    // Legacy slugify function
+    window.slugify = utils.slugify;
+    
+    // Theme utilities
+    window.getCurrentTheme = utils.getCurrentTheme;
+    window.applyTheme = utils.applyTheme;
+  }
 
-document
-  .getElementById("expandAll")
-  ?.addEventListener("click", () => setAllDetails(true));
-document
-  .getElementById("collapseAll")
-  ?.addEventListener("click", () => setAllDetails(false));
+  /**
+   * Load dynamic content
+   */
+  async loadDynamicContent() {
+    await Promise.all([
+      this.loadContributors(),
+      this.loadGitHubHeatmap()
+    ]);
+  }
 
-/* ────────────────────────────────────────────────────────────
-   Custom dropdown buttons (books / index page)
-   ---------------------------------------------------------- */
-function toggleDropdown(contentId, button) {
-  const content = document.getElementById(contentId);
-  if (!content) return;
-  const isExpanded = button.getAttribute("aria-expanded") === "true";
-  button.setAttribute("aria-expanded", (!isExpanded).toString());
-  content.hidden = isExpanded;
-}
-window.toggleDropdown = toggleDropdown; // needed for inline onclick="…"
-
-/* attach to any button that wasn't wired inline */
-document.addEventListener("DOMContentLoaded", () => {
-  document
-    .querySelectorAll(".dropdown-toggle, .index-dropdown")
-    .forEach((btn) => {
-      const id = btn.getAttribute("aria-controls");
-      if (id) btn.addEventListener("click", () => toggleDropdown(id, btn));
-    });
-});
-
-/* ────────────────────────────────────────────────────────────
-   Inject ‘index-content.html’ server‑side‑include when running
-   locally (so dev build matches prod)
-   ---------------------------------------------------------- */
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("nav").forEach((nav) => {
-    if (!nav.innerHTML.includes('<!--#include file="index-content.html" -->'))
-      return;
-    fetch("index-content.html")
-      .then((r) => r.text())
-      .then((html) => {
-        nav.innerHTML = nav.innerHTML.replace(
-          /<!--#include file="index-content.html" -->/,
-          html
-        );
-      })
-      .catch(() => {
-        nav.insertAdjacentHTML(
-          "beforeend",
-          '<p class="error">Unable to load navigation.</p>'
-        );
-      });
-  });
-});
-
-/* ────────────────────────────────────────────────────────────
-   Misc extras: last‑modified stamp, GitHub heat‑map, contributor
-   leaderboard (runs only where matching elements exist)
-   ---------------------------------------------------------- */
-document.addEventListener("DOMContentLoaded", () => {
-  /* 1) “Last updated” */
-  const last = document.getElementById("lastUpdated");
-  if (last) {
-    last.textContent = new Date(document.lastModified).toLocaleDateString(
-      undefined,
-      {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
+  /**
+   * Setup last updated timestamp
+   */
+  setupLastUpdated() {
+    const lastUpdatedEl = $('#lastUpdated');
+    if (lastUpdatedEl) {
+      // Try to get from localStorage first
+      const cached = getStorageItem('lastUpdated');
+      if (cached) {
+        lastUpdatedEl.textContent = formatRelativeTime(cached);
+        lastUpdatedEl.setAttribute('datetime', new Date(cached).toISOString());
+      } else {
+        lastUpdatedEl.textContent = 'Recently';
       }
-    );
+    }
   }
 
-  /* 2) GitHub contribution heat‑map */
-  if (document.getElementById("github-heatmap")) {
-    const css = document.createElement("link");
-    css.rel = "stylesheet";
-    css.href =
-      "https://cdn.jsdelivr.net/npm/github-calendar@latest/dist/github-calendar-responsive.css";
-    document.head.appendChild(css);
-
-    const script = document.createElement("script");
-    script.src =
-      "https://cdn.jsdelivr.net/npm/github-calendar@latest/dist/github-calendar.min.js";
-    script.onload = () =>
-      window.GitHubCalendar &&
-      GitHubCalendar("#github-heatmap", "COD1995", { responsive: true });
-    document.body.appendChild(script);
+  /**
+   * Setup contributor system
+   */
+  setupContributors() {
+    // Contributors will be loaded asynchronously
+    this.setupContributorRefresh();
   }
 
-  /* 3) GitHub contributor leaderboard */
-  if (document.querySelector(".leaderboard-table tbody")) {
-    const owner = "COD1995",
-      repo = "ml-meta",
-      key = "ghContribCache",
-      ttl = 24 * 60 * 60 * 1000; // 24 h
+  /**
+   * Setup contributor refresh mechanism
+   */
+  setupContributorRefresh() {
+    // Refresh contributors every 24 hours
+    const REFRESH_INTERVAL = 24 * 60 * 60 * 1000; // 24 hours
+    const lastRefresh = getStorageItem('contributorsLastRefresh', 0);
+    const now = Date.now();
 
-    const fetchContributors = async () => {
-      const cached = JSON.parse(localStorage.getItem(key) || "{}");
-      if (cached.when && Date.now() - cached.when < ttl) return cached.data;
-      const res = await fetch(
-        `https://api.github.com/repos/${owner}/${repo}/contributors`
+    if (now - lastRefresh > REFRESH_INTERVAL) {
+      this.loadContributors(true); // Force refresh
+    }
+  }
+
+  /**
+   * Load GitHub contributors
+   */
+  async loadContributors(forceRefresh = false) {
+    const cacheKey = 'contributors';
+    const lastRefreshKey = 'contributorsLastRefresh';
+    
+    // Check cache first
+    if (!forceRefresh) {
+      const cached = getStorageItem(cacheKey);
+      if (cached && Array.isArray(cached)) {
+        this.displayContributors(cached);
+        return;
+      }
+    }
+
+    try {
+      const response = await fetchWithTimeout(
+        'https://api.github.com/repos/COD1995/ml-meta/contributors?per_page=100',
+        { headers: { 'Accept': 'application/vnd.github.v3+json' } },
+        10000
       );
-      if (!res.ok) throw new Error(res.status);
-      const data = await res.json();
-      localStorage.setItem(key, JSON.stringify({ when: Date.now(), data }));
-      return data;
-    };
 
-    const renderContributors = (list) => {
-      const tbody = document.querySelector(".leaderboard-table tbody");
-      if (!tbody) return;
-      const medals = ["🥇", "🥈", "🥉"];
-      list
+      if (!response.ok) {
+        throw new Error(`GitHub API responded with ${response.status}`);
+      }
+
+      const contributors = await response.json();
+      
+      // Filter and sort contributors
+      const filtered = contributors
+        .filter(c => c.type === 'User' && c.contributions > 0)
         .sort((a, b) => b.contributions - a.contributions)
-        .slice(0, 10)
-        .forEach((u, i) => {
-          const medal = medals[i]
-            ? `<span class="medal">${medals[i]}</span>`
-            : "";
-          tbody.insertAdjacentHTML(
-            "beforeend",
-            `<tr>
-              <td class="number">${i + 1}</td>
-              <td class="name">
-                <div class="name-cell">
-                  <img class="avatar" src="${u.avatar_url}&s=80" alt="${
-              u.login
-            } avatar">
-                  ${u.login}
-                </div>
-              </td>
-              <td class="points">${u.contributions}${medal}</td>
-            </tr>`
-          );
-        });
-    };
+        .slice(0, 10); // Top 10 contributors
 
-    fetchContributors()
-      .then(renderContributors)
-      .catch(() => {
-        document
-          .querySelector("#contributors")
-          ?.insertAdjacentHTML(
-            "beforeend",
-            '<p class="error">Unable to load contributor list 😢</p>'
-          );
-      });
+      this.contributors = filtered;
+      this.displayContributors(filtered);
+
+      // Cache the results
+      setStorageItem(cacheKey, filtered);
+      setStorageItem(lastRefreshKey, Date.now());
+      setStorageItem('lastUpdated', new Date().toISOString());
+      
+      // Update last updated display
+      this.setupLastUpdated();
+
+    } catch (error) {
+      console.error('Failed to load contributors:', error);
+      this.displayContributorsError(error.message);
+    }
   }
-});
+
+  /**
+   * Display contributors in leaderboard
+   */
+  displayContributors(contributors) {
+    const tbody = $('.leaderboard-table tbody');
+    if (!tbody) return;
+
+    // Clear existing content
+    tbody.innerHTML = '';
+
+    contributors.forEach((contributor, index) => {
+      const row = this.createContributorRow(contributor, index + 1);
+      tbody.appendChild(row);
+    });
+  }
+
+  /**
+   * Create contributor table row
+   */
+  createContributorRow(contributor, rank) {
+    const row = document.createElement('tr');
+    
+    // Rank with medal for top 3
+    const rankCell = document.createElement('td');
+    rankCell.className = 'number';
+    rankCell.innerHTML = this.getRankDisplay(rank);
+    
+    // Name with avatar and link
+    const nameCell = document.createElement('td');
+    nameCell.className = 'name';
+    nameCell.innerHTML = `
+      <div class="contributor-info">
+        <img src="${contributor.avatar_url}" alt="${contributor.login}" width="24" height="24" class="contributor-avatar">
+        <a href="${contributor.html_url}" target="_blank" rel="noopener noreferrer">${contributor.login}</a>
+      </div>
+    `;
+    
+    // Contributions
+    const contributionsCell = document.createElement('td');
+    contributionsCell.className = 'points';
+    contributionsCell.textContent = contributor.contributions;
+    
+    row.appendChild(rankCell);
+    row.appendChild(nameCell);
+    row.appendChild(contributionsCell);
+    
+    return row;
+  }
+
+  /**
+   * Get rank display with medals
+   */
+  getRankDisplay(rank) {
+    const medals = { 1: '🥇', 2: '🥈', 3: '🥉' };
+    return medals[rank] || rank;
+  }
+
+  /**
+   * Display contributors error
+   */
+  displayContributorsError(message) {
+    const tbody = $('.leaderboard-table tbody');
+    if (!tbody) return;
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="3" class="error">
+          Failed to load contributors: ${message}
+        </td>
+      </tr>
+    `;
+  }
+
+  /**
+   * Load GitHub contribution heatmap
+   */
+  async loadGitHubHeatmap() {
+    const container = $('#github-heatmap');
+    if (!container) return;
+
+    try {
+      // Create iframe for GitHub contribution graph
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://ghchart.rshah.org/COD1995';
+      iframe.width = '100%';
+      iframe.height = '150';
+      iframe.style.border = 'none';
+      iframe.title = 'GitHub Contribution Chart';
+      
+      container.appendChild(iframe);
+    } catch (error) {
+      console.error('Failed to load GitHub heatmap:', error);
+      container.innerHTML = '<p class="error">Failed to load contribution chart</p>';
+    }
+  }
+
+  /**
+   * Setup expand/collapse all functionality
+   */
+  setupExpandCollapse() {
+    const expandBtn = $('#expandAll');
+    const collapseBtn = $('#collapseAll');
+
+    if (expandBtn) {
+      expandBtn.addEventListener('click', () => {
+        this.expandAllSections();
+      });
+    }
+
+    if (collapseBtn) {
+      collapseBtn.addEventListener('click', () => {
+        this.collapseAllSections();
+      });
+    }
+  }
+
+  /**
+   * Expand all sections
+   */
+  expandAllSections() {
+    // Main navigation sections
+    $$('.toc-book').forEach(book => {
+      book.setAttribute('open', '');
+      const button = book.querySelector('.toc-book-title, .index-dropdown');
+      if (button) button.setAttribute('aria-expanded', 'true');
+    });
+
+    // Any other collapsible sections
+    $$('details').forEach(details => {
+      details.open = true;
+    });
+
+    // Dispatch event for other components
+    window.dispatchEvent(new CustomEvent('sectionsExpanded'));
+  }
+
+  /**
+   * Collapse all sections
+   */
+  collapseAllSections() {
+    // Main navigation sections
+    $$('.toc-book').forEach(book => {
+      book.removeAttribute('open');
+      const button = book.querySelector('.toc-book-title, .index-dropdown');
+      if (button) button.setAttribute('aria-expanded', 'false');
+    });
+
+    // Any other collapsible sections
+    $$('details').forEach(details => {
+      details.open = false;
+    });
+
+    // Dispatch event for other components
+    window.dispatchEvent(new CustomEvent('sectionsCollapsed'));
+  }
+
+  /**
+   * Refresh all dynamic content
+   */
+  async refresh() {
+    try {
+      await Promise.all([
+        this.loadContributors(true),
+        this.loadGitHubHeatmap()
+      ]);
+      console.log('Content refreshed successfully');
+    } catch (error) {
+      console.error('Failed to refresh content:', error);
+    }
+  }
+}
+
+// Create and initialize the application
+const app = new MLMetaApp();
+
+// Auto-initialize when DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => app.init());
+} else {
+  app.init();
+}
+
+// Expose app instance for debugging and external access
+window.MLMetaApp = app;
+
+// Export for module systems
+export default app;

@@ -1,346 +1,351 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Machine Learning Mastery</title>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive machine learning and algorithms textbook with side-by-side explanations, community-driven content, and beautiful mathematical rendering.">
+  <meta name="keywords" content="machine learning, algorithms, computer science, education, interactive textbook">
+  <meta name="author" content="Jue Guo, Kristopher Kodweis">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ML-Meta: Interactive Machine Learning & Algorithms Textbook">
+  <meta property="og:description" content="Community-driven educational platform with side-by-side explanations for complex ML and CS concepts.">
+  <meta property="og:url" content="https://github.com/COD1995/ml-meta">
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="ML-Meta: Interactive Machine Learning & Algorithms Textbook">
+  <meta name="twitter:description" content="Community-driven educational platform with side-by-side explanations for complex ML and CS concepts.">
+  
+  <title>ML-Meta: Interactive Machine Learning & Algorithms Textbook</title>
+  
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="assets/css/variables.css">
+  <link rel="stylesheet" href="assets/css/base.css">
+  <link rel="stylesheet" href="assets/css/inline-styles.css">
+  <link rel="stylesheet" href="assets/css/theme-clean.css">
+  <link rel="stylesheet" href="assets/css/layout.css">
+  <link rel="stylesheet" href="assets/css/books.css">
+  <link rel="stylesheet" href="assets/css/leaderboard.css">
+  
+  <!-- Preload critical resources -->
+  <link rel="preload" href="assets/js/utils.js" as="script" type="module">
+  <link rel="preload" href="assets/js/theme.js" as="script" type="module">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+</head>
 
-    <!-- Global & layout styles -->
-    <link rel="stylesheet" href="assets/css/base.css" />
-    <link rel="stylesheet" href="assets/css/layout.css" />
+<body>
+  <!-- Skip to main content for accessibility -->
+  <a href="#main" class="sr-only focus-visible">Skip to main content</a>
+  
+  <!-- Side Navigation -->
+  <nav class="side-nav" aria-label="Site navigation">
+    <!-- Navigation Controls -->
+    <section class="side-nav-controls" role="group" aria-label="Navigation controls">
+      <button
+        id="themeToggle"
+        class="btn-toggle"
+        aria-label="Toggle dark mode"
+        title="Switch theme"
+      >
+        🌓
+      </button>
+      <span class="nav-divider" aria-hidden="true"></span>
+      <button
+        id="toggleAll"
+        class="btn-toggle"
+        aria-label="Toggle all sections"
+        title="Toggle all sections"
+        data-state="collapsed"
+      >
+        ⬇️
+      </button>
+    </section>
+    
+    <hr class="side-nav-divider" aria-hidden="true">
+    
+    <!-- Main Navigation Links -->
+    <a href="#math-foundations" class="nav-link">
+      <span aria-hidden="true">📐</span> Math Foundations
+    </a>
+    <a href="#books" class="nav-link">
+      <span aria-hidden="true">📚</span> Books
+    </a>
+    <a href="#papers" class="nav-link">
+      <span aria-hidden="true">📄</span> Papers
+    </a>
+    <a href="#main-contributors" class="nav-link">
+      <span aria-hidden="true">🌟</span> Main Contributors
+    </a>
+    <a href="#call-for-contribution" class="nav-link">
+      <span aria-hidden="true">🤝</span> Join the Community
+    </a>
+    
+    <hr class="side-nav-divider" aria-hidden="true">
+    
+    <!-- Slack Community Banner -->
+    <aside class="slack-banner">
+      <a
+        href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
+        id="slackButton"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Join our Slack Community"
+        class="slack-link"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 122.8 122.8"
+          fill="#fff"
+          aria-hidden="true"
+        >
+          <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
+          <path d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z" />
+          <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
+          <path d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z" />
+          <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
+          <path d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z" />
+          <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
+          <path d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z" />
+        </svg>
+        <span>Join our Slack</span>
+      </a>
+    </aside>
+  </nav>
 
-    <!-- Styles for the book list -->
-    <link rel="stylesheet" href="assets/css/books.css" />
-    <link rel="stylesheet" href="assets/css/leaderboard.css" />
-  </head>
+  <!-- Main Content Container -->
+  <div class="container">
+    <!-- Page Header -->
+    <header role="banner">
+      <h1>Machine Learning Mastery</h1>
+      <p class="tagline">
+        A curated collection of notes for CS majors and passionate learners,
+        bridging the gap between fundamental algorithms and modern artificial
+        intelligence.
+      </p>
+    </header>
 
-  <body>
-    <!-- Issue #35: Persistent Left Navbar -->
-    <nav class="side-nav">
-      <!-- Button group for theme/expand/collapse toggle -->
-      <div class="side-nav-controls">
-        <button
-          id="themeToggle"
-          class="btn-toggle"
-          aria-label="Toggle dark mode"
-          style="
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9em;
-            display: flex;
-            align-items: center;
-          "
-        >
-          🌓
-        </button>
-        <span
-          class="nav-divider"
-          style="
-            display: inline-block;
-            width: 1px;
-            height: 1.5em;
-            background: var(--border-color, #ddd);
-            margin: 0;
-          "
-        ></span>
-        <button
-          id="expandAll"
-          class="btn-toggle"
-          aria-label="Expand all sections"
-          style="
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9em;
-            display: flex;
-            align-items: center;
-          "
-        >
-          ⬇️
-        </button>
-        <span
-          class="nav-divider"
-          style="
-            display: inline-block;
-            width: 1px;
-            height: 1.5em;
-            background: var(--border-color, #ddd);
-            margin: 0;
-          "
-        ></span>
-        <button
-          id="collapseAll"
-          class="btn-toggle"
-          aria-label="Collapse all sections"
-          style="
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 0.9em;
-            display: flex;
-            align-items: center;
-          "
-        >
-          ⬆️
-        </button>
-      </div>
-      <hr class="side-nav-divider" />
-      <a href="#math-foundations">📐 Math Foundations</a>
-      <a href="#books">📚 Books</a>
-      <a href="#papers">📄 Papers</a>
-      <a href="#main-contributors">🌟 Main Contributors</a>
-      <a href="#call-for-contribution">🤝 Join the Community</a>
-      <hr class="side-nav-divider" />
-      <!-- Slack banner below nav links -->
-      <div class="slack-banner">
+    <!-- Main Content -->
+    <main id="main" role="main">
+      <!-- Main Navigation Content (Generated by JavaScript) -->
+      <nav id="mainNav" aria-label="Main content navigation">
+        <!-- Content will be populated by build-main-nav.js -->
+      </nav>
+    </main>
+
+    <!-- Main Contributors Section -->
+    <section id="main-contributors" aria-labelledby="contributors-heading">
+      <h2 id="contributors-heading">🌟 Main Contributors</h2>
+
+      <ul class="main-contrib-list">
+        <!-- Jue Guo -->
+        <li class="main-card">
+          <figure>
+            <img
+              src="assets/images/author_profiles/jg.jpeg"
+              alt="Portrait of Jue Guo"
+              width="64"
+              height="64"
+            >
+            <figcaption>
+              <span class="name">Jue Guo</span>
+              <span class="role">Lead Author</span>
+              <a
+                class="site-link"
+                href="https://csragtoriches.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Personal Website <span aria-hidden="true">↗</span>
+              </a>
+            </figcaption>
+          </figure>
+
+          <p class="bio">
+            Jue (Bob) Guo is a Ph.D. candidate and adjunct professor in
+            Computer Science at the University at Buffalo, specializing in
+            machine learning, deep learning and AI. He translates complex
+            theory into practical projects with PyTorch and TensorFlow,
+            develops curricula and mentors students bridging classical
+            algorithms with modern AI techniques.
+          </p>
+        </li>
+
+        <!-- Kristopher Kodweis -->
+        <li class="main-card">
+          <figure>
+            <img
+              src="assets/images/author_profiles/kk.jpeg"
+              alt="Portrait of Kristopher Kodweis"
+              width="64"
+              height="64"
+            >
+            <figcaption>
+              <span class="name">Kristopher Kodweis</span>
+              <span class="role">Lead Author</span>
+              <a
+                class="site-link"
+                href="https://www.linkedin.com/in/kristopherkodweis/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn <span aria-hidden="true">↗</span>
+              </a>
+            </figcaption>
+          </figure>
+
+          <p class="bio">
+            As a M.S. candidate in Mechanical Engineering, Kristopher Kodweis
+            engineers intelligent computer vision systems for mobile
+            platforms. His approach is shaped by a background in visual
+            communication design, photography, and woodworking, focusing on
+            innate human-centered principles. Kristopher creates technology
+            that is robust and intuitive, aiming for AI tools that are
+            seamless extensions of human capability.
+          </p>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Call for Contribution Section -->
+    <section id="call-for-contribution" aria-labelledby="contribution-heading">
+      <h2 id="contribution-heading">🚀 Help Build This Resource</h2>
+      <p>
+        This project is built by the community. From fixing a typo to adding
+        notes on a new research paper, all contributions are welcome. See an
+        area for improvement? Feel free to open an issue on GitHub or join our
+        community on Slack to discuss ideas.
+      </p>
+
+      <!-- GitHub Contribution Heatmap -->
+      <div id="github-heatmap" aria-label="GitHub contribution activity"></div>
+
+      <!-- Contributor Leaderboard -->
+      <aside class="leaderboard-panel" aria-labelledby="leaderboard-title">
+        <h3 id="leaderboard-title" class="leaderboard-title">🏆 Ranking</h3>
+
+        <table class="leaderboard-table">
+          <thead>
+            <tr>
+              <th scope="col" class="number">#</th>
+              <th scope="col" class="name">Contributor</th>
+              <th scope="col" class="points">Commits</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Content will be populated by JavaScript -->
+          </tbody>
+        </table>
+      </aside>
+
+      <!-- Action Buttons -->
+      <div class="button-group">
         <a
-          href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
-          id="slackButton"
+          href="https://github.com/COD1995/ml-meta"
+          class="btn-github"
           target="_blank"
-          rel="noopener"
-          aria-label="Join our Slack Community"
-          data-tooltip="Join Community"
+          rel="noopener noreferrer"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 122.8 122.8"
-            fill="#fff"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+            fill="none"
+            style="margin-right: 0.5em; vertical-align: middle"
           >
-            <path d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z" />
             <path
-              d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z"
-            />
-            <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
-            <path
-              d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z"
-            />
-            <path d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z" />
-            <path
-              d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z"
-            />
-            <path d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z" />
-            <path
-              d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z"
+              fill="#fff"
+              d="M12 2C6.477 2 2 6.484 2 12.012c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.091-.646.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.254-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 7.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.747-1.025 2.747-1.025.546 1.378.202 2.396.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.579.688.481C19.138 20.188 22 16.437 22 12.012 22 6.484 17.523 2 12 2Z"
             />
           </svg>
-          <span>Join our Slack</span>
+          Contribute
+        </a>
+        <a
+          class="btn-slack"
+          href="https://www.notion.so/Meta-ML-Contribution-Guide-July-2025-23543ced6be680b88eabd9fbfba64ff4"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          📄 &nbsp;Contribution Guide
+        </a>
+        <a
+          class="btn-slack"
+          href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 122.8 122.8"
+            style="margin-right: 0.5em; vertical-align: middle"
+          >
+            <g>
+              <path
+                fill="#ffffff"
+                d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z"
+              />
+              <path
+                fill="#ffffff"
+                d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z"
+              />
+              <path
+                fill="#ffffff"
+                d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z"
+              />
+              <path
+                fill="#ffffff"
+                d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z"
+              />
+              <path
+                fill="#ffffff"
+                d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z"
+              />
+              <path
+                fill="#ffffff"
+                d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z"
+              />
+              <path
+                fill="#ffffff"
+                d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z"
+              />
+              <path
+                fill="#ffffff"
+                d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z"
+              />
+            </g>
+          </svg>
+          Join our Slack
         </a>
       </div>
-    </nav>
-    <div class="container" style="padding: 0.7rem 2.15rem; margin: 1.5rem auto">
-      <header>
-        <h1>Machine Learning Mastery</h1>
-        <p class="tagline">
-          A curated collection of notes for CS majors and passionate learners,
-          bridging the gap between fundamental algorithms and modern artificial
-          intelligence.
-        </p>
-      </header>
+    </section>
 
-      <nav id="mainNav">
-        <!-- Main content navigation generated by script -->
-      </nav>
+    <!-- Page Footer -->
+    <footer role="contentinfo">
+      <p>
+        © 2025 Bob Guo & Kristopher Kodweis •
+        <a
+          href="https://github.com/COD1995/ml-meta"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          View on GitHub
+        </a>
+        • Last updated: <time id="lastUpdated" datetime="">Loading...</time>
+      </p>
+    </footer>
+  </div>
 
-      <!-- ✧ Main Contributors ------------------------------------------------ -->
-      <section id="main-contributors">
-        <h2>🌟 Main Contributors</h2>
-
-        <ul class="main-contrib-list">
-          <!-- ─── Jue Guo ─────────────────────────────────────────── -->
-          <li class="main-card">
-            <figure>
-              <img
-                src="assets/images/author_profiles/jg.jpeg"
-                alt="Portrait of Jue Guo"
-              />
-              <figcaption>
-                <span class="name">Jue Guo</span>
-                <span class="role">Lead Author</span>
-
-                <a
-                  class="site-link"
-                  href="https://csragtoriches.com/"
-                  target="_blank"
-                  rel="noopener"
-                  >Personal Website ↗</a
-                >
-              </figcaption>
-            </figure>
-
-            <p class="bio">
-              Jue (Bob) Guo is a Ph.D. candidate and adjunct professor in
-              Computer Science at the University at Buffalo, specializing in
-              machine learning, deep learning and AI. He translates complex
-              theory into practical projects with PyTorch and TensorFlow,
-              develops curricula and mentors students bridging classical
-              algorithms with modern AI techniques.
-            </p>
-          </li>
-
-          <!-- ─── Kristopher Kodweis ──────────────────────────────── -->
-          <li class="main-card">
-            <figure>
-              <img
-                src="assets/images/author_profiles/kk.jpeg"
-                alt="Portrait of Kristopher Kodweis"
-              />
-              <figcaption>
-                <span class="name">Kristopher Kodweis</span>
-                <span class="role">Lead Author</span>
-                <a
-                  class="site-link"
-                  href="https://www.linkedin.com/in/kristopherkodweis/"
-                  target="_blank"
-                  rel="noopener"
-                  >linkedin ↗</a
-                >
-              </figcaption>
-            </figure>
-
-            <p class="bio">
-              As a M.S. candidate in Mechanical Engineering, Kristopher Kodweis
-              engineers intelligent computer vision systems for mobile
-              platforms. His approach is shaped by a background in visual
-              communication design, photography, and woodworking, focusing on
-              innate human-centered principles. Kristopher creates technology
-              that is robust and intuitive, aiming for AI tools that are
-              seamless extensions of human capability.
-            </p>
-            <!-- No personal site yet – omit link -->
-          </li>
-        </ul>
-      </section>
-
-      <section id="call-for-contribution">
-        <h2>🚀 Help Build This Resource</h2>
-        <p>
-          This project is built by the community. From fixing a typo to adding
-          notes on a new research paper, all contributions are welcome. See an
-          area for improvement? Feel free to open an issue on GitHub or join our
-          community on Slack to discuss ideas.
-        </p>
-
-        <div id="github-heatmap"></div>
-
-        <div class="leaderboard-panel">
-          <h3 class="leaderboard-title">🏆 Ranking</h3>
-
-          <table class="leaderboard-table">
-            <thead>
-              <tr>
-                <th class="number">#</th>
-                <th class="name">Contributor</th>
-                <th class="points">Commits</th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
-
-        <div class="button-group">
-          <a
-            href="https://github.com/COD1995/ml-meta"
-            class="btn-github"
-            target="_blank"
-            rel="noopener"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              viewBox="0 0 24 24"
-              fill="none"
-              style="margin-right: 0.5em; vertical-align: middle"
-            >
-              <path
-                fill="#fff"
-                d="M12 2C6.477 2 2 6.484 2 12.012c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.009-.868-.013-1.703-2.782.605-3.369-1.342-3.369-1.342-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.004.07 1.532 1.032 1.532 1.032.892 1.53 2.341 1.088 2.91.832.091-.646.35-1.088.636-1.339-2.221-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.254-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.025A9.564 9.564 0 0 1 12 7.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.747-1.025 2.747-1.025.546 1.378.202 2.396.1 2.65.64.7 1.028 1.595 1.028 2.688 0 3.847-2.337 4.695-4.566 4.944.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.579.688.481C19.138 20.188 22 16.437 22 12.012 22 6.484 17.523 2 12 2Z"
-              />
-            </svg>
-            Contribute
-          </a>
-          <a
-            class="btn-slack"
-            href="https://www.notion.so/Meta-ML-Contribution-Guide-July-2025-23543ced6be680b88eabd9fbfba64ff4?source=copy_link"
-            target="_blank"
-            rel="noopener"
-          >
-            📄 &nbsp;Contribution Guide
-          </a>
-          <a
-            class="btn-slack"
-            href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
-            target="_blank"
-            rel="noopener"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="32"
-              height="32"
-              viewBox="0 0 122.8 122.8"
-              style="margin-right: 0.5em; vertical-align: middle"
-            >
-              <g>
-                <path
-                  fill="#ffffff"
-                  d="M30.3 78.6c0 5-4 9-9 9s-9-4-9-9 4-9 9-9h9v9z"
-                />
-                <path
-                  fill="#ffffff"
-                  d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z"
-                />
-                <path
-                  fill="#ffffff"
-                  d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z"
-                />
-                <path
-                  fill="#ffffff"
-                  d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z"
-                />
-                <path
-                  fill="#ffffff"
-                  d="M92.5 44c0-5 4-9 9-9s9 4 9 9-4 9-9 9h-9V44z"
-                />
-                <path
-                  fill="#ffffff"
-                  d="M88 44c0 5-4 9-9 9s-9-4-9-9V21.5c0-5 4-9 9-9s9 4 9 9V44z"
-                />
-                <path
-                  fill="#ffffff"
-                  d="M78.8 92.5c5 0 9 4 9 9s-4 9-9 9-9-4-9-9v-9h9z"
-                />
-                <path
-                  fill="#ffffff"
-                  d="M78.8 88c-5 0-9-4-9-9s4-9 9-9h22.5c5 0 9 4 9 9s-4 9-9 9H78.8z"
-                />
-              </g>
-            </svg>
-            Join our Slack
-          </a>
-        </div>
-      </section>
-
-      <!-- Contributors section removed: content moved to Help Build This Resource section -->
-
-      <footer>
-        <p>
-          © 2025 Bob Guo & Kristopher Kodweis •
-          <a
-            href="https://github.com/COD1995/ml-meta"
-            target="_blank"
-            rel="noopener"
-          >
-            View on GitHub
-          </a>
-          • Last updated: <span id="lastUpdated"></span>
-        </p>
-      </footer>
-    </div>
-
-    <script src="assets/js/main-nav-data.js" defer></script>
-    <script src="assets/js/build-main-nav.js" defer></script>
-    <script src="assets/js/main.js" defer></script>
-  </body>
+  <!-- JavaScript Modules -->
+  <script type="module" src="assets/js/main.js"></script>
+  
+  <!-- Legacy JavaScript for backward compatibility -->
+  <script src="assets/js/main-nav-data.js" defer></script>
+  <script src="assets/js/build-main-nav.js" defer></script>
+</body>
 </html>

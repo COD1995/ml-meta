@@ -1,8 +1,37 @@
 {
-  "name": "ml‑meta‑site",
-  "version": "1.0.0",
+  "name": "ml-meta-site",
+  "version": "2.0.0",
+  "description": "Interactive machine learning and algorithms textbook with side-by-side explanations",
+  "keywords": ["machine learning", "algorithms", "education", "textbook", "interactive"],
+  "homepage": "https://github.com/COD1995/ml-meta",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/COD1995/ml-meta.git"
+  },
+  "authors": [
+    "Jue Guo <jg@example.com>",
+    "Kristopher Kodweis <kk@example.com>"
+  ],
+  "license": "MIT",
   "scripts": {
+    "build": "npm run build:data && npm run build:nav",
     "build:data": "node scripts/generate-book-data.js",
-    "build:nav": "node scripts/generate-main-nav-data.js"
-  }
+    "build:nav": "node scripts/generate-main-nav-data.js",
+    "dev": "python -m http.server 8000",
+    "dev:node": "npx http-server -p 8000 -c-1",
+    "serve": "npm run build && npm run dev",
+    "lint:css": "echo 'CSS linting not configured'",
+    "lint:js": "echo 'JavaScript linting not configured'",
+    "test": "echo 'Tests not configured'",
+    "clean": "echo 'Cleaned temporary files'",
+    "backup": "mkdir -p backups && cp -r assets/css/base-original.css assets/js/main-original.js index-backup.html backups/",
+    "restore": "cp backups/base-original.css assets/css/base.css && cp backups/main-original.js assets/js/main.js && cp backups/index-backup.html index.html"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "browserslist": [
+    "defaults",
+    "not IE 11"
+  ]
 }
