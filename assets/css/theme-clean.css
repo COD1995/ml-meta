@@ -1,0 +1,421 @@
+/* ============================================
+ * Theme System - Clean Implementation
+ * Replaces !important declarations with proper specificity
+ * ============================================ */
+
+/* ========== Light Theme (Default) ========== */
+:root {
+  /* Theme is defined in variables.css */
+}
+
+/* Force light theme when explicitly set */
+html.theme-light {
+  /* Background adjustments for light theme */
+  --bg-primary: #dbe0e5; /* Slightly darker than default for contrast */
+}
+
+/* ========== Dark Theme ========== */
+html.theme-dark {
+  /* Dark theme colors are defined in variables.css */
+}
+
+/* ========== Component Theme Overrides ========== */
+
+/* Body and main containers */
+html.theme-dark body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+html.theme-light body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+/* Generic containers and sections */
+html.theme-dark div,
+html.theme-dark section,
+html.theme-dark article,
+html.theme-dark main,
+html.theme-dark aside,
+html.theme-dark details,
+html.theme-dark summary,
+html.theme-dark fieldset {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+html.theme-light div,
+html.theme-light section,
+html.theme-light article,
+html.theme-light main,
+html.theme-light aside,
+html.theme-light details,
+html.theme-light summary,
+html.theme-light fieldset {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+/* Card components */
+html.theme-dark .card,
+html.theme-dark .main-card,
+html.theme-dark .toc-card {
+  background: var(--color-card-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+html.theme-light .card,
+html.theme-light .main-card,
+html.theme-light .toc-card {
+  background: var(--color-card-bg);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Code elements */
+html.theme-dark code,
+html.theme-dark pre {
+  background: var(--bg-code);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+html.theme-light code,
+html.theme-light pre {
+  background: var(--bg-code);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+/* Text content containers */
+html.theme-dark .original-text,
+html.theme-dark .original-text-container,
+html.theme-dark .explanation-text {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+html.theme-light .original-text,
+html.theme-light .original-text-container,
+html.theme-light .explanation-text {
+  background-color: var(--bg-secondary);
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+/* Special text elements */
+html.theme-dark .tagline {
+  color: var(--text-secondary);
+}
+
+html.theme-light .tagline {
+  color: var(--text-secondary);
+}
+
+/* ========== Navigation Theme Overrides ========== */
+
+/* Side navigation */
+html.theme-dark .side-nav {
+  background: var(--color-sidebar-bg);
+  border-color: var(--border-color);
+}
+
+html.theme-light .side-nav {
+  background: var(--color-sidebar-bg);
+  border-color: var(--border-color);
+}
+
+/* Side navigation controls */
+html.theme-dark .side-nav-controls {
+  background: var(--bg-tertiary);
+}
+
+html.theme-light .side-nav-controls {
+  background: var(--bg-secondary);
+}
+
+html.theme-dark .side-nav-controls .btn-toggle {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+html.theme-light .side-nav-controls .btn-toggle {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+html.theme-dark .side-nav-controls .btn-toggle:hover {
+  background: var(--color-slack-dark);
+  color: var(--color-white);
+}
+
+html.theme-light .side-nav-controls .btn-toggle:hover {
+  background: var(--bg-active);
+  color: var(--color-slack);
+}
+
+html.theme-dark .side-nav-controls .btn-toggle + .btn-toggle {
+  border-left-color: var(--border-color);
+}
+
+html.theme-light .side-nav-controls .btn-toggle + .btn-toggle {
+  border-left-color: var(--border-color);
+}
+
+/* Side navigation dividers */
+html.theme-dark .side-nav-divider {
+  border-top-color: var(--border-color);
+}
+
+html.theme-light .side-nav-divider {
+  border-top-color: var(--border-color-light);
+}
+
+/* ========== Table of Contents Theme Overrides ========== */
+
+/* TOC Books and chapters */
+html.theme-dark .toc-books,
+html.theme-dark .toc-book,
+html.theme-dark .toc-chapters,
+html.theme-dark .toc-chapters > div,
+html.theme-dark .toc-chapters a {
+  background: var(--color-sidebar-bg);
+  color: var(--color-white);
+  border: none;
+}
+
+html.theme-light .toc-books,
+html.theme-light .toc-book {
+  background: var(--color-sidebar-bg);
+  color: var(--text-primary);
+}
+
+/* TOC book titles */
+html.theme-dark .toc-book-title {
+  color: var(--color-white);
+  background: transparent;
+}
+
+html.theme-light .toc-book-title {
+  color: var(--text-primary);
+  background: transparent;
+}
+
+html.theme-dark .toc-book-title::before {
+  color: var(--color-white);
+}
+
+html.theme-light .toc-book-title::before {
+  color: var(--color-slack);
+}
+
+/* TOC dropdown content */
+html.theme-dark .toc-chapters.dropdown-content {
+  background: var(--color-sidebar-bg);
+}
+
+html.theme-light .toc-chapters.dropdown-content {
+  background: var(--color-sidebar-bg);
+}
+
+/* TOC labels */
+html.theme-dark .toc-label {
+  color: var(--text-primary);
+}
+
+html.theme-light .toc-label {
+  color: var(--text-primary);
+}
+
+/* ========== Leaderboard Theme Overrides ========== */
+
+/* Leaderboard panel */
+html.theme-dark .leaderboard-panel {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+  box-shadow: var(--shadow-md);
+}
+
+html.theme-light .leaderboard-panel {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Leaderboard title */
+html.theme-dark .leaderboard-title {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+html.theme-light .leaderboard-title {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+/* Leaderboard table */
+html.theme-dark .leaderboard-table {
+  background: transparent;
+  color: var(--text-primary);
+}
+
+html.theme-light .leaderboard-table {
+  background: transparent;
+  color: var(--text-primary);
+}
+
+html.theme-dark .leaderboard-table th,
+html.theme-dark .leaderboard-table td {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+html.theme-light .leaderboard-table th,
+html.theme-light .leaderboard-table td {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+html.theme-dark .leaderboard-table tr:nth-child(even) {
+  background: var(--bg-tertiary);
+}
+
+html.theme-dark .leaderboard-table tr:nth-child(odd) {
+  background: var(--bg-secondary);
+}
+
+html.theme-light .leaderboard-table tr:nth-child(even) {
+  background: var(--bg-tertiary);
+}
+
+html.theme-light .leaderboard-table tr:nth-child(odd) {
+  background: var(--bg-secondary);
+}
+
+html.theme-dark .leaderboard-table .number,
+html.theme-dark .leaderboard-table .name,
+html.theme-dark .leaderboard-table .points {
+  color: var(--text-primary);
+}
+
+html.theme-light .leaderboard-table .number,
+html.theme-light .leaderboard-table .name,
+html.theme-light .leaderboard-table .points {
+  color: var(--text-primary);
+}
+
+/* ========== Main Navigation Theme Overrides ========== */
+
+/* Main nav divider */
+html.theme-dark .main-nav-divider {
+  border-top-color: var(--border-color-dark);
+  background: var(--bg-secondary);
+}
+
+html.theme-light .main-nav-divider {
+  border-top-color: var(--border-color-light);
+  background: var(--bg-secondary);
+}
+
+/* ========== Index Page Dropdowns ========== */
+
+html.theme-dark .index-dropdown {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+html.theme-light .index-dropdown {
+  color: var(--text-primary);
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+html.theme-dark .index-dropdown:focus,
+html.theme-dark .index-dropdown:hover {
+  background: var(--bg-hover);
+}
+
+html.theme-light .index-dropdown:focus,
+html.theme-light .index-dropdown:hover {
+  background: var(--bg-hover);
+}
+
+/* ========== Slack Banner Theme ========== */
+
+html.theme-dark .slack-banner #slackButton span {
+  color: var(--color-white);
+}
+
+html.theme-light .slack-banner #slackButton span {
+  color: var(--color-slack);
+}
+
+html.theme-dark .slack-banner #slackButton svg {
+  background: var(--color-slack-dark);
+}
+
+html.theme-light .slack-banner #slackButton svg {
+  background: var(--color-slack);
+}
+
+/* ========== Transitions ========== */
+
+/* Smooth transitions for theme changes */
+body,
+div,
+section,
+article,
+main,
+aside,
+nav,
+.card,
+.main-card,
+.toc-card,
+.side-nav,
+.leaderboard-panel,
+.slack-banner {
+  transition: 
+    background-color var(--transition-base),
+    color var(--transition-base),
+    border-color var(--transition-base);
+}
+
+/* ========== High Contrast Mode Support ========== */
+
+@media (prefers-contrast: high) {
+  :root {
+    --border-width: 2px;
+  }
+  
+  html.theme-dark {
+    --text-primary: #ffffff;
+    --text-secondary: #e6e6e6;
+    --border-color: #666666;
+  }
+  
+  html.theme-light {
+    --text-primary: #000000;
+    --text-secondary: #333333;
+    --border-color: #999999;
+  }
+}
+
+/* ========== Reduced Motion Support ========== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

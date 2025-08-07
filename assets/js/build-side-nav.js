@@ -47,9 +47,10 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isCurrent) {
       btn.classList.add("active");
       btn.setAttribute("aria-expanded", "true");
+      inner.classList.add("show");
       injectHeadings(inner);
     } else {
-      inner.hidden = true; // collapsed by default
+      inner.classList.add("hidden"); // collapsed by default
     }
 
     /* assemble */
@@ -109,13 +110,24 @@ function toggleDropdown(id, btn, chapter = null) {
   if (!box) return;
 
   const isCurrent = !chapter;
-  if (!isCurrent && box.hidden && !box.dataset.loaded) {
+  const isCurrentlyVisible = box.classList.contains('show');
+  
+  // Load remote headings if needed
+  if (!isCurrent && !isCurrentlyVisible && !box.dataset.loaded) {
     injectRemoteHeadings(box, chapter.href);
   }
 
-  const isOpen = !box.hidden;
-  box.hidden = isOpen;
-  btn.setAttribute("aria-expanded", (!isOpen).toString());
+  if (isCurrentlyVisible) {
+    // Hide dropdown
+    box.classList.add('hidden');
+    box.classList.remove('show');
+    btn.setAttribute("aria-expanded", "false");
+  } else {
+    // Show dropdown
+    box.classList.remove('hidden');
+    box.classList.add('show');
+    btn.setAttribute("aria-expanded", "true");
+  }
 }
 
 function fileNoExt(p) {

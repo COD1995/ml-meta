@@ -1,9 +1,15 @@
 document.addEventListener("DOMContentLoaded", () => {
   const navData = window.MAIN_NAV_DATA;
-  if (!navData) return;
+  if (!navData) {
+    console.log('No MAIN_NAV_DATA found');
+    return;
+  }
 
   const navContainer = document.getElementById("mainNav");
-  if (!navContainer) return;
+  if (!navContainer) {
+    console.log('No mainNav container found');
+    return;
+  }
 
   const html = generateMainContentHTML(navData);
   navContainer.innerHTML = html;
