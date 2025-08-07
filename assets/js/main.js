@@ -208,8 +208,8 @@ class MLMetaApp {
     const nameCell = document.createElement('td');
     nameCell.className = 'name';
     nameCell.innerHTML = `
-      <div class="contributor-info">
-        <img src="${contributor.avatar_url}" alt="${contributor.login}" width="24" height="24" class="contributor-avatar">
+      <div class="name-cell">
+        <img src="${contributor.avatar_url}" alt="${contributor.login}" width="32" height="32" class="avatar">
         <a href="${contributor.html_url}" target="_blank" rel="noopener noreferrer">${contributor.login}</a>
       </div>
     `;

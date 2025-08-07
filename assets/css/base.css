@@ -43,9 +43,11 @@
 }
 
 body {
-  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   color: var(--c-gray-900);
-  background: #f4f6f8;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background-attachment: fixed;
+  min-height: 100vh;
   line-height: 1.6;
 }
 
@@ -64,14 +66,13 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Shared container helper ----------------------------------- */
+/* Clean main container ----------------------------------- */
 .container {
-  width: 90%;
-  max-width: 850px;
-  margin: 1.5rem auto;
-  padding: 3.15rem; /* left padding ~100px (5.4rem) */
-  border-radius: 18px; /* rounded corners */
-  background: none; /* keep background consistent */
+  width: 94%;
+  max-width: 950px;
+  margin: 2rem auto;
+  padding: 2rem 2.5rem;
+  background: transparent;
   box-sizing: border-box;
 }
 
@@ -106,27 +107,75 @@ code {
   white-space: pre-wrap;
 }
 
-/* Buttons (GitHub / Slack) ---------------------------------- */
+/* Enhanced Contribution Buttons ---------------------------------- */
 .btn-slack,
 .btn-github {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   color: #fff;
-  padding: 0.75rem 1.5rem;
-  border-radius: 6px;
+  padding: 0.875rem 1.75rem;
+  border-radius: 8px;
   font-weight: 600;
-  transition: background-color 0.2s;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
-.btn-slack {
-  background: #4a154b;
-}
-.btn-slack:hover {
-  background: #621f69;
-}
+
+.btn-slack,
 .btn-github {
-  background: var(--c-green-600);
+  background: linear-gradient(135deg, var(--primary-color, #4a154b) 0%, var(--primary-dark, #621f69) 100%);
 }
+
+.btn-github {
+  --primary-color: #2da44e;
+  --primary-dark: #1a7f37;
+}
+
+.btn-slack {
+  --primary-color: #4a154b;
+  --primary-dark: #621f69;
+}
+
+.btn-slack:hover,
 .btn-github:hover {
-  background: #279045;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  filter: brightness(1.05);
+}
+
+.btn-slack:active,
+.btn-github:active {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+/* Focus states for accessibility */
+.btn-slack:focus,
+.btn-github:focus {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+/* Dark theme support */
+html.theme-dark .btn-slack,
+html.theme-dark .btn-github {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+html.theme-dark .btn-slack:hover,
+html.theme-dark .btn-github:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+html.theme-dark .btn-slack:focus,
+html.theme-dark .btn-github:focus {
+  outline-color: #c7d2fe;
 }
 
 /* ────────────────────────────────────────────────────────────
@@ -134,11 +183,18 @@ code {
    ---------------------------------------------------------- */
 
 #main-contributors {
-  margin-top: 3rem;
+  margin-top: 4rem;
+  padding: 1.5rem 0;
 }
+
 #main-contributors h2 {
-  font-size: 1.4rem;
-  margin-bottom: 0.8rem;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .main-contrib-list {
@@ -149,13 +205,20 @@ code {
 }
 
 .main-card {
-  background: #fafafa;
-  border: 1px solid #e0e0e0;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
   border-radius: 8px;
-  padding: 1rem;
+  padding: 1.25rem;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.2s ease;
+}
+
+.main-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
 }
 .main-card figure {
   display: flex;
@@ -185,34 +248,84 @@ code {
   color: var(--c-blue-600);
 }
 
-/* Call‑for‑contribution block ------------------------------- */
+/* Enhanced Call‑for‑contribution section ------------------------------- */
 #call-for-contribution {
   text-align: center;
   margin-top: 4rem;
-  padding: 2rem;
-  background: #f6f8fa;
-  border: 1px solid var(--c-gray-200);
-  border-radius: 8px;
+  padding: 3rem 2.5rem;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
 }
+
+#call-for-contribution h2 {
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 #call-for-contribution p {
-  max-width: 65ch;
-  margin: 0 auto 1.5rem;
+  max-width: 68ch;
+  margin: 0 auto 2rem;
+  font-size: 1.1rem;
+  color: #4a5568;
+  line-height: 1.7;
 }
 .button-group {
   display: flex;
-  flex-direction: row;
   flex-wrap: wrap;
+  justify-content: center;
   gap: 1rem;
   width: 100%;
-  justify-content: stretch;
+  margin-top: 2rem;
+  padding: 1rem 0;
 }
+
 .button-group a {
-  flex: 1 1 0;
-  min-width: 220px;
-  max-width: 100%;
-  width: 100%;
+  flex: 1 1 200px;
+  max-width: 280px;
   box-sizing: border-box;
-  text-align: left;
+  text-align: center;
+  min-height: 52px;
+}
+
+/* SVG icon styling within buttons */
+.button-group a svg {
+  margin-right: 0.6rem !important;
+  vertical-align: middle !important;
+  flex-shrink: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .button-group {
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .button-group a {
+    flex: none;
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  .btn-slack,
+  .btn-github {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+}
+
+@media (min-width: 901px) {
+  .button-group a {
+    min-width: 220px;
+  }
 }
 
 /* Leaderboard section container (layout spacing only) ------- */
@@ -529,8 +642,43 @@ div, section, article, details, summary, fieldset {
   }
 
   html.theme-dark body {
-    background: #0d1117 !important;
+    background: linear-gradient(135deg, #0d1117 0%, #161b22 100%) !important;
+    background-attachment: fixed;
     color: #c9d1d9 !important;
+  }
+
+  html.theme-dark .container {
+    background: rgba(22, 27, 34, 0.9) !important;
+    backdrop-filter: blur(12px);
+    border-color: rgba(48, 54, 61, 0.8) !important;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  html.theme-dark #main-contributors {
+    background: rgba(22, 27, 34, 0.95) !important;
+    border-color: rgba(48, 54, 61, 0.8) !important;
+    box-shadow: 0 6px 32px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  html.theme-dark #call-for-contribution {
+    background: rgba(22, 27, 34, 0.95) !important;
+    border-color: rgba(48, 54, 61, 0.8) !important;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4) !important;
+  }
+
+  html.theme-dark #call-for-contribution p {
+    color: #c9d1d9 !important;
+  }
+
+  html.theme-dark .main-card {
+    background: rgba(22, 27, 34, 0.95) !important;
+    border-color: rgba(48, 54, 61, 0.6) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  html.theme-dark .main-card:hover {
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5) !important;
+    border-color: rgba(139, 92, 246, 0.4) !important;
   }
   html.theme-dark div,
   html.theme-dark section,
@@ -655,16 +803,18 @@ html.theme-dark .toc-chapters a {
 /* --- Book/Chapter dropdown button restyle --- */
 
 .toc-books {
-  margin-bottom: 0em;
-  border-radius: 12px;
-  background-color: #f0f0f0;
-  transition: box-shadow 0.18s;
+  margin-bottom: 2rem;
+  display: block;
 }
 .toc-book {
-  margin-bottom: 0em;
-  border-radius: 12px;
-  background-color: #f0f0f0;
-  transition: box-shadow 0.18s;
+  margin-bottom: 2rem;
+  background: transparent;
+  border: none;
+  transition: all 0.3s ease;
+  position: relative;
+}
+.toc-book:hover {
+  transform: none;
 }
 .toc-book:last-child {
   margin-bottom: 0;
@@ -672,53 +822,61 @@ html.theme-dark .toc-chapters a {
 .toc-book-title {
   position: relative;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  padding: 1.3em .7em 0.7em 2.1em;
-  font-size: 1em;
-  font-weight: 500;
-  background: none;
+  padding: 1.5rem 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
   border: none;
   outline: none;
-  
   cursor: pointer;
   text-align: left;
-  border-radius: 12px 12px 0 0;
-  transition: background 0.15s, box-shadow 0.15s;
+  transition: all 0.3s ease;
 }
+/* Hover handled by gradient below */
 .toc-book-title:focus, .toc-book-title:hover {
-  background: #e6e6e6;
-  /* box-shadow: 0 2px 8px rgba(80,60,120,0.08); */
+  background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
   outline: none;
 }
-.toc-book-title::before {
-  content: '\25B6'; /* right-pointing triangle */
-  display: inline-block;
-  position: absolute;
-  left: .90rem;
-  top: 1.4rem;
-  font-size: 0.82em;
-  line-height: 1;
-  transition: transform 0.18s cubic-bezier(.4,0,.2,1), color 0.18s;
-  color: #a08bbd;
-  opacity: 0.7;
+/* Subtle clickable indicator - only for main page */
+#mainNav .toc-book-title::after {
+  content: "+";
+  font-size: 1.2em;
+  font-weight: 300;
+  color: #9ca3af !important;
+  -webkit-text-fill-color: #9ca3af !important;
+  background: none !important;
+  transition: all 0.3s ease;
+  margin-left: auto;
 }
-.toc-book[open] > .toc-book-title::before,
-.toc-book .toc-book-title[aria-expanded="true"]::before {
-  transform: rotate(90deg) scale(0.95);
-  color: #7a5fa3;
-  opacity: 0.85;
+#mainNav .toc-book-title[aria-expanded="true"]::after {
+  content: "−";
+  color: #667eea !important;
+  -webkit-text-fill-color: #667eea !important;
+  background: none !important;
+}
+#mainNav .toc-book-title:hover::after {
+  color: #4f46e5 !important;
+  -webkit-text-fill-color: #4f46e5 !important;
+  background: none !important;
 }
 
-/* Dropdown content rounded corners and subtle shadow */
+/* Clean dropdown content */
 .toc-chapters.dropdown-content {
-  border-radius: 0 0 10px 10px;
-  background: #f0f0f0;
-  margin-top: -2px;
-  padding-bottom: 0.5em;
-  padding-left: 2.1em;
+  background: transparent;
+  margin-top: 0;
+  padding: 1rem 0 1.5rem 1.5rem;
   overflow: hidden;
-  transition: max-height 0.3s ease, opacity 0.3s ease, padding 0.3s ease;
+  transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
 }
 
 /* Default hidden state */
@@ -726,45 +884,146 @@ html.theme-dark .toc-chapters a {
 .toc-chapters.dropdown-content:not(.show) {
   max-height: 0 !important;
   opacity: 0 !important;
-  padding-bottom: 0 !important;
+  padding: 0 !important;
+  overflow: hidden !important;
 }
 
 /* Visible state - very specific selector to override everything */
 .toc-books .toc-book .toc-chapters.dropdown-content.show,
 .toc-chapters.dropdown-content.show {
-  max-height: 500px !important;
+  max-height: 1000px !important;
   opacity: 1 !important;
-  padding-bottom: 0.5em !important;
+  padding: 1rem 0 1.5rem 1.5rem !important;
   display: block !important;
+  overflow: visible !important;
 }
 html.theme-dark .toc-books,
-html.theme-dark .toc-book,
+html.theme-dark .toc-book {
+  background: transparent !important;
+}
 html.theme-dark .toc-chapters.dropdown-content {
-  background: #231c31 !important;
+  background: transparent !important;
 }
 
 .toc-chapters.dropdown-content a {
   display: block;
-  font-size: 0.9em;
-  padding: .32em .2em 0.32em 0;
-  margin-left: 0;
-  text-align: left;
+  font-size: 0.95em;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  margin: 0.25rem 0;
+  color: #6b7280;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.toc-chapters.dropdown-content a:hover {
+  color: #4338ca;
+  transform: translateX(4px);
+}
+
+/* No dividers between nav sections */
+.main-nav-divider {
+  display: none;
+}
+
+/* Elegant separation between main nav and contributors */
+#mainNav {
+  margin-bottom: 5rem;
+  padding-bottom: 3rem;
+  position: relative;
+}
+
+#mainNav::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #4f46e5, transparent);
+  border-radius: 1px;
 }
 
 html.theme-dark .toc-book-title {
-  color: #fff !important;
+  background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+html.theme-dark .toc-book-title:hover {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+html.theme-dark .toc-chapters.dropdown-content a {
+  color: #9ca3af !important;
+}
+html.theme-dark .toc-chapters.dropdown-content a:hover {
+  color: #c7d2fe !important;
+}
+html.theme-dark .main-nav-divider {
+  background: #374151 !important;
+}
+html.theme-dark #mainNav::after {
+  background: linear-gradient(90deg, transparent, #6366f1, transparent) !important;
+}
+html.theme-dark .index-dropdown {
+  background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+html.theme-dark .index-dropdown:hover,
+html.theme-dark .index-dropdown:focus {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+html.theme-dark #mainNav .toc-book-title::after,
+html.theme-dark .index-dropdown::after {
+  color: #6b7280 !important;
+  -webkit-text-fill-color: #6b7280 !important;
+  background: none !important;
+}
+html.theme-dark #mainNav .toc-book-title:hover::after,
+html.theme-dark .index-dropdown:hover::after {
+  color: #8b5cf6 !important;
+  -webkit-text-fill-color: #8b5cf6 !important;
+  background: none !important;
+}
+html.theme-dark #mainNav .toc-book-title[aria-expanded="true"]::after,
+html.theme-dark .index-dropdown[aria-expanded="true"]::after {
+  color: #a78bfa !important;
+  -webkit-text-fill-color: #a78bfa !important;
   background: none !important;
 }
 html.theme-light .toc-book-title {
-  color: #24292e !important;
-  background: none !important;
+  background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
 }
-html.theme-dark .toc-book-title::before {
-  color: #fff;
+html.theme-light .toc-book-title:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
 }
-html.theme-light .toc-book-title::before {
-  color: #4a154b;
+html.theme-light .index-dropdown {
+  background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
 }
+html.theme-light .index-dropdown:hover {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+/* No ::before indicators needed */
 /* --- Leaderboard theme fixes --- */
 /* Default (no theme class) and light theme */
 .leaderboard-panel {
@@ -848,6 +1107,55 @@ html.theme-dark .leaderboard-table .points {
   color: #fff !important;
 }
 
+/* Coffee banner under side-nav */
+.coffee-banner {
+  margin-top: 0.5rem;
+  padding: 0.2rem 0.5rem;
+  background: #fff3cd;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.coffee-banner #coffeeButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-weight: 600;
+  background: none;
+  box-shadow: none;
+  padding: 0;
+  margin: 0;
+  width: auto;
+  height: 48px;
+  border-radius: 0;
+  color: #b8860b;
+  font-size: 1rem;
+  transition: none;
+}
+
+.coffee-banner #coffeeButton svg {
+  width: 24px;
+  height: 24px;
+  background: #b8860b;
+  border-radius: 6px;
+  padding: 3px;
+  margin-right: 0.3em;
+  transition: background 0.2s;
+  color: #fff;
+}
+
+.coffee-banner #coffeeButton:hover svg {
+  background: #996b0d;
+}
+
+.coffee-banner #coffeeButton span {
+  color: #b8860b;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
 /* Slack banner under side-nav */
 .slack-banner {
   margin-top: 0.475rem; /* reduced from 0.5rem by 5% */
@@ -902,6 +1210,23 @@ html.theme-dark .slack-banner {
 
 html.theme-dark .slack-banner #slackButton span {
   color: #fff;
+}
+
+html.theme-dark .coffee-banner {
+  background: #3d2914;
+}
+
+html.theme-dark .coffee-banner #coffeeButton span {
+  color: #ffd700;
+}
+
+html.theme-dark .coffee-banner #coffeeButton svg {
+  background: #ffd700;
+  color: #3d2914;
+}
+
+html.theme-dark .coffee-banner #coffeeButton:hover svg {
+  background: #ffed4a;
 }
 
 html.theme-dark .slack-banner #slackButton svg {
@@ -969,47 +1294,54 @@ html.theme-dark .toc-book {
 }
 /* --- Index page dropdowns --- */
 .index-dropdown {
-  font-size: 1.5em;
-  font-weight: 500;
-  color: #23213a;
-  background: none;
-  border: 1px solid rgba(138, 138, 138, 0.2);
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #667eea, #764ba2) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: transparent !important;
+  border: none;
   outline: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   text-align: left;
-  border-radius: 12px 12px 12px 12px;
-  padding-left: 2.3em;
-  padding-top: .95em;
-  padding-bottom: .7em;
-  transition: background 0.15s, box-shadow 0.15s;
+  padding: 1.5rem 0;
+  transition: all 0.3s ease;
   position: relative;
+  width: 100%;
 }
 .index-dropdown:focus,
 .index-dropdown:hover {
-  background: #e6e6e6;
+  background: linear-gradient(135deg, #4f46e5, #7c3aed) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
 }
-.index-dropdown::before {
-  content: '\25B6'; /* right-pointing triangle */
-  display: inline-block;
+/* Subtle clickable indicator for index dropdown */
+.index-dropdown::after {
+  content: "+";
+  font-size: 1.2em;
+  font-weight: 300;
+  color: #9ca3af !important;
+  -webkit-text-fill-color: #9ca3af !important;
+  background: none !important;
   position: absolute;
-  left: 1.25rem;
-  top: 1.8rem;
-  bottom: 1.8rem;
-  font-size: 0.82em;
-  line-height: 1;
-  transition: transform 0.18s cubic-bezier(.4,0,.2,1), color 0.18s;
-  color: #a08bbd;
-  opacity: 0.7;
-  
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  transition: all 0.3s ease;
+  margin-left: auto;
 }
-
-
-.toc-book[open] > .index-dropdown::before,
-.toc-book .index-dropdown[aria-expanded="true"]::before {
-  transform: rotate(90deg) scale(0.95);
-  color: #7a5fa3;
-  opacity: 0.85;
+.index-dropdown[aria-expanded="true"]::after {
+  content: "−";
+  color: #667eea !important;
+  -webkit-text-fill-color: #667eea !important;
+  background: none !important;
+}
+.index-dropdown:hover::after {
+  color: #4f46e5 !important;
+  -webkit-text-fill-color: #4f46e5 !important;
+  background: none !important;
 }
 .toc-label {
   font-size: 0.95em;

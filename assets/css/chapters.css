@@ -223,14 +223,14 @@ p.original-text {
 
 /* TOC Container - Simple and clean */
 .side-nav .toc-label + .toc-books {
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
 }
 
 .side-nav .toc-books {
   background: #fff;
   border: 1px solid #e2e8f0;
   border-radius: 8px;
-  padding: 0.75rem 0;
+  padding: 0.25rem 0;
   max-height: 32vh;
   overflow-y: auto;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -257,7 +257,7 @@ p.original-text {
   font-size: 0.875rem;
   background: none;
   border: none;
-  padding: 0.5rem 1rem 0.5rem 2rem;
+  padding: 0.2rem 1rem 0.1rem 1rem;
   cursor: pointer;
   color: #374151;
   transition: all 0.15s ease;
@@ -266,10 +266,7 @@ p.original-text {
   position: relative;
 }
 
-.side-nav .toc-book-title:hover {
-  background: #f8fafc;
-  color: #1f2937;
-}
+/* No hover effect for section titles */
 
 .side-nav .toc-book-title.active {
   background: #f0f4ff;
@@ -277,24 +274,10 @@ p.original-text {
   font-weight: 600;
 }
 
-/* Clean arrow indicator */
-.side-nav .toc-book-title::before {
-  content: "▶";
-  font-size: 0.9em;
-  transition: all 0.2s ease;
-  color: #9ca3af;
-  line-height: 1;
-  font-family: system-ui, -apple-system, sans-serif;
-  position: absolute;
-  left: 0.6rem;
-  top: 0.55rem;
-  width: 0.8rem;
-  text-align: center;
-}
-
-.side-nav .toc-book-title[aria-expanded="true"]::before {
-  transform: rotate(90deg);
-  color: #6366f1;
+/* No indicators in side nav chapters */
+.side-nav .toc-book-title::before,
+.side-nav .toc-book-title::after {
+  display: none !important;
 }
 
 /* Chapter sections - clean hierarchy */
@@ -312,7 +295,7 @@ p.original-text {
 
 .side-nav .toc-chapters.dropdown-content a {
   display: block;
-  padding: 0.375rem 1rem 0.375rem 2rem;
+  padding: 0.15rem 1rem 0.15rem 1.5rem;
   font-size: 0.8125rem;
   font-weight: 400;
   color: #6b7280;
@@ -321,8 +304,8 @@ p.original-text {
   border-left: 3px solid transparent;
 }
 
+/* Minimal hover for chapter links */
 .side-nav .toc-chapters.dropdown-content a:hover {
-  background: #f8fafc;
   color: #374151;
   border-left-color: #e5e7eb;
 }
@@ -353,31 +336,20 @@ html.theme-dark .side-nav .toc-book-title {
   color: #d1d5db;
 }
 
-html.theme-dark .side-nav .toc-book-title:hover {
-  background: #2d3748;
-  color: #f9fafb;
-}
+/* No hover effect in dark mode either */
 
 html.theme-dark .side-nav .toc-book-title.active {
   background: #1e1b4b;
   color: #c7d2fe;
 }
 
-html.theme-dark .side-nav .toc-book-title::before {
-  color: #6b7280;
-}
-
-html.theme-dark .side-nav .toc-book-title[aria-expanded="true"]::before {
-  color: #8b5cf6;
-  transform: rotate(90deg);
-}
+/* No indicators in dark mode either */
 
 html.theme-dark .side-nav .toc-chapters.dropdown-content a {
   color: #9ca3af;
 }
 
 html.theme-dark .side-nav .toc-chapters.dropdown-content a:hover {
-  background: #2d3748;
   color: #d1d5db;
   border-left-color: #4b5563;
 }
@@ -395,4 +367,47 @@ html.theme-dark .side-nav .toc-chapters.dropdown-content a.active {
   background: transparent !important;
   border: none !important;
   padding: 0; /* keeps spacing controlled by inner elements */
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Reading Progress Indicator
+   ----------------------------------------------------------------*/
+#reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  transition: opacity 0.3s ease;
+}
+
+#reading-progress-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  transition: width 0.1s ease-out;
+  border-radius: 0 2px 2px 0;
+}
+
+/* Dark mode styling */
+html.theme-dark #reading-progress {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+html.theme-dark #reading-progress-bar {
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+}
+
+/* Fade out when at top of page */
+body.at-top #reading-progress {
+  opacity: 0;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  #reading-progress {
+    height: 3px;
+  }
 }
