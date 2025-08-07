@@ -143,441 +143,347 @@
       <h1>Deep Learning Crash Course</h1>
 
       <section id="what-is-deep-learning">
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em>
-                Deep learning is a subset of machine learning that uses
-                artificial neural networks with multiple layers to automatically
-                learn patterns from data. Unlike traditional programming where
-                we write explicit rules, deep learning systems discover these
-                patterns through examples.
-              </em>
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
-              Think of deep learning as teaching a computer to recognize
-              patterns the same way a child learns - through repeated exposure
-              to examples. The "deep" refers to the multiple layers of
-              artificial neurons that process information in increasingly
-              complex ways, much like how our brains process visual information
-              from simple edges to complex objects.
-            </p>
-          </div>
-        </div>
+        <blockquote>
+          Deep learning is a subset of machine learning that uses artificial
+          neural networks with multiple layers to automatically learn patterns
+          from data. Unlike traditional programming where we write explicit
+          rules, deep learning systems discover these patterns through examples.
+        </blockquote>
+
+        <p>
+          Think of deep learning as teaching a computer to recognize patterns
+          the same way a child learns - through repeated exposure to examples.
+          The "deep" refers to the multiple layers of artificial neurons that
+          process information in increasingly complex ways, much like how our
+          brains process visual information from simple edges to complex
+          objects.
+        </p>
       </section>
 
       <section id="neural-networks-fundamentals">
         <h2>1. Neural Network Fundamentals</h2>
 
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em>
-                An artificial neuron is a mathematical function that takes
-                multiple inputs, applies weights to them, adds a bias term, and
-                passes the result through an activation function to produce an
-                output.
-              </em>
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
-              The basic neuron operation can be expressed as: $$y = f(w_1x_1 +
-              w_2x_2 + ... + w_nx_n + b)$$ where $f$ is the activation function,
-              $w_i$ are weights, $x_i$ are inputs, and $b$ is the bias term.
-              This simple mathematical operation becomes powerful when combined
-              with thousands or millions of other neurons.
-            </p>
-          </div>
-        </div>
+        <blockquote>
+          An artificial neuron is a mathematical function that takes multiple
+          inputs, applies weights to them, adds a bias term, and passes the
+          result through an activation function to produce an output.
+        </blockquote>
 
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em>
-                A neural network consists of three types of layers: an input
-                layer that receives raw data, one or more hidden layers that
-                process the information, and an output layer that produces the
-                final prediction or classification.
-              </em>
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
-              The architecture matters significantly. Deeper networks (with more
-              hidden layers) can learn more complex patterns, but they also
-              require more data and computational power to train effectively.
-              The key insight is that each layer learns to detect increasingly
-              sophisticated features - from simple patterns in early layers to
-              complex concepts in deeper layers.
-            </p>
-          </div>
-        </div>
+        <p>
+          The basic neuron operation can be expressed as: $$y = f(w_1x_1 +
+          w_2x_2 + ... + w_nx_n + b)$$ where $f$ is the activation function,
+          $w_i$ are weights, $x_i$ are inputs, and $b$ is the bias term. This
+          simple mathematical operation becomes powerful when combined with
+          thousands or millions of other neurons.
+        </p>
+
+        <blockquote>
+          A neural network consists of three types of layers: an input layer
+          that receives raw data, one or more hidden layers that process the
+          information, and an output layer that produces the final prediction or
+          classification.
+        </blockquote>
+
+        <p>
+          The architecture matters significantly. Deeper networks (with more
+          hidden layers) can learn more complex patterns, but they also require
+          more data and computational power to train effectively. The key
+          insight is that each layer learns to detect increasingly sophisticated
+          features - from simple patterns in early layers to complex concepts in
+          deeper layers.
+        </p>
       </section>
 
       <section id="training-process">
         <h2>2. How Neural Networks Learn</h2>
 
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em>
-                Training a neural network involves showing it many examples of
-                input-output pairs and gradually adjusting the weights and
-                biases to minimize the difference between predicted and actual
-                outputs. This process uses an algorithm called backpropagation.
-              </em>
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>The training process follows these steps:</p>
-            <ol>
-              <li>
-                <strong>Forward Pass:</strong> Data flows through the network to
-                make predictions
-              </li>
-              <li>
-                <strong>Loss Calculation:</strong> Compare predictions with true
-                answers using a loss function
-              </li>
-              <li>
-                <strong>Backward Pass:</strong> Calculate gradients showing how
-                to adjust each weight
-              </li>
-              <li>
-                <strong>Parameter Update:</strong> Adjust weights in the
-                direction that reduces error
-              </li>
-              <li>
-                <strong>Repeat:</strong> Continue this process until the network
-                performs well
-              </li>
-            </ol>
-          </div>
-        </div>
+        <blockquote>
+          Training a neural network involves showing it many examples of
+          input-output pairs and gradually adjusting the weights and biases to
+          minimize the difference between predicted and actual outputs. This
+          process uses an algorithm called backpropagation.
+        </blockquote>
 
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em>
-                The learning rate controls how big steps we take when updating
-                weights. Too large, and the network might overshoot the optimal
-                solution; too small, and training becomes prohibitively slow.
-              </em>
-            </p>
-            <pre class="pseudocode" id="training-algorithm">
-              \begin{algorithm}
-              \caption{Neural Network Training}
-              \begin{algorithmic}
-                \For{each epoch}
-                  \For{each batch of data}
-                    \State predictions $\gets$ forward\_pass(input\_data)
-                    \State loss $\gets$ loss\_function(predictions, true\_labels)
-                    \State gradients $\gets$ backward\_pass(loss)
-                    \State weights $\gets$ weights - learning\_rate $\times$ gradients
-                  \EndFor
-                \EndFor
-              \end{algorithmic}
-              \end{algorithm}
-            </pre>
-          </div>
-          <div class="explanation-text">
-            <p>
-              This algorithm is deceptively simple but incredibly powerful. The
-              magic happens in the backward pass, where calculus (specifically
-              the chain rule) is used to determine exactly how each weight
-              contributed to the final error, allowing precise adjustments
-              across the entire network.
-            </p>
-          </div>
-        </div>
+        <p>The training process follows these steps:</p>
+        <ol>
+          <li>
+            <strong>Forward Pass:</strong> Data flows through the network to
+            make predictions
+          </li>
+          <li>
+            <strong>Loss Calculation:</strong> Compare predictions with true
+            answers using a loss function
+          </li>
+          <li>
+            <strong>Backward Pass:</strong> Calculate gradients showing how to
+            adjust each weight
+          </li>
+          <li>
+            <strong>Parameter Update:</strong> Adjust weights in the direction
+            that reduces error
+          </li>
+          <li>
+            <strong>Repeat:</strong> Continue this process until the network
+            performs well
+          </li>
+        </ol>
+
+        <blockquote>
+          The learning rate controls how big steps we take when updating
+          weights. Too large, and the network might overshoot the optimal
+          solution; too small, and training becomes prohibitively slow.
+        </blockquote>
+
+        <pre class="pseudocode" id="training-algorithm">
+          \begin{algorithm}
+          \caption{Neural Network Training}
+          \begin{algorithmic}
+            \For{each epoch}
+              \For{each batch of data}
+                \State predictions $\gets$ forward\_pass(input\_data)
+                \State loss $\gets$ loss\_function(predictions, true\_labels)
+                \State gradients $\gets$ backward\_pass(loss)
+                \State weights $\gets$ weights - learning\_rate $\times$ gradients
+              \EndFor
+            \EndFor
+          \end{algorithmic}
+          \end{algorithm}
+        </pre>
+
+        <p>
+          This algorithm is deceptively simple but incredibly powerful. The
+          magic happens in the backward pass, where calculus (specifically the
+          chain rule) is used to determine exactly how each weight contributed
+          to the final error, allowing precise adjustments across the entire
+          network.
+        </p>
       </section>
 
       <section id="backpropagation">
-        <h3>2.1.  Backpropagation Explained</h3>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em>
-                Backpropagation is the algorithm that computes gradients for
-                each weight in the network by applying the chain rule of
-                calculus. It allows us to efficiently calculate how much each
-                weight contributed to the overall error.
-              </em>
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
-              The key idea, introduced by Geoffrey Hinton, is to propagate the error backward through the
-              network, layer by layer, adjusting weights based on their
-              contribution to the error. This process enables deep networks to
-              learn complex mappings from inputs to outputs.
-            </p>
-          </div>
-      </section>
+        <h3>2.1. Backpropagation Explained</h3>
 
+        <blockquote>
+          Backpropagation is the algorithm that computes gradients for each
+          weight in the network by applying the chain rule of calculus. It
+          allows us to efficiently calculate how much each weight contributed to
+          the overall error.
+        </blockquote>
+
+        <p>
+          The key idea, introduced by Geoffrey Hinton, is to propagate the error
+          backward through the network, layer by layer, adjusting weights based
+          on their contribution to the error. This process enables deep networks
+          to learn complex mappings from inputs to outputs.
+        </p>
+      </section>
 
       <section id="activation-functions">
         <h2>3. Activation Functions</h2>
 
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em>
-                Activation functions introduce non-linearity into neural
-                networks. Without them, no matter how many layers we stack, the
-                network would only be capable of learning linear relationships -
-                severely limiting its power.
-              </em>
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>Common activation functions include:</p>
-            <ul>
-              <li>
-                <strong>ReLU (Rectified Linear Unit):</strong> $f(x) = \max(0,
-                x)$ - Simple, effective, most popular
-              </li>
-              <li>
-                <strong>Sigmoid:</strong> $f(x) = \frac{1}{1 + e^{-x}}$ -
-                Outputs between 0 and 1
-              </li>
-              <li>
-                <strong>Tanh:</strong> $f(x) = \frac{e^x - e^{-x}}{e^x +
-                e^{-x}}$ - Outputs between -1 and 1
-              </li>
-              <li>
-                <strong>Softmax:</strong> Converts outputs to probabilities for
-                multi-class classification
-              </li>
-            </ul>
-            <p>
-              ReLU's popularity stems from its simplicity and effectiveness at
-              mitigating the vanishing gradient problem that plagued earlier
-              activation functions.
-            </p>
-          </div>
-        </div>
+        <blockquote>
+          Activation functions introduce non-linearity into neural networks.
+          Without them, no matter how many layers we stack, the network would
+          only be capable of learning linear relationships - severely limiting
+          its power.
+        </blockquote>
+
+        <p>Common activation functions include:</p>
+        <ul>
+          <li>
+            <strong>ReLU (Rectified Linear Unit):</strong> $f(x) = \max(0, x)$ -
+            Simple, effective, most popular
+          </li>
+          <li>
+            <strong>Sigmoid:</strong> $f(x) = \frac{1}{1 + e^{-x}}$ - Outputs
+            between 0 and 1
+          </li>
+          <li>
+            <strong>Tanh:</strong> $f(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}$ -
+            Outputs between -1 and 1
+          </li>
+          <li>
+            <strong>Softmax:</strong> Converts outputs to probabilities for
+            multi-class classification
+          </li>
+        </ul>
+        <p>
+          ReLU's popularity stems from its simplicity and effectiveness at
+          mitigating the vanishing gradient problem that plagued earlier
+          activation functions.
+        </p>
       </section>
 
       <section id="network-architectures">
         <h2>4. Popular Network Architectures</h2>
 
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em>
-                Different types of neural networks excel at different tasks.
-                Convolutional Neural Networks (CNNs) dominate computer vision,
-                Recurrent Neural Networks (RNNs) excel at sequential data, and
-                Transformers have revolutionized natural language processing.
-              </em>
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p><strong>Convolutional Neural Networks (CNNs):</strong></p>
-            <p>
-              CNNs use convolution operations to detect features like edges,
-              textures, and patterns in images. They're designed to be
-              translation-invariant, meaning they can recognize a cat whether it
-              appears in the top-left or bottom-right of an image.
-            </p>
+        <blockquote>
+          Different types of neural networks excel at different tasks.
+          Convolutional Neural Networks (CNNs) dominate computer vision,
+          Recurrent Neural Networks (RNNs) excel at sequential data, and
+          Transformers have revolutionized natural language processing.
+        </blockquote>
 
-            <p><strong>Recurrent Neural Networks (RNNs):</strong></p>
-            <p>
-              RNNs maintain internal memory to process sequential data like text
-              or time series. Modern variants like LSTMs and GRUs solve the
-              vanishing gradient problem that limited earlier RNN architectures.
-            </p>
+        <p><strong>Convolutional Neural Networks (CNNs):</strong></p>
+        <p>
+          CNNs use convolution operations to detect features like edges,
+          textures, and patterns in images. They're designed to be
+          translation-invariant, meaning they can recognize a cat whether it
+          appears in the top-left or bottom-right of an image.
+        </p>
 
-            <p><strong>Transformer Networks:</strong></p>
-            <p>
-              Transformers use attention mechanisms to process sequences in
-              parallel rather than sequentially. This architecture powers modern
-              language models like GPT and has achieved state-of-the-art results
-              across many domains.
-            </p>
-          </div>
-        </div>
+        <p><strong>Recurrent Neural Networks (RNNs):</strong></p>
+        <p>
+          RNNs maintain internal memory to process sequential data like text or
+          time series. Modern variants like LSTMs and GRUs solve the vanishing
+          gradient problem that limited earlier RNN architectures.
+        </p>
+
+        <p><strong>Transformer Networks:</strong></p>
+        <p>
+          Transformers use attention mechanisms to process sequences in parallel
+          rather than sequentially. This architecture powers modern language
+          models like GPT and has achieved state-of-the-art results across many
+          domains.
+        </p>
       </section>
 
       <section id="common-challenges">
         <h2>5. Common Challenges and Solutions</h2>
 
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em>
-                Deep learning practitioners face several recurring challenges:
-                overfitting (memorizing training data), vanishing gradients
-                (weights in early layers barely update), and finding the right
-                hyperparameters.
-              </em>
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p><strong>Overfitting:</strong></p>
-            <ul>
-              <li>
-                Use dropout during training to randomly ignore some neurons
-              </li>
-              <li>
-                Apply regularization techniques (L1, L2) to penalize large
-                weights
-              </li>
-              <li>Collect more diverse training data</li>
-              <li>
-                Use data augmentation to artificially increase dataset size
-              </li>
-            </ul>
+        <blockquote>
+          Deep learning practitioners face several recurring challenges:
+          overfitting (memorizing training data), vanishing gradients (weights
+          in early layers barely update), and finding the right hyperparameters.
+        </blockquote>
 
-            <p><strong>Vanishing Gradients:</strong></p>
-            <ul>
-              <li>Use ReLU activation functions instead of sigmoid/tanh</li>
-              <li>Apply batch normalization to stabilize training</li>
-              <li>Implement residual connections (skip connections)</li>
-              <li>Use proper weight initialization schemes</li>
-            </ul>
+        <p><strong>Overfitting:</strong></p>
+        <ul>
+          <li>Use dropout during training to randomly ignore some neurons</li>
+          <li>
+            Apply regularization techniques (L1, L2) to penalize large weights
+          </li>
+          <li>Collect more diverse training data</li>
+          <li>Use data augmentation to artificially increase dataset size</li>
+        </ul>
 
-            <p><strong>Hyperparameter Tuning:</strong></p>
-            <ul>
-              <li>Start with proven architectures and modify gradually</li>
-              <li>Use learning rate scheduling</li>
-              <li>Employ validation sets to guide parameter choices</li>
-              <li>Consider automated hyperparameter optimization tools</li>
-            </ul>
-          </div>
-        </div>
+        <p><strong>Vanishing Gradients:</strong></p>
+        <ul>
+          <li>Use ReLU activation functions instead of sigmoid/tanh</li>
+          <li>Apply batch normalization to stabilize training</li>
+          <li>Implement residual connections (skip connections)</li>
+          <li>Use proper weight initialization schemes</li>
+        </ul>
+
+        <p><strong>Hyperparameter Tuning:</strong></p>
+        <ul>
+          <li>Start with proven architectures and modify gradually</li>
+          <li>Use learning rate scheduling</li>
+          <li>Employ validation sets to guide parameter choices</li>
+          <li>Consider automated hyperparameter optimization tools</li>
+        </ul>
       </section>
 
       <section id="practical-applications">
         <h2>6. Real-World Applications</h2>
 
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em>
-                Deep learning has achieved remarkable success across diverse
-                fields: image recognition surpassing human performance, natural
-                language processing enabling sophisticated AI assistants, and
-                game-playing AI mastering complex strategic games.
-              </em>
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p><strong>Computer Vision:</strong></p>
-            <ul>
-              <li>Medical image analysis for disease diagnosis</li>
-              <li>Autonomous vehicle perception systems</li>
-              <li>Facial recognition and object detection</li>
-              <li>Image generation and style transfer</li>
-            </ul>
+        <blockquote>
+          Deep learning has achieved remarkable success across diverse fields:
+          image recognition surpassing human performance, natural language
+          processing enabling sophisticated AI assistants, and game-playing AI
+          mastering complex strategic games.
+        </blockquote>
 
-            <p><strong>Natural Language Processing:</strong></p>
-            <ul>
-              <li>Machine translation between languages</li>
-              <li>Sentiment analysis and text classification</li>
-              <li>Chatbots and conversational AI</li>
-              <li>Text generation and summarization</li>
-            </ul>
+        <p><strong>Computer Vision:</strong></p>
+        <ul>
+          <li>Medical image analysis for disease diagnosis</li>
+          <li>Autonomous vehicle perception systems</li>
+          <li>Facial recognition and object detection</li>
+          <li>Image generation and style transfer</li>
+        </ul>
 
-            <p><strong>Other Domains:</strong></p>
-            <ul>
-              <li>Drug discovery and molecular design</li>
-              <li>Financial fraud detection</li>
-              <li>Recommendation systems</li>
-              <li>Climate modeling and weather prediction</li>
-            </ul>
-          </div>
-        </div>
+        <p><strong>Natural Language Processing:</strong></p>
+        <ul>
+          <li>Machine translation between languages</li>
+          <li>Sentiment analysis and text classification</li>
+          <li>Chatbots and conversational AI</li>
+          <li>Text generation and summarization</li>
+        </ul>
+
+        <p><strong>Other Domains:</strong></p>
+        <ul>
+          <li>Drug discovery and molecular design</li>
+          <li>Financial fraud detection</li>
+          <li>Recommendation systems</li>
+          <li>Climate modeling and weather prediction</li>
+        </ul>
       </section>
 
       <section id="getting-started">
         <h2>7. Getting Started</h2>
 
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em>
-                The best way to learn deep learning is through hands-on
-                practice. Start with established frameworks like TensorFlow or
-                PyTorch, work through tutorials with real datasets, and
-                gradually tackle more complex projects.
-              </em>
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p><strong>Learning Path:</strong></p>
-            <ol>
-              <li>
-                <strong>Mathematics Foundation:</strong> Linear algebra,
-                calculus, probability
-              </li>
-              <li>
-                <strong>Programming Skills:</strong> Python, NumPy, pandas
-              </li>
-              <li>
-                <strong>Deep Learning Frameworks:</strong> TensorFlow/Keras or
-                PyTorch
-              </li>
-              <li>
-                <strong>Practice Projects:</strong> Image classification,
-                sentiment analysis
-              </li>
-              <li>
-                <strong>Advanced Topics:</strong> Specialized architectures,
-                optimization
-              </li>
-            </ol>
+        <blockquote>
+          The best way to learn deep learning is through hands-on practice.
+          Start with established frameworks like TensorFlow or PyTorch, work
+          through tutorials with real datasets, and gradually tackle more
+          complex projects.
+        </blockquote>
 
-            <p><strong>Practical Tips:</strong></p>
-            <ul>
-              <li>
-                Start simple - don't jump into complex architectures immediately
-              </li>
-              <li>Focus on data quality over quantity</li>
-              <li>Use pre-trained models when possible (transfer learning)</li>
-              <li>Keep detailed logs of experiments and results</li>
-              <li>Join communities and read recent research papers</li>
-            </ul>
-          </div>
-        </div>
+        <p><strong>Learning Path:</strong></p>
+        <ol>
+          <li>
+            <strong>Mathematics Foundation:</strong> Linear algebra, calculus,
+            probability
+          </li>
+          <li><strong>Programming Skills:</strong> Python, NumPy, pandas</li>
+          <li>
+            <strong>Deep Learning Frameworks:</strong> TensorFlow/Keras or
+            PyTorch
+          </li>
+          <li>
+            <strong>Practice Projects:</strong> Image classification, sentiment
+            analysis
+          </li>
+          <li>
+            <strong>Advanced Topics:</strong> Specialized architectures,
+            optimization
+          </li>
+        </ol>
+
+        <p><strong>Practical Tips:</strong></p>
+        <ul>
+          <li>
+            Start simple - don't jump into complex architectures immediately
+          </li>
+          <li>Focus on data quality over quantity</li>
+          <li>Use pre-trained models when possible (transfer learning)</li>
+          <li>Keep detailed logs of experiments and results</li>
+          <li>Join communities and read recent research papers</li>
+        </ul>
       </section>
 
       <section id="future-directions">
         <h2>8. Future Directions</h2>
 
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em>
-                Deep learning continues to evolve rapidly. Current research
-                focuses on making models more efficient, interpretable, and
-                capable of learning from fewer examples. Emerging areas include
-                few-shot learning, neural architecture search, and integration
-                with symbolic reasoning.
-              </em>
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
-              The field is moving toward more efficient and generalizable AI
-              systems. Key trends include developing smaller models that perform
-              as well as larger ones, creating systems that can explain their
-              decisions, and building AI that can learn new tasks quickly with
-              minimal data - much like humans do.
-            </p>
-            <p>
-              As we advance, the integration of deep learning with other AI
-              approaches promises even more powerful and versatile systems,
-              bringing us closer to artificial general intelligence while
-              addressing current limitations in robustness, interpretability,
-              and efficiency.
-            </p>
-          </div>
-        </div>
+        <blockquote>
+          Deep learning continues to evolve rapidly. Current research focuses on
+          making models more efficient, interpretable, and capable of learning
+          from fewer examples. Emerging areas include few-shot learning, neural
+          architecture search, and integration with symbolic reasoning.
+        </blockquote>
+
+        <p>
+          The field is moving toward more efficient and generalizable AI
+          systems. Key trends include developing smaller models that perform as
+          well as larger ones, creating systems that can explain their
+          decisions, and building AI that can learn new tasks quickly with
+          minimal data - much like humans do.
+        </p>
+        <p>
+          As we advance, the integration of deep learning with other AI
+          approaches promises even more powerful and versatile systems, bringing
+          us closer to artificial general intelligence while addressing current
+          limitations in robustness, interpretability, and efficiency.
+        </p>
       </section>
 
       <section id="comments">

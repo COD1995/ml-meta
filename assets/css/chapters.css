@@ -167,6 +167,10 @@ body.sidebar-collapsed .sidebar-header {
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
 }
+.content h3, h3 {
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
 
 /* ---------- Mobile drawer -------------------------------- */
 @media (max-width: 768px) {
@@ -204,6 +208,122 @@ body.sidebar-collapsed .sidebar-header {
 p.original-text {
   font-style: italic;
   color: var(--c-gray-900);
+}
+
+/* ---------- Better blockquote styles ---------------------- */
+blockquote, .original-quote {
+  background: linear-gradient(135deg, #f6f8fa 0%, #ffffff 100%);
+  border-left: 4px solid #667eea;
+  margin: 1.5rem 0;
+  padding: 1rem 1.5rem;
+  border-radius: 0 8px 8px 0;
+  position: relative;
+  font-style: italic;
+  color: #4a5568;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+blockquote cite {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.9em;
+  color: #718096;
+  font-style: normal;
+}
+
+/* Styled quotes with better design */
+.styled-quote {
+  background: linear-gradient(135deg, #667eea10 0%, #764ba210 100%);
+  border-left: 4px solid linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%) 1;
+}
+
+/* Note/Callout blocks */
+.note {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  border: 1px solid;
+}
+
+.note-icon {
+  flex-shrink: 0;
+  font-size: 1.2rem;
+}
+
+.note-content {
+  flex: 1;
+}
+
+.note-info {
+  background: #e3f2fd;
+  border-color: #2196f3;
+  color: #0d47a1;
+}
+
+.note-warning {
+  background: #fff3e0;
+  border-color: #ff9800;
+  color: #e65100;
+}
+
+.note-tip {
+  background: #f3e5f5;
+  border-color: #9c27b0;
+  color: #4a148c;
+}
+
+.note-important {
+  background: #ffebee;
+  border-color: #f44336;
+  color: #b71c1c;
+}
+
+.note-success {
+  background: #e8f5e9;
+  border-color: #4caf50;
+  color: #1b5e20;
+}
+
+/* Dark theme support */
+html.theme-dark blockquote,
+html.theme-dark .original-quote {
+  background: linear-gradient(135deg, #1a1f2e 0%, #242937 100%);
+  border-left-color: #8b5cf6;
+  color: #cbd5e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+html.theme-dark .note-info {
+  background: #1e3a5f;
+  border-color: #2196f3;
+  color: #90caf9;
+}
+
+html.theme-dark .note-warning {
+  background: #4a3319;
+  border-color: #ff9800;
+  color: #ffb74d;
+}
+
+html.theme-dark .note-tip {
+  background: #3b1e47;
+  border-color: #9c27b0;
+  color: #ce93d8;
+}
+
+html.theme-dark .note-important {
+  background: #4a1c1c;
+  border-color: #f44336;
+  color: #ef9a9a;
+}
+
+html.theme-dark .note-success {
+  background: #1e3a20;
+  border-color: #4caf50;
+  color: #a5d6a7;
 }
 
 .hljs-ln-numbers {

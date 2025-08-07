@@ -138,49 +138,33 @@
             </p>
 
             <section id="introduction">
-                <div class="explanation-block">
-                    <div class="original-text-container">
-                        <p><strong>Imagine you have a brilliant assistant who knows everything about the world.</strong>
-                        </p>
-                        <p class="original-text">
-                            <em>But you want to teach them something specific, like medical terminology, without erasing everything they already know!</em>
-                        </p>
-                    </div>
-                </div>
+                <blockquote>
+          Imagine you have a brilliant assistant who knows everything about the world. But you want to teach them something specific, like medical terminology, without erasing everything they already know!
+        </blockquote>
             </section>
 
             <section id="what-is-lora">
                 <h2>1. What is LoRA? The Smart Way to Teach AI</h2>
-                <div class="explanation-block">
-                    <div class="original-text-container">
-                        <p><strong>How do we teach new skills to a massive AI model?</strong></p>
-                        <p class="original-text">
-                            <em>Instead of retraining the entire brain, we add small <strong>adapter modules</strong> that work alongside existing knowledge!</em>
-                        </p>
-                    </div>
-                    <div class="explanation-text">
-                        <p>LoRA stands for <strong>Low-Rank Adaptation</strong>. Think of it like this:</p>
+                <blockquote>
+          How do we teach new skills to a massive AI model? Instead of retraining the entire brain, we add small adapter modules that work alongside existing knowledge!
+        </blockquote>
+        
+        <p>LoRA stands for <strong>Low-Rank Adaptation</strong>. Think of it like this:</p>
                         <ul>
                             <li>Your AI model has a huge "brain" with billions of connections (parameters)</li>
                             <li>Instead of changing all these connections, LoRA adds tiny "specialist modules"</li>
                             <li>These modules learn the new task while keeping the original brain frozen</li>
                         </ul>
                         <p><em>It's like adding a specialized toolbox to a master craftsman - they keep all their skills but gain new ones!</em></p>
-                    </div>
-                </div>
             </section>
 
             <section id="the-problem">
                 <h2>2. The Problem: Why Traditional Fine-tuning is Expensive</h2>
-                <div class="explanation-block">
-                    <div class="original-text-container">
-                        <p><strong>What's wrong with just updating everything?</strong></p>
-                        <p class="original-text">
-                            <em>Traditional fine-tuning is like rewiring your entire house just to add a new light switch!</em>
-                        </p>
-                    </div>
-                    <div class="explanation-text">
-                        <p>Consider a large language model with <strong>7 billion parameters</strong>:</p>
+                <blockquote>
+          What's wrong with just updating everything? Traditional fine-tuning is like rewiring your entire house just to add a new light switch!
+        </blockquote>
+        
+        <p>Consider a large language model with <strong>7 billion parameters</strong>:</p>
                         <ul>
                             <li>🔥 You need to update ALL 7 billion numbers during training</li>
                             <li>💰 Requires expensive, powerful GPUs (often multiple!)</li>
@@ -189,21 +173,15 @@
                             <li>⚠️ Risk of "forgetting" what the model originally knew</li>
                         </ul>
                         <p><strong>The cost can be tens of thousands of dollars just for one fine-tuning run!</strong></p>
-                    </div>
-                </div>
             </section>
 
             <section id="lora-solution">
                 <h2>3. LoRA's Clever Solution: Low-Rank Decomposition</h2>
-                <div class="explanation-block">
-                    <div class="original-text-container">
-                        <p><strong>How does LoRA make this affordable?</strong></p>
-                        <p class="original-text">
-                            <em>Instead of changing the original weights, LoRA approximates the changes using much smaller matrices!</em>
-                        </p>
-                    </div>
-                    <div class="explanation-text">
-                        <p>Here's the mathematical magic:</p>
+                <blockquote>
+          How does LoRA make this affordable? Instead of changing the original weights, LoRA approximates the changes using much smaller matrices!
+        </blockquote>
+        
+        <p>Here's the mathematical magic:</p>
                         
                         <p>Instead of updating a large weight matrix $ W $ directly, LoRA represents the change $ \Delta W $ as:</p>
                         <p style="margin: 1rem 0; font-size: 1.2rem; text-align: center;">
@@ -257,21 +235,15 @@
                             <text x="50" y="220" font-size="12">LoRA: d × r + r × k parameters</text>
                             <text x="50" y="240" font-size="12" fill="#e74c3c">Reduction: ~97% fewer parameters!</text>
                         </svg>
-                    </div>
-                </div>
             </section>
 
             <section id="mathematical-details">
                 <h2>4. The Mathematics Behind LoRA</h2>
-                <div class="explanation-block">
-                    <div class="original-text-container">
-                        <p><strong>How does the math work exactly?</strong></p>
-                        <p class="original-text">
-                            <em>Let's break down the equations step by step!</em>
-                        </p>
-                    </div>
-                    <div class="explanation-text">
-                        <p>The complete LoRA formula is:</p>
+                <blockquote>
+          How does the math work exactly? Let's break down the equations step by step!
+        </blockquote>
+        
+        <p>The complete LoRA formula is:</p>
                         <p style="margin: 1rem 0; font-size: 1.3rem; text-align: center;">
                             $$ W' = W + \alpha \cdot (A \times B) $$
                         </p>
@@ -299,21 +271,15 @@
                             <li>Only update $ A $ and $ B $ during training</li>
                             <li>$ W $ stays completely frozen</li>
                         </ol>
-                    </div>
-                </div>
             </section>
 
             <section id="practical-example">
                 <h2>5. Real-World Example: Medical Text Adaptation</h2>
-                <div class="explanation-block">
-                    <div class="original-text-container">
-                        <p><strong>Let's see LoRA in action!</strong></p>
-                        <p class="original-text">
-                            <em>Imagine adapting a general language model to understand medical terminology and context.</em>
-                        </p>
-                    </div>
-                    <div class="explanation-text">
-                        <p><strong>Scenario:</strong> You have a 7B parameter language model and want it to excel at medical tasks.</p>
+                <blockquote>
+          Let's see LoRA in action! Imagine adapting a general language model to understand medical terminology and context.
+        </blockquote>
+        
+        <p><strong>Scenario:</strong> You have a 7B parameter language model and want it to excel at medical tasks.</p>
 
                         <p><strong>Traditional Fine-tuning:</strong></p>
                         <ul>
@@ -340,21 +306,15 @@
                         </ol>
 
                         <p><em>Result: A model that maintains its general language abilities while gaining medical expertise!</em></p>
-                    </div>
-                </div>
             </section>
 
             <section id="advantages">
                 <h2>6. Why LoRA is Revolutionary</h2>
-                <div class="explanation-block">
-                    <div class="original-text-container">
-                        <p><strong>What makes LoRA so special?</strong></p>
-                        <p class="original-text">
-                            <em>LoRA democratizes AI fine-tuning, making it accessible to researchers and companies without massive budgets!</em>
-                        </p>
-                    </div>
-                    <div class="explanation-text">
-                        <p><strong>🔧 Modularity:</strong> Create different LoRA adapters for different tasks:</p>
+                <blockquote>
+          What makes LoRA so special? LoRA democratizes AI fine-tuning, making it accessible to researchers and companies without massive budgets!
+        </blockquote>
+        
+        <p><strong>🔧 Modularity:</strong> Create different LoRA adapters for different tasks:</p>
                         <ul>
                             <li>Medical LoRA for healthcare applications</li>
                             <li>Legal LoRA for contract analysis</li>
@@ -383,8 +343,6 @@
                             <li>Democratizes access to state-of-the-art AI</li>
                             <li>Encourages innovation and experimentation</li>
                         </ul>
-                    </div>
-                </div>
             </section>
 
 

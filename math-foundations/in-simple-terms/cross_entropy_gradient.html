@@ -79,49 +79,32 @@
             </p>
 
             <section id="introduction">
-                <div class="explanation-block">
-                    <div class="original-text-container">
-                        <p><strong>Imagine you have a robot friend who loves to guess what's in your drawings.</strong>
-                        </p>
-                        <p class="original-text">
-                            <em>The robot uses numbers to help it learn, and you can too!</em>
-                        </p>
-                    </div>
-                </div>
+                <blockquote>
+          Imagine you have a robot friend who loves to guess what's in your drawings. The robot uses numbers to help it learn, and you can too!
+        </blockquote>
             </section>
 
             <section id="one-hot-encoding">
                 <h2>1. One-Hot Encoding: Telling the Robot the Right Answer</h2>
-                <div class="explanation-block">
-                    <div class="original-text-container">
-                        <p><strong>How do we tell the robot the right answer?</strong></p>
-                        <p class="original-text">
-                            <em>We use something called a <strong>vector</strong>. Don't worry, it's just a row of
-                                numbers!</em>
-                        </p>
-                    </div>
-                    <div class="explanation-text">
-                        <p>Suppose you have three animals: a cat, a dog, and a rabbit. If the picture is a
+                <blockquote>
+          How do we tell the robot the right answer? We use something called a vector. Don't worry, it's just a row of numbers!
+        </blockquote>
+        
+        <p>Suppose you have three animals: a cat, a dog, and a rabbit. If the picture is a
                             <strong>cat</strong>, then we write:</p>
                         <p>$ \text{Cat: } 1, \quad \text{Dog: } 0, \quad \text{Rabbit: } 0 $</p>
                         <p>So the correct answer (called <strong>one-hot encoding</strong>) is: $ [1, 0, 0] $</p>
                         <p><em>One-hot</em> just means "only one is right!"</p>
-                    </div>
-                </div>
 
             </section>
 
             <section id="robot-guessing">
                 <h2>2. Robot Guessing (Softmax)</h2>
-                <div class="explanation-block">
-                    <div class="original-text-container">
-                        <p><strong>How does the robot guess?</strong></p>
-                        <p class="original-text">
-                            <em>The robot looks at the picture and gives us its best guess. For example:</em>
-                        </p>
-                    </div>
-                    <div class="explanation-text">
-                        <p>The robot gives us an answer: $[0.8, 0.15, 0.05]$</p>
+                <blockquote>
+          How does the robot guess? The robot looks at the picture and gives us its best guess. For example:
+        </blockquote>
+        
+        <p>The robot gives us an answer: $[0.8, 0.15, 0.05]$</p>
                         <p>Wait, what does that even mean? Why can't the robot just say what the drawing is?</p>
                         <p>Well, these numbers show how confident the robot is about each option:</p>
                         <ul>
@@ -151,24 +134,17 @@
                             <li>Divide each one by the total</li>
                         </ul>
                         <p>Now all guesses will be between 0 and 1 and add up to 1.</p>
-                    </div>
-                </div>
 
             </section>
 
             <section id="cross-entropy-loss">
                 <h2>3. Cross-Entropy Loss</h2>
 
-                <div class="explanation-block">
-                    <div class="original-text-container">
-                        <p><strong>How do we know how good the robot did?</strong></p>
-                        <p class="original-text">
-                            <em>If the true label is "cat" (so the one-hot vector is ([1, 0, 0])) and the robot guessed
-                                [0.8, 0.15, 0.05]</em>
-                        </p>
-                    </div>
-                    <div class="explanation-text">
-                        <p>We use a special math formula called <strong>cross-entropy loss</strong>:</p>
+                <blockquote>
+          How do we know how good the robot did? If the true label is "cat" (so the one-hot vector is ([1, 0, 0])) and the robot guessed [0.8, 0.15, 0.05]
+        </blockquote>
+        
+        <p>We use a special math formula called <strong>cross-entropy loss</strong>:</p>
 
                         <p style="margin: 1rem 0; font-size: 1.2rem;">
                             $$ L = -\sum_i y_i \log(\hat{y}_i) $$
@@ -206,22 +182,15 @@
                             </li>
                         </ul>
                         <p><em>Note: Log(1) is 0, so we want the robot to guess cat with value 1.</em></p>
-                    </div>
-                </div>
             </section>
 
             <section id="gradient-descent">
                 <h2>4. Gradient Calculations</h2>
-                <div class="explanation-block">
-                    <div class="original-text-container">
-                        <p><strong>How does the robot get better?</strong></p>
-                        <p class="original-text">
-                            <em>The robot learns by trying to make the error (loss) smaller using a process called
-                                <strong>gradient descent</strong>:</em>
-                        </p>
-                    </div>
-                    <div class="explanation-text">
-                        <ol>
+                <blockquote>
+          How does the robot get better? The robot learns by trying to make the error (loss) smaller using a process called gradient descent:
+        </blockquote>
+        
+        <ol>
                             <li>First, check how wrong the guess was (this is the <strong>cross-entropy loss</strong>).
                             </li>
                             <li>Then, figure out what caused the mistake (find how each part affected the error. This is
@@ -407,9 +376,6 @@
                         <p style="font-size: 0.95rem; font-style: italic; color: #555; margin-top: 0.5rem;">
                             The robot tweaks the dial just a bit each time: learning from every mistake!
                         </p>
-
-                    </div>
-                </div>
             </section>
 
             <section id="comments">
