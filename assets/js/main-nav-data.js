@@ -72,6 +72,16 @@ window.MAIN_NAV_DATA = [
     "title": "📄 Papers",
     "subdirs": [
       {
+        "name": "Basics",
+        "id": "basics",
+        "chapters": [
+          {
+            "href": "papers/basics/deep-learning-crash-course.html",
+            "title": "Deep Learning Crash Course"
+          }
+        ]
+      },
+      {
         "name": "Training Research",
         "id": "training-research",
         "chapters": [

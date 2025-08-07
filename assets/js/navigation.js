@@ -289,6 +289,9 @@ function setupScrollSpy() {
  * Setup mobile menu functionality
  */
 function setupMobileMenu() {
+  // Check sidebar overlap on load and resize
+  checkSidebarOverlap();
+  
   // Create mobile menu toggle if not exists
   if (window.innerWidth <= 768 && !$('#mobileMenuToggle')) {
     createMobileMenuToggle();
@@ -299,6 +302,8 @@ function setupMobileMenu() {
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(() => {
+      checkSidebarOverlap();
+      
       if (window.innerWidth <= 768 && !$('#mobileMenuToggle')) {
         createMobileMenuToggle();
       } else if (window.innerWidth > 768) {
@@ -306,6 +311,78 @@ function setupMobileMenu() {
       }
     }, 250);
   });
+}
+
+/**
+ * Check if sidebar would overlap with main content
+ */
+function checkSidebarOverlap() {
+  const sideNav = $('.side-nav');
+  const container = $('.container');
+  
+  if (!sideNav || !container) return;
+  
+  // Check if manually toggled
+  const isManuallyToggled = sideNav.getAttribute('data-manually-toggled') === 'true';
+  
+  // Get positions and dimensions
+  const sideNavRect = sideNav.getBoundingClientRect();
+  const containerRect = container.getBoundingClientRect();
+  
+  // Calculate if they would overlap (with 20px buffer)
+  const sideNavRight = sideNavRect.left + sideNavRect.width;
+  const wouldOverlap = sideNavRight + 20 > containerRect.left;
+  
+  // Get or create nav toggle bubble
+  let navBubble = $('#navToggleBubble');
+  if (!navBubble) {
+    navBubble = createNavToggleBubble();
+  }
+  
+  // Hide/show sidebar based on overlap (unless manually toggled)
+  if (wouldOverlap && !isManuallyToggled) {
+    sideNav.style.display = 'none';
+    navBubble.style.display = 'flex';
+    navBubble.classList.add('pulse');
+  } else if (!wouldOverlap) {
+    sideNav.style.display = 'flex';
+    navBubble.style.display = 'none';
+    sideNav.removeAttribute('data-manually-toggled');
+  }
+}
+
+/**
+ * Create navigation toggle bubble
+ */
+function createNavToggleBubble() {
+  const bubble = createElement('button', {
+    id: 'navToggleBubble',
+    className: 'nav-toggle-bubble',
+    'aria-label': 'Toggle navigation'
+  });
+  bubble.innerHTML = '☰';
+  
+  bubble.addEventListener('click', () => {
+    const sideNav = $('.side-nav');
+    if (sideNav) {
+      const isVisible = sideNav.style.display === 'flex';
+      
+      if (isVisible) {
+        // Hide nav
+        sideNav.style.display = 'none';
+        sideNav.removeAttribute('data-manually-toggled');
+        bubble.classList.remove('active');
+      } else {
+        // Show nav and mark as manually toggled
+        sideNav.style.display = 'flex';
+        sideNav.setAttribute('data-manually-toggled', 'true');
+        bubble.classList.add('active');
+      }
+    }
+  });
+  
+  document.body.appendChild(bubble);
+  return bubble;
 }
 
 /**

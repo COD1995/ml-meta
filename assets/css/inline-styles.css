@@ -53,7 +53,7 @@
 .side-nav {
   position: fixed;
   top: 50%;
-  left: clamp(0px, calc((100vw - 900px) / 5), 3.5vw);
+  left: clamp(0px, calc((100vw - 1000px) / 5), 3.5vw);
   transform: translateY(-50%);
   width: var(--side-nav-width);
   display: flex;
@@ -245,9 +245,10 @@ html.theme-dark .slack-banner #slackButton svg {
 }
 
 /* ========== Responsive Styles ========== */
-@media (max-width: 1350px) {
+/* Dynamic hiding handled by JavaScript - only force hide on mobile */
+@media (max-width: 768px) {
   .side-nav {
-    display: none;
+    display: none !important;
   }
 }
 
