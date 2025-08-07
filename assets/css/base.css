@@ -69,11 +69,12 @@ a:hover {
 /* Clean main container ----------------------------------- */
 .container {
   width: 94%;
-  max-width: 950px;
+  max-width: 1000px;
   margin: 2rem auto;
   padding: 2rem 2.5rem;
   background: transparent;
   box-sizing: border-box;
+  border-radius: 12px;
 }
 
 /* Figure & caption ------------------------------------------ */
@@ -423,13 +424,13 @@ html.theme-dark #slackButton span {
   top: 50%;
   left: 0;
   /* Calculate left margin: (viewport - container width) / 2 = margin on each side */
-  /* Sidebar width: 220px (adjusted for better content) */
-  width: 240px;
+  /* Sidebar width: 260px (adjusted for better content) */
+  width: 260px;
   /* Center in left margin: (left margin - sidebar width) / 2 */
   /* left margin = (100vw - 900px) / 2 for max-width, fallback to 5% for smaller screens */
   /* Use clamp to avoid negative values on small screens */
   /* This works best if .container is centered with max-width: 900px and width: 90% */
-  left: clamp(0px, calc((100vw - 900px) / 5), 3.5vw);
+  left: clamp(0px, calc((100vw - 1000px) / 5), 3.5vw);
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
@@ -577,9 +578,10 @@ html.theme-dark .side-nav-controls .btn-toggle:hover {
 html {
   scroll-behavior: smooth;
 }
-@media (max-width: 1350px) {
+/* Remove fixed breakpoint - let JavaScript handle dynamic hiding */
+@media (max-width: 768px) {
   .side-nav {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -652,6 +654,7 @@ div, section, article, details, summary, fieldset {
     backdrop-filter: blur(12px);
     border-color: rgba(48, 54, 61, 0.8) !important;
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3) !important;
+    border-radius: 12px;
   }
 
   html.theme-dark #main-contributors {
@@ -1374,4 +1377,73 @@ html.theme-dark .toc-label {
 .focus-visible:focus {
   outline: 2px solid var(--c-blue-600);
   outline-offset: 2px;
+}
+
+/* Navigation Toggle Bubble */
+.nav-toggle-bubble {
+  position: fixed;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  color: white;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  z-index: 999;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.nav-toggle-bubble:hover {
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.nav-toggle-bubble:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.nav-toggle-bubble.active {
+  background: linear-gradient(135deg, #4a154b 0%, #621f69 100%);
+}
+
+/* Remove SVG styles since we're using text now */
+
+/* Pulse animation for attention */
+@keyframes pulse {
+  0% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+  }
+  100% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.nav-toggle-bubble.pulse {
+  animation: pulse 2s ease-in-out 3;
+}
+
+/* Dark theme support for bubble */
+html.theme-dark .nav-toggle-bubble {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+html.theme-dark .nav-toggle-bubble:hover {
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+}
+
+html.theme-dark .nav-toggle-bubble.active {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
 }

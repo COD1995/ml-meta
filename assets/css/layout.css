@@ -8,9 +8,10 @@
 /* Page Container */
 .container {
     width: 90%;
-    max-width: 850px;
+    max-width: 1000px;
     margin: 0 auto;
     padding: 0 1rem;
+    border-radius: 12px;
 }
 
 /* Header */
