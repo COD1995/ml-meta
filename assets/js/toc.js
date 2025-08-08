@@ -127,21 +127,73 @@ function setupSmoothScrolling(tocContainer) {
 function setupActiveTracking(headings, tocContainer) {
   if (!headings.length) return;
   
+  // Track which sections are currently visible
+  const visibleSections = new Set();
+  
   const observerOptions = {
     rootMargin: '-20% 0px -70% 0px',
     threshold: 0
   };
   
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      const tocLink = tocContainer.querySelector(`a[href="#${entry.target.id}"]`);
-      if (tocLink) {
-        tocLink.classList.toggle('active', entry.isIntersecting);
+  const updateActiveLink = () => {
+    // Remove all active classes first
+    tocContainer.querySelectorAll('.toc-link.active').forEach(link => {
+      link.classList.remove('active');
+    });
+    
+    // Find the topmost visible section
+    let topmostSection = null;
+    let topmostPosition = Infinity;
+    
+    visibleSections.forEach(id => {
+      const element = document.getElementById(id);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        if (rect.top < topmostPosition && rect.top > -100) {
+          topmostPosition = rect.top;
+          topmostSection = id;
+        }
       }
     });
+    
+    // Highlight the topmost visible section
+    if (topmostSection) {
+      const activeLink = tocContainer.querySelector(`a[href="#${topmostSection}"]`);
+      if (activeLink) {
+        activeLink.classList.add('active');
+        
+        // Ensure the active link is visible in the TOC container if it has scroll
+        const tocRect = tocContainer.getBoundingClientRect();
+        const linkRect = activeLink.getBoundingClientRect();
+        
+        if (linkRect.top < tocRect.top || linkRect.bottom > tocRect.bottom) {
+          activeLink.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    }
+  };
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        visibleSections.add(entry.target.id);
+      } else {
+        visibleSections.delete(entry.target.id);
+      }
+    });
+    
+    // Update active link after processing all entries
+    updateActiveLink();
   }, observerOptions);
   
   headings.forEach(heading => observer.observe(heading));
+  
+  // Also update on scroll for smoother tracking
+  let scrollTimeout;
+  window.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(updateActiveLink, 50);
+  }, { passive: true });
 }
 
 /**

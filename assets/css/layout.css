@@ -1,4 +1,3 @@
-
 /* Consistent vertical spacing for Slack banner in sidebar */
 .slack-banner {
   margin-top: 0rem;
@@ -7,50 +6,50 @@
 
 /* Page Container */
 .container {
-    width: 90%;
-    max-width: 1000px;
-    margin: 0 auto;
-    padding: 0 1rem;
-    border-radius: 12px;
+  width: 90%;
+  max-width: 1000px;
+  margin: 2rem auto;
+  padding: 2rem 1rem 1rem 1rem;
+  border-radius: 12px;
 }
 
 /* Header */
 header {
-    text-align: center;
-    margin: 2rem 0;
+  text-align: center;
+  margin: 1rem 0 2rem 0;
 }
 
 header h1 {
-    font-size: 3rem;
-    color: #005DAA;
+  font-size: 3rem;
+  color: #005daa;
 }
 
 header .tagline {
-    font-size: 1.2rem;
-    color: #555;
-    margin-top: 0.5rem;
+  font-size: 1.2rem;
+  color: #555;
+  margin-top: 0.5rem;
 }
 
 /* Navigation Heading */
 nav h2 {
-    font-size: 1.5rem;
-    color: #005DAA;
-    margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #005daa;
+  margin-bottom: 1rem;
 }
 
 /* Footer */
 footer {
-    text-align: center;
-    font-size: 0.9rem;
-    color: #777;
-    margin: 3rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #777;
+  margin: 3rem 0;
 }
 
 footer a {
-    color: #005DAA;
-    text-decoration: none;
+  color: #005daa;
+  text-decoration: none;
 }
 
 footer a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }

@@ -443,10 +443,10 @@ html.theme-dark .note-success {
 }
 
 .side-nav .toc-chapters.dropdown-content a.active {
-  background: #f0f4ff;
-  color: #4338ca;
-  border-left-color: #6366f1;
-  font-weight: 500;
+  background: transparent;
+  color: inherit;
+  border-left-color: transparent;
+  font-weight: normal;
 }
 
 /* ---------- Dark mode - clean and consistent ------------------------------ */
@@ -490,9 +490,9 @@ html.theme-dark .side-nav .toc-chapters.dropdown-content a:hover {
 }
 
 html.theme-dark .side-nav .toc-chapters.dropdown-content a.active {
-  background: #1e1b4b;
-  color: #c7d2fe;
-  border-left-color: #8b5cf6;
+  background: transparent;
+  color: inherit;
+  border-left-color: transparent;
 }
 
 /* ──────────────────────────────────────────────────────────────
@@ -545,4 +545,121 @@ body.at-top #reading-progress {
   #reading-progress {
     height: 3px;
   }
+}
+
+/* ──────────────────────────────────────────────────────────────
+   Remove chapter title hover effects
+   ----------------------------------------------------------------*/
+.toc-book-title:hover,
+.toc-book-title:focus {
+  background: transparent !important;
+  color: inherit !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: inherit !important;
+}
+
+.toc-book-title:hover::after {
+  color: inherit !important;
+  -webkit-text-fill-color: inherit !important;
+}
+
+html.theme-dark .toc-book-title:hover,
+html.theme-dark .toc-book-title:focus {
+  background: transparent !important;
+  color: inherit !important;
+  -webkit-background-clip: unset !important;
+  background-clip: unset !important;
+  -webkit-text-fill-color: inherit !important;
+}
+
+html.theme-dark .toc-book-title:hover::after {
+  color: inherit !important;
+  -webkit-text-fill-color: inherit !important;
+}
+
+/* ──────────────────────────────────────────────────────────────
+   TOC Active Link Highlighting
+   ----------------------------------------------------------------*/
+.toc-link {
+  transition: all 0.2s ease;
+  position: relative;
+  display: block;
+  padding: 0.25rem 0.5rem;
+  padding-left: 1rem;
+}
+
+/* Override other active and hover styles to keep it minimal */
+.toc-link:hover {
+  background: transparent !important;
+  color: inherit !important;
+}
+
+.toc-link.active {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: inherit !important;
+  font-weight: normal !important;
+  border-radius: 0 !important;
+  border: none !important;
+  border-left: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.toc-link.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  height: 60%;
+  width: 2px;
+  background: #4f46e5;
+}
+
+/* Dark mode TOC active styles */
+html.theme-dark .toc-link:hover {
+  background: transparent !important;
+  color: inherit !important;
+}
+
+html.theme-dark .toc-link.active {
+  background: transparent !important;
+  color: inherit !important;
+}
+
+html.theme-dark .toc-link.active::before {
+  background: #818cf8;
+}
+
+/* Nested TOC items (H3) have slightly different styling */
+.side-nav .toc-chapters.dropdown-content a.toc-link.toc-h3 {
+  padding-left: 2.5rem !important;
+  font-size: 0.875em;
+  opacity: 0.9;
+}
+
+/* Fix H3 active indicator position */
+.toc-link.toc-h3.active {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: inherit !important;
+  font-weight: normal !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.toc-link.toc-h3.active::before {
+  content: '';
+  position: absolute;
+  left: 1.5rem;
+  top: 20%;
+  height: 60%;
+  width: 2px;
+  background: #4f46e5;
+}
+
+/* Dark mode H3 indicator */
+html.theme-dark .toc-link.toc-h3.active::before {
+  background: #818cf8;
 }

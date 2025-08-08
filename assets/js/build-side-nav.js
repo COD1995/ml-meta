@@ -82,9 +82,13 @@ function injectHeadings(container) {
   heads.forEach((h) => {
     if (!h.id) h.id = slugify(h.textContent);
     const row = document.createElement("div");
-    row.innerHTML = `<a href="#${h.id}">${h.textContent}</a>`;
+    const level = h.tagName.toLowerCase();
+    row.innerHTML = `<a href="#${h.id}" class="toc-link toc-${level}">${h.textContent}</a>`;
     container.appendChild(row);
   });
+  
+  // Setup scroll tracking for these headings
+  setupScrollTracking(heads, container);
 }
 
 function injectRemoteHeadings(container, path) {
@@ -104,8 +108,9 @@ function injectRemoteHeadings(container, path) {
       container.innerHTML = ""; // clear loading
       heads.forEach((h) => {
         if (!h.id) h.id = slugify(h.textContent);
+        const level = h.tagName.toLowerCase();
         const row = document.createElement("div");
-        row.innerHTML = `<a href="${path}#${h.id}">${h.textContent}</a>`;
+        row.innerHTML = `<a href="${path}#${h.id}" class="toc-link toc-${level}">${h.textContent}</a>`;
         container.appendChild(row);
       });
       if (heads.length === 0) {
@@ -162,4 +167,68 @@ function slugify(str) {
     .toLowerCase()
     .replace(/\s+/g, "-")
     .replace(/[^\w-]/g, "");
+}
+
+function setupScrollTracking(headings, container) {
+  if (!headings || headings.length === 0) return;
+  
+  const tocLinks = container.querySelectorAll('.toc-link');
+
+  const updateActiveLink = () => {
+    // Remove all active classes
+    tocLinks.forEach(link => link.classList.remove('active'));
+    
+    // Get current scroll position
+    const scrollPosition = window.scrollY + 100; // Offset for fixed headers
+    
+    // Find the current section based on scroll position
+    let currentSection = null;
+    
+    for (let i = headings.length - 1; i >= 0; i--) {
+      const heading = headings[i];
+      if (heading.id && heading.offsetTop <= scrollPosition) {
+        currentSection = heading.id;
+        break;
+      }
+    }
+    
+    // If no section found but we're at the top, highlight the first section
+    if (!currentSection && scrollPosition < 200 && headings[0] && headings[0].id) {
+      currentSection = headings[0].id;
+    }
+    
+    // Highlight the current section
+    if (currentSection) {
+      const activeLink = container.querySelector(`a[href="#${currentSection}"]`);
+      if (activeLink) {
+        activeLink.classList.add('active');
+        
+        // Ensure the active link is visible in the container if it has scroll
+        const containerRect = container.getBoundingClientRect();
+        const linkRect = activeLink.getBoundingClientRect();
+        
+        if (linkRect.top < containerRect.top || linkRect.bottom > containerRect.bottom) {
+          activeLink.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+      }
+    }
+  };
+
+  // Update on scroll with debouncing
+  let scrollTimeout;
+  const handleScroll = () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(updateActiveLink, 10);
+  };
+  
+  window.addEventListener('scroll', handleScroll, { passive: true });
+  
+  // Initial update
+  updateActiveLink();
+  
+  // Update on window resize
+  window.addEventListener('resize', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(updateActiveLink, 100);
+  });
 }
