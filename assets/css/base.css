@@ -452,8 +452,8 @@ html.theme-dark #slackButton span {
 
 /* Drag handle for the sidebar */
 .side-nav-drag-handle {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 0.75rem 1.25rem;
+  background: transparent;
+  padding: 0.5rem 1rem;
   border-radius: 16px 16px 0 0;
   cursor: move;
   display: flex;
@@ -461,18 +461,19 @@ html.theme-dark #slackButton span {
   justify-content: center;
   user-select: none;
   position: relative;
+  transition: all 0.2s ease;
 }
 
 .side-nav-drag-handle::before {
-  content: '⋮⋮';
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1.2rem;
-  letter-spacing: 2px;
+  content: '⋯';
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 1rem;
+  letter-spacing: 1px;
   line-height: 1;
 }
 
 .side-nav-drag-handle:hover::before {
-  color: rgba(255, 255, 255, 1);
+  color: rgba(0, 0, 0, 0.6);
 }
 
 /* Content area with proper padding and scroll */
@@ -492,11 +493,11 @@ html.theme-dark #slackButton span {
 }
 
 .side-nav.dragging .side-nav-drag-handle {
-  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  background: rgba(0, 0, 0, 0.05);
 }
 
 .side-nav.dragging .side-nav-drag-handle::before {
-  color: rgba(255, 255, 255, 1);
+  color: rgba(0, 0, 0, 0.8);
 }
 .side-nav a {
   text-decoration: none;
@@ -816,12 +817,20 @@ html.theme-dark .side-nav {
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
-html.theme-dark .side-nav-drag-handle {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+html.theme-dark .side-nav-drag-handle::before {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+html.theme-dark .side-nav-drag-handle:hover::before {
+  color: rgba(255, 255, 255, 0.7);
 }
 
 html.theme-dark .side-nav.dragging .side-nav-drag-handle {
-  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+html.theme-dark .side-nav.dragging .side-nav-drag-handle::before {
+  color: rgba(255, 255, 255, 0.9);
 }
 
 html.theme-dark .side-nav a {
