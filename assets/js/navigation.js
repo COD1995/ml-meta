@@ -52,6 +52,8 @@ export function initNavigation() {
   setupSideNavLinks();
   setupMobileMenu();
   setupSidebarDragging();
+  setupSidebarResize();
+  setupSidebarMinimize();
 }
 
 /**
@@ -315,7 +317,7 @@ function setupMobileMenu() {
 }
 
 /**
- * Check if sidebar would overlap with main content
+ * Check if sidebar would overlap with main content (simplified for cloud button system)
  */
 function checkSidebarOverlap() {
   const sideNav = $('.side-nav');
@@ -323,8 +325,10 @@ function checkSidebarOverlap() {
   
   if (!sideNav || !container) return;
   
-  // Check if manually toggled
-  const isManuallyToggled = sideNav.getAttribute('data-manually-toggled') === 'true';
+  // Skip if already minimized or manually positioned
+  if (sideNav.classList.contains('minimized') || sideNav.getAttribute('data-manually-toggled') === 'true') {
+    return;
+  }
   
   // Get positions and dimensions
   const sideNavRect = sideNav.getBoundingClientRect();
@@ -334,117 +338,13 @@ function checkSidebarOverlap() {
   const sideNavRight = sideNavRect.left + sideNavRect.width;
   const wouldOverlap = sideNavRight + 20 > containerRect.left;
   
-  // Get or create nav toggle bubble
-  let navBubble = $('#navToggleBubble');
-  if (!navBubble) {
-    navBubble = createNavToggleBubble();
-  }
-  
-  // Hide/show sidebar based on overlap (unless manually toggled)
-  if (wouldOverlap && !isManuallyToggled) {
-    sideNav.style.display = 'none';
-    navBubble.style.display = 'flex';
-    navBubble.classList.remove('fade-out');
-    navBubble.classList.add('fade-in', 'pulse');
-    navBubble.innerHTML = '☰';
-    navBubble.setAttribute('aria-label', 'Show navigation');
-  } else if (!wouldOverlap) {
-    sideNav.style.display = 'flex';
-    
-    // Smoothly hide the bubble
-    if (navBubble.style.display === 'flex') {
-      navBubble.classList.add('fade-out');
-      setTimeout(() => {
-        navBubble.style.display = 'none';
-        navBubble.classList.remove('fade-out', 'pulse', 'active', 'sidebar-open');
-      }, 300);
-    } else {
-      navBubble.style.display = 'none';
-    }
-    
-    sideNav.removeAttribute('data-manually-toggled');
+  // Auto-minimize if overlapping
+  if (wouldOverlap) {
+    const minimizeEvent = new Event('minimize-sidebar');
+    sideNav.dispatchEvent(minimizeEvent);
   }
 }
 
-/**
- * Create navigation toggle bubble
- */
-function createNavToggleBubble() {
-  const bubble = createElement('button', {
-    id: 'navToggleBubble',
-    className: 'nav-toggle-bubble fade-in',
-    'aria-label': 'Toggle navigation'
-  });
-  bubble.innerHTML = '☰';
-  
-  // Add pulse animation initially
-  setTimeout(() => bubble.classList.add('pulse'), 300);
-  
-  bubble.addEventListener('click', () => {
-    const sideNav = $('.side-nav');
-    if (sideNav) {
-      const isVisible = sideNav.style.display === 'flex';
-      
-      if (isVisible) {
-        // Hide nav and switch back to hamburger
-        sideNav.style.display = 'none';
-        sideNav.removeAttribute('data-manually-toggled');
-        
-        bubble.classList.remove('active', 'sidebar-open');
-        bubble.innerHTML = '☰';
-        bubble.setAttribute('aria-label', 'Show navigation');
-        
-        // Keep button visible and ready for next use
-        bubble.classList.remove('fade-out');
-        bubble.classList.add('pulse'); // Add attention-grabbing pulse
-      } else {
-        // Add icon change animation only when opening
-        bubble.classList.add('icon-change');
-        
-        // Show nav and keep button partially visible
-        sideNav.style.display = 'flex';
-        sideNav.setAttribute('data-manually-toggled', 'true');
-        bubble.classList.add('active', 'sidebar-open');
-        bubble.innerHTML = '✕';
-        bubble.setAttribute('aria-label', 'Hide navigation');
-        
-        // Remove fade classes and add smart positioning
-        bubble.classList.remove('fade-out');
-        
-        // Auto-hide button after 3 seconds if not hovered
-        const autoHide = setTimeout(() => {
-          if (!bubble.matches(':hover')) {
-            bubble.classList.add('fade-out');
-            setTimeout(() => {
-              if (bubble.classList.contains('fade-out')) {
-                bubble.style.display = 'none';
-              }
-            }, 300);
-          }
-        }, 3000);
-        
-        // Cancel auto-hide on hover
-        bubble.addEventListener('mouseenter', () => clearTimeout(autoHide), { once: true });
-        
-        // Remove icon animation class after animation completes
-        setTimeout(() => bubble.classList.remove('icon-change'), 400);
-      }
-    }
-  });
-  
-  // Add keyboard support for accessibility
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') {
-      const sideNav = $('.side-nav');
-      if (sideNav && sideNav.style.display === 'flex' && sideNav.hasAttribute('data-manually-toggled')) {
-        bubble.click(); // Trigger the same hide behavior
-      }
-    }
-  });
-  
-  document.body.appendChild(bubble);
-  return bubble;
-}
 
 /**
  * Create mobile menu toggle button
@@ -603,7 +503,10 @@ function saveSidebarPosition(sideNav) {
   const position = {
     x: rect.left,
     y: rect.top,
-    isDragged: true
+    width: sideNav.style.width || '',
+    height: sideNav.style.height || '',
+    isDragged: true,
+    isMinimized: sideNav.classList.contains('minimized') || false
   };
   localStorage.setItem('sidebarPosition', JSON.stringify(position));
 }
@@ -618,6 +521,19 @@ function loadSidebarPosition(sideNav) {
   try {
     const position = JSON.parse(saved);
     if (position.isDragged) {
+      // Restore dimensions if saved
+      if (position.width) sideNav.style.width = position.width;
+      if (position.height) sideNav.style.height = position.height;
+      
+      // Restore minimized state
+      if (position.isMinimized) {
+        // Trigger minimize after setup is complete
+        setTimeout(() => {
+          const minimizeEvent = new Event('minimize-sidebar');
+          sideNav.dispatchEvent(minimizeEvent);
+        }, 1000);
+      }
+      
       // Ensure position is still within viewport bounds
       const maxX = window.innerWidth - sideNav.offsetWidth;
       const maxY = window.innerHeight - sideNav.offsetHeight;
@@ -632,6 +548,463 @@ function loadSidebarPosition(sideNav) {
   } catch (e) {
     console.warn('Failed to load sidebar position:', e);
   }
+}
+
+/**
+ * Setup sidebar resize functionality
+ */
+function setupSidebarResize() {
+  const sideNav = $('.side-nav');
+  if (!sideNav) return;
+
+  // Create resize handles
+  const resizeHandleRight = createElement('div', {
+    className: 'resize-handle resize-handle-right',
+    'aria-label': 'Resize sidebar width'
+  });
+
+  const resizeHandleBottom = createElement('div', {
+    className: 'resize-handle resize-handle-bottom',
+    'aria-label': 'Resize sidebar height'
+  });
+
+  const resizeHandleCorner = createElement('div', {
+    className: 'resize-handle resize-handle-corner',
+    'aria-label': 'Resize sidebar width and height'
+  });
+
+  // Add resize handles to sidebar
+  sideNav.appendChild(resizeHandleRight);
+  sideNav.appendChild(resizeHandleBottom);
+  sideNav.appendChild(resizeHandleCorner);
+
+  // Resize state
+  let isResizing = false;
+  let resizeType = '';
+  let startSize = { width: 0, height: 0 };
+  let startMouse = { x: 0, y: 0 };
+
+  // Add resize event listeners
+  resizeHandleRight.addEventListener('mousedown', (e) => startResize(e, 'right'));
+  resizeHandleBottom.addEventListener('mousedown', (e) => startResize(e, 'bottom'));
+  resizeHandleCorner.addEventListener('mousedown', (e) => startResize(e, 'corner'));
+
+  document.addEventListener('mousemove', handleResize);
+  document.addEventListener('mouseup', endResize);
+
+  function startResize(e, type) {
+    if (e.button !== 0) return;
+    e.preventDefault();
+    e.stopPropagation();
+
+    isResizing = true;
+    resizeType = type;
+    sideNav.classList.add('resizing');
+
+    const rect = sideNav.getBoundingClientRect();
+    startSize.width = rect.width;
+    startSize.height = rect.height;
+    startMouse.x = e.clientX;
+    startMouse.y = e.clientY;
+
+    document.body.style.userSelect = 'none';
+    document.body.style.cursor = type === 'right' ? 'ew-resize' : 
+                               type === 'bottom' ? 'ns-resize' : 'nwse-resize';
+  }
+
+  function handleResize(e) {
+    if (!isResizing) return;
+    e.preventDefault();
+
+    const deltaX = e.clientX - startMouse.x;
+    const deltaY = e.clientY - startMouse.y;
+
+    let newWidth = startSize.width;
+    let newHeight = startSize.height;
+
+    if (resizeType === 'right' || resizeType === 'corner') {
+      newWidth = Math.max(200, Math.min(600, startSize.width + deltaX));
+    }
+
+    if (resizeType === 'bottom' || resizeType === 'corner') {
+      newHeight = Math.max(300, Math.min(window.innerHeight - 50, startSize.height + deltaY));
+    }
+
+    sideNav.style.width = `${newWidth}px`;
+    sideNav.style.height = `${newHeight}px`;
+  }
+
+  function endResize() {
+    if (!isResizing) return;
+
+    isResizing = false;
+    resizeType = '';
+    sideNav.classList.remove('resizing');
+    document.body.style.userSelect = '';
+    document.body.style.cursor = '';
+
+    // Save the new dimensions
+    saveSidebarPosition(sideNav);
+  }
+}
+
+/**
+ * Setup sidebar minimize functionality with cloud button
+ */
+function setupSidebarMinimize() {
+  const sideNav = $('.side-nav');
+  if (!sideNav) return;
+
+  let cloudButton = null;
+
+  // Function to create cloud button
+  function createCloudButton() {
+    if (cloudButton) return cloudButton;
+    
+    cloudButton = createElement('button', {
+      className: 'cloud-restore-btn',
+      'aria-label': 'Restore sidebar (draggable)',
+      'title': 'Click to restore sidebar • Drag to move'
+    });
+    cloudButton.innerHTML = '☁️';
+    
+    // Load saved position
+    const savedCloudPos = localStorage.getItem('cloudButtonPosition');
+    let cloudPosition = { x: 20, y: window.innerHeight / 2 };
+    if (savedCloudPos) {
+      try {
+        cloudPosition = JSON.parse(savedCloudPos);
+      } catch (e) {
+        console.warn('Failed to load cloud button position');
+      }
+    }
+    
+    // Style the cloud button
+    Object.assign(cloudButton.style, {
+      position: 'fixed',
+      top: `${cloudPosition.y}px`,
+      left: `${cloudPosition.x}px`,
+      transform: 'translate(-50%, -50%)',
+      width: '50px',
+      height: '50px',
+      borderRadius: '50%',
+      border: 'none',
+      background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+      color: 'white',
+      fontSize: '20px',
+      cursor: 'grab',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)',
+      zIndex: '1002',
+      transition: 'box-shadow 0.3s ease, transform 0.1s ease',
+      display: 'none',
+      userSelect: 'none'
+    });
+
+    // Dragging state
+    let isDragging = false;
+    let dragOffset = { x: 0, y: 0 };
+    let dragStartTime = 0;
+
+    // Mouse events for dragging
+    cloudButton.addEventListener('mousedown', startDrag);
+    document.addEventListener('mousemove', drag);
+    document.addEventListener('mouseup', endDrag);
+
+    // Touch events for mobile dragging
+    cloudButton.addEventListener('touchstart', startDragTouch, { passive: false });
+    document.addEventListener('touchmove', dragTouch, { passive: false });
+    document.addEventListener('touchend', endDrag);
+
+    function startDrag(e) {
+      if (e.button !== 0) return; // Only left mouse button
+      e.preventDefault();
+      dragStartTime = Date.now();
+      initializeDrag(e.clientX, e.clientY);
+    }
+
+    function startDragTouch(e) {
+      e.preventDefault();
+      dragStartTime = Date.now();
+      const touch = e.touches[0];
+      initializeDrag(touch.clientX, touch.clientY);
+    }
+
+    function initializeDrag(clientX, clientY) {
+      isDragging = true;
+      cloudButton.style.cursor = 'grabbing';
+      cloudButton.style.transition = 'none';
+      cloudButton.style.boxShadow = '0 8px 24px rgba(0, 0, 0, 0.3)';
+      
+      const rect = cloudButton.getBoundingClientRect();
+      dragOffset.x = clientX - (rect.left + rect.width / 2);
+      dragOffset.y = clientY - (rect.top + rect.height / 2);
+      
+      document.body.style.userSelect = 'none';
+    }
+
+    function drag(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      updatePosition(e.clientX, e.clientY);
+    }
+
+    function dragTouch(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      const touch = e.touches[0];
+      updatePosition(touch.clientX, touch.clientY);
+    }
+
+    function updatePosition(clientX, clientY) {
+      const newX = clientX - dragOffset.x;
+      const newY = clientY - dragOffset.y;
+      
+      // Constrain to viewport bounds (with button radius buffer)
+      const radius = 25;
+      const constrainedX = Math.max(radius, Math.min(window.innerWidth - radius, newX));
+      const constrainedY = Math.max(radius, Math.min(window.innerHeight - radius, newY));
+      
+      cloudButton.style.left = `${constrainedX}px`;
+      cloudButton.style.top = `${constrainedY}px`;
+    }
+
+    function endDrag() {
+      if (!isDragging) return;
+      
+      const dragDuration = Date.now() - dragStartTime;
+      isDragging = false;
+      
+      cloudButton.style.cursor = 'grab';
+      cloudButton.style.transition = 'box-shadow 0.3s ease, transform 0.1s ease';
+      cloudButton.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+      document.body.style.userSelect = '';
+      
+      // Save position
+      const rect = cloudButton.getBoundingClientRect();
+      const position = {
+        x: rect.left + rect.width / 2,
+        y: rect.top + rect.height / 2
+      };
+      localStorage.setItem('cloudButtonPosition', JSON.stringify(position));
+      
+      // If drag was very short (< 200ms), treat as click
+      if (dragDuration < 200) {
+        setTimeout(() => restoreSidebar(), 10);
+      }
+    }
+
+    // Hover effects (only when not dragging)
+    cloudButton.addEventListener('mouseenter', () => {
+      if (!isDragging) {
+        cloudButton.style.transform = 'translate(-50%, -50%) scale(1.1)';
+        cloudButton.style.boxShadow = '0 6px 20px rgba(0, 0, 0, 0.2)';
+      }
+    });
+    
+    cloudButton.addEventListener('mouseleave', () => {
+      if (!isDragging) {
+        cloudButton.style.transform = 'translate(-50%, -50%) scale(1)';
+        cloudButton.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+      }
+    });
+
+    document.body.appendChild(cloudButton);
+    return cloudButton;
+  }
+
+  // Function to minimize sidebar
+  function minimizeSidebar() {
+    // Get sidebar position before hiding
+    const sideNavRect = sideNav.getBoundingClientRect();
+    const sidebarCenterX = sideNavRect.left + sideNavRect.width / 2;
+    const sidebarCenterY = sideNavRect.top + sideNavRect.height / 2;
+    
+    // Hide the sidebar
+    sideNav.style.display = 'none';
+    sideNav.classList.add('minimized');
+    
+    // Show cloud button at sidebar's position
+    const button = createCloudButton();
+    button.style.display = 'flex';
+    button.style.visibility = 'visible';
+    button.style.alignItems = 'center';
+    button.style.justifyContent = 'center';
+    
+    // Position cloud button where sidebar was
+    button.style.left = `${sidebarCenterX}px`;
+    button.style.top = `${sidebarCenterY}px`;
+    button.style.transform = 'translate(-50%, -50%)';
+    
+    // Save cloud button position
+    const cloudPosition = {
+      x: sidebarCenterX,
+      y: sidebarCenterY
+    };
+    localStorage.setItem('cloudButtonPosition', JSON.stringify(cloudPosition));
+    
+    // Add pulse animation
+    button.style.animation = 'pulse 2s ease-in-out 3';
+    
+    // Save minimized state
+    saveSidebarPosition(sideNav);
+  }
+
+  // Function to restore sidebar
+  function restoreSidebar() {
+    // Get cloud button position if it exists
+    if (cloudButton && cloudButton.style.display !== 'none') {
+      const cloudRect = cloudButton.getBoundingClientRect();
+      const cloudCenterX = cloudRect.left + cloudRect.width / 2;
+      const cloudCenterY = cloudRect.top + cloudRect.height / 2;
+      
+      // Position sidebar at cloud button location
+      sideNav.style.position = 'fixed';
+      sideNav.style.left = `${cloudCenterX}px`;
+      sideNav.style.top = `${cloudCenterY}px`;
+      sideNav.style.transform = 'translate(-50%, -50%)';
+      
+      // Ensure sidebar stays within viewport bounds
+      setTimeout(() => {
+        const sideNavRect = sideNav.getBoundingClientRect();
+        let adjustedX = cloudCenterX;
+        let adjustedY = cloudCenterY;
+        
+        // Adjust X position if sidebar would go off-screen
+        if (sideNavRect.left < 0) {
+          adjustedX = sideNav.offsetWidth / 2 + 10;
+        } else if (sideNavRect.right > window.innerWidth) {
+          adjustedX = window.innerWidth - sideNav.offsetWidth / 2 - 10;
+        }
+        
+        // Adjust Y position if sidebar would go off-screen
+        if (sideNavRect.top < 0) {
+          adjustedY = sideNav.offsetHeight / 2 + 10;
+        } else if (sideNavRect.bottom > window.innerHeight) {
+          adjustedY = window.innerHeight - sideNav.offsetHeight / 2 - 10;
+        }
+        
+        // Apply adjusted position
+        sideNav.style.left = `${adjustedX}px`;
+        sideNav.style.top = `${adjustedY}px`;
+        
+        // Save the new position
+        saveSidebarPosition(sideNav);
+      }, 50);
+    }
+    
+    // Show the sidebar with animation
+    sideNav.style.display = 'flex';
+    sideNav.style.opacity = '0';
+    sideNav.style.transform += ' scale(0.8)';
+    sideNav.classList.remove('minimized');
+    
+    // Animate in
+    setTimeout(() => {
+      sideNav.style.opacity = '1';
+      sideNav.style.transform = sideNav.style.transform.replace(' scale(0.8)', '');
+    }, 10);
+    
+    // Hide cloud button completely
+    if (cloudButton) {
+      cloudButton.style.display = 'none';
+      cloudButton.style.visibility = 'hidden';
+    }
+    
+    // Save restored state
+    const position = JSON.parse(localStorage.getItem('sidebarPosition') || '{}');
+    position.isMinimized = false;
+    localStorage.setItem('sidebarPosition', JSON.stringify(position));
+  }
+
+  // Function to check if sidebar overlaps with content and auto-minimize
+  function checkOverlapAndMinimize() {
+    const container = $('.container');
+    if (!container || sideNav.classList.contains('minimized')) return;
+    
+    const sideNavRect = sideNav.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    
+    // Check if they overlap (with 20px buffer)
+    const sideNavRight = sideNavRect.left + sideNavRect.width;
+    const wouldOverlap = sideNavRight + 20 > containerRect.left;
+    
+    if (wouldOverlap) {
+      minimizeSidebar();
+    }
+  }
+
+  // Add minimize button to drag handle area
+  const dragHandle = sideNav.querySelector('.side-nav-drag-handle');
+  if (dragHandle) {
+    const minimizeBtn = createElement('button', {
+      className: 'minimize-btn cloud-btn',
+      'aria-label': 'Minimize sidebar',
+      'title': 'Minimize sidebar to cloud button'
+    });
+    minimizeBtn.innerHTML = '☁️';
+    dragHandle.appendChild(minimizeBtn);
+
+    // Minimize button functionality
+    minimizeBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      minimizeSidebar();
+    });
+
+    // Double-click on drag handle to minimize
+    dragHandle.addEventListener('dblclick', () => {
+      minimizeSidebar();
+    });
+  }
+
+  // Function to ensure cloud button visibility matches sidebar state
+  function syncCloudButtonVisibility() {
+    if (!cloudButton) return;
+    
+    const sideNavVisible = sideNav.style.display === 'flex' && !sideNav.classList.contains('minimized');
+    
+    if (sideNavVisible) {
+      // Hide cloud button when sidebar is visible
+      cloudButton.style.display = 'none';
+      cloudButton.style.visibility = 'hidden';
+    } else if (sideNav.classList.contains('minimized')) {
+      // Show cloud button when sidebar is minimized
+      cloudButton.style.display = 'flex';
+      cloudButton.style.visibility = 'visible';
+    }
+  }
+
+  // Monitor sidebar visibility changes
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && 
+          (mutation.attributeName === 'style' || mutation.attributeName === 'class')) {
+        setTimeout(syncCloudButtonVisibility, 50);
+      }
+    });
+  });
+
+  observer.observe(sideNav, {
+    attributes: true,
+    attributeFilter: ['style', 'class']
+  });
+
+  // Listen for window resize to check overlap
+  window.addEventListener('resize', () => {
+    setTimeout(() => {
+      checkOverlapAndMinimize();
+      syncCloudButtonVisibility();
+    }, 100);
+  });
+
+  // Listen for minimize events
+  sideNav.addEventListener('minimize-sidebar', minimizeSidebar);
+
+  // Check overlap and sync visibility on initial load
+  setTimeout(() => {
+    checkOverlapAndMinimize();
+    syncCloudButtonVisibility();
+  }, 1000);
 }
 
 // toggleDropdown is now defined as a global function above

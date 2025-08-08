@@ -447,7 +447,9 @@ html.theme-dark #slackButton span {
   z-index: 1000;
   max-height: 85vh;
   overflow: hidden;
-  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 200px;
+  min-height: 300px;
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, transform 0.3s ease;
 }
 
 /* Drag handle for the sidebar */
@@ -1578,4 +1580,123 @@ html.theme-dark .nav-toggle-bubble.sidebar-open {
 html.theme-dark .nav-toggle-bubble.sidebar-open:hover {
   opacity: 1;
   box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+
+/* Resize handles for sidebar */
+.resize-handle {
+  position: absolute;
+  z-index: 10;
+}
+
+.resize-handle-right {
+  top: 0;
+  right: -3px;
+  width: 6px;
+  height: 100%;
+  cursor: ew-resize;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 0 4px 4px 0;
+}
+
+.resize-handle-bottom {
+  left: 0;
+  bottom: -3px;
+  width: 100%;
+  height: 6px;
+  cursor: ns-resize;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 0 0 4px 4px;
+}
+
+.resize-handle-corner {
+  right: -3px;
+  bottom: -3px;
+  width: 12px;
+  height: 12px;
+  cursor: nwse-resize;
+  background: rgba(102, 126, 234, 0.2);
+  border-radius: 0 0 4px 0;
+}
+
+/* Hover effects for resize handles */
+.resize-handle:hover {
+  background: rgba(102, 126, 234, 0.3);
+}
+
+html.theme-dark .resize-handle:hover {
+  background: rgba(139, 92, 246, 0.3);
+}
+
+/* Resizing state */
+.side-nav.resizing {
+  transition: none;
+  user-select: none;
+}
+
+/* Minimize button (cloud button) */
+.minimize-btn.cloud-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  z-index: 20;
+}
+
+.minimize-btn.cloud-btn:hover {
+  background: rgba(0, 0, 0, 0.1);
+  transform: scale(1.1);
+}
+
+html.theme-dark .minimize-btn.cloud-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Minimized sidebar state - hidden when minimized to nav toggle bubble */
+.side-nav.minimized {
+  display: none !important;
+}
+
+/* Cloud restore button styling */
+.cloud-restore-btn {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+}
+
+.cloud-restore-btn:active {
+  cursor: grabbing !important;
+}
+
+html.theme-dark .cloud-restore-btn {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%) !important;
+}
+
+html.theme-dark .cloud-restore-btn:hover {
+  box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4) !important;
+}
+
+/* Dragging state for cloud button */
+.cloud-restore-btn.dragging {
+  transition: none !important;
+  cursor: grabbing !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3) !important;
+  z-index: 1003 !important;
+}
+
+html.theme-dark .cloud-restore-btn.dragging {
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4) !important;
 }
