@@ -134,21 +134,11 @@
 
       <section id="intro">
         <h2>Introduction</h2>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >A game like chess can be won only by thinking ahead: a player
-                who is focused entirely on immediate advantage is easy to
-                defeat. But in many other games, such as Scrabble, it is
-                possible to do quite well by simply making whichever move seems
-                best at the moment and not worrying too much about future
-                consequences.</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >A game like chess can be won only by thinking ahead: a player who is focused entirely on immediate advantage is easy to defeat. But in many other games, such as Scrabble, it is possible to do quite well by simply making whichever move seems best at the moment and not worrying too much about future consequences.</em >
+        </blockquote>
+        
+        <p>
               This chapter introduces a powerful and intuitive algorithmic
               strategy: the <strong>greedy algorithm</strong>. The opening
               paragraph uses a great analogy to explain the core concept. Some
@@ -158,24 +148,11 @@
               word you can find right now is often a very good strategy. Greedy
               algorithms operate like that Scrabble player.
             </p>
-          </div>
-        </div>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >This sort of myopic behavior is easy and convenient, making it
-                an attractive algorithmic strategy. Greedy algorithms build up a
-                solution piece by piece, always choosing the next piece that
-                offers the most obvious and immediate benefit. Although such an
-                approach can be disastrous for some computational tasks, there
-                are many for which it is optimal. Our first example is that of
-                minimum spanning trees.</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >This sort of myopic behavior is easy and convenient, making it an attractive algorithmic strategy. Greedy algorithms build up a solution piece by piece, always choosing the next piece that offers the most obvious and immediate benefit. Although such an approach can be disastrous for some computational tasks, there are many for which it is optimal. Our first example is that of minimum spanning trees.</em >
+        </blockquote>
+        
+        <p>
               A greedy algorithm builds a solution step-by-step. At each step,
               it makes a "myopic" choice—the one that seems best at that exact
               moment, without considering the future consequences. This "take
@@ -185,30 +162,17 @@
               important problems where it surprisingly leads to the perfect,
               optimal solution.
             </p>
-          </div>
-        </div>
       </section>
 
       <hr />
 
       <section id="mst">
         <h2>5.1 Minimum Spanning Trees</h2>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >Suppose you are asked to network a collection of computers by
-                linking selected pairs of them. This translates into a graph
-                problem in which nodes are computers, undirected edges are
-                potential links, and the goal is to pick enough of these edges
-                that the nodes are connected. But this is not all; each link
-                also has a maintenance cost, reflected in that edge’s weight.
-                What is the cheapest possible network?</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >Suppose you are asked to network a collection of computers by linking selected pairs of them. This translates into a graph problem in which nodes are computers, undirected edges are potential links, and the goal is to pick enough of these edges that the nodes are connected. But this is not all; each link also has a maintenance cost, reflected in that edge’s weight. What is the cheapest possible network?</em >
+        </blockquote>
+        
+        <p>
               Let's start with a classic problem that feels very practical.
               Imagine you need to connect a set of computers (or houses, or
               cities) with physical cables. Each potential connection has a
@@ -218,24 +182,11 @@
               <strong>Minimum Spanning Tree (MST)</strong> problem, a perfect
               candidate for a greedy approach.
             </p>
-          </div>
-        </div>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >One immediate observation is that the optimal set of edges
-                cannot contain a cycle, because removing an edge from this cycle
-                would reduce the cost without compromising connectivity... So
-                the solution must be connected and acyclic: undirected graphs of
-                this kind are called trees. The particular tree we want is the
-                one with minimum total weight, known as the minimum spanning
-                tree.</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >One immediate observation is that the optimal set of edges cannot contain a cycle, because removing an edge from this cycle would reduce the cost without compromising connectivity... So the solution must be connected and acyclic: undirected graphs of this kind are called trees. The particular tree we want is the one with minimum total weight, known as the minimum spanning tree.</em >
+        </blockquote>
+        
+        <p>
               Right away, we can establish a rule: the cheapest network will
               never contain a cycle (like a path from computer A to B to C and
               back to A). Why? Because you could always remove one edge from the
@@ -245,31 +196,17 @@
               tree that "spans" (connects) all the nodes and has the minimum
               possible total edge weight.
             </p>
-          </div>
-        </div>
       </section>
 
       <hr />
 
       <section id="greedy-approach">
         <h3>5.1.1 A greedy approach</h3>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >Kruskal’s minimum spanning tree algorithm starts with the empty
-                graph and then selects edges from E according to the following
-                rule. Repeatedly add the next lightest edge that doesn’t produce
-                a cycle. In other words, it constructs the tree edge by edge
-                and, apart from taking care to avoid cycles, simply picks
-                whichever edge is cheapest at the moment. This is a greedy
-                algorithm: every decision it makes is the one with the most
-                obvious immediate advantage.</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >Kruskal’s minimum spanning tree algorithm starts with the empty graph and then selects edges from E according to the following rule. Repeatedly add the next lightest edge that doesn’t produce a cycle. In other words, it constructs the tree edge by edge and, apart from taking care to avoid cycles, simply picks whichever edge is cheapest at the moment. This is a greedy algorithm: every decision it makes is the one with the most obvious immediate advantage.</em >
+        </blockquote>
+        
+        <p>
               One famous greedy algorithm for MST is
               <strong>Kruskal's algorithm</strong>. Its strategy is incredibly
               simple. First, sort all possible connections (edges) from cheapest
@@ -280,25 +217,11 @@
               you pick the cheapest option available that doesn't mess things
               up.
             </p>
-          </div>
-        </div>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >Figure 5.1 shows an example. We start with an empty graph and
-                then attempt to add edges in increasing order of weight (ties
-                are broken arbitrarily)... The first two succeed, but the third,
-                B − D, would produce a cycle if added. So we ignore it and move
-                along. The final result is a tree with cost 14, the minimum
-                possible. The correctness of Kruskal’s method follows from a
-                certain cut property, which is general enough to also justify a
-                whole slew of other minimum spanning tree algorithms.</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >Figure 5.1 shows an example. We start with an empty graph and then attempt to add edges in increasing order of weight (ties are broken arbitrarily)... The first two succeed, but the third, B − D, would produce a cycle if added. So we ignore it and move along. The final result is a tree with cost 14, the minimum possible. The correctness of Kruskal’s method follows from a certain cut property, which is general enough to also justify a whole slew of other minimum spanning tree algorithms.</em >
+        </blockquote>
+        
+        <p>
               Walking through an example makes Kruskal's algorithm clear. As you
               add the cheapest edges one by one, you'll eventually try to add an
               edge that connects two nodes already in the same connected group,
@@ -308,31 +231,17 @@
               The reason *why* it works is due to a fundamental principle called
               the "cut property," which we'll see next.
             </p>
-          </div>
-        </div>
       </section>
 
       <hr />
 
       <section id="cut-property">
         <h3>5.1.2 The cut property</h3>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >Say that in the process of building a minimum spanning tree
-                (MST), we have already chosen some edges and are so far on the
-                right track. Which edge should we add next? The following lemma
-                gives us a lot of flexibility in our choice. Cut property
-                Suppose edges X are part of a minimum spanning tree of G = (V,
-                E). Pick any subset of nodes S for which X does not cross
-                between S and V − S, and let e be the lightest edge across this
-                partition. Then X ∪ {e} is part of some MST.</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >Say that in the process of building a minimum spanning tree (MST), we have already chosen some edges and are so far on the right track. Which edge should we add next? The following lemma gives us a lot of flexibility in our choice. Cut property Suppose edges X are part of a minimum spanning tree of G = (V, E). Pick any subset of nodes S for which X does not cross between S and V − S, and let e be the lightest edge across this partition. Then X ∪ {e} is part of some MST.</em >
+        </blockquote>
+        
+        <p>
               The <strong>cut property</strong> is the theoretical backbone for
               greedy MST algorithms. Imagine you divide all the nodes in your
               graph into two teams, Group S and Group V-S (this is called a
@@ -342,24 +251,11 @@
               spanning tree. This is a powerful, universal rule for safely
               adding an edge to your growing MST.
             </p>
-          </div>
-        </div>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >Let’s see why this holds. Edges X are part of some MST T; if
-                the new edge e also happens to be part of T, then there is
-                nothing to prove. So assume e is not in T. We will construct a
-                different MST T′ containing X ∪ {e} by altering T slightly,
-                changing just one of its edges... If we now remove this edge, we
-                are left with T′ = T ∪ {e} − {e′}, which we will show to be a
-                tree. ... Moreover, T′ is a minimum spanning tree.</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >Let’s see why this holds. Edges X are part of some MST T; if the new edge e also happens to be part of T, then there is nothing to prove. So assume e is not in T. We will construct a different MST T′ containing X ∪ {e} by altering T slightly, changing just one of its edges... If we now remove this edge, we are left with T′ = T ∪ {e} − {e′}, which we will show to be a tree. ... Moreover, T′ is a minimum spanning tree.</em >
+        </blockquote>
+        
+        <p>
               Why is the cut property true? The proof is a classic "exchange
               argument." Suppose some MST (call it T) *doesn't* include the
               cheapest crossing edge, `e`. If you add `e` to T, you create a
@@ -370,32 +266,17 @@
               cheaper. Therefore, it's always safe to include the lightest edge
               across any cut.
             </p>
-          </div>
-        </div>
       </section>
 
       <hr />
 
       <section id="kruskal-prim">
         <h3>5.1.3 Kruskal’s Algorithm and 5.1.5 Prim's Algorithm</h3>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >We are ready to justify Kruskal’s algorithm...The next edge e
-                to be added connects two of these components; call them T1 and
-                T2. Since e is the lightest edge that doesn’t produce a cycle,
-                it is certain to be the lightest edge between T1 and V − T1 and
-                therefore satisfies the cut property... At each stage, the
-                algorithm needs to test each candidate edge u − v to see whether
-                the endpoints u and v lie in different components... And once an
-                edge is chosen, the corresponding components need to be merged.
-                What kind of data structure supports such operations?</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >We are ready to justify Kruskal’s algorithm...The next edge e to be added connects two of these components; call them T1 and T2. Since e is the lightest edge that doesn’t produce a cycle, it is certain to be the lightest edge between T1 and V − T1 and therefore satisfies the cut property... At each stage, the algorithm needs to test each candidate edge u − v to see whether the endpoints u and v lie in different components... And once an edge is chosen, the corresponding components need to be merged. What kind of data structure supports such operations?</em >
+        </blockquote>
+        
+        <p>
               Kruskal's algorithm works because it perfectly follows the cut
               property. At each step, the graph consists of several disconnected
               "islands" of nodes. The algorithm picks the cheapest edge overall
@@ -407,24 +288,11 @@
               structure—that can quickly tell us if two nodes are in the same
               island (`find`) and merge two islands into one (`union`).
             </p>
-          </div>
-        </div>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >A popular alternative to Kruskal’s algorithm is Prim’s, in
-                which the intermediate set of edges X always forms a subtree,
-                and S is chosen to be the set of this tree’s vertices... On each
-                iteration, the subtree defined by X grows by one edge, namely,
-                the lightest edge between a vertex in S and a vertex outside S.
-                ... This is strongly reminiscent of Dijkstra’s algorithm, and in
-                fact the pseudocode (Figure 5.9) is almost identical.</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >A popular alternative to Kruskal’s algorithm is Prim’s, in which the intermediate set of edges X always forms a subtree, and S is chosen to be the set of this tree’s vertices... On each iteration, the subtree defined by X grows by one edge, namely, the lightest edge between a vertex in S and a vertex outside S. ... This is strongly reminiscent of Dijkstra’s algorithm, and in fact the pseudocode (Figure 5.9) is almost identical.</em >
+        </blockquote>
+        
+        <p>
               <strong>Prim's algorithm</strong> is another greedy approach that
               also relies on the cut property. But instead of building a forest
               of components like Kruskal's, Prim's grows a single tree. It
@@ -435,29 +303,17 @@
               shortest path algorithm; the key difference is that it prioritizes
               the next cheapest *edge*, not the next shortest *path*.
             </p>
-          </div>
-        </div>
       </section>
 
       <hr />
 
       <section id="huffman">
         <h2>5.2 Huffman Encoding</h2>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >In the MP3 audio compression scheme, a sound signal is
-                encoded... The resulting string of length T over alphabet Γ is
-                encoded in binary. It is in the last step that Huffman encoding
-                is used... What is the most economical way to write this long
-                string in binary? The obvious choice is to use 2 bits per
-                symbol... Can there possibly be a better encoding than this?</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >In the MP3 audio compression scheme, a sound signal is encoded... The resulting string of length T over alphabet Γ is encoded in binary. It is in the last step that Huffman encoding is used... What is the most economical way to write this long string in binary? The obvious choice is to use 2 bits per symbol... Can there possibly be a better encoding than this?</em >
+        </blockquote>
+        
+        <p>
               Now we switch from graphs to data compression. Imagine you have a
               long text file. The letter 'e' appears much more often than the
               letter 'z'. A standard encoding scheme, like ASCII, uses 8 bits
@@ -468,25 +324,11 @@
               characters and longer codes for rare ones, dramatically reducing
               the total file size.
             </p>
-          </div>
-        </div>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >Any prefix-free encoding can be represented by a full binary
-                tree... the two symbols with the smallest frequencies must be at
-                the bottom of the optimal tree, as children of the lowest
-                internal node... This suggests that we start constructing the
-                tree greedily: find the two symbols with the smallest
-                frequencies, say i and j, and make them children of a new node,
-                which then has frequency fi + fj . ... So we pull f1 and f2 off
-                the list of frequencies, insert (f1 + f2), and loop.</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >Any prefix-free encoding can be represented by a full binary tree... the two symbols with the smallest frequencies must be at the bottom of the optimal tree, as children of the lowest internal node... This suggests that we start constructing the tree greedily: find the two symbols with the smallest frequencies, say i and j, and make them children of a new node, which then has frequency fi + fj . ... So we pull f1 and f2 off the list of frequencies, insert (f1 + f2), and loop.</em >
+        </blockquote>
+        
+        <p>
               The algorithm's genius lies in its greedy strategy for building an
               optimal code tree from the bottom up. The core insight is that the
               two least frequent symbols should have the longest codewords and
@@ -499,32 +341,17 @@
               perfect data structure for efficiently finding the two smallest
               items at each step.
             </p>
-          </div>
-        </div>
       </section>
 
       <hr />
 
       <section id="horn">
         <h2>5.3 Horn Formulas</h2>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >Horn formulas are a particular framework for... expressing
-                logical facts and deriving conclusions. The most primitive
-                object in a Horn formula is a Boolean variable, taking value
-                either true or false... In Horn formulas, knowledge about
-                variables is represented by two kinds of clauses: Implications
-                ... and Pure negative clauses... Given a set of clauses of these
-                two types, the goal is to determine whether there is a
-                consistent explanation: an assignment of true/false values to
-                the variables that satisfies all the clauses.</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >Horn formulas are a particular framework for... expressing logical facts and deriving conclusions. The most primitive object in a Horn formula is a Boolean variable, taking value either true or false... In Horn formulas, knowledge about variables is represented by two kinds of clauses: Implications ... and Pure negative clauses... Given a set of clauses of these two types, the goal is to determine whether there is a consistent explanation: an assignment of true/false values to the variables that satisfies all the clauses.</em >
+        </blockquote>
+        
+        <p>
               This section applies the greedy mindset to a problem in logic. A
               <strong>Horn formula</strong> is a special set of logical rules.
               These rules come in two flavors: 1) simple "if-then" statements,
@@ -533,23 +360,11 @@
               false." The overall problem is to find a `true/false` assignment
               for all variables that doesn't violate any of these rules.
             </p>
-          </div>
-        </div>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >our algorithm for Horn clauses is the following greedy scheme
-                (stingy is perhaps more descriptive): set all variables to
-                false, while there is an implication that is not satisfied: set
-                the right-hand variable of the implication to true, if all pure
-                negative clauses are satisfied: return the assignment, else:
-                return ‘‘formula is not satisfiable’’</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >our algorithm for Horn clauses is the following greedy scheme (stingy is perhaps more descriptive): set all variables to false, while there is an implication that is not satisfied: set the right-hand variable of the implication to true, if all pure negative clauses are satisfied: return the assignment, else: return ‘‘formula is not satisfiable’’</em >
+        </blockquote>
+        
+        <p>
               The greedy algorithm for this is beautifully simple and can be
               described as "stingy." It starts by assuming every variable is
               <code>false</code>. It only flips a variable to
@@ -562,28 +377,17 @@
               found. This remarkably efficient process is at the core of logic
               programming languages like Prolog.
             </p>
-          </div>
-        </div>
       </section>
 
       <hr />
 
       <section id="set-cover">
         <h2>5.4 Set Cover</h2>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >The dots in Figure 5.11 represent a collection of towns...
-                There are only two constraints: each school should be in a town,
-                and no one should have to travel more than 30 miles to reach one
-                of them. What is the minimum number of schools needed? This is a
-                typical set cover problem.</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >The dots in Figure 5.11 represent a collection of towns... There are only two constraints: each school should be in a town, and no one should have to travel more than 30 miles to reach one of them. What is the minimum number of schools needed? This is a typical set cover problem.</em >
+        </blockquote>
+        
+        <p>
               The final section introduces a famous and difficult problem called
               <strong>Set Cover</strong>. The school placement example makes it
               easy to grasp: you have a universe of items to be "covered" (the
@@ -594,24 +398,11 @@
               there is no known efficient algorithm that guarantees a perfect
               solution for Set Cover.
             </p>
-          </div>
-        </div>
-        <div class="explanation-block">
-          <div class="original-text-container">
-            <p class="original-text">
-              <em
-                >This problem lends itself immediately to a greedy solution:
-                Repeat until all elements of B are covered: Pick the set Si with
-                the largest number of uncovered elements... The greedy scheme is
-                not optimal! But luckily, it isn’t too far from optimal. Claim:
-                Suppose B contains n elements and that the optimal cover
-                consists of k sets. Then the greedy algorithm will use at most k
-                ln n sets.</em
-              >
-            </p>
-          </div>
-          <div class="explanation-text">
-            <p>
+        <blockquote>
+          <em >This problem lends itself immediately to a greedy solution: Repeat until all elements of B are covered: Pick the set Si with the largest number of uncovered elements... The greedy scheme is not optimal! But luckily, it isn’t too far from optimal. Claim: Suppose B contains n elements and that the optimal cover consists of k sets. Then the greedy algorithm will use at most k ln n sets.</em >
+        </blockquote>
+        
+        <p>
               The most natural greedy strategy for Set Cover is to, at each
               step, choose the set that covers the largest number of currently
               uncovered items. It's a "most bang for your buck" approach. The
@@ -624,8 +415,6 @@
               items to cover. For many hard problems, a provably good (but not
               perfect) approximation is the best we can hope for.
             </p>
-          </div>
-        </div>
       </section>
 
       <section id="comments">

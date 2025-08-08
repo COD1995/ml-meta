@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Content Templates - ML Meta</title>
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/chapters.css">
+    <script type="module" src="../assets/js/components.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Content Template Examples</h1>
+        
+        <h2>Method 1: Simple Blockquote (Easiest)</h2>
+        <blockquote>
+            Backpropagation is the algorithm that computes gradients for
+            each weight in the network by applying the chain rule of
+            calculus. It allows us to efficiently calculate how much each
+            weight contributed to the overall error.
+        </blockquote>
+        
+        <h2>Method 2: Blockquote with Citation</h2>
+        <blockquote>
+            The key idea is to propagate the error backward through the network,
+            layer by layer, adjusting weights based on their contribution to the error.
+            <cite>Geoffrey Hinton</cite>
+        </blockquote>
+        
+        <h2>Method 3: Note Blocks</h2>
+        <div class="note note-info">
+            <span class="note-icon">ℹ️</span>
+            <div class="note-content">
+                This is an informational note about backpropagation.
+            </div>
+        </div>
+        
+        <div class="note note-tip">
+            <span class="note-icon">💡</span>
+            <div class="note-content">
+                <strong>Pro Tip:</strong> Use gradient clipping to prevent exploding gradients during backpropagation.
+            </div>
+        </div>
+        
+        <div class="note note-warning">
+            <span class="note-icon">⚠️</span>
+            <div class="note-content">
+                Be careful with vanishing gradients in deep networks.
+            </div>
+        </div>
+        
+        <h2>Method 4: Using JavaScript Components</h2>
+        <div id="dynamic-content"></div>
+        
+        <script type="module">
+            // Once the components are loaded
+            window.addEventListener('DOMContentLoaded', () => {
+                const container = document.getElementById('dynamic-content');
+                
+                // Create a quote block
+                const quote = window.MLComponents.createQuote(
+                    "Neural networks are the second best way to do almost anything.",
+                    "Someone at Google"
+                );
+                
+                // Create a note
+                const note = window.MLComponents.createNote(
+                    "This content was generated dynamically using JavaScript components.",
+                    "success"
+                );
+                
+                container.innerHTML = quote + note;
+            });
+        </script>
+        
+        <h2>Method 5: Markdown-like Syntax (Future)</h2>
+        <pre><code>
+> This would be converted to a blockquote automatically
+
+[!NOTE]
+This would become a note block
+
+[!WARNING]
+This would become a warning block
+        </code></pre>
+    </div>
+</body>
+</html>

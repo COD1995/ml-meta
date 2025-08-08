@@ -10,23 +10,35 @@
     <link rel="stylesheet" href="../../../assets/css/chapters.css" />
 
     <!-- Library styles -->
-    <link rel="stylesheet"
-          href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css" />
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
+    />
 
     <!-- MathJax global config (must come BEFORE MathJax) -->
     <script src="../../../assets/js/mathjax-config.js"></script>
 
     <!-- Library scripts (deferred) -->
-    <script defer
-            src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script defer
-            src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"></script>
-    <script defer
-            src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"></script>
-    <script defer
-            src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/highlight.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/highlightjs-line-numbers.js@2.8.0/dist/highlightjs-line-numbers.min.js"
+    ></script>
   </head>
 
   <body>
@@ -34,7 +46,7 @@
     <div id="reading-progress">
       <div id="reading-progress-bar"></div>
     </div>
-    
+
     <nav class="side-nav">
       <div class="side-nav-controls">
         <button
@@ -71,9 +83,18 @@
           rel="noopener noreferrer"
           aria-label="Support ML-Meta on Buy Me a Coffee"
         >
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M20 3H4V5H20V3Z" fill="currentColor"/>
-            <path d="M20 7H4C2.9 7 2 7.9 2 9V17C2 18.1 2.9 19 4 19H10C11.1 19 12 18.1 12 17V16H16C18.2 16 20 14.2 20 12V9C20 7.9 19.1 7 18 7H20Z" fill="currentColor"/>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M20 3H4V5H20V3Z" fill="currentColor" />
+            <path
+              d="M20 7H4C2.9 7 2 7.9 2 9V17C2 18.1 2.9 19 4 19H10C11.1 19 12 18.1 12 17V16H16C18.2 16 20 14.2 20 12V9C20 7.9 19.1 7 18 7H20Z"
+              fill="currentColor"
+            />
           </svg>
           <span>Support Us</span>
         </a>
@@ -118,674 +139,539 @@
       </div>
     </nav>
     <div class="container content">
+      <h1>Chapter 6: Dynamic Programming</h1>
 
-        <h1>Chapter 6: Dynamic Programming</h1>
+      <section id="recap-shortest-path-dags">
+        <blockquote>
+          The Sledgehammers of Algorithm Design
+          <em
+            >In the preceding chapters we have seen some elegant design
+            principles-such as divide-andconquer, graph exploration, and greedy
+            choice-that yield definitive algorithms for a variety of important
+            computational tasks. The drawback of these tools is that they can
+            only be used on very specific types of problems. We now turn to the
+            two sledgehammers of the algorithms craft, dynamic programming and
+            linear programming, techniques of very broad applicability that can
+            be invoked when more specialized methods fail. Predictably, this
+            generality often comes with a cost in efficiency.</em
+          >
+        </blockquote>
 
-        <section id="recap-shortest-path-dags">
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p><strong>The Sledgehammers of Algorithm Design</strong></p>
-              <p class="original-text">
-                <em
-                  >In the preceding chapters we have seen some elegant design
-                  principles-such as divide-andconquer, graph exploration, and
-                  greedy choice-that yield definitive algorithms for a variety
-                  of important computational tasks. The drawback of these tools
-                  is that they can only be used on very specific types of
-                  problems. We now turn to the two sledgehammers of the
-                  algorithms craft, dynamic programming and linear programming,
-                  techniques of very broad applicability that can be invoked
-                  when more specialized methods fail. Predictably, this
-                  generality often comes with a cost in efficiency.</em
-                >
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                This paragraph introduces
-                <strong>dynamic programming</strong> (DP) and
-                <strong>linear programming</strong> as powerful, general-purpose
-                problem-solving techniques. It contrasts them with more
-                specialized methods like greedy algorithms or
-                divide-and-conquer, which are elegant but only work for specific
-                problem structures. Dynamic programming is presented as a
-                "sledgehammer"—a versatile and powerful tool that can solve a
-                very wide range of problems, especially when other methods fail.
-              </p>
-            </div>
-          </div>
-        </section>
+        <p>
+          This paragraph introduces
+          <strong>dynamic programming</strong> (DP) and
+          <strong>linear programming</strong> as powerful, general-purpose
+          problem-solving techniques. It contrasts them with more specialized
+          methods like greedy algorithms or divide-and-conquer, which are
+          elegant but only work for specific problem structures. Dynamic
+          programming is presented as a "sledgehammer"—a versatile and powerful
+          tool that can solve a very wide range of problems, especially when
+          other methods fail.
+        </p>
+      </section>
 
-        <section id="shortest-paths-in-dags">
-          <h2>6.1 Shortest paths in dags, revisited</h2>
+      <section id="shortest-paths-in-dags">
+        <h2>6.1 Shortest paths in dags, revisited</h2>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p><strong>A Familiar Problem: Shortest Paths in DAGs</strong></p>
-              <p class="original-text">
-                <em
-                  >At the conclusion of our study of shortest paths (Chapter 4),
-                  we observed that the problem is especially easy in directed
-                  acyclic graphs (dags). Let's recapitulate this case, because
-                  it lies at the heart of dynamic programming.</em
-                >
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                This paragraph sets the stage by revisiting a problem that is
-                easy to solve: finding the shortest path in a
-                <strong>Directed Acyclic Graph (DAG)</strong>. The text
-                highlights that the solution to this specific problem contains
-                the core logic that defines the entire paradigm of dynamic
-                programming.
-              </p>
-            </div>
-          </div>
+        <blockquote>
+          A Familiar Problem: Shortest Paths in DAGs
+          <em
+            >At the conclusion of our study of shortest paths (Chapter 4), we
+            observed that the problem is especially easy in directed acyclic
+            graphs (dags). Let's recapitulate this case, because it lies at the
+            heart of dynamic programming.</em
+          >
+        </blockquote>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p><strong>The Key Property of a DAG: Linearization</strong></p>
-              <p class="original-text">
-                <em
-                  >The special distinguishing feature of a dag is that its nodes
-                  can be linearized; that is, they can be arranged on a line so
-                  that all edges go from left to right (Figure 6.1). To see why
-                  this helps with shortest paths, suppose we want to figure out
-                  distances from node $S$ to the other nodes. For concreteness,
-                  let's focus on node $D$. The only way to get to it is through
-                  its predecessors, $B$ or $C$; so to find the shortest path to
-                  $D$, we need only compare these two routes:</em
-                >
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                The key feature of a DAG that makes it easy to work with is that
-                it has no cycles. This means its vertices can be
-                <strong>linearized</strong> (also known as being topologically
-                sorted)—arranged in a straight line such that all directed edges
-                only point from left to right. This ordering is fundamental
-                because it guarantees that by the time you process any node, you
-                have <em>already</em> processed all the nodes that could
-                possibly lead to it.
-              </p>
-            </div>
-          </div>
+        <p>
+          This paragraph sets the stage by revisiting a problem that is easy to
+          solve: finding the shortest path in a
+          <strong>Directed Acyclic Graph (DAG)</strong>. The text highlights
+          that the solution to this specific problem contains the core logic
+          that defines the entire paradigm of dynamic programming.
+        </p>
 
-          <figure>
-            <img
-              src="../../../assets/images/algorithms/chpt_6_imgs/figure-6-1.png"
-              alt="A DAG and its topological ordering."
-              width="700"
-            />
-            <figcaption>
-              Figure 6.1: A dag and its linearization (topological ordering).
-            </figcaption>
-          </figure>
+        <blockquote>
+          The Key Property of a DAG: Linearization
+          <em
+            >The special distinguishing feature of a dag is that its nodes can
+            be linearized; that is, they can be arranged on a line so that all
+            edges go from left to right (Figure 6.1). To see why this helps with
+            shortest paths, suppose we want to figure out distances from node
+            $S$ to the other nodes. For concreteness, let's focus on node $D$.
+            The only way to get to it is through its predecessors, $B$ or $C$;
+            so to find the shortest path to $D$, we need only compare these two
+            routes:</em
+          >
+        </blockquote>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p><strong>The Recurrence Relation</strong></p>
-              <p class="original-text">
-                <em
-                  >$$ \operatorname{dist}(D)=\min \{\operatorname{dist}(B)+1,
-                  \operatorname{dist}(C)+3\} . $$ A similar relation can be
-                  written for every node. If we compute these dist values in the
-                  left-to-right order of Figure 6.1, we can always be sure that
-                  by the time we get to a node $v$, we already have all the
-                  information we need to compute dist $(v)$. We are therefore
-                  able to compute all distances in a single pass:</em
-                >
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                This section provides the core mathematical relationship, or
-                <strong>recurrence relation</strong>, for this problem. The
-                shortest path to any node <code>D</code> must pass through one
-                of its immediate predecessors (<code>B</code> or
-                <code>C</code> in the example). Therefore, we only need to
-                compare the path lengths of those incoming routes:
-              </p>
-              <ul>
-                <li>Path through B: <code>dist(B) + length(B, D)</code></li>
-                <li>Path through C: <code>dist(C) + length(C, D)</code></li>
-              </ul>
-              <p>
-                We take the minimum of these options. Because we process the
-                nodes in their linearized order, we are guaranteed to have
-                already calculated the final values for <code>dist(B)</code> and
-                <code>dist(C)</code> by the time we get to <code>D</code>.
-              </p>
-            </div>
-          </div>
+        <p>
+          The key feature of a DAG that makes it easy to work with is that it
+          has no cycles. This means its vertices can be
+          <strong>linearized</strong> (also known as being topologically
+          sorted)—arranged in a straight line such that all directed edges only
+          point from left to right. This ordering is fundamental because it
+          guarantees that by the time you process any node, you have
+          <em>already</em> processed all the nodes that could possibly lead to
+          it.
+        </p>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p><strong>The Single-Pass Algorithm</strong></p>
-              <pre class="pseudocode" id="dag-shortest-path">
-                \begin{algorithm}
-                    \caption{Shortest paths in a dag.}
-                    \begin{algorithmic}
-                        \State initialize all $dist(\cdot)$ values to $\infty$
-                        \State $dist(s) \gets 0$
-                        \For{each $v \in V \setminus \{s\}$, in linearized order}
-                            \State $dist(v) \gets \min_{(u,v) \in E} \{dist(u) + l(u,v)\}$
-                        \EndFor
-                    \end{algorithmic}
-                \end{algorithm}
-                </pre
-              >
-            </div>
-            <div class="explanation-text">
-              <p>
-                This pseudocode shows the complete algorithm. It works in a
-                single pass through the topologically sorted vertices:
-              </p>
-              <ol>
-                <li>
-                  Initialize all distances to infinity, except for the start
-                  node <code>s</code>, which is 0.
-                </li>
-                <li>
-                  Go through the vertices one by one according to their
-                  linearized order.
-                </li>
-                <li>
-                  For each vertex <code>v</code>, calculate its shortest
-                  distance by applying the `min` formula, using the
-                  already-computed `dist` values of its predecessors.
-                </li>
-              </ol>
-            </div>
-          </div>
+        <figure>
+          <img
+            src="../../../assets/images/algorithms/chpt_6_imgs/figure-6-1.png"
+            alt="A DAG and its topological ordering."
+            width="700"
+          />
+          <figcaption>
+            Figure 6.1: A dag and its linearization (topological ordering).
+          </figcaption>
+        </figure>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p><strong>Solving Subproblems in Order</strong></p>
-              <p class="original-text">
-                <em
-                  >Notice that this algorithm is solving a collection of
-                  subproblems, $\{\operatorname{dist}(u): u \in V\}$. We start
-                  with the smallest of them, dist $(s)$, since we immediately
-                  know its answer to be 0. We then proceed with progressively
-                  "larger" subproblems-distances to vertices that are further
-                  and further along in the linearization...</em
-                >
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                This paragraph explicitly connects the algorithm to the core
-                idea of dynamic programming. The main problem ("find all
-                shortest paths") is broken down into a collection of smaller
-                <strong>subproblems</strong>, where each subproblem is: "what is
-                the shortest distance to node <code>u</code>?". The algorithm
-                solves these subproblems one by one in a specific order (the
-                linearized order), starting with the smallest subproblem
-                (<code>dist(s)</code>) and using its answer to help solve the
-                next ones.
-              </p>
-            </div>
-          </div>
+        <blockquote>
+          The Recurrence Relation
+          <em
+            >$$ \operatorname{dist}(D)=\min \{\operatorname{dist}(B)+1,
+            \operatorname{dist}(C)+3\} . $$ A similar relation can be written
+            for every node. If we compute these dist values in the left-to-right
+            order of Figure 6.1, we can always be sure that by the time we get
+            to a node $v$, we already have all the information we need to
+            compute dist $(v)$. We are therefore able to compute all distances
+            in a single pass:</em
+          >
+        </blockquote>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p><strong>A General Technique</strong></p>
-              <p class="original-text">
-                <em
-                  >This is a very general technique. At each node, we compute
-                  some function of the values of the node's predecessors. It so
-                  happens that our particular function is a minimum of sums, but
-                  we could just as well make it a maximum, in which case we
-                  would get longest paths in the dag. Or we could use a product
-                  instead of a sum...</em
-                >
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                This paragraph highlights the flexibility of the dynamic
-                programming framework. The same fundamental algorithm
-                (traversing a DAG in linear order and applying a recurrence at
-                each node) can solve many different problems simply by changing
-                the function being computed. Instead of a `min` of `sums` for
-                shortest paths, you could use a `max` of `sums` to find longest
-                paths, or a `product` to find something else entirely.
-              </p>
-            </div>
-          </div>
+        <p>
+          This section provides the core mathematical relationship, or
+          <strong>recurrence relation</strong>, for this problem. The shortest
+          path to any node <code>D</code> must pass through one of its immediate
+          predecessors (<code>B</code> or <code>C</code> in the example).
+          Therefore, we only need to compare the path lengths of those incoming
+          routes:
+        </p>
+        <ul>
+          <li>Path through B: <code>dist(B) + length(B, D)</code></li>
+          <li>Path through C: <code>dist(C) + length(C, D)</code></li>
+        </ul>
+        <p>
+          We take the minimum of these options. Because we process the nodes in
+          their linearized order, we are guaranteed to have already calculated
+          the final values for <code>dist(B)</code> and <code>dist(C)</code> by
+          the time we get to <code>D</code>.
+        </p>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p><strong>What is Dynamic Programming?</strong></p>
-              <p class="original-text">
-                <em
-                  >Dynamic programming is a very powerful algorithmic paradigm
-                  in which a problem is solved by identifying a collection of
-                  subproblems and tackling them one by one, smallest first,
-                  using the answers to small problems to help figure out larger
-                  ones... In dynamic programming we are not given a dag; the dag
-                  is implicit. Its nodes are the subproblems we define, and its
-                  edges are the dependencies between the subproblems...</em
-                >
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                This is the central definition of
-                <strong>dynamic programming</strong>. It is a technique built on
-                three key ideas:
-              </p>
-              <ol>
-                <li>
-                  <strong>Break the problem into subproblems:</strong> The first
-                  step is to define the smaller pieces of the problem (e.g.,
-                  `dist(u)`).
-                </li>
-                <li>
-                  <strong>Solve subproblems in order:</strong> You must solve
-                  them from "smallest" to "largest," so that answers to
-                  dependencies are always ready when you need them.
-                </li>
-                <li>
-                  <strong>Store and reuse solutions:</strong> Solutions to
-                  smaller subproblems are stored and used to build up solutions
-                  to larger ones.
-                </li>
-              </ol>
-              <p>
-                The paragraph makes a beautiful point: for most DP problems, the
-                DAG isn't given to you—it's an **implicit** structure where the
-                nodes are the subproblems and the edges are their dependencies.
-                Dynamic programming is the process of solving the subproblems in
-                the correct topological order of this implicit DAG.
-              </p>
-            </div>
-          </div>
+        <blockquote>
+          The Single-Pass Algorithm
+          <pre class="pseudocode">
+            \begin{algorithm}
+            \caption{Shortest paths in a dag.}
+            \begin{algorithmic}
+              \State initialize all $dist(\cdot)$ values to $\infty$
+              \State $dist(s) \gets 0$
+              \For{each $v \in V \setminus \{s\}$, in linearized order}
+                \State $dist(v) \gets \min_{(u,v) \in E} \{dist(u) + l(u,v)\}$
+              \EndFor
+            \end{algorithmic}
+            \end{algorithm}
+          </pre>
+        </blockquote>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p><strong>On to an Example</strong></p>
-              <p class="original-text">
-                <em>But it's time we saw an example.</em>
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                This is a transition, indicating that the text will now move
-                from the abstract definition of dynamic programming to a
-                concrete example to illustrate how these ideas are applied in
-                practice.
-              </p>
-            </div>
-          </div>
-        </section>
+        <p>
+          This pseudocode shows the complete algorithm. It works in a single
+          pass through the topologically sorted vertices:
+        </p>
+        <ol>
+          <li>
+            Initialize all distances to infinity, except for the start node
+            <code>s</code>, which is 0.
+          </li>
+          <li>
+            Go through the vertices one by one according to their linearized
+            order.
+          </li>
+          <li>
+            For each vertex <code>v</code>, calculate its shortest distance by
+            applying the `min` formula, using the already-computed `dist` values
+            of its predecessors.
+          </li>
+        </ol>
 
-        <section id="longest-increasing-subsequences">
-          <h2>6.2 Longest increasing subsequences</h2>
+        <blockquote>
+          Solving Subproblems in Order
+          <em
+            >Notice that this algorithm is solving a collection of subproblems,
+            $\{\operatorname{dist}(u): u \in V\}$. We start with the smallest of
+            them, dist $(s)$, since we immediately know its answer to be 0. We
+            then proceed with progressively "larger" subproblems-distances to
+            vertices that are further and further along in the
+            linearization...</em
+          >
+        </blockquote>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p><strong>Defining the Problem</strong></p>
-              <p class="original-text">
-                <em
-                  >In the longest increasing subsequence problem, the input is a
-                  sequence of numbers $a_{1}, \ldots, a_{n}$. A subsequence is
-                  any subset of these numbers taken in order, of the form
-                  $a_{i_{1}}, a_{i_{2}}, \ldots, a_{i_{k}}$ where $1 \leq i_{1}
-                  < i_{2} < \cdots < i_{k} \leq n$, and an increasing
-                  subsequence is one in which the numbers are getting strictly
-                  larger. The task is to find the increasing subsequence of
-                  greatest length. For instance, the longest increasing
-                  subsequence of $5,2,8,6,3,6,9,7$ is $2,3,6,9$:</em
-                >
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                This paragraph defines the
-                <strong>Increasing Subsequence (LIS) problem</strong>. It's
-                important to distinguish between a "substring" (which must be
-                contiguous) and a "subsequence" (which can have gaps). For the
-                sequence <code>5, 2, 8, 6</code>, the subsequence
-                <code>2, 6</code> is valid because 2 appears before 6 in the
-                original sequence. The goal is to find the longest such
-                subsequence where the values are strictly increasing.
-              </p>
-            </div>
-          </div>
-          <pre><code class="language-python">for i in range(n):
+        <p>
+          This paragraph explicitly connects the algorithm to the core idea of
+          dynamic programming. The main problem ("find all shortest paths") is
+          broken down into a collection of smaller
+          <strong>subproblems</strong>, where each subproblem is: "what is the
+          shortest distance to node <code>u</code>?". The algorithm solves these
+          subproblems one by one in a specific order (the linearized order),
+          starting with the smallest subproblem (<code>dist(s)</code>) and using
+          its answer to help solve the next ones.
+        </p>
+
+        <blockquote>
+          A General Technique
+          <em
+            >This is a very general technique. At each node, we compute some
+            function of the values of the node's predecessors. It so happens
+            that our particular function is a minimum of sums, but we could just
+            as well make it a maximum, in which case we would get longest paths
+            in the dag. Or we could use a product instead of a sum...</em
+          >
+        </blockquote>
+
+        <p>
+          This paragraph highlights the flexibility of the dynamic programming
+          framework. The same fundamental algorithm (traversing a DAG in linear
+          order and applying a recurrence at each node) can solve many different
+          problems simply by changing the function being computed. Instead of a
+          `min` of `sums` for shortest paths, you could use a `max` of `sums` to
+          find longest paths, or a `product` to find something else entirely.
+        </p>
+
+        <blockquote>
+          What is Dynamic Programming?
+          <em
+            >Dynamic programming is a very powerful algorithmic paradigm in
+            which a problem is solved by identifying a collection of subproblems
+            and tackling them one by one, smallest first, using the answers to
+            small problems to help figure out larger ones... In dynamic
+            programming we are not given a dag; the dag is implicit. Its nodes
+            are the subproblems we define, and its edges are the dependencies
+            between the subproblems...</em
+          >
+        </blockquote>
+
+        <p>
+          This is the central definition of
+          <strong>dynamic programming</strong>. It is a technique built on three
+          key ideas:
+        </p>
+        <ol>
+          <li>
+            <strong>Break the problem into subproblems:</strong> The first step
+            is to define the smaller pieces of the problem (e.g., `dist(u)`).
+          </li>
+          <li>
+            <strong>Solve subproblems in order:</strong> You must solve them
+            from "smallest" to "largest," so that answers to dependencies are
+            always ready when you need them.
+          </li>
+          <li>
+            <strong>Store and reuse solutions:</strong> Solutions to smaller
+            subproblems are stored and used to build up solutions to larger
+            ones.
+          </li>
+        </ol>
+        <p>
+          The paragraph makes a beautiful point: for most DP problems, the DAG
+          isn't given to you—it's an **implicit** structure where the nodes are
+          the subproblems and the edges are their dependencies. Dynamic
+          programming is the process of solving the subproblems in the correct
+          topological order of this implicit DAG.
+        </p>
+
+        <blockquote>
+          On to an Example But it's time we saw an example.
+        </blockquote>
+
+        <p>
+          This is a transition, indicating that the text will now move from the
+          abstract definition of dynamic programming to a concrete example to
+          illustrate how these ideas are applied in practice.
+        </p>
+      </section>
+
+      <section id="longest-increasing-subsequences">
+        <h2>6.2 Longest increasing subsequences</h2>
+
+        <blockquote>
+          Defining the Problem
+          <em
+            >In the longest increasing subsequence problem, the input is a
+            sequence of numbers $a_{1}, \ldots, a_{n}$. A subsequence is any
+            subset of these numbers taken in order, of the form $a_{i_{1}},
+            a_{i_{2}}, \ldots, a_{i_{k}}$ where $1 \leq i_{1} < i_{2} < \cdots <
+            i_{k} \leq n$, and an increasing subsequence is one in which the
+            numbers are getting strictly larger. The task is to find the
+            increasing subsequence of greatest length. For instance, the longest
+            increasing subsequence of $5,2,8,6,3,6,9,7$ is $2,3,6,9$:</em
+          >
+        </blockquote>
+
+        <p>
+          This paragraph defines the
+          <strong>Increasing Subsequence (LIS) problem</strong>. It's important
+          to distinguish between a "substring" (which must be contiguous) and a
+          "subsequence" (which can have gaps). For the sequence
+          <code>5, 2, 8, 6</code>, the subsequence <code>2, 6</code> is valid
+          because 2 appears before 6 in the original sequence. The goal is to
+          find the longest such subsequence where the values are strictly
+          increasing.
+        </p>
+        <pre><code class="language-python">for i in range(n):
     print(A[i])
 </code></pre>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p>
-                <strong>A New Perspective: From Sequences to Graphs</strong>
-              </p>
-              <p class="original-text">
-                <em>
-                  In this example, the arrows denote transitions between
-                  consecutive elements of the optimal solution. More generally,
-                  to better understand the solution space, let's create a graph
-                  of all permissible transitions: establish a node $i$ for each
-                  element $a_{i}$, and add directed edges $(i, j)$ whenever it
-                  is possible for $a_{i}$ and $a_{j}$ to be consecutive elements
-                  in an increasing subsequence, that is, whenever $i < j$ and
-                  $a_{i} < a_{j}$ (Figure 6.2).
-                </em>
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                This is a crucial step in finding a solution: transforming the
-                problem into a different domain. Here, the sequence problem is
-                converted into a graph problem. Each number in the sequence
-                becomes a node in a graph. A directed edge is drawn from node
-                `i` to node `j` only if `j` can follow `i` in an increasing
-                subsequence (meaning `j` appears after `i` in the sequence and
-                has a larger value).
-              </p>
-            </div>
-          </div>
+        <blockquote>
+          A New Perspective: From Sequences to Graphs In this example, the
+          arrows denote transitions between consecutive elements of the optimal
+          solution. More generally, to better understand the solution space,
+          let's create a graph of all permissible transitions: establish a node
+          $i$ for each element $a_{i}$, and add directed edges $(i, j)$ whenever
+          it is possible for $a_{i}$ and $a_{j}$ to be consecutive elements in
+          an increasing subsequence, that is, whenever $i < j$ and $a_{i} <
+          a_{j}$ (Figure 6.2).
+        </blockquote>
 
-          <figure>
-            <img
-              src="../../../assets/images/algorithms/chpt_6_imgs/figure-6-2.png"
-              alt="A directed acyclic graph representing the LIS problem."
-              width="700"
-            />
-            <figcaption>
-              Figure 6.2: The dag of increasing subsequences.
-            </figcaption>
-          </figure>
+        <p>
+          This is a crucial step in finding a solution: transforming the problem
+          into a different domain. Here, the sequence problem is converted into
+          a graph problem. Each number in the sequence becomes a node in a
+          graph. A directed edge is drawn from node `i` to node `j` only if `j`
+          can follow `i` in an increasing subsequence (meaning `j` appears after
+          `i` in the sequence and has a larger value).
+        </p>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p>
-                <strong>The Key Insight: LIS as Longest Path in a DAG</strong>
-              </p>
-              <p class="original-text">
-                <em
-                  >Notice that (1) this graph $G=(V, E)$ is a dag, since all
-                  edges $(i, j)$ have $i < j$, and (2) there is a one-to-one
-                  correspondence between increasing subsequences and paths in
-                  this dag. Therefore, our goal is simply to find the longest
-                  path in the dag!</em
-                >
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                This paragraph reveals the solution path. The graph we
-                constructed is a **Directed Acyclic Graph (DAG)** because edges
-                only point from smaller indices to larger ones, so it's
-                impossible to form a cycle. Crucially, any path through this DAG
-                corresponds exactly to a valid increasing subsequence.
-                Therefore, the LIS problem has now been simplified to finding
-                the **longest path in a DAG**—a well-understood graph problem.
-              </p>
-            </div>
-          </div>
+        <figure>
+          <img
+            src="../../../assets/images/algorithms/chpt_6_imgs/figure-6-2.png"
+            alt="A directed acyclic graph representing the LIS problem."
+            width="700"
+          />
+          <figcaption>
+            Figure 6.2: The dag of increasing subsequences.
+          </figcaption>
+        </figure>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p><strong>The Dynamic Programming Algorithm</strong></p>
-              <p class="original-text">
-                <em
-                  >Here is the algorithm: $$ \begin{aligned} & \text { for }
-                  j=1,2, \ldots, n \text { : } \\ & \quad L(j)=1+\max \{L(i):(i,
-                  j) \in E\} \\ & \text { return } \max _{j} L(j) \end{aligned}
-                  $$ $L(j)$ is the length of the longest path—the longest
-                  increasing subsequence—ending at $j$...</em
-                >
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                This presents the core dynamic programming algorithm. Let's
-                break down the logic:
-              </p>
-              <ul>
-                <li>
-                  We define $L(j)$ as the length of the longest increasing
-                  subsequence that **ends at position** $j$.
-                </li>
-                <li>
-                  We iterate from $j=1$ to $n$, calculating each $L(j)$ in
-                  order.
-                </li>
-                <li>
-                  To calculate $L(j)$, we look at all previous nodes $i$ that
-                  could connect to $j$ (i.e., where $i < j$ and $a_i < a_j$). We
-                  find the one that has the longest path ending at it (the
-                  maximum $L(i)$ value).
-                </li>
-                <li>
-                  The length of the path to $j$ is then $1$ (for $j$ itself)
-                  plus the length of the best path leading into it.
-                </li>
-                <li>
-                  The final answer is the maximum value in our `L` array, since
-                  the longest subsequence could end at any position.
-                </li>
-              </ul>
-            </div>
-          </div>
+        <blockquote>
+          The Key Insight: LIS as Longest Path in a DAG
+          <em
+            >Notice that (1) this graph $G=(V, E)$ is a dag, since all edges
+            $(i, j)$ have $i < j$, and (2) there is a one-to-one correspondence
+            between increasing subsequences and paths in this dag. Therefore,
+            our goal is simply to find the longest path in the dag!</em
+          >
+        </blockquote>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p><strong>The Essence of Dynamic Programming</strong></p>
-              <p class="original-text">
-                <em
-                  >This is dynamic programming. In order to solve our original
-                  problem, we have defined a collection of subproblems $\{L(j):
-                  1 \leq j \leq n\}$ with the following key property...: ${
-                  }^{(*)}$ There is an ordering on the subproblems, and a
-                  relation that shows how to solve a subproblem given the
-                  answers to "smaller" subproblems...</em
-                >
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                This paragraph explicitly defines why the previous algorithm is
-                a perfect example of dynamic programming. It satisfies the key
-                properties:
-              </p>
-              <ol>
-                <li>
-                  <strong>A collection of subproblems:</strong> Our subproblems
-                  are "What is the LIS ending at position $j$?" for all $j$ from
-                  1 to $n$.
-                </li>
-                <li>
-                  <strong>An ordering:</strong> We solve the subproblems in a
-                  specific, linear order: for $L(1)$, then $L(2)$, then $L(3)$,
-                  and so on.
-                </li>
-                <li>
-                  <strong>A recurrence relation:</strong> To solve for a
-                  subproblem $L(j)$, we only rely on the answers to "smaller"
-                  subproblems—those $L(i)$ where $i < j$, which we have already
-                  calculated and stored.
-                </li>
-              </ol>
-              <p>
-                This "bottom-up" approach of solving smaller pieces first and
-                using their results to build up to the final answer is the
-                hallmark of dynamic programming.
-              </p>
-            </div>
-          </div>
+        <p>
+          This paragraph reveals the solution path. The graph we constructed is
+          a **Directed Acyclic Graph (DAG)** because edges only point from
+          smaller indices to larger ones, so it's impossible to form a cycle.
+          Crucially, any path through this DAG corresponds exactly to a valid
+          increasing subsequence. Therefore, the LIS problem has now been
+          simplified to finding the **longest path in a DAG**—a well-understood
+          graph problem.
+        </p>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p><strong>Efficiency and Path Reconstruction</strong></p>
-              <p class="original-text">
-                <em
-                  >How long does this step take? It requires the predecessors of
-                  $j$ to be known... The computation of $L(j)$ then takes time
-                  proportional to the indegree of $j$, giving an overall running
-                  time linear in $|E|$. This is at most $O\left(n^{2}\right)$...
-                  we can recover the subsequence itself... with the same
-                  bookkeeping device we used for shortest paths... While
-                  computing $L(j)$, we should also note down
-                  $\operatorname{prev}(j)$, the next-to-last node on the longest
-                  path to $j$.</em
-                >
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                The runtime of this algorithm is analyzed. For each element $j$,
-                we look at all previous elements $i < j$. In the worst case (a
-                sorted array), every previous element is a valid predecessor.
-                This results in a nested loop structure, giving a total runtime
-                of $O(n^2)$. To reconstruct the actual subsequence (not just its
-                length), we can use a `prev` array, just as in Dijkstra's
-                algorithm. When we find the best predecessor `i` for `j`, we
-                store it: `prev[j] = i`. After the `L` array is full, we can
-                find the max value, start from that index, and follow the `prev`
-                pointers backward to find the path.
-              </p>
-            </div>
-          </div>
-        </section>
+        <blockquote>
+          The Dynamic Programming Algorithm
+          <em
+            >Here is the algorithm: $$ \begin{aligned} & \text { for } j=1,2,
+            \ldots, n \text { : } \\ & \quad L(j)=1+\max \{L(i):(i, j) \in E\}
+            \\ & \text { return } \max _{j} L(j) \end{aligned} $$ $L(j)$ is the
+            length of the longest path—the longest increasing subsequence—ending
+            at $j$...</em
+          >
+        </blockquote>
 
-        <section id="recursion-vs-dp">
-          <h2>Recursion? No, thanks.</h2>
+        <p>
+          This presents the core dynamic programming algorithm. Let's break down
+          the logic:
+        </p>
+        <ul>
+          <li>
+            We define $L(j)$ as the length of the longest increasing subsequence
+            that **ends at position** $j$.
+          </li>
+          <li>
+            We iterate from $j=1$ to $n$, calculating each $L(j)$ in order.
+          </li>
+          <li>
+            To calculate $L(j)$, we look at all previous nodes $i$ that could
+            connect to $j$ (i.e., where $i < j$ and $a_i < a_j$). We find the
+            one that has the longest path ending at it (the maximum $L(i)$
+            value).
+          </li>
+          <li>
+            The length of the path to $j$ is then $1$ (for $j$ itself) plus the
+            length of the best path leading into it.
+          </li>
+          <li>
+            The final answer is the maximum value in our `L` array, since the
+            longest subsequence could end at any position.
+          </li>
+        </ul>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p><strong>Why Not Just Use Recursion?</strong></p>
-              <p class="original-text">
-                <em
-                  >...the formula for $L(j)$ also suggests an alternative,
-                  recursive algorithm. Wouldn't that be even simpler? Actually,
-                  recursion is a very bad idea: the resulting procedure would
-                  require exponential time! To see why, suppose that the dag
-                  contains edges $(i, j)$ for all $i < j$... the formula for
-                  subproblem $L(j)$ becomes $L(j)=1+\max \{L(1), L(2), \ldots,
-                  L(j-1)\}$. The following figure unravels the recursion for
-                  $L(5)$. Notice that the same subproblems get solved over and
-                  over again!</em
-                >
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                This section addresses a common question: if we have a
-                recurrence relation, why not just write a simple recursive
-                function? The text explains this is a terrible idea for dynamic
-                programming problems. A naive recursive implementation would
-                re-calculate the same subproblems an exponential number of
-                times. For example, to calculate `L(5)`, it would call `L(4)`,
-                `L(3)`, `L(2)`, and `L(1)`. To calculate `L(4)`, it would again
-                call `L(3)`, `L(2)`, and `L(1)`. The redundant computations
-                explode exponentially.
-              </p>
-            </div>
-          </div>
+        <blockquote>
+          The Essence of Dynamic Programming
+          <em
+            >This is dynamic programming. In order to solve our original
+            problem, we have defined a collection of subproblems $\{L(j): 1 \leq
+            j \leq n\}$ with the following key property...: ${ }^{(*)}$ There is
+            an ordering on the subproblems, and a relation that shows how to
+            solve a subproblem given the answers to "smaller" subproblems...</em
+          >
+        </blockquote>
 
-          <div class="explanation-block">
-            <div class="original-text-container">
-              <p>
-                <strong>Divide-and-Conquer vs. Dynamic Programming</strong>
-              </p>
-              <p class="original-text">
-                <em
-                  >Then why did recursion work so well with divide-and-conquer?
-                  The key point is that in divide-and-conquer, a problem is
-                  expressed in terms of subproblems that are substantially
-                  smaller... In contrast, in a typical dynamic programming
-                  formulation, a problem is reduced to subproblems that are only
-                  slightly smaller... However, it turns out that most of these
-                  nodes are repeats... Efficiency is therefore obtained by
-                  explicitly enumerating the distinct subproblems and solving
-                  them in the right order.</em
-                >
-              </p>
-            </div>
-            <div class="explanation-text">
-              <p>
-                This is a critical distinction between two major algorithmic
-                paradigms:
-              </p>
-              <ul>
-                <li>
-                  <strong>Divide and Conquer (e.g., Mergesort):</strong> Works
-                  well with recursion because it breaks a problem into a few,
-                  *independent* subproblems that are much smaller (e.g., half
-                  the size). The subproblems don't overlap.
-                </li>
-                <li>
-                  <strong>Dynamic Programming (e.g., LIS):</strong> Is needed
-                  when the subproblems are only slightly smaller (e.g., size
-                  `n-1` for a problem of size `n`) and are heavily
-                  *overlapping*. DP's power comes from using a table (or array)
-                  to store the results of subproblems, ensuring each one is
-                  calculated only once.
-                </li>
-              </ul>
-            </div>
-            <pre class="pseudocode" id="bfs-code">
-                \begin{algorithm}
-                \caption{Breadth‑First Search}
-                \begin{algorithmic}   
-                \Procedure{BFS}{$G, s$}
-                    \ForAll{$u \in V$}
-                    \State $\text{dist}(u) \gets \infty$
-                    \EndFor
-                    \State $\text{dist}(s) \gets 0$
-                    \State $Q \gets [s]$
-                    \While{$Q$ is not empty}
-                    \State $u \gets \text{eject}(Q)$
-                    \ForAll{$(u,v) \in E$}
-                        \If{$\text{dist}(v)=\infty$}
-                        \State $\text{inject}(Q,v)$
-                        \State $\text{dist}(v) \gets \text{dist}(u)+1$
-                        \EndIf
-                    \EndFor
-                    \EndWhile
-                \EndProcedure
-                \end{algorithmic}
-                \end{algorithm}
-                </pre
-            >
-          </div>
-        </section>
+        <p>
+          This paragraph explicitly defines why the previous algorithm is a
+          perfect example of dynamic programming. It satisfies the key
+          properties:
+        </p>
+        <ol>
+          <li>
+            <strong>A collection of subproblems:</strong> Our subproblems are
+            "What is the LIS ending at position $j$?" for all $j$ from 1 to $n$.
+          </li>
+          <li>
+            <strong>An ordering:</strong> We solve the subproblems in a
+            specific, linear order: for $L(1)$, then $L(2)$, then $L(3)$, and so
+            on.
+          </li>
+          <li>
+            <strong>A recurrence relation:</strong> To solve for a subproblem
+            $L(j)$, we only rely on the answers to "smaller" subproblems—those
+            $L(i)$ where $i < j$, which we have already calculated and stored.
+          </li>
+        </ol>
+        <p>
+          This "bottom-up" approach of solving smaller pieces first and using
+          their results to build up to the final answer is the hallmark of
+          dynamic programming.
+        </p>
 
-        <section id="comments">
-          <script
-            src="https://utteranc.es/client.js"
-            repo="COD1995/ml-meta"
-            issue-term="pathname"
-            label="comment"
-            theme="github-light"
-            crossorigin="anonymous"
-            async
-          ></script>
-        </section>
+        <blockquote>
+          Efficiency and Path Reconstruction
+          <em
+            >How long does this step take? It requires the predecessors of $j$
+            to be known... The computation of $L(j)$ then takes time
+            proportional to the indegree of $j$, giving an overall running time
+            linear in $|E|$. This is at most $O\left(n^{2}\right)$... we can
+            recover the subsequence itself... with the same bookkeeping device
+            we used for shortest paths... While computing $L(j)$, we should also
+            note down $\operatorname{prev}(j)$, the next-to-last node on the
+            longest path to $j$.</em
+          >
+        </blockquote>
 
-        <footer>
-          <p>
-            © 2025 Bob Guo • 
-            <a
-              href="https://github.com/COD1995/ml-meta"
-              target="_blank"
-              rel="noopener"
-            >
-              View on GitHub
-            </a>
-          </p>
-        </footer>
+        <p>
+          The runtime of this algorithm is analyzed. For each element $j$, we
+          look at all previous elements $i < j$. In the worst case (a sorted
+          array), every previous element is a valid predecessor. This results in
+          a nested loop structure, giving a total runtime of $O(n^2)$. To
+          reconstruct the actual subsequence (not just its length), we can use a
+          `prev` array, just as in Dijkstra's algorithm. When we find the best
+          predecessor `i` for `j`, we store it: `prev[j] = i`. After the `L`
+          array is full, we can find the max value, start from that index, and
+          follow the `prev` pointers backward to find the path.
+        </p>
+      </section>
+
+      <section id="recursion-vs-dp">
+        <h2>Recursion? No, thanks.</h2>
+
+        <blockquote>
+          Why Not Just Use Recursion?
+          <em
+            >...the formula for $L(j)$ also suggests an alternative, recursive
+            algorithm. Wouldn't that be even simpler? Actually, recursion is a
+            very bad idea: the resulting procedure would require exponential
+            time! To see why, suppose that the dag contains edges $(i, j)$ for
+            all $i < j$... the formula for subproblem $L(j)$ becomes
+            $L(j)=1+\max \{L(1), L(2), \ldots, L(j-1)\}$. The following figure
+            unravels the recursion for $L(5)$. Notice that the same subproblems
+            get solved over and over again!</em
+          >
+        </blockquote>
+
+        <p>
+          This section addresses a common question: if we have a recurrence
+          relation, why not just write a simple recursive function? The text
+          explains this is a terrible idea for dynamic programming problems. A
+          naive recursive implementation would re-calculate the same subproblems
+          an exponential number of times. For example, to calculate `L(5)`, it
+          would call `L(4)`, `L(3)`, `L(2)`, and `L(1)`. To calculate `L(4)`, it
+          would again call `L(3)`, `L(2)`, and `L(1)`. The redundant
+          computations explode exponentially.
+        </p>
+
+        <blockquote>
+          <strong>Divide-and-Conquer vs. Dynamic Programming</strong><br />
+          Then why did recursion work so well with divide-and-conquer? The key
+          point is that in divide-and-conquer, a problem is expressed in terms
+          of subproblems that are substantially smaller... In contrast, in a
+          typical dynamic programming formulation, a problem is reduced to
+          subproblems that are only slightly smaller... However, it turns out
+          that most of these nodes are repeats... Efficiency is therefore
+          obtained by explicitly enumerating the distinct subproblems and
+          solving them in the right order.
+        </blockquote>
+
+        <p>
+          This is a critical distinction between two major algorithmic
+          paradigms:
+        </p>
+        <ul>
+          <li>
+            <strong>Divide and Conquer (e.g., Mergesort):</strong> Works well
+            with recursion because it breaks a problem into a few, *independent*
+            subproblems that are much smaller (e.g., half the size). The
+            subproblems don't overlap.
+          </li>
+          <li>
+            <strong>Dynamic Programming (e.g., LIS):</strong> Is needed when the
+            subproblems are only slightly smaller (e.g., size `n-1` for a
+            problem of size `n`) and are heavily *overlapping*. DP's power comes
+            from using a table (or array) to store the results of subproblems,
+            ensuring each one is calculated only once.
+          </li>
+        </ul>
+      </section>
+
+      <section id="comments">
+        <script
+          src="https://utteranc.es/client.js"
+          repo="COD1995/ml-meta"
+          issue-term="pathname"
+          label="comment"
+          theme="github-light"
+          crossorigin="anonymous"
+          async
+        ></script>
+      </section>
+
+      <footer>
+        <p>
+          © 2025 Bob Guo • 
+          <a
+            href="https://github.com/COD1995/ml-meta"
+            target="_blank"
+            rel="noopener"
+          >
+            View on GitHub
+          </a>
+        </p>
+      </footer>
     </div>
 
     <!-- Framework scripts -->
     <script type="module" src="../../../assets/js/main.js"></script>
     <script type="module" src="../../../assets/js/chapter-page.js"></script>
+
+    <!-- 1️⃣ auto‑generated by the build script (local to this folder) -->
+    <script src="book-data.js"></script>
+
+    <!-- 2️⃣ builds the sidebar & mini‑TOC in the browser -->
+    <script type="module" src="../../../assets/js/build-side-nav.js"></script>
   </body>
 </html>

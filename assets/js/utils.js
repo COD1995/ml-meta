@@ -74,7 +74,15 @@ export function safeJsonParse(jsonString, fallback = null) {
 export function getStorageItem(key, fallback = null) {
   try {
     const item = localStorage.getItem(key);
-    return item !== null ? safeJsonParse(item, item) : fallback;
+    if (item === null) return fallback;
+    
+    // Check if it's already a plain string value (not JSON)
+    if (item === 'light' || item === 'dark' || item === 'auto') {
+      return item;
+    }
+    
+    // Try to parse as JSON, fallback to raw value if it fails
+    return safeJsonParse(item, item);
   } catch (error) {
     console.error('localStorage error:', error);
     return fallback;
