@@ -51,6 +51,7 @@ export function initNavigation() {
   setupExpandCollapseButtons();
   setupSideNavLinks();
   setupMobileMenu();
+  setupSidebarDragging();
 }
 
 /**
@@ -343,10 +344,24 @@ function checkSidebarOverlap() {
   if (wouldOverlap && !isManuallyToggled) {
     sideNav.style.display = 'none';
     navBubble.style.display = 'flex';
-    navBubble.classList.add('pulse');
+    navBubble.classList.remove('fade-out');
+    navBubble.classList.add('fade-in', 'pulse');
+    navBubble.innerHTML = '☰';
+    navBubble.setAttribute('aria-label', 'Show navigation');
   } else if (!wouldOverlap) {
     sideNav.style.display = 'flex';
-    navBubble.style.display = 'none';
+    
+    // Smoothly hide the bubble
+    if (navBubble.style.display === 'flex') {
+      navBubble.classList.add('fade-out');
+      setTimeout(() => {
+        navBubble.style.display = 'none';
+        navBubble.classList.remove('fade-out', 'pulse', 'active', 'sidebar-open');
+      }, 300);
+    } else {
+      navBubble.style.display = 'none';
+    }
+    
     sideNav.removeAttribute('data-manually-toggled');
   }
 }
@@ -357,10 +372,13 @@ function checkSidebarOverlap() {
 function createNavToggleBubble() {
   const bubble = createElement('button', {
     id: 'navToggleBubble',
-    className: 'nav-toggle-bubble',
+    className: 'nav-toggle-bubble fade-in',
     'aria-label': 'Toggle navigation'
   });
   bubble.innerHTML = '☰';
+  
+  // Add pulse animation initially
+  setTimeout(() => bubble.classList.add('pulse'), 300);
   
   bubble.addEventListener('click', () => {
     const sideNav = $('.side-nav');
@@ -368,15 +386,58 @@ function createNavToggleBubble() {
       const isVisible = sideNav.style.display === 'flex';
       
       if (isVisible) {
-        // Hide nav
+        // Hide nav and switch back to hamburger
         sideNav.style.display = 'none';
         sideNav.removeAttribute('data-manually-toggled');
-        bubble.classList.remove('active');
+        
+        bubble.classList.remove('active', 'sidebar-open');
+        bubble.innerHTML = '☰';
+        bubble.setAttribute('aria-label', 'Show navigation');
+        
+        // Keep button visible and ready for next use
+        bubble.classList.remove('fade-out');
+        bubble.classList.add('pulse'); // Add attention-grabbing pulse
       } else {
-        // Show nav and mark as manually toggled
+        // Add icon change animation only when opening
+        bubble.classList.add('icon-change');
+        
+        // Show nav and keep button partially visible
         sideNav.style.display = 'flex';
         sideNav.setAttribute('data-manually-toggled', 'true');
-        bubble.classList.add('active');
+        bubble.classList.add('active', 'sidebar-open');
+        bubble.innerHTML = '✕';
+        bubble.setAttribute('aria-label', 'Hide navigation');
+        
+        // Remove fade classes and add smart positioning
+        bubble.classList.remove('fade-out');
+        
+        // Auto-hide button after 3 seconds if not hovered
+        const autoHide = setTimeout(() => {
+          if (!bubble.matches(':hover')) {
+            bubble.classList.add('fade-out');
+            setTimeout(() => {
+              if (bubble.classList.contains('fade-out')) {
+                bubble.style.display = 'none';
+              }
+            }, 300);
+          }
+        }, 3000);
+        
+        // Cancel auto-hide on hover
+        bubble.addEventListener('mouseenter', () => clearTimeout(autoHide), { once: true });
+        
+        // Remove icon animation class after animation completes
+        setTimeout(() => bubble.classList.remove('icon-change'), 400);
+      }
+    }
+  });
+  
+  // Add keyboard support for accessibility
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const sideNav = $('.side-nav');
+      if (sideNav && sideNav.style.display === 'flex' && sideNav.hasAttribute('data-manually-toggled')) {
+        bubble.click(); // Trigger the same hide behavior
       }
     }
   });
@@ -419,6 +480,157 @@ function removeMobileMenuToggle() {
   const sideNav = $('.side-nav');
   if (sideNav) {
     sideNav.classList.remove('mobile-open');
+  }
+}
+
+/**
+ * Setup sidebar dragging functionality
+ */
+function setupSidebarDragging() {
+  const sideNav = $('.side-nav');
+  if (!sideNav) return;
+
+  // Create drag handle and wrap existing content
+  const dragHandle = createElement('div', {
+    className: 'side-nav-drag-handle',
+    'aria-label': 'Drag to move sidebar'
+  });
+
+  const contentWrapper = createElement('div', {
+    className: 'side-nav-content'
+  });
+
+  // Move all existing sidebar content into the wrapper
+  while (sideNav.firstChild) {
+    contentWrapper.appendChild(sideNav.firstChild);
+  }
+
+  // Add drag handle and content wrapper to sidebar
+  sideNav.appendChild(dragHandle);
+  sideNav.appendChild(contentWrapper);
+
+  // Dragging state
+  let isDragging = false;
+  let dragOffset = { x: 0, y: 0 };
+  let startPosition = { x: 0, y: 0 };
+
+  // Load saved position from localStorage
+  loadSidebarPosition(sideNav);
+
+  // Mouse events for dragging
+  dragHandle.addEventListener('mousedown', startDrag);
+  document.addEventListener('mousemove', drag);
+  document.addEventListener('mouseup', endDrag);
+
+  // Touch events for mobile dragging
+  dragHandle.addEventListener('touchstart', startDragTouch, { passive: false });
+  document.addEventListener('touchmove', dragTouch, { passive: false });
+  document.addEventListener('touchend', endDrag);
+
+  function startDrag(e) {
+    if (e.button !== 0) return; // Only left mouse button
+    e.preventDefault();
+    initializeDrag(e.clientX, e.clientY);
+  }
+
+  function startDragTouch(e) {
+    e.preventDefault();
+    const touch = e.touches[0];
+    initializeDrag(touch.clientX, touch.clientY);
+  }
+
+  function initializeDrag(clientX, clientY) {
+    isDragging = true;
+    sideNav.classList.add('dragging');
+    
+    const rect = sideNav.getBoundingClientRect();
+    dragOffset.x = clientX - rect.left;
+    dragOffset.y = clientY - rect.top;
+    startPosition.x = rect.left;
+    startPosition.y = rect.top;
+    
+    document.body.style.userSelect = 'none';
+    document.body.style.cursor = 'move';
+  }
+
+  function drag(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    updatePosition(e.clientX, e.clientY);
+  }
+
+  function dragTouch(e) {
+    if (!isDragging) return;
+    e.preventDefault();
+    const touch = e.touches[0];
+    updatePosition(touch.clientX, touch.clientY);
+  }
+
+  function updatePosition(clientX, clientY) {
+    const newX = clientX - dragOffset.x;
+    const newY = clientY - dragOffset.y;
+    
+    // Constrain to viewport bounds
+    const maxX = window.innerWidth - sideNav.offsetWidth;
+    const maxY = window.innerHeight - sideNav.offsetHeight;
+    
+    const constrainedX = Math.max(0, Math.min(maxX, newX));
+    const constrainedY = Math.max(0, Math.min(maxY, newY));
+    
+    sideNav.style.left = `${constrainedX}px`;
+    sideNav.style.top = `${constrainedY}px`;
+    sideNav.style.transform = 'none'; // Override the translateY(-50%)
+  }
+
+  function endDrag() {
+    if (!isDragging) return;
+    
+    isDragging = false;
+    sideNav.classList.remove('dragging');
+    document.body.style.userSelect = '';
+    document.body.style.cursor = '';
+    
+    // Save position to localStorage
+    saveSidebarPosition(sideNav);
+  }
+}
+
+/**
+ * Save sidebar position to localStorage
+ */
+function saveSidebarPosition(sideNav) {
+  const rect = sideNav.getBoundingClientRect();
+  const position = {
+    x: rect.left,
+    y: rect.top,
+    isDragged: true
+  };
+  localStorage.setItem('sidebarPosition', JSON.stringify(position));
+}
+
+/**
+ * Load sidebar position from localStorage
+ */
+function loadSidebarPosition(sideNav) {
+  const saved = localStorage.getItem('sidebarPosition');
+  if (!saved) return;
+  
+  try {
+    const position = JSON.parse(saved);
+    if (position.isDragged) {
+      // Ensure position is still within viewport bounds
+      const maxX = window.innerWidth - sideNav.offsetWidth;
+      const maxY = window.innerHeight - sideNav.offsetHeight;
+      
+      const constrainedX = Math.max(0, Math.min(maxX, position.x));
+      const constrainedY = Math.max(0, Math.min(maxY, position.y));
+      
+      sideNav.style.left = `${constrainedX}px`;
+      sideNav.style.top = `${constrainedY}px`;
+      sideNav.style.transform = 'none';
+    }
+  } catch (e) {
+    console.warn('Failed to load sidebar position:', e);
   }
 }
 

@@ -418,7 +418,7 @@ html.theme-dark #slackButton span {
   visibility: visible;
 }
 
-/* Persistent side navbar - enhanced styling ----------------------------------- */
+/* Persistent side navbar - enhanced styling with drag support ----------------------------------- */
 .side-nav {
   position: fixed;
   top: 50%;
@@ -437,7 +437,7 @@ html.theme-dark #slackButton span {
   gap: 1rem;
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(12px);
-  padding: 1.25rem;
+  padding: 0;
   border-radius: 16px;
   border: 1px solid rgba(225, 226, 228, 0.8);
   box-shadow: 
@@ -446,8 +446,57 @@ html.theme-dark #slackButton span {
     inset 0 1px 0 rgba(255, 255, 255, 0.8);
   z-index: 1000;
   max-height: 85vh;
+  overflow: hidden;
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Drag handle for the sidebar */
+.side-nav-drag-handle {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 0.75rem 1.25rem;
+  border-radius: 16px 16px 0 0;
+  cursor: move;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  position: relative;
+}
+
+.side-nav-drag-handle::before {
+  content: '⋮⋮';
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+  line-height: 1;
+}
+
+.side-nav-drag-handle:hover::before {
+  color: rgba(255, 255, 255, 1);
+}
+
+/* Content area with proper padding and scroll */
+.side-nav-content {
+  padding: 1.25rem;
   overflow-y: auto;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex: 1;
+}
+
+/* Dragging state */
+.side-nav.dragging {
+  box-shadow: 
+    0 12px 48px rgba(0, 0, 0, 0.2),
+    0 4px 16px rgba(0, 0, 0, 0.1);
+  transition: none;
+  z-index: 1001;
+}
+
+.side-nav.dragging .side-nav-drag-handle {
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+}
+
+.side-nav.dragging .side-nav-drag-handle::before {
+  color: rgba(255, 255, 255, 1);
 }
 .side-nav a {
   text-decoration: none;
@@ -765,6 +814,14 @@ html.theme-dark .side-nav {
     0 8px 32px rgba(0, 0, 0, 0.3),
     0 2px 8px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+html.theme-dark .side-nav-drag-handle {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+}
+
+html.theme-dark .side-nav.dragging .side-nav-drag-handle {
+  background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
 }
 
 html.theme-dark .side-nav a {
@@ -1379,7 +1436,7 @@ html.theme-dark .toc-label {
   outline-offset: 2px;
 }
 
-/* Navigation Toggle Bubble */
+/* Navigation Toggle Bubble - Enhanced */
 .nav-toggle-bubble {
   position: fixed;
   top: 50%;
@@ -1396,10 +1453,11 @@ html.theme-dark .toc-label {
   justify-content: center;
   cursor: pointer;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
   z-index: 999;
   font-size: 24px;
   font-weight: bold;
+  opacity: 1;
 }
 
 .nav-toggle-bubble:hover {
@@ -1411,27 +1469,83 @@ html.theme-dark .toc-label {
   transform: translateY(-50%) scale(0.95);
 }
 
+/* Enhanced active state with icon change */
 .nav-toggle-bubble.active {
   background: linear-gradient(135deg, #4a154b 0%, #621f69 100%);
 }
 
+/* Smart positioning - keep partially visible when sidebar is open */
+.nav-toggle-bubble.sidebar-open {
+  left: -25px;
+  opacity: 0.7;
+  transform: translateY(-50%) scale(0.8);
+}
+
+.nav-toggle-bubble.sidebar-open:hover {
+  left: -15px;
+  opacity: 1;
+  transform: translateY(-50%) scale(1.0);
+}
+
+/* Fade out animation */
+.nav-toggle-bubble.fade-out {
+  opacity: 0;
+  transform: translateY(-50%) scale(0.8);
+}
+
+/* Fade in animation */
+.nav-toggle-bubble.fade-in {
+  opacity: 1;
+  transform: translateY(-50%) scale(1);
+  animation: fadeInBounce 0.5s ease-out;
+}
+
+@keyframes fadeInBounce {
+  0% {
+    opacity: 0;
+    transform: translateY(-50%) scale(0.5);
+  }
+  60% {
+    opacity: 0.8;
+    transform: translateY(-50%) scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(-50%) scale(1);
+  }
+}
+
 /* Remove SVG styles since we're using text now */
 
-/* Pulse animation for attention */
+/* Enhanced pulse animation */
 @keyframes pulse {
   0% {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-50%) scale(1);
   }
   50% {
     box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+    transform: translateY(-50%) scale(1.05);
   }
   100% {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-50%) scale(1);
   }
 }
 
 .nav-toggle-bubble.pulse {
   animation: pulse 2s ease-in-out 3;
+}
+
+/* Icon transition animation - subtle scale only */
+@keyframes iconChange {
+  0% { transform: translateY(-50%) scale(1); }
+  50% { transform: translateY(-50%) scale(1.2); }
+  100% { transform: translateY(-50%) scale(1); }
+}
+
+.nav-toggle-bubble.icon-change {
+  animation: iconChange 0.3s ease-in-out;
 }
 
 /* Dark theme support for bubble */
@@ -1446,4 +1560,13 @@ html.theme-dark .nav-toggle-bubble:hover {
 
 html.theme-dark .nav-toggle-bubble.active {
   background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+}
+
+html.theme-dark .nav-toggle-bubble.sidebar-open {
+  opacity: 0.6;
+}
+
+html.theme-dark .nav-toggle-bubble.sidebar-open:hover {
+  opacity: 1;
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
 }
