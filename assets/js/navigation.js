@@ -263,29 +263,82 @@ function setupSideNavLinks() {
  * Setup scroll spy for navigation
  */
 function setupScrollSpy() {
-  const sections = $$('section[id], article[id], div[id^="main-"], div[id^="call-"]');
-  const navLinks = $$('.side-nav a[href^="#"]');
+  // Get all potential targets: sections, headings for TOC
+  const sections = $$('section[id], article[id], div[id^="main-"], div[id^="call-"], h2[id], h3[id]');
+  const navLinks = $$('.side-nav a[href^="#"], .toc-link');
   
   if (!sections.length || !navLinks.length) return;
+  
+  // Track visible sections
+  const visibleSections = new Set();
   
   const observerOptions = {
     rootMargin: '-20% 0px -70% 0px',
     threshold: 0
   };
   
+  const updateActiveLinks = () => {
+    // Remove all active classes
+    navLinks.forEach(link => {
+      toggleClass(link, 'active', false);
+    });
+    
+    // Find the topmost visible section
+    let topmostSection = null;
+    let topmostPosition = Infinity;
+    
+    visibleSections.forEach(id => {
+      const element = document.getElementById(id);
+      if (element) {
+        const rect = element.getBoundingClientRect();
+        if (rect.top < topmostPosition && rect.top > -100) {
+          topmostPosition = rect.top;
+          topmostSection = id;
+        }
+      }
+    });
+    
+    // Activate the corresponding link
+    if (topmostSection) {
+      navLinks.forEach(link => {
+        if (link.getAttribute('href') === `#${topmostSection}`) {
+          toggleClass(link, 'active', true);
+          
+          // Auto-scroll TOC container if needed
+          const tocContainer = link.closest('#toc-list, .toc-chapters');
+          if (tocContainer && tocContainer.scrollHeight > tocContainer.clientHeight) {
+            const tocRect = tocContainer.getBoundingClientRect();
+            const linkRect = link.getBoundingClientRect();
+            
+            if (linkRect.top < tocRect.top || linkRect.bottom > tocRect.bottom) {
+              link.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+          }
+        }
+      });
+    }
+  };
+  
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
-        const id = entry.target.id;
-        navLinks.forEach(link => {
-          const isActive = link.getAttribute('href') === `#${id}`;
-          toggleClass(link, 'active', isActive);
-        });
+        visibleSections.add(entry.target.id);
+      } else {
+        visibleSections.delete(entry.target.id);
       }
     });
+    
+    updateActiveLinks();
   }, observerOptions);
   
   sections.forEach(section => observer.observe(section));
+  
+  // Also update on scroll for smoother experience
+  let scrollTimeout;
+  window.addEventListener('scroll', () => {
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(updateActiveLinks, 50);
+  }, { passive: true });
 }
 
 /**
@@ -558,14 +611,24 @@ function setupSidebarResize() {
   if (!sideNav) return;
 
   // Create resize handles
+  const resizeHandleLeft = createElement('div', {
+    className: 'resize-handle resize-handle-left',
+    'aria-label': 'Resize sidebar width from left'
+  });
+
   const resizeHandleRight = createElement('div', {
     className: 'resize-handle resize-handle-right',
-    'aria-label': 'Resize sidebar width'
+    'aria-label': 'Resize sidebar width from right'
+  });
+
+  const resizeHandleTop = createElement('div', {
+    className: 'resize-handle resize-handle-top',
+    'aria-label': 'Resize sidebar height from top'
   });
 
   const resizeHandleBottom = createElement('div', {
     className: 'resize-handle resize-handle-bottom',
-    'aria-label': 'Resize sidebar height'
+    'aria-label': 'Resize sidebar height from bottom'
   });
 
   const resizeHandleCorner = createElement('div', {
@@ -573,21 +636,46 @@ function setupSidebarResize() {
     'aria-label': 'Resize sidebar width and height'
   });
 
+  const resizeHandleCornerTL = createElement('div', {
+    className: 'resize-handle resize-handle-corner-tl',
+    'aria-label': 'Resize from top-left corner'
+  });
+
+  const resizeHandleCornerTR = createElement('div', {
+    className: 'resize-handle resize-handle-corner-tr',
+    'aria-label': 'Resize from top-right corner'
+  });
+
+  const resizeHandleCornerBL = createElement('div', {
+    className: 'resize-handle resize-handle-corner-bl',
+    'aria-label': 'Resize from bottom-left corner'
+  });
+
   // Add resize handles to sidebar
+  sideNav.appendChild(resizeHandleLeft);
   sideNav.appendChild(resizeHandleRight);
+  sideNav.appendChild(resizeHandleTop);
   sideNav.appendChild(resizeHandleBottom);
   sideNav.appendChild(resizeHandleCorner);
+  sideNav.appendChild(resizeHandleCornerTL);
+  sideNav.appendChild(resizeHandleCornerTR);
+  sideNav.appendChild(resizeHandleCornerBL);
 
   // Resize state
   let isResizing = false;
   let resizeType = '';
-  let startSize = { width: 0, height: 0 };
+  let startSize = { width: 0, height: 0, left: 0, top: 0 };
   let startMouse = { x: 0, y: 0 };
 
   // Add resize event listeners
+  resizeHandleLeft.addEventListener('mousedown', (e) => startResize(e, 'left'));
   resizeHandleRight.addEventListener('mousedown', (e) => startResize(e, 'right'));
+  resizeHandleTop.addEventListener('mousedown', (e) => startResize(e, 'top'));
   resizeHandleBottom.addEventListener('mousedown', (e) => startResize(e, 'bottom'));
   resizeHandleCorner.addEventListener('mousedown', (e) => startResize(e, 'corner'));
+  resizeHandleCornerTL.addEventListener('mousedown', (e) => startResize(e, 'corner-tl'));
+  resizeHandleCornerTR.addEventListener('mousedown', (e) => startResize(e, 'corner-tr'));
+  resizeHandleCornerBL.addEventListener('mousedown', (e) => startResize(e, 'corner-bl'));
 
   document.addEventListener('mousemove', handleResize);
   document.addEventListener('mouseup', endResize);
@@ -604,12 +692,32 @@ function setupSidebarResize() {
     const rect = sideNav.getBoundingClientRect();
     startSize.width = rect.width;
     startSize.height = rect.height;
+    startSize.left = rect.left;
+    startSize.top = rect.top;
     startMouse.x = e.clientX;
     startMouse.y = e.clientY;
 
     document.body.style.userSelect = 'none';
-    document.body.style.cursor = type === 'right' ? 'ew-resize' : 
-                               type === 'bottom' ? 'ns-resize' : 'nwse-resize';
+    document.body.style.cursor = getCursorForType(type);
+  }
+
+  function getCursorForType(type) {
+    switch(type) {
+      case 'left':
+      case 'right':
+        return 'ew-resize';
+      case 'top':
+      case 'bottom':
+        return 'ns-resize';
+      case 'corner':
+      case 'corner-tl':
+        return 'nwse-resize';
+      case 'corner-tr':
+      case 'corner-bl':
+        return 'nesw-resize';
+      default:
+        return 'move';
+    }
   }
 
   function handleResize(e) {
@@ -621,17 +729,59 @@ function setupSidebarResize() {
 
     let newWidth = startSize.width;
     let newHeight = startSize.height;
+    let newLeft = startSize.left;
+    let newTop = startSize.top;
 
-    if (resizeType === 'right' || resizeType === 'corner') {
-      newWidth = Math.max(200, Math.min(600, startSize.width + deltaX));
+    // Handle different resize types
+    switch(resizeType) {
+      case 'right':
+        newWidth = Math.max(200, Math.min(600, startSize.width + deltaX));
+        break;
+      
+      case 'left':
+        newWidth = Math.max(200, Math.min(600, startSize.width - deltaX));
+        newLeft = startSize.left + (startSize.width - newWidth);
+        break;
+      
+      case 'bottom':
+        newHeight = Math.max(300, Math.min(window.innerHeight - 50, startSize.height + deltaY));
+        break;
+      
+      case 'top':
+        newHeight = Math.max(300, Math.min(window.innerHeight - 50, startSize.height - deltaY));
+        newTop = startSize.top + (startSize.height - newHeight);
+        break;
+      
+      case 'corner': // bottom-right
+        newWidth = Math.max(200, Math.min(600, startSize.width + deltaX));
+        newHeight = Math.max(300, Math.min(window.innerHeight - 50, startSize.height + deltaY));
+        break;
+      
+      case 'corner-tl': // top-left
+        newWidth = Math.max(200, Math.min(600, startSize.width - deltaX));
+        newHeight = Math.max(300, Math.min(window.innerHeight - 50, startSize.height - deltaY));
+        newLeft = startSize.left + (startSize.width - newWidth);
+        newTop = startSize.top + (startSize.height - newHeight);
+        break;
+      
+      case 'corner-tr': // top-right
+        newWidth = Math.max(200, Math.min(600, startSize.width + deltaX));
+        newHeight = Math.max(300, Math.min(window.innerHeight - 50, startSize.height - deltaY));
+        newTop = startSize.top + (startSize.height - newHeight);
+        break;
+      
+      case 'corner-bl': // bottom-left
+        newWidth = Math.max(200, Math.min(600, startSize.width - deltaX));
+        newHeight = Math.max(300, Math.min(window.innerHeight - 50, startSize.height + deltaY));
+        newLeft = startSize.left + (startSize.width - newWidth);
+        break;
     }
 
-    if (resizeType === 'bottom' || resizeType === 'corner') {
-      newHeight = Math.max(300, Math.min(window.innerHeight - 50, startSize.height + deltaY));
-    }
-
+    // Apply new dimensions and position
     sideNav.style.width = `${newWidth}px`;
     sideNav.style.height = `${newHeight}px`;
+    sideNav.style.left = `${newLeft}px`;
+    sideNav.style.top = `${newTop}px`;
   }
 
   function endResize() {

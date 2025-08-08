@@ -71,7 +71,7 @@ a:hover {
   width: 94%;
   max-width: 1000px;
   margin: 2rem auto;
-  padding: 2rem 2.5rem;
+  padding: 3rem 2.5rem 2rem 2.5rem;
   background: transparent;
   box-sizing: border-box;
   border-radius: 12px;
@@ -875,6 +875,8 @@ html.theme-dark .toc-chapters a {
 
 .toc-books {
   margin-bottom: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
   display: block;
 }
 .toc-book {
@@ -1585,46 +1587,132 @@ html.theme-dark .nav-toggle-bubble.sidebar-open:hover {
 /* Resize handles for sidebar */
 .resize-handle {
   position: absolute;
-  z-index: 10;
+  z-index: 1005;
+}
+
+.resize-handle-left {
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 100%;
+  cursor: ew-resize;
+  background: linear-gradient(to left, transparent, rgba(102, 126, 234, 0.2));
+  transition: all 0.2s ease;
 }
 
 .resize-handle-right {
   top: 0;
-  right: -3px;
-  width: 6px;
+  right: 0;
+  width: 8px;
   height: 100%;
   cursor: ew-resize;
-  background: rgba(102, 126, 234, 0.1);
-  border-radius: 0 4px 4px 0;
+  background: linear-gradient(to right, transparent, rgba(102, 126, 234, 0.2));
+  transition: all 0.2s ease;
+}
+
+.resize-handle-top {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  cursor: ns-resize;
+  background: linear-gradient(to top, transparent, rgba(102, 126, 234, 0.2));
+  transition: all 0.2s ease;
 }
 
 .resize-handle-bottom {
   left: 0;
-  bottom: -3px;
+  bottom: 0;
   width: 100%;
-  height: 6px;
+  height: 8px;
   cursor: ns-resize;
-  background: rgba(102, 126, 234, 0.1);
-  border-radius: 0 0 4px 4px;
+  background: linear-gradient(to bottom, transparent, rgba(102, 126, 234, 0.2));
+  transition: all 0.2s ease;
 }
 
 .resize-handle-corner {
-  right: -3px;
-  bottom: -3px;
+  right: 0;
+  bottom: 0;
   width: 12px;
   height: 12px;
   cursor: nwse-resize;
-  background: rgba(102, 126, 234, 0.2);
+  background: linear-gradient(to bottom right, transparent, rgba(102, 126, 234, 0.4));
   border-radius: 0 0 4px 0;
 }
 
-/* Hover effects for resize handles */
-.resize-handle:hover {
-  background: rgba(102, 126, 234, 0.3);
+.resize-handle-corner-tl {
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  cursor: nwse-resize;
+  background: linear-gradient(to top left, transparent, rgba(102, 126, 234, 0.4));
+  border-radius: 4px 0 0 0;
 }
 
-html.theme-dark .resize-handle:hover {
-  background: rgba(139, 92, 246, 0.3);
+.resize-handle-corner-tr {
+  top: 0;
+  right: 0;
+  width: 12px;
+  height: 12px;
+  cursor: nesw-resize;
+  background: linear-gradient(to top right, transparent, rgba(102, 126, 234, 0.4));
+  border-radius: 0 4px 0 0;
+}
+
+.resize-handle-corner-bl {
+  bottom: 0;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  cursor: nesw-resize;
+  background: linear-gradient(to bottom left, transparent, rgba(102, 126, 234, 0.4));
+  border-radius: 0 0 0 4px;
+}
+
+/* Hover effects for resize handles */
+.resize-handle-left:hover {
+  background: linear-gradient(to left, transparent, rgba(102, 126, 234, 0.5));
+}
+
+.resize-handle-right:hover {
+  background: linear-gradient(to right, transparent, rgba(102, 126, 234, 0.5));
+}
+
+.resize-handle-top:hover {
+  background: linear-gradient(to top, transparent, rgba(102, 126, 234, 0.5));
+}
+
+.resize-handle-bottom:hover {
+  background: linear-gradient(to bottom, transparent, rgba(102, 126, 234, 0.5));
+}
+
+.resize-handle-corner:hover {
+  background: linear-gradient(to bottom right, transparent, rgba(102, 126, 234, 0.6));
+}
+
+.resize-handle-corner-tl:hover {
+  background: linear-gradient(to top left, transparent, rgba(102, 126, 234, 0.6));
+}
+
+.resize-handle-corner-tr:hover {
+  background: linear-gradient(to top right, transparent, rgba(102, 126, 234, 0.6));
+}
+
+.resize-handle-corner-bl:hover {
+  background: linear-gradient(to bottom left, transparent, rgba(102, 126, 234, 0.6));
+}
+
+html.theme-dark .resize-handle-right:hover {
+  border-right-color: rgba(139, 92, 246, 0.8);
+}
+
+html.theme-dark .resize-handle-bottom:hover {
+  border-bottom-color: rgba(139, 92, 246, 0.8);
+}
+
+html.theme-dark .resize-handle-corner:hover {
+  background: rgba(139, 92, 246, 0.5);
 }
 
 /* Resizing state */
