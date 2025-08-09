@@ -1355,22 +1355,176 @@ html.theme-dark .side-nav-divider {
 .side-nav-divider + a:first-of-type {
   margin-top: .7rem;
 }
-/* Contribution Graph Heatmap */
-.contribution-graph {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  margin: 0 auto 2rem auto;
-  overflow: visible;
-  box-sizing: border-box;
+/* Enhanced GitHub Heatmap Container */
+.github-heatmap-container {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  padding: 1.5rem;
+  margin: 2rem 0;
+  box-shadow: none;
+  transition: none;
 }
 
-.contribution-graph svg,
-.contribution-graph img {
+.github-heatmap-container:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+.heatmap-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.heatmap-header h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin: 0;
+}
+
+.heatmap-username {
+  font-family: monospace;
+  color: #6366f1;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.heatmap-content {
+  position: relative;
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.heatmap-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  color: #666;
+}
+
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #e5e7eb;
+  border-top: 2px solid #6366f1;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.heatmap-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ef4444;
+  text-align: center;
+}
+
+.heatmap-error a {
+  color: #6366f1;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.heatmap-error a:hover {
+  text-decoration: underline;
+}
+
+.heatmap-content iframe {
+  width: 100%;
+  border: none;
+  border-radius: 6px;
+  background: #f8fafc;
+  transition: opacity 0.3s ease;
+}
+
+.heatmap-footer {
+  margin-top: 1rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.heatmap-footer a {
+  color: #6366f1;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.heatmap-footer a:hover {
+  text-decoration: underline;
+}
+
+/* Dark theme support */
+html.theme-dark .github-heatmap-container {
+  background: rgba(22, 27, 34, 0.95);
+  border-color: rgba(48, 54, 61, 0.6);
+}
+
+html.theme-dark .heatmap-header {
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+html.theme-dark .heatmap-header h3 {
+  color: #c9d1d9;
+}
+
+html.theme-dark .heatmap-loading {
+  color: #8b949e;
+}
+
+html.theme-dark .heatmap-footer {
+  border-top-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Custom SVG Heatmap Styles */
+.custom-heatmap {
   width: 100%;
   height: auto;
-  display: block;
   max-width: 100%;
+  background: transparent;
+}
+
+.contribution-cell {
+  cursor: pointer;
+  transition: none;
+}
+
+.contribution-cell:hover {
+  /* Remove all hover effects */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .github-heatmap-container {
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  .heatmap-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .custom-heatmap {
+    transform: scale(0.8);
+    transform-origin: center;
+  }
 }
 
 /* Main nav divider (thin horizontal rule) for Main index page navigation ------------------- */

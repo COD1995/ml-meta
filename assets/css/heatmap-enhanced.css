@@ -1,0 +1,687 @@
+/* Enhanced GitHub Contribution Heatmap Styles */
+
+/* Override existing heatmap container styles */
+.github-heatmap-container {
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
+  padding: 2rem !important;
+  margin: 2.5rem 0 !important;
+  box-shadow: none !important;
+  transition: none !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.github-heatmap-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0969da, #2ea043, #0969da);
+  border-radius: 16px 16px 0 0;
+}
+
+.github-heatmap-container:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.heatmap-header {
+  margin-bottom: 1.5rem !important;
+  padding-bottom: 0 !important;
+  border-bottom: none !important;
+}
+
+.heatmap-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+  gap: 1.5rem;
+}
+
+.heatmap-title {
+  margin: 0 !important;
+  font-size: 1.375rem !important;
+  font-weight: 700 !important;
+  color: #24292f !important;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  line-height: 1.25;
+}
+
+.heatmap-icon {
+  opacity: 0.8;
+  transition: opacity 0.2s ease;
+}
+
+.heatmap-title:hover .heatmap-icon {
+  opacity: 1;
+}
+
+.heatmap-username {
+  font-family: var(--font-mono) !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  color: #656d76 !important;
+  background: linear-gradient(135deg, #f6f8fa, #e1e4e8) !important;
+  padding: 0.375rem 0.75rem !important;
+  border-radius: 8px !important;
+  border: 1px solid #d1d9e0 !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.heatmap-username:hover {
+  background: linear-gradient(135deg, #e1e4e8, #d1d9e0) !important;
+  transform: translateY(-1px);
+}
+
+.at-symbol {
+  color: #0969da;
+  font-weight: 600;
+}
+
+.heatmap-subtitle {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #656d76;
+  font-style: italic;
+}
+
+.heatmap-content {
+  position: relative;
+  min-height: 160px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1.5rem 0 !important;
+  background: #f8fafc !important;
+  border-radius: 12px !important;
+  border: 1px solid #e1e4e8 !important;
+  padding: 1rem !important;
+}
+
+.heatmap-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem !important;
+  color: #656d76 !important;
+}
+
+.loading-text {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.loading-spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid #e1e4e8 !important;
+  border-top: 2px solid #0969da !important;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.heatmap-error {
+  display: flex;
+  align-items: center !important;
+  gap: 1rem !important;
+  text-align: left !important;
+  color: #d1242f !important;
+}
+
+.error-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.error-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.error-message {
+  font-weight: 500;
+}
+
+.error-link {
+  color: #0969da !important;
+  text-decoration: none;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.error-link:hover {
+  color: #0550ae !important;
+  text-decoration: underline;
+}
+
+.heatmap-footer {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding-top: 1rem !important;
+  border-top: 1px solid #e1e4e8 !important;
+  gap: 1rem;
+  margin-top: 1rem !important;
+  text-align: left !important;
+}
+
+.heatmap-legend {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  color: #656d76;
+}
+
+.legend-squares {
+  display: flex;
+  gap: 2px;
+}
+
+.legend-square {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  border: 1px solid rgba(27, 31, 36, 0.06);
+}
+
+.legend-square.level-0 {
+  background: #ebedf0;
+}
+
+.legend-square.level-1 {
+  background: #9be9a8;
+}
+
+.legend-square.level-2 {
+  background: #40c463;
+}
+
+.legend-square.level-3 {
+  background: #30a14e;
+}
+
+.legend-square.level-4 {
+  background: #216e39;
+}
+
+.legend-label {
+  font-weight: 500;
+}
+
+.heatmap-link {
+  color: #0969da !important;
+  font-size: 0.875rem !important;
+  font-weight: 500 !important;
+  text-decoration: none !important;
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  transition: all 0.2s ease;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+}
+
+.heatmap-link:hover {
+  color: #0550ae !important;
+  background: rgba(9, 105, 218, 0.05);
+  transform: translateX(2px);
+  text-decoration: none !important;
+}
+
+.heatmap-link svg {
+  transition: transform 0.2s ease;
+}
+
+.heatmap-link:hover svg {
+  transform: scale(1.1);
+}
+
+/* Enhanced Custom SVG Heatmap Styles */
+.custom-heatmap {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  background: transparent !important;
+  border-radius: 8px;
+}
+
+.contribution-cell {
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+
+.contribution-cell:hover {
+  /* Remove all hover effects */
+}
+
+/* Snake animation styles */
+.contribution-cell.snake-head {
+  filter: drop-shadow(0 0 8px #00ff00) !important;
+  z-index: 1000 !important;
+  position: relative !important;
+}
+
+.contribution-cell.snake-body {
+  filter: drop-shadow(0 0 4px #228B22) !important;
+  z-index: 999 !important;
+  position: relative !important;
+}
+
+/* Snake Game Instructions */
+.snake-game-instructions {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  transition: all 0.3s ease;
+}
+
+.game-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+
+.game-status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.game-mode-indicator {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.game-message {
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+}
+
+.game-message.game-over {
+  color: #e74c3c;
+  font-weight: bold;
+  animation: pulse 1s infinite;
+}
+
+.game-instructions {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.instruction-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: opacity 0.3s ease;
+}
+
+.arrow-keys {
+  display: flex;
+  gap: 0.25rem;
+}
+
+kbd {
+  background: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.8rem;
+  font-family: monospace;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.arrow-keys kbd {
+  width: 1.5rem;
+  height: 1.5rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+}
+
+/* Dark theme support */
+html.theme-dark .snake-game-instructions {
+  background: rgba(22, 27, 34, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+html.theme-dark .game-message {
+  color: #8b949e;
+}
+
+html.theme-dark kbd {
+  background: #21262d;
+  border-color: #30363d;
+  color: #e6edf3;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Arcade-style Game Start Overlay */
+.arcade-game-start {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.arcade-game-start.show {
+  opacity: 1;
+  animation: arcadeGameStart 1.5s ease-out;
+}
+
+.arcade-message {
+  /* No background - just transparent */
+  background: linear-gradient(45deg, #ff0000, #ffff00, #00ff00, #00ffff, #ff0000);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: arcadeColors 0.5s ease-in-out infinite;
+  
+  font-family: 'Courier New', monospace;
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+  letter-spacing: 0.1em;
+  
+  /* Fallback for browsers that don't support background-clip: text */
+  color: #00ff00;
+  
+  /* Ensure no background box */
+  padding: 0;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+}
+
+@keyframes arcadeGameStart {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3);
+    opacity: 0;
+  }
+  20% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 1;
+  }
+  40% {
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(1.1);
+  }
+  80% {
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes arcadeColors {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Arcade Game Over Overlay */
+.arcade-game-over {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+.arcade-game-over.show {
+  opacity: 1;
+  animation: arcadeGameOver 2s ease-out;
+}
+
+.arcade-message-over {
+  /* Red/dramatic color scheme for game over */
+  background: linear-gradient(45deg, #ff0000, #ff4444, #cc0000, #ff6666, #ff0000);
+  background-size: 400% 400%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: arcadeGameOverColors 0.3s ease-in-out infinite;
+  
+  font-family: 'Courier New', monospace;
+  font-size: 2.8rem;
+  font-weight: bold;
+  text-align: center;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.9);
+  letter-spacing: 0.1em;
+  
+  /* Fallback for browsers that don't support background-clip: text */
+  color: #ff0000;
+  
+  /* Ensure no background box */
+  padding: 0;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+}
+
+@keyframes arcadeGameOver {
+  0% {
+    transform: translate(-50%, -50%) scale(0.1) rotate(-10deg);
+    opacity: 0;
+  }
+  10% {
+    transform: translate(-50%, -50%) scale(1.3) rotate(5deg);
+    opacity: 1;
+  }
+  20% {
+    transform: translate(-50%, -50%) scale(0.8) rotate(-2deg);
+  }
+  30% {
+    transform: translate(-50%, -50%) scale(1.1) rotate(1deg);
+  }
+  40% {
+    transform: translate(-50%, -50%) scale(0.9) rotate(0deg);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+  60% {
+    transform: translate(-50%, -50%) scale(0.95);
+  }
+  70% {
+    transform: translate(-50%, -50%) scale(1.02);
+  }
+  80% {
+    transform: translate(-50%, -50%) scale(0.98);
+  }
+  90% {
+    transform: translate(-50%, -50%) scale(1.01);
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes arcadeGameOverColors {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Heatmap subtle highlight flash */
+.github-heatmap-container.game-mode-transition {
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+  border: 1px solid rgba(0, 255, 0, 0.6);
+  transition: all 0.4s ease;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .game-controls {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .game-instructions {
+    gap: 1rem;
+  }
+}
+
+/* Dark theme support */
+html.theme-dark .github-heatmap-container {
+  background: rgba(22, 27, 34, 0.98) !important;
+  border-color: rgba(48, 54, 61, 0.6) !important;
+}
+
+html.theme-dark .github-heatmap-container::before {
+  background: linear-gradient(90deg, #58a6ff, #3fb950, #58a6ff);
+}
+
+html.theme-dark .heatmap-title {
+  color: #c9d1d9 !important;
+}
+
+html.theme-dark .heatmap-username {
+  background: linear-gradient(135deg, #21262d, #30363d) !important;
+  border-color: #30363d !important;
+  color: #8b949e !important;
+}
+
+html.theme-dark .heatmap-username:hover {
+  background: linear-gradient(135deg, #30363d, #21262d) !important;
+}
+
+html.theme-dark .at-symbol {
+  color: #58a6ff;
+}
+
+html.theme-dark .heatmap-subtitle {
+  color: #8b949e;
+}
+
+html.theme-dark .heatmap-content {
+  background: #0d1117 !important;
+  border-color: #30363d !important;
+}
+
+html.theme-dark .heatmap-loading {
+  color: #8b949e !important;
+}
+
+html.theme-dark .loading-spinner {
+  border-color: #30363d !important;
+  border-top-color: #58a6ff !important;
+}
+
+html.theme-dark .heatmap-footer {
+  border-top-color: #30363d !important;
+}
+
+html.theme-dark .heatmap-legend {
+  color: #8b949e;
+}
+
+html.theme-dark .legend-square.level-0 {
+  background: #161b22;
+  border-color: #30363d;
+}
+
+html.theme-dark .legend-square.level-1 {
+  background: #0e4429;
+}
+
+html.theme-dark .legend-square.level-2 {
+  background: #006d32;
+}
+
+html.theme-dark .legend-square.level-3 {
+  background: #26a641;
+}
+
+html.theme-dark .legend-square.level-4 {
+  background: #39d353;
+}
+
+html.theme-dark .heatmap-link {
+  color: #58a6ff !important;
+}
+
+html.theme-dark .heatmap-link:hover {
+  color: #79c0ff !important;
+  background: rgba(88, 166, 255, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 968px) {
+  .heatmap-title-row {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 768px) {
+  .github-heatmap-container {
+    padding: 1.5rem !important;
+    margin: 2rem 0 !important;
+  }
+  
+  .heatmap-title-row {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    text-align: center;
+  }
+  
+  .heatmap-footer {
+    flex-direction: column !important;
+    gap: 1rem !important;
+    text-align: center !important;
+  }
+  
+  .custom-heatmap {
+    transform: scale(0.85);
+    transform-origin: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .heatmap-title {
+    font-size: 1.25rem !important;
+  }
+  
+  .heatmap-username {
+    font-size: 0.8rem !important;
+    padding: 0.3rem 0.6rem !important;
+  }
+}
