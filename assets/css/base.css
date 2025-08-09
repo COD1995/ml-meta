@@ -66,6 +66,16 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Paragraph spacing for better readability ----------------------------------- */
+p {
+  margin-bottom: 1.2rem;
+  line-height: 1.7;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
 /* Clean main container ----------------------------------- */
 .container {
   width: 94%;
@@ -450,6 +460,29 @@ html.theme-dark #slackButton span {
   min-width: 200px;
   min-height: 300px;
   transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, transform 0.3s ease;
+  cursor: grab;
+}
+
+/* Interactive elements should have their normal cursors */
+.side-nav button,
+.side-nav a,
+.side-nav input,
+.side-nav select,
+.side-nav textarea,
+.side-nav .resize-handle {
+  cursor: auto;
+}
+
+.side-nav button {
+  cursor: pointer;
+}
+
+.side-nav a {
+  cursor: pointer;
+}
+
+.side-nav .resize-handle {
+  cursor: inherit;
 }
 
 /* Drag handle for the sidebar */
@@ -492,11 +525,9 @@ html.theme-dark #slackButton span {
     0 4px 16px rgba(0, 0, 0, 0.1);
   transition: none;
   z-index: 1001;
+  cursor: grabbing !important;
 }
 
-.side-nav.dragging .side-nav-drag-handle {
-  background: rgba(0, 0, 0, 0.05);
-}
 
 .side-nav.dragging .side-nav-drag-handle::before {
   color: rgba(0, 0, 0, 0.8);
