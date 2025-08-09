@@ -574,13 +574,43 @@ class MLMetaApp {
     // Add snake elements directly to the SVG
     console.log('Adding snake elements directly to SVG');
     
-    let currentIndex = 0;
+    // Create a grid map for natural movement
+    const maxWeeks = Math.max(...cellArray.map(cell => Math.floor(cell.x / 14))) + 1;
+    const maxDays = 7;
+    const grid = {};
+    
+    // Map cells to grid coordinates
+    cellArray.forEach((cell, index) => {
+      const week = Math.floor(cell.x / 14);
+      const day = Math.floor(cell.y / 14);
+      grid[`${week},${day}`] = {
+        ...cell,
+        index: index,
+        week: week,
+        day: day
+      };
+    });
+    
+    // Snake properties for interactive movement
+    let snake = [{week: 0, day: 3}]; // Start in middle of first column
+    let direction = {week: 1, day: 0}; // Moving right initially
     let snakeLength = 3;
-    let snake = []; // Array of cell indices in cellArray
     let snakeElements = []; // Array of SVG elements for snake
+    let eatenCells = new Set(); // Track which cells have been eaten
+    let gameMode = 'auto'; // 'auto' or 'manual'
+    let gameInterval = null;
+    let originalGreenCount = Object.values(grid).filter(cell => cell.isGreen).length; // Track original green boxes
+    let totalGreenBoxesEaten = 0;
+    
+    // Speed boost functionality
+    let currentSpeed = 300; // Default manual mode speed (ms)
+    let normalSpeed = 300;
+    let boostSpeed = 150; // Faster speed when holding key
+    let isKeyPressed = false;
+    let keyHoldTimer = null;
     
     const moveSnake = () => {
-      console.log('moveSnake called, currentIndex:', currentIndex);
+      console.log('moveSnake called, snake head at:', snake[0]);
       
       // Clear previous snake elements from SVG
       snakeElements.forEach(element => {
@@ -590,63 +620,130 @@ class MLMetaApp {
       });
       snakeElements = [];
       
-      // Add new head position
-      if (currentIndex < cellArray.length) {
-        snake.unshift(currentIndex);
+      // Calculate next head position
+      const head = snake[0];
+      let nextHead = {
+        week: head.week + direction.week,
+        day: head.day + direction.day
+      };
+      
+      // Boundary and collision checking
+      if (nextHead.week >= maxWeeks || nextHead.week < 0 || nextHead.day >= maxDays || nextHead.day < 0) {
+        if (gameMode === 'manual') {
+          // In manual mode, hitting walls ends the game
+          showGameOverFlash();
+          updateGameUI('manual', '💀 Game Over! Hit the wall. Press SPACE to restart.', true);
+          console.log('Game Over! Snake hit the wall. Press SPACE to restart.');
+          if (gameInterval) clearInterval(gameInterval);
+          gameInterval = null;
+          return;
+        } else {
+          // In auto mode, use smart boundary handling
+          if (nextHead.week >= maxWeeks || nextHead.week < 0) {
+            direction.week = -direction.week;
+            nextHead.week = head.week;
+            nextHead.day = head.day + 1;
+            
+            if (nextHead.day >= maxDays) {
+              resetGame();
+              return;
+            }
+          } else if (nextHead.day >= maxDays || nextHead.day < 0) {
+            direction.day = -direction.day;
+            nextHead.day = head.day + direction.day;
+          }
+        }
+      }
+      
+      // Check for self-collision in manual mode
+      if (gameMode === 'manual') {
+        const collision = snake.some(segment => 
+          segment.week === nextHead.week && segment.day === nextHead.day
+        );
+        if (collision) {
+          showGameOverFlash();
+          updateGameUI('manual', '💀 Game Over! Snake ate itself. Press SPACE to restart.', true);
+          console.log('Game Over! Snake ran into itself. Press SPACE to restart.');
+          if (gameInterval) clearInterval(gameInterval);
+          gameInterval = null;
+          return;
+        }
+      }
+      
+      // Add new head (only if it's a valid position)
+      const cellKey = `${nextHead.week},${nextHead.day}`;
+      const cellAtPosition = grid[cellKey];
+      
+      if (cellAtPosition) {
+        snake.unshift(nextHead);
         
-        // Check if snake ate a green box
-        if (cellArray[currentIndex] && cellArray[currentIndex].isGreen) {
+        // Check if snake ate a green box at this position (and hasn't eaten it before)
+        if (cellAtPosition.isGreen && !eatenCells.has(cellKey)) {
           snakeLength++;
-          console.log(`Snake ate green box! Length: ${snakeLength}`);
+          eatenCells.add(cellKey);
+          totalGreenBoxesEaten++;
+          console.log(`Snake ate green box at ${cellKey}! Length: ${snakeLength}, Total eaten: ${totalGreenBoxesEaten}`);
+          
+          // Make the green box disappear (turn gray based on theme)
+          const isDark = document.documentElement.classList.contains("theme-dark");
+          cellAtPosition.element.style.fill = isDark ? '#161b22' : '#ebedf0';
+          cellAtPosition.element.style.opacity = '0.4';
+          cellAtPosition.isGreen = false; // Mark as no longer green
+          
+          // Check if all green boxes have been eaten
+          const remainingGreenBoxes = Object.values(grid).filter(cell => cell.isGreen).length;
+          console.log(`Remaining green boxes: ${remainingGreenBoxes}`);
+          
+          if (remainingGreenBoxes === 0) {
+            // All green boxes eaten! Spawn new ones
+            const newBoxCount = Math.max(5, Math.min(10, Math.floor(totalGreenBoxesEaten / 3)));
+            spawnRandomGreenBoxes(newBoxCount);
+            console.log(`🎉 All green boxes eaten! Spawning ${newBoxCount} new ones to continue the game!`);
+          }
         }
         
-        // Keep snake at proper length
+        // Keep snake at proper length - remove tail to maintain spacing
         while (snake.length > snakeLength) {
           snake.pop();
         }
-        
-        currentIndex++;
       } else {
-        // Reset to beginning
-        currentIndex = 0;
-        snake = [];
+        // Invalid position, try to adjust
+        nextHead = {week: 0, day: 0};
+        direction = {week: 1, day: 0};
+        snake = [nextHead];
         snakeLength = 3;
-        console.log('Snake reset to beginning');
-        return;
       }
       
       // Draw snake elements directly into the SVG (on top of existing cells)
-      snake.forEach((cellIndex, segmentIndex) => {
-        const cell = cellArray[cellIndex];
-        if (cell && cell.element) {
-          console.log('Drawing snake segment', segmentIndex, 'at cell', cellIndex);
+      snake.forEach((position, segmentIndex) => {
+        const cellKey = `${position.week},${position.day}`;
+        const cellAtPosition = grid[cellKey];
+        
+        if (cellAtPosition) {
+          console.log('Drawing snake segment', segmentIndex, 'at position', position);
           
           // Create new SVG rect for snake segment
           const snakeRect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
           
           if (segmentIndex === 0) {
-            // Head - bright green with larger size
+            // Head - bright green, fits exactly in the box with slight enlargement
             snakeRect.setAttribute("fill", "#00ff00");
             snakeRect.setAttribute("stroke", "#ffffff");
-            snakeRect.setAttribute("stroke-width", "3");
-            const size = cell.width * 1.5;
-            const offset = (size - cell.width) / 2;
-            snakeRect.setAttribute("x", cell.x - offset);
-            snakeRect.setAttribute("y", cell.y - offset);
-            snakeRect.setAttribute("width", size);
-            snakeRect.setAttribute("height", size);
+            snakeRect.setAttribute("stroke-width", "2");
+            snakeRect.setAttribute("x", cellAtPosition.x - 1);
+            snakeRect.setAttribute("y", cellAtPosition.y - 1);
+            snakeRect.setAttribute("width", cellAtPosition.width + 2);
+            snakeRect.setAttribute("height", cellAtPosition.height + 2);
             snakeRect.setAttribute("rx", "3");
           } else {
-            // Body - dark green with medium size
+            // Body - dark green, fits exactly in each heatmap box
             snakeRect.setAttribute("fill", "#228B22");
             snakeRect.setAttribute("stroke", "#ffffff");
-            snakeRect.setAttribute("stroke-width", "2");
-            const size = cell.width * 1.3;
-            const offset = (size - cell.width) / 2;
-            snakeRect.setAttribute("x", cell.x - offset);
-            snakeRect.setAttribute("y", cell.y - offset);
-            snakeRect.setAttribute("width", size);
-            snakeRect.setAttribute("height", size);
+            snakeRect.setAttribute("stroke-width", "1");
+            snakeRect.setAttribute("x", cellAtPosition.x);
+            snakeRect.setAttribute("y", cellAtPosition.y);
+            snakeRect.setAttribute("width", cellAtPosition.width);
+            snakeRect.setAttribute("height", cellAtPosition.height);
             snakeRect.setAttribute("rx", "2");
           }
           
@@ -657,13 +754,293 @@ class MLMetaApp {
       });
     };
 
+    // Add keyboard controls for interactive play with speed boost
+    const handleKeyPress = (event) => {
+      // Always handle spacebar and arrow keys for the snake game
+      if (event.key === ' ' || event.key.startsWith('Arrow')) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      
+      let newDirection = direction;
+      let shouldChangeDirection = false;
+      
+      switch(event.key) {
+        case 'ArrowUp':
+          console.log('Arrow Up pressed, gameMode:', gameMode);
+          if (gameMode === 'manual' && direction.day !== 1) { // Prevent reverse direction
+            newDirection = {week: 0, day: -1};
+            shouldChangeDirection = true;
+            console.log('Direction changed to UP');
+          }
+          break;
+        case 'ArrowDown':
+          console.log('Arrow Down pressed, gameMode:', gameMode);
+          if (gameMode === 'manual' && direction.day !== -1) { // Prevent reverse direction
+            newDirection = {week: 0, day: 1};
+            shouldChangeDirection = true;
+            console.log('Direction changed to DOWN');
+          }
+          break;
+        case 'ArrowLeft':
+          console.log('Arrow Left pressed, gameMode:', gameMode);
+          if (gameMode === 'manual' && direction.week !== 1) { // Prevent reverse direction
+            newDirection = {week: -1, day: 0};
+            shouldChangeDirection = true;
+            console.log('Direction changed to LEFT');
+          }
+          break;
+        case 'ArrowRight':
+          console.log('Arrow Right pressed, gameMode:', gameMode);
+          if (gameMode === 'manual' && direction.week !== -1) { // Prevent reverse direction
+            newDirection = {week: 1, day: 0};
+            shouldChangeDirection = true;
+            console.log('Direction changed to RIGHT');
+          }
+          break;
+        case ' ': // Spacebar to toggle auto/manual mode or restart
+          console.log('Spacebar pressed! Current mode:', gameMode, 'Game interval:', !!gameInterval);
+          if (!gameInterval && gameMode === 'manual') {
+            // Game is paused/over in manual mode - restart
+            resetGame();
+            gameMode = 'manual'; // Stay in manual mode
+          } else {
+            toggleGameMode();
+          }
+          break;
+      }
+      
+      if (gameMode === 'manual' && shouldChangeDirection) {
+        direction = newDirection;
+        
+        // Speed boost: if key is pressed and we're in manual mode, increase speed
+        if (!isKeyPressed) {
+          isKeyPressed = true;
+          currentSpeed = boostSpeed;
+          console.log('Speed boost activated:', currentSpeed + 'ms');
+          
+          // Restart game interval with boosted speed
+          if (gameInterval) {
+            clearInterval(gameInterval);
+            gameInterval = setInterval(moveSnake, currentSpeed);
+          }
+        }
+        
+        // Clear any existing timer and set new one
+        if (keyHoldTimer) clearTimeout(keyHoldTimer);
+        keyHoldTimer = setTimeout(() => {
+          // Reset to normal speed after 500ms of no key presses
+          isKeyPressed = false;
+          currentSpeed = normalSpeed;
+          console.log('Speed boost deactivated, back to normal:', currentSpeed + 'ms');
+          
+          if (gameInterval && gameMode === 'manual') {
+            clearInterval(gameInterval);
+            gameInterval = setInterval(moveSnake, currentSpeed);
+          }
+        }, 500);
+      }
+    };
+
+    const handleKeyUp = (event) => {
+      // Handle key release for speed management
+      if (event.key.startsWith('Arrow') && gameMode === 'manual') {
+        // Immediately start the timer to return to normal speed
+        if (keyHoldTimer) clearTimeout(keyHoldTimer);
+        keyHoldTimer = setTimeout(() => {
+          if (isKeyPressed) {
+            isKeyPressed = false;
+            currentSpeed = normalSpeed;
+            console.log('Key released, returning to normal speed:', currentSpeed + 'ms');
+            
+            if (gameInterval && gameMode === 'manual') {
+              clearInterval(gameInterval);
+              gameInterval = setInterval(moveSnake, currentSpeed);
+            }
+          }
+        }, 100); // Quick response to key release
+      }
+    };
+    
+    const updateGameUI = (mode, message, isGameOver = false) => {
+      const modeIndicator = document.querySelector('.game-mode-indicator');
+      const gameMessage = document.querySelector('.game-message');
+      const manualInstructions = document.querySelector('.manual-only');
+      
+      if (modeIndicator) {
+        modeIndicator.textContent = mode === 'auto' ? '🤖 AUTO MODE' : '🎮 MANUAL MODE';
+      }
+      
+      if (gameMessage) {
+        gameMessage.textContent = message;
+        gameMessage.classList.toggle('game-over', isGameOver);
+      }
+      
+      if (manualInstructions) {
+        manualInstructions.style.opacity = mode === 'manual' ? '1' : '0.5';
+      }
+    };
+
+    const showGameStartFlash = () => {
+      // Show arcade-style "GAME START" overlay
+      const arcadeOverlay = document.querySelector('.arcade-game-start');
+      if (arcadeOverlay) {
+        // Show the overlay
+        arcadeOverlay.classList.add('show');
+        
+        // Hide after 1.5 seconds
+        setTimeout(() => {
+          arcadeOverlay.classList.remove('show');
+        }, 1500);
+      }
+    };
+
+    const showGameOverFlash = () => {
+      // Show arcade-style "GAME OVER" overlay
+      const gameOverOverlay = document.querySelector('.arcade-game-over');
+      if (gameOverOverlay) {
+        // Show the overlay
+        gameOverOverlay.classList.add('show');
+        
+        // Hide after 3 seconds (longer for game over)
+        setTimeout(() => {
+          gameOverOverlay.classList.remove('show');
+        }, 3000);
+      }
+    };
+
+    const spawnRandomGreenBoxes = (count = 5) => {
+      // Get all gray cells that aren't currently part of the snake
+      const availableCells = Object.values(grid).filter(cell => 
+        !cell.isGreen && 
+        !eatenCells.has(`${cell.week},${cell.day}`) &&
+        !snake.some(segment => segment.week === cell.week && segment.day === cell.day)
+      );
+      
+      // Spawn new green boxes
+      const spawnCount = Math.min(count, availableCells.length);
+      for (let i = 0; i < spawnCount; i++) {
+        const randomIndex = Math.floor(Math.random() * availableCells.length);
+        const selectedCell = availableCells.splice(randomIndex, 1)[0];
+        
+        if (selectedCell) {
+          // Make it green
+          const isDark = document.documentElement.classList.contains("theme-dark");
+          const greenColor = isDark ? '#39d353' : '#40c463';
+          selectedCell.element.style.fill = greenColor;
+          selectedCell.element.style.opacity = '1';
+          selectedCell.isGreen = true;
+          
+          console.log(`Spawned new green box at ${selectedCell.week},${selectedCell.day}`);
+        }
+      }
+      
+      if (spawnCount > 0) {
+        console.log(`Spawned ${spawnCount} new green boxes for continued gameplay!`);
+      }
+    };
+
+    const toggleGameMode = () => {
+      if (gameMode === 'auto') {
+        gameMode = 'manual';
+        if (gameInterval) clearInterval(gameInterval);
+        
+        // Show subtle game start flash
+        showGameStartFlash();
+        
+        // Start manual mode game loop after a brief delay
+        setTimeout(() => {
+          currentSpeed = normalSpeed; // Reset to normal speed when starting
+          gameInterval = setInterval(moveSnake, currentSpeed);
+        }, 500);
+        
+        updateGameUI('manual', 'Use arrow keys to control the snake!');
+        console.log('🎮 MANUAL MODE: Use arrow keys to control the snake! SPACEBAR to go back to auto');
+      } else {
+        gameMode = 'auto';
+        startAutoMode();
+        updateGameUI('auto', 'Watch the snake eat your contributions!');
+        console.log('🤖 AUTO MODE: Snake moves automatically. SPACEBAR to take manual control');
+      }
+    };
+    
+    const startAutoMode = () => {
+      if (gameInterval) clearInterval(gameInterval);
+      gameInterval = setInterval(moveSnake, 400);
+    };
+    
+    const resetGame = () => {
+      // Stop any running interval
+      if (gameInterval) clearInterval(gameInterval);
+      
+      // Reset snake
+      snake = [{week: 0, day: 3}];
+      direction = {week: 1, day: 0};
+      snakeLength = 3;
+      
+      // Clear snake elements
+      snakeElements.forEach(element => {
+        if (element.parentNode) {
+          element.parentNode.removeChild(element);
+        }
+      });
+      snakeElements = [];
+      
+      // Restore all eaten boxes
+      eatenCells.forEach(cellKey => {
+        const cell = grid[cellKey];
+        if (cell) {
+          cell.element.style.fill = cell.originalFill;
+          cell.element.style.opacity = '1';
+          cell.isGreen = cell.originalFill !== '#ebedf0' && cell.originalFill !== '#161b22';
+        }
+      });
+      eatenCells.clear();
+      
+      // Restart based on current mode
+      if (gameMode === 'auto') {
+        startAutoMode();
+        updateGameUI('auto', 'Watch the snake eat your contributions!');
+      } else {
+        currentSpeed = normalSpeed; // Reset to normal speed
+        gameInterval = setInterval(moveSnake, currentSpeed);
+        updateGameUI('manual', 'Use arrow keys to control the snake!');
+      }
+      
+      console.log('Game reset! Snake length:', snakeLength);
+    };
+    
+    // Add event listeners with capture to ensure they get priority
+    document.addEventListener('keydown', handleKeyPress, true);
+    document.addEventListener('keyup', handleKeyUp, true);
+    
+    // Also add specific listeners for the heatmap container
+    const heatmapContainer = document.querySelector('.github-heatmap-container');
+    if (heatmapContainer) {
+      heatmapContainer.addEventListener('keydown', handleKeyPress, true);
+      heatmapContainer.addEventListener('keyup', handleKeyUp, true);
+      // Make container focusable
+      heatmapContainer.setAttribute('tabindex', '0');
+      heatmapContainer.focus();
+    }
+    
+    // Show game instructions
+    const instructionsEl = document.querySelector('.snake-game-instructions');
+    if (instructionsEl) {
+      instructionsEl.style.display = 'block';
+    }
+    
     console.log(`Snake initialized! Moving through ${cellArray.length} cells.`);
-    console.log('Starting snake animation...');
+    console.log('🐍 SNAKE GAME CONTROLS:');
+    console.log('  SPACEBAR: Toggle Auto/Manual mode');
+    console.log('  ARROW KEYS: Control snake (Manual mode only)');
+    console.log('  Current mode: AUTO (snake moves by itself)');
     
     // Test the snake immediately
     moveSnake();
     
-    setInterval(moveSnake, 500);
+    // Start in auto mode
+    startAutoMode();
   }
 
   /**

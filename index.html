@@ -296,8 +296,40 @@
             </div>
             <p class="heatmap-subtitle">Commit frequency over the past year</p>
           </header>
+
+          <!-- Snake Game Instructions -->
+          <div class="snake-game-instructions" style="display: none;">
+            <div class="game-controls">
+              <div class="game-status">
+                <span class="game-mode-indicator">🤖 AUTO MODE</span>
+                <span class="game-message">Watch the snake eat your contributions!</span>
+              </div>
+              <div class="game-instructions">
+                <div class="instruction-item">
+                  <kbd>SPACE</kbd>
+                  <span>Toggle Auto/Manual mode</span>
+                </div>
+                <div class="instruction-item manual-only" style="opacity: 0.5;">
+                  <div class="arrow-keys">
+                    <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd>
+                  </div>
+                  <span>Control snake direction • Hold for speed boost</span>
+                </div>
+              </div>
+            </div>
+          </div>
           
           <div class="heatmap-content">
+            <!-- Arcade Game Start Overlay -->
+            <div class="arcade-game-start">
+              <div class="arcade-message">GAME START</div>
+            </div>
+            
+            <!-- Arcade Game Over Overlay -->
+            <div class="arcade-game-over">
+              <div class="arcade-message-over">GAME OVER</div>
+            </div>
+            
             <div class="heatmap-loading">
               <div class="loading-spinner"></div>
               <span class="loading-text">Loading contribution chart...</span>
