@@ -470,23 +470,33 @@ function setupSidebarDragging() {
   // Load saved position from localStorage
   loadSidebarPosition(sideNav);
 
-  // Mouse events for dragging
-  dragHandle.addEventListener('mousedown', startDrag);
+  // Mouse events for dragging - entire sidebar is draggable
+  sideNav.addEventListener('mousedown', startDrag);
   document.addEventListener('mousemove', drag);
   document.addEventListener('mouseup', endDrag);
 
-  // Touch events for mobile dragging
-  dragHandle.addEventListener('touchstart', startDragTouch, { passive: false });
+  // Touch events for mobile dragging - entire sidebar is draggable
+  sideNav.addEventListener('touchstart', startDragTouch, { passive: false });
   document.addEventListener('touchmove', dragTouch, { passive: false });
   document.addEventListener('touchend', endDrag);
 
   function startDrag(e) {
+    // Skip if clicking on interactive elements (buttons, links, inputs, resize handles)
+    if (e.target.closest('button, a, input, select, textarea, .resize-handle')) {
+      return;
+    }
+    
     if (e.button !== 0) return; // Only left mouse button
     e.preventDefault();
     initializeDrag(e.clientX, e.clientY);
   }
 
   function startDragTouch(e) {
+    // Skip if touching interactive elements
+    if (e.target.closest('button, a, input, select, textarea, .resize-handle')) {
+      return;
+    }
+    
     e.preventDefault();
     const touch = e.touches[0];
     initializeDrag(touch.clientX, touch.clientY);
@@ -516,7 +526,9 @@ function setupSidebarDragging() {
     if (!isDragging) return;
     e.preventDefault();
     const touch = e.touches[0];
-    updatePosition(touch.clientX, touch.clientY);
+    if (touch) {
+      updatePosition(touch.clientX, touch.clientY);
+    }
   }
 
   function updatePosition(clientX, clientY) {
@@ -735,45 +747,61 @@ function setupSidebarResize() {
     // Handle different resize types
     switch(resizeType) {
       case 'right':
-        newWidth = Math.max(200, Math.min(600, startSize.width + deltaX));
+        // Ensure right edge doesn't go beyond viewport
+        const maxWidthRight = window.innerWidth - startSize.left;
+        newWidth = Math.max(200, Math.min(maxWidthRight, startSize.width + deltaX));
         break;
       
       case 'left':
-        newWidth = Math.max(200, Math.min(600, startSize.width - deltaX));
-        newLeft = startSize.left + (startSize.width - newWidth);
+        // Ensure left edge doesn't go beyond viewport
+        const actualDeltaLeft = Math.min(deltaX, startSize.width - 200);
+        newWidth = Math.max(200, Math.min(600, startSize.width - actualDeltaLeft));
+        newLeft = Math.max(0, startSize.left + (startSize.width - newWidth));
         break;
       
       case 'bottom':
-        newHeight = Math.max(300, Math.min(window.innerHeight - 50, startSize.height + deltaY));
+        // Ensure bottom edge doesn't go beyond viewport
+        const maxHeightBottom = window.innerHeight - startSize.top;
+        newHeight = Math.max(300, Math.min(maxHeightBottom, startSize.height + deltaY));
         break;
       
       case 'top':
-        newHeight = Math.max(300, Math.min(window.innerHeight - 50, startSize.height - deltaY));
-        newTop = startSize.top + (startSize.height - newHeight);
+        // Ensure top edge doesn't go beyond viewport
+        const actualDeltaTop = Math.min(deltaY, startSize.height - 300);
+        newHeight = Math.max(300, Math.min(window.innerHeight, startSize.height - actualDeltaTop));
+        newTop = Math.max(0, startSize.top + (startSize.height - newHeight));
         break;
       
       case 'corner': // bottom-right
-        newWidth = Math.max(200, Math.min(600, startSize.width + deltaX));
-        newHeight = Math.max(300, Math.min(window.innerHeight - 50, startSize.height + deltaY));
+        const maxWidthBR = window.innerWidth - startSize.left;
+        const maxHeightBR = window.innerHeight - startSize.top;
+        newWidth = Math.max(200, Math.min(maxWidthBR, startSize.width + deltaX));
+        newHeight = Math.max(300, Math.min(maxHeightBR, startSize.height + deltaY));
         break;
       
       case 'corner-tl': // top-left
-        newWidth = Math.max(200, Math.min(600, startSize.width - deltaX));
-        newHeight = Math.max(300, Math.min(window.innerHeight - 50, startSize.height - deltaY));
-        newLeft = startSize.left + (startSize.width - newWidth);
-        newTop = startSize.top + (startSize.height - newHeight);
+        const actualDeltaTLX = Math.min(deltaX, startSize.width - 200);
+        const actualDeltaTLY = Math.min(deltaY, startSize.height - 300);
+        newWidth = Math.max(200, startSize.width - actualDeltaTLX);
+        newHeight = Math.max(300, startSize.height - actualDeltaTLY);
+        newLeft = Math.max(0, startSize.left + (startSize.width - newWidth));
+        newTop = Math.max(0, startSize.top + (startSize.height - newHeight));
         break;
       
       case 'corner-tr': // top-right
-        newWidth = Math.max(200, Math.min(600, startSize.width + deltaX));
-        newHeight = Math.max(300, Math.min(window.innerHeight - 50, startSize.height - deltaY));
-        newTop = startSize.top + (startSize.height - newHeight);
+        const maxWidthTR = window.innerWidth - startSize.left;
+        const actualDeltaTRY = Math.min(deltaY, startSize.height - 300);
+        newWidth = Math.max(200, Math.min(maxWidthTR, startSize.width + deltaX));
+        newHeight = Math.max(300, startSize.height - actualDeltaTRY);
+        newTop = Math.max(0, startSize.top + (startSize.height - newHeight));
         break;
       
       case 'corner-bl': // bottom-left
-        newWidth = Math.max(200, Math.min(600, startSize.width - deltaX));
-        newHeight = Math.max(300, Math.min(window.innerHeight - 50, startSize.height + deltaY));
-        newLeft = startSize.left + (startSize.width - newWidth);
+        const maxHeightBL = window.innerHeight - startSize.top;
+        const actualDeltaBLX = Math.min(deltaX, startSize.width - 200);
+        newWidth = Math.max(200, startSize.width - actualDeltaBLX);
+        newHeight = Math.max(300, Math.min(maxHeightBL, startSize.height + deltaY));
+        newLeft = Math.max(0, startSize.left + (startSize.width - newWidth));
         break;
     }
 
