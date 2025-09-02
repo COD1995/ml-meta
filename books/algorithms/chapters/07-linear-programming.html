@@ -3,14 +3,12 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Chapter 7 — Linear Programming & Reductions</title>
+    <title>Chapter 7 — Linear Programming and Reductions</title>
 
-    <!-- Global styles -->
     <link rel="stylesheet" href="../../../assets/css/base.css" />
     <link rel="stylesheet" href="../../../assets/css/inline-styles.css" />
     <link rel="stylesheet" href="../../../assets/css/chapters.css" />
 
-    <!-- Library styles -->
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/pseudocode@latest/build/pseudocode.min.css"
@@ -20,10 +18,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/default.min.css"
     />
 
-    <!-- MathJax global config (must come BEFORE MathJax) -->
     <script src="../../../assets/js/mathjax-config.js"></script>
 
-    <!-- Library scripts (deferred) -->
     <script
       defer
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
@@ -43,7 +39,6 @@
   </head>
 
   <body>
-    <!-- Reading Progress Indicator -->
     <div id="reading-progress">
       <div id="reading-progress-bar"></div>
     </div>
@@ -70,12 +65,10 @@
 
       <hr class="side-nav-divider" />
 
-      <!-- everything below is built by build-side-nav.js -->
       <div id="bookNav"></div>
 
       <hr class="side-nav-divider" />
 
-      <!-- Buy Me a Coffee Banner -->
       <div class="coffee-banner">
         <a
           href="https://buymeacoffee.com/guoj1995"
@@ -101,7 +94,6 @@
         </a>
       </div>
 
-      <!-- Slack banner (unchanged) -->
       <div class="slack-banner">
         <a
           href="https://join.slack.com/t/mlmetacommunity/shared_invite/zt-38mj0hx5v-8GyxvZ7lanC9HbywfUOwJw"
@@ -139,185 +131,232 @@
         </a>
       </div>
     </nav>
-
     <div class="container content">
       <h1>Chapter 7: Linear Programming and Reductions</h1>
+      <p>
+        Many of the problems for which we want algorithms are optimization
+        tasks: the shortest path, the cheapest spanning tree, the longest
+        increasing subsequence, and so on. In such cases, we seek a solution
+        that (1) satisfies certain constraints (for instance, the path must use
+        edges of the graph and lead from s to t, the tree must touch all nodes,
+        the subsequence must be increasing); and (2) is the best possible, with
+        respect to some well-defined criterion, among all solutions that
+        satisfy these constraints.
+      </p>
+      <p>
+        <strong>Linear programming</strong> describes a broad class of optimization tasks in
+        which both the constraints and the optimization criterion are linear
+        functions. It turns out an enormous number of problems can be expressed
+        in this way.
+      </p>
 
-      <section>
-        <h2>7.1 An Introduction to Linear Programming</h2>
+      <section id="intro-lp">
+        <h2>7.1 An introduction to linear programming</h2>
         <p>
-          This chapter provides a comprehensive look at linear programming, a
-          powerful tool for solving optimization problems.
-        </p>
-        <p>
-          Linear programming is presented as a method for solving optimization
-          tasks where one must find the best possible outcome (e.g., maximizing
-          profit or minimizing cost) given a set of constraints. Both the
-          objective and the constraints must be linear functions.
-        </p>
-
-        <h3>Profit Maximization Example</h3>
-        <p>
-          A simple problem about a chocolatier deciding how much of two products
-          to make is used to introduce the core concepts. The goal is to
-          maximize profit, subject to linear constraints like demand and labor.
-          The set of valid solutions forms a convex polygon, and the optimal
-          solution is always found at one of its vertices. The
-          <strong>simplex method</strong> is introduced as an algorithm that
-          finds this optimal vertex by starting at one vertex and moving along
-          edges to neighbors with better objective values until it can no longer
-          improve.
-        </p>
-
-        <h3>Extending the Example</h3>
-        <p>
-          The problem is expanded to three dimensions, where the feasible region
-          becomes a polyhedron, but the simplex method's logic of moving between
-          vertices remains the same. This leads to the concept of
-          <strong>duality</strong>, a key idea where a certificate of optimality
-          can be found by creating a new linear program (the dual) whose
-          solution provides a bound on the original (primal) problem's solution.
+          In a linear programming problem we are given a set of variables, and
+          we want to assign real values to them so as to (1) satisfy a set of
+          linear equations and/or linear inequalities involving these variables
+          and (2) maximize or minimize a given linear objective function.
         </p>
 
-        <h3>Further Applications</h3>
+        <h3>7.1.1 Example: profit maximization</h3>
         <p>
-          The chapter demonstrates the versatility of linear programming with
-          two more examples: a complex
-          <strong>production planning</strong> problem for a carpet company
-          dealing with seasonal demand, and an
-          <strong>optimum bandwidth allocation</strong> problem in a network.
-          These examples show how to translate real-world problems into the
-          formal language of variables, constraints, and objectives.
+          A boutique chocolatier has two products: Pyramide and Pyramide Nuit.
+          How much of each should it produce to maximize profits? Let's say it
+          makes $x_1$ boxes of Pyramide per day, at a profit of $1 each, and
+          $x_2$ boxes of Nuit, at a profit of $6 apiece. The constraints are:
+          demand is limited to 200 boxes of Pyramide and 300 of Nuit, and the
+          workforce can produce at most 400 boxes total per day.
+        </p>
+        <blockquote class="code-block">
+            <strong>Objective function:</strong> max $x_1 + 6x_2$<br/>
+            <strong>Constraints:</strong>
+            <pre>
+$x_1 \le 200$
+$x_2 \le 300$
+$x_1 + x_2 \le 400$
+$x_1, x_2 \ge 0$</pre>
+        </blockquote>
+        <p>
+          The set of all feasible solutions is a convex polygon (Figure 7.1).
+          The objective function is a line that we move as far as possible while
+          still touching the feasible region. The optimum solution will
+          therefore be a vertex of the polygon.
+        </p>
+        <figure>
+          <img
+            src="../../../assets/images/algorithms/chpt_7_imgs/figure-7-1.png"
+            alt="The feasible region and objective function for a linear program."
+            width="700"
+          />
+          <figcaption>
+            Figure 7.1 (a) The feasible region for a linear program. (b)
+            Contour lines of the objective function.
+          </figcaption>
+        </figure>
+        <p>
+            It is a general rule of linear programs that the optimum is achieved at a vertex of the feasible region.
+        </p>
+        <h4>Solving linear programs</h4>
+        <p>
+            Linear programs (LPs) can be solved by the <strong>simplex method</strong>, which starts at a vertex and repeatedly moves to an adjacent vertex of better objective value. Upon reaching a vertex that has no better neighbor, simplex declares it to be optimal and halts.
         </p>
 
-        <h3>Reductions and Standard Form</h3>
+        <h4>More products</h4>
         <p>
-          The concept of a <strong>reduction</strong> is formalized, showing how
-          an algorithm for one problem can be used to solve another. It's shown
-          that all linear programs can be converted into a
-          <strong>standard form</strong> (minimizing an objective, with equality
-          constraints and non-negative variables) through simple
-          transformations, which simplifies solving them.
+            If the chocolatier adds a third product, Pyramide Luxe, at a profit of $13 per box ($x_3$), with additional constraints, the problem becomes three-dimensional. The feasible region is now a polyhedron. The objective function $x_1 + 6x_2 + 13x_3 = c$ is a plane. The simplex algorithm behaves similarly, moving from vertex to vertex along the edges of the polyhedron, steadily increasing profit.
+        </p>
+        <figure>
+          <img
+            src="../../../assets/images/algorithms/chpt_7_imgs/figure-7-2.png"
+            alt="The feasible polyhedron for a 3-variable LP."
+            width="500"
+          />
+          <figcaption>
+            Figure 7.2 The feasible polyhedron for a three-variable linear program.
+          </figcaption>
+        </figure>
+
+        <h3>7.1.2 Example: production planning</h3>
+        <p>
+            A company making handwoven carpets has seasonal demand ($d_1, \dots, d_{12}$). It can handle fluctuations by using overtime, hiring/firing workers, or storing surplus carpets, all of which have associated costs. This complex problem can be formulated as an LP to minimize total cost. The variables would include workers per month ($w_i$), carpets made ($x_i$), overtime production ($o_i$), workers hired/fired ($h_i, f_i$), and carpets stored ($s_i$). The constraints would define the relationships between these variables, and the objective function would be the total cost to be minimized.
+        </p>
+
+        <h3>7.1.3 Example: optimum bandwidth allocation</h3>
+        <p>
+            A network service provider needs to establish three connections (A-B, B-C, A-C), each with a certain payment per unit of bandwidth. Each connection can be routed along a short or long path. The goal is to route the connections to maximize revenue without exceeding the bandwidth capacity of any network line. This can be formulated as an LP with variables for the bandwidth on each path of each connection.
+        </p>
+        <figure>
+            <img
+              src="../../../assets/images/algorithms/chpt_7_imgs/figure-7-3.png"
+              alt="A communications network with bandwidths shown."
+              width="500"
+            />
+            <figcaption>
+              Figure 7.3 A communications network between three users A, B, and C.
+            </figcaption>
+          </figure>
+
+        <h3>Reductions</h3>
+        <p>
+            Many computational problems can be reduced to one another. If a problem P can be solved using a subroutine for problem Q, we say P reduces to Q. This is a powerful concept because an efficient algorithm for Q can then be used to solve P and many other problems. Linear programming is a prime example of a problem to which a vast number of other problems reduce.
+        </p>
+
+        <h3>7.1.4 Variants of linear programming</h3>
+        <p>
+            Any LP can be transformed into a **standard form** (e.g., minimization, all constraints are equations, all variables are non-negative) through simple conversions:
+        </p>
+        <ul>
+            <li>Maximization can be turned into minimization by multiplying the objective function by -1.</li>
+            <li>An inequality $\sum a_i x_i \le b$ can be converted to an equation $\sum a_i x_i + s = b$ by adding a non-negative **slack variable** $s$.</li>
+            <li>An equation $ax=b$ can be replaced by two inequalities, $ax \le b$ and $ax \ge b$.</li>
+            <li>An unrestricted variable $x$ can be replaced by the difference of two non-negative variables, $x^+ - x^-$.</li>
+        </ul>
+        <p>Using matrix-vector notation, a typical LP can be expressed concisely:</p>
+        <blockquote class="code-block">
+            max $c^T x$<br/>
+            $Ax \le b$<br/>
+            $x \ge 0$
+        </blockquote>
+      </section>
+      
+      <hr/>
+
+      <section id="network-flows">
+        <h2>7.2 Flows in networks</h2>
+        <p>The problem of shipping the maximum possible amount of a commodity from a source $s$ to a sink $t$ in a network is a classic LP problem. Each edge in the network has a maximum capacity.</p>
+        <p>A **flow** assigns a value $f_e$ to each edge $e$ satisfying two properties:</p>
+        <ol>
+            <li><strong>Capacity constraints:</strong> $0 \le f_e \le c_e$ for all edges $e$.</li>
+            <li><strong>Flow conservation:</strong> For all nodes $u$ (except $s$ and $t$), the flow entering $u$ equals the flow leaving $u$.</li>
+        </ol>
+        <p>The goal is to maximize the total flow leaving the source $s$. This can be directly translated into an LP. The simplex algorithm, when applied to this problem, finds an s-t path in a "residual network" and pushes as much flow as possible along it. This is repeated until no such path can be found.</p>
+        <figure>
+            <img
+              src="../../../assets/images/algorithms/chpt_7_imgs/figure-7-4.png"
+              alt="A network with edge capacities and a flow."
+              width="700"
+            />
+            <figcaption>
+              Figure 7.4 (a) A network with edge capacities. (b) A flow in the network.
+            </figcaption>
+        </figure>
+        <p>
+            A remarkable result, the **max-flow min-cut theorem**, states that the size of the maximum flow in a network is equal to the capacity of the minimum cut (the smallest total capacity of edges that, if removed, would disconnect $s$ from $t$).
         </p>
       </section>
 
-      <section>
-        <h2>7.2 Flows in Networks</h2>
-        <p>
-          This section explores the <strong>maximum flow problem</strong>: how
-          to ship the most material from a source node <em>s</em> to a sink node
-          <em>t</em> in a network where edges have capacity limits.
-        </p>
+      <hr/>
 
-        <h3>LP Formulation and the Algorithm</h3>
+      <section id="bipartite-matching">
+        <h2>7.3 Bipartite matching</h2>
         <p>
-          This problem is a classic example of a linear program. The simplex
-          algorithm, when applied to max-flow, has an intuitive interpretation:
-          it repeatedly finds a path from <em>s</em> to <em>t</em> and pushes
-          more flow along it. To handle cases where an early path choice might
-          block a better one, the algorithm uses a
-          <strong>residual graph</strong>. This graph represents the remaining
-          capacity on edges and includes reverse edges that allow the algorithm
-          to "undo" or cancel previous flow, enabling it to find the true
-          optimal solution.
+            The problem of finding a **perfect matching** in a bipartite graph (e.g., pairing boys and girls who like each other) can be reduced to the maximum-flow problem.
         </p>
-
-        <h3>Max-Flow Min-Cut Theorem</h3>
         <p>
-          A powerful concept, the <strong>s-t cut</strong>, is introduced. A cut
-          is a partition of the vertices into two sets, one containing
-          <em>s</em> and the other <em>t</em>. The capacity of the cut is the
-          total capacity of edges crossing from the <em>s</em> side to the
-          <em>t</em> side, which provides an upper bound on any possible flow.
-          The celebrated <strong>max-flow min-cut theorem</strong> states that
-          the maximum possible flow is exactly equal to the capacity of the
-          minimum possible cut. The algorithm automatically finds this minimum
-          cut, which serves as a certificate of optimality.
+            We create a source $s$ with edges to all boys, and a sink $t$ with edges from all girls. All edges in the original graph are directed from boy to girl. By setting all edge capacities to 1, a max flow of size equal to the number of boys corresponds to a perfect matching. A key property here is that for integer capacities, the max-flow algorithm finds an optimal flow with integer values, which correctly corresponds to a valid matching.
         </p>
+        <figure>
+            <img
+              src="../../../assets/images/algorithms/chpt_7_imgs/figure-7-8.png"
+              alt="A matchmaking network for bipartite matching."
+              width="600"
+            />
+            <figcaption>
+              Figure 7.8 A matchmaking network. Each edge has a capacity of one.
+            </figcaption>
+          </figure>
       </section>
 
-      <section>
-        <h2>7.3 Bipartite Matching</h2>
-        <p>
-          This section shows how to solve the problem of finding a
-          <strong>perfect matching</strong> in a bipartite graph (for instance,
-          pairing boys and girls who like each other). The problem is reduced to
-          max-flow by constructing a special network. A key insight is that
-          because max-flow with integer capacities yields an integer solution,
-          the result of the reduction correctly corresponds to a valid matching.
-        </p>
-      </section>
+      <hr/>
 
-      <section>
+      <section id="duality">
         <h2>7.4 Duality</h2>
         <p>
-          Duality is revisited as a general principle of linear programming. For
-          any maximization LP (the primal), there is a corresponding
-          minimization LP (the dual). A feasible solution to the dual provides a
-          bound on the optimal value of the primal. The
-          <strong>Duality Theorem</strong> states that their optimal values are,
-          in fact, identical.
+            Every linear maximization program (the **primal**) has a corresponding minimization program (the **dual**). Any feasible solution to the dual provides an upper bound on the optimal value of the primal. The **duality theorem** states that if an LP has a bounded optimum, then so does its dual, and their optimal values are equal.
         </p>
+        <p>
+            This provides a powerful way to certify optimality. If you find a feasible solution for the primal and a feasible solution for the dual that have the same objective value, you know both must be optimal. The relationship between max-flow and min-cut is a special case of LP duality.
+        </p>
+        <figure>
+            <img
+              src="../../../assets/images/algorithms/chpt_7_imgs/figure-7-10.png"
+              alt="A primal LP and its corresponding dual LP."
+              width="700"
+            />
+            <figcaption>
+              Figure 7.10 A generic primal LP in matrix-vector form, and its dual.
+            </figcaption>
+          </figure>
       </section>
 
-      <section>
-        <h2>7.5 Zero-Sum Games</h2>
-        <p>
-          Linear programming is applied to game theory, specifically two-player
-          <strong>zero-sum games</strong>. By using
-          <strong>mixed strategies</strong> (probabilities for choosing moves),
-          players aim to optimize their expected payoff. A player's problem of
-          finding their best defensive strategy can be formulated as a linear
-          program. The problems for the maximizing and minimizing players turn
-          out to be duals of each other, proving the famous
-          <strong>min-max theorem</strong>: there is always an optimal mixed
-          strategy for both players, and the expected outcome is the same
-          regardless of which player "announces" their strategy first.
-        </p>
-      </section>
+      <hr/>
 
-      <section>
-        <h2>7.6 The Simplex Algorithm</h2>
+      <section id="simplex-algorithm">
+        <h2>7.6 The simplex algorithm</h2>
         <p>
-          This section details the workings of the simplex algorithm in
-          high-dimensional spaces.
+            The simplex algorithm solves LPs by moving from vertex to vertex on the surface of the n-dimensional feasible polyhedron.
         </p>
-
-        <h3>Vertices and the Algorithm</h3>
         <p>
-          In <em>n</em> dimensions, a <strong>vertex</strong> is a point defined
-          by <em>n</em> tight inequality constraints, and
-          <strong>neighbors</strong> are vertices that share <em>n-1</em> of
-          these tight constraints. Simplex moves from vertex to vertex. At any
-          vertex, it can transform the LP into a local coordinate system where
-          that vertex is the origin. From the origin, it's easy to see if an
-          improvement is possible and in which direction to move. This process
-          repeats until no further improvement can be made.
+            At each vertex, it performs two tasks:
         </p>
-
-        <h3>Practical Issues and History</h3>
+        <ol>
+            <li>Checks if the current vertex is optimal. This is easy if the vertex is at the origin: it's optimal if and only if all coefficients in the objective function are non-positive.</li>
+            <li>Determines where to move next. If not optimal, it moves along an edge (by increasing a variable with a positive objective coefficient) to a neighboring vertex with a better objective value.</li>
+        </ol>
         <p>
-          The chapter addresses loose ends like finding a starting vertex,
-          handling degenerate vertices, and detecting when an LP is unbounded.
-          Although simplex can take exponential time in the worst case, it is
-          highly efficient in practice. The chapter also briefly mentions the
-          history of other polynomial-time algorithms like the
-          <strong>ellipsoid method</strong> and
-          <strong>interior-point methods</strong>.
+            If a vertex is not at the origin, the algorithm cleverly transforms the coordinate system to move the current vertex to the origin, then solves the problem in this new "local" view. While simplex is very efficient in practice, its worst-case running time is exponential. Other algorithms, like the ellipsoid and interior-point methods, are provably polynomial-time.
         </p>
-      </section>
-
-      <section>
-        <h2>7.7 Postscript: Circuit Evaluation</h2>
-        <p>
-          The chapter concludes by showing the ultimate power of linear
-          programming: any problem that can be solved in polynomial time can be
-          reduced to it. This is demonstrated by reducing the
-          <strong>CIRCUIT VALUE</strong> problem to a linear program. Since any
-          polynomial-time algorithm can be described by a polynomial-size
-          circuit, this implies that all problems in P reduce to linear
-          programming.
-        </p>
+        <figure>
+            <img
+              src="../../../assets/images/algorithms/chpt_7_imgs/figure-7-13.png"
+              alt="An example of the Simplex algorithm in action."
+              width="700"
+            />
+            <figcaption>
+              Figure 7.13 Simplex in action.
+            </figcaption>
+          </figure>
       </section>
 
       <section id="comments">
@@ -334,9 +373,13 @@
 
       <footer>
         <p>
-          © 2025 Kristopher Kodweis • 
-          <a href="YOUR_GITHUB_LINK" target="_blank" rel="noopener">
-            View on GitHub
+          © 2025 Kristopher Kodweis •
+          <a
+            href="https://github.com/COD1995/ml-meta"
+            target="_blank"
+            rel="noopener"
+          >
+            View on GitHub
           </a>
         </p>
       </footer>
@@ -345,10 +388,8 @@
     <script type="module" src="../../../assets/js/main.js"></script>
     <script type="module" src="../../../assets/js/chapter-page.js"></script>
 
-    <!-- 1️⃣ auto‑generated by the build script (local to this folder) -->
     <script src="book-data.js"></script>
 
-    <!-- 2️⃣ builds the sidebar & mini‑TOC in the browser -->
     <script type="module" src="../../../assets/js/build-side-nav.js"></script>
   </body>
 </html>
