@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -113,7 +112,8 @@
             <path
               d="M34.8 78.6c0-5 4-9 9-9s9 4 9 9v22.5c0 5-4 9-9 9s-9-4-9-9V78.6z"
             />
-            <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z" />
+            <path d="M44 30.3c-5 0-9-4-9-9s4-9 9-9 9 4 9 9v9H44z"
+            />
             <path
               d="M44 34.8c5 0 9 4 9 9s-4 9-9 9H21.5c-5 0-9-4-9-9s4-9 9-9H44z"
             />
@@ -205,27 +205,26 @@
           discovered by scanning the neighbors of layer d.
         </p>
         <p>
-          Breadth-first search (BFS) directly implements this simple reasoning
-          (Figure 4.3). Initially the queue Q consists only of s, the one node
-          at distance 0. And for each subsequent distance d = 1, 2, 3, ...,
-          there is a point in time at which Q contains all the nodes at distance
-          d and nothing else. As these nodes are processed (ejected off the
-          front of the queue), their as-yet-unseen neighbors are injected into
-          the end of the queue.
+          Breadth-first search (BFS) directly implements this simple reasoning.
+          Initially the queue Q consists only of s, the one node at distance 0. And
+          for each subsequent distance d = 1, 2, 3, ..., there is a point in time
+          at which Q contains all the nodes at distance d and nothing else. As
+          these nodes are processed (ejected off the front of the queue), their
+          as-yet-unseen neighbors are injected into the end of the queue.
         </p>
         <pre class="pseudocode">
             \begin{algorithm}
-            \caption{Breadth-first search.}
+            \caption{Breadth-first search (BFS)}
             \begin{algorithmic}
-              \Procedure{bfs}{$G, s$}
+              \Procedure{BFS}{$G, s$}
                 \ForAll{$u \in V$}
                   \State $dist(u) \gets \infty$
                 \EndFor
                 \State $dist(s) \gets 0$
-                \State $Q \gets [s]$ \Comment{Queue containing just s}
+                \State $Q \gets [s]$ \Comment{A queue containing just s}
                 \While{$Q$ is not empty}
                   \State $u \gets \text{eject}(Q)$
-                  \ForAll{edges $(u, v) \in E$}
+                  \ForAll{edge $(u, v) \in E$}
                     \If{$dist(v) = \infty$}
                       \State $\text{inject}(Q, v)$
                       \State $dist(v) \gets dist(u) + 1$
@@ -264,7 +263,7 @@
           We have developed the basic intuition behind breadth-first search. In
           order to check that the algorithm works correctly, we need to make
           sure that it faithfully executes this intuition. What we expect,
-          precisely, is that
+          precisely, is that:
         </p>
         <blockquote>
           For each $d = 0, 1, 2, \dots$, there is a moment at which (1) all
@@ -280,7 +279,7 @@
           The overall running time of this algorithm is linear,
           $O(|V| + |E|)$, for exactly the same reasons as depth-first search.
           Each vertex is put on the queue exactly once, when it is first
-          encountered, so there are $2|V|$ queue operations. The rest of the
+          encountered, so there are $O(|V|)$ queue operations. The rest of the
           work is done in the algorithm's innermost loop. Over the course of
           execution, this loop looks at each edge once (in directed graphs) or
           twice (in undirected graphs), and therefore takes $O(|E|)$ time.
@@ -288,15 +287,10 @@
         <p>
           Now that we have both BFS and DFS before us: how do their exploration
           styles compare? Depth-first search makes deep incursions into a graph,
-          retreating only when it runs out of new nodes to visit. This strategy
-          gives it the wonderful, subtle, and extremely useful properties we saw
-          in Chapter 3. But it also means that DFS can end up taking a long and
-          convoluted route to a vertex that is actually very close by, as in
-          Figure 4.1. Breadth-first search makes sure to visit vertices in
-          increasing order of their distance from the starting point. This is a
-          broader, shallower search, rather like the propagation of a wave upon
-          water. And it is achieved using almost exactly the same code as DFS,
-          but with a queue in place of a stack.
+          retreating only when it runs out of new nodes to visit. Breadth-first
+          search makes sure to visit vertices in increasing order of their distance
+          from the starting point. This is a broader, shallower search, rather
+          like the propagation of a wave upon water.
         </p>
         <p>
           Also notice one stylistic difference from DFS: since we are only
@@ -310,14 +304,12 @@
         <p>
           Breadth-first search treats all edges as having the same length. This
           is rarely true in applications where shortest paths are to be found.
-          For instance, suppose you are driving from San Francisco to Las Vegas,
-          and want to find the quickest route. Figure 4.5 shows the major
-          highways you might conceivably use. Picking the right combination of
-          them is a shortest-path problem in which the length of each edge (each
-          stretch of highway) is important. For the remainder of this chapter,
-          we will deal with this more general scenario, annotating every edge
-          $e \in E$ with a length $l_e$. If $e = (u, v)$, we will sometimes also
-          write $l(u,v)$ or $l_{uv}$.
+          For instance, suppose you are driving from San Francisco to Las Vegas.
+          Picking the right combination of highways is a shortest-path problem
+          in which the length of each edge (each stretch of highway) is important.
+          For the remainder of this chapter, we will deal with this more general
+          scenario, annotating every edge $e \in E$ with a length $l_e$. If
+          $e = (u, v)$, we will sometimes also write $l(u,v)$ or $l_{uv}$.
         </p>
         <figure>
           <img
@@ -329,10 +321,9 @@
         </figure>
         <p>
           These $l_e$'s do not have to correspond to physical lengths. They
-          could denote time (driving time between cities) or money (cost of
-          taking a bus), or any other quantity that we would like to conserve.
-          In fact, there are cases in which we need to use negative lengths, but
-          we will briefly overlook this particular complication.
+          could denote time, cost, or any other quantity that we would like
+          to conserve. In fact, there are cases in which we need to use negative
+          lengths, which we will discuss later.
         </p>
       </section>
 
@@ -340,26 +331,12 @@
         <h2>4.4 Dijkstra's algorithm</h2>
         <h3>4.4.1 An adaptation of breadth-first search</h3>
         <p>
-          Breadth-first search finds shortest paths in any graph whose edges
-          have unit length. Can we adapt it to a more general graph $G = (V,E)$
-          whose edge lengths $l_e$ are positive integers?
+          BFS finds shortest paths in any graph whose edges have unit length.
+          Can we adapt it to a more general graph $G = (V,E)$ whose edge
+          lengths $l_e$ are positive integers? A simple trick is to convert G
+          into a graph G' that BFS can handle: break long edges into
+          unit-length pieces by introducing "dummy" nodes.
         </p>
-        <h4>A more convenient graph</h4>
-        <p>
-          Here is a simple trick for converting G into something BFS can handle:
-          break G's long edges into unit-length pieces, by introducing "dummy"
-          nodes. Figure 4.6 shows an example of this transformation. To
-          construct the new graph G', for any edge $e = (u, v)$ of E, replace
-          it by $l_e$ edges of length 1, by adding $l_e - 1$ dummy nodes between
-          u and v.
-        </p>
-        <p>
-          Graph G' contains all the vertices V that interest us, and the
-          distances between them are exactly the same as in G. Most
-          importantly, the edges of G' all have unit length. Therefore, we can
-          compute distances in G by running BFS on G'.
-        </p>
-
         <figure>
           <img
             src="../../../assets/images/algorithms/chpt_4_imgs/figure-4-6.png"
@@ -370,117 +347,25 @@
             Figure 4.6 Breaking edges into unit-length pieces.
           </figcaption>
         </figure>
-
-        <h4>Alarm clocks</h4>
         <p>
-          If efficiency were not an issue, we could stop here. But when G has
-          very long edges, the G' it engenders is thickly populated with dummy
-          nodes, and the BFS spends most of its time diligently computing
-          distances to these nodes that we don't care about at all.
-        </p>
-        <p>
-          To see this more concretely, consider the graphs G and G' of Figure
-          4.7, and imagine that the BFS, started at node s of G', advances by
-          one unit of distance per minute. For the first 99 minutes it
-          tediously progresses along S-A and S-B, an endless desert of dummy
-          nodes. Is there some way we can snooze through these boring phases and
-          have an alarm wake us up whenever something interesting is happening,
-          specifically, whenever one of the real nodes (from the original graph
-          G) is reached?
-        </p>
-        <figure>
-          <img
-            src="../../../assets/images/algorithms/chpt_4_imgs/figure-4-7.png"
-            alt="BFS on a graph with dummy nodes can be uneventful for long periods."
-            width="700"
-          />
-          <figcaption>
-            Figure 4.7 BFS on G' is mostly uneventful. The dotted lines show
-            some early "wavefronts."
-          </figcaption>
-        </figure>
-        <p>
-          We do this by setting two alarms at the outset, one for node A, set to
-          go off at time T = 100, and one for B, at time T = 200. These are
-          estimated times of arrival, based upon the edges currently being
-          traversed. We doze off and awake at T = 100 to find A has been
-          discovered. At this point, the estimated time of arrival for B is
-          adjusted to T = 150 and we change its alarm accordingly.
-        </p>
-        <p>
-          More generally, at any given moment the breadth-first search is
-          advancing along certain edges of G, and there is an alarm for every
-          endpoint node toward which it is moving, set to go off at the
-          estimated time of arrival at that node. Some of these might be
-          overestimates because BFS may later find shortcuts, as a result of
-          future arrivals elsewhere. In the preceding example, a quicker route
-          to B was revealed upon arrival at A. However, nothing interesting can
-          possibly happen before an alarm goes off. The sounding of the next
--         alarm must therefore signal the arrival of the wavefront to a real
--         node $u \in V$ by BFS. At that point, BFS might also start advancing
--         along some new edges out of u, and alarms need to be set for their
--         endpoints.
-        </p>
-        <p>
-          The "alarm clock algorithm" faithfully simulates the execution of BFS
-          on G'.
-        </p>
-        <ul>
-          <li>Set an alarm clock for node s at time 0.</li>
-          <li>
-            Repeat until there are no more alarms: Say the next alarm goes off
-            at time T, for node u. Then:
-            <ul>
-              <li>The distance from s to u is T.</li>
-              <li>
-                For each neighbor v of u in G:
-                <ul>
-                  <li>
-                    If there is no alarm yet for v, set one for time
-                    $T + l(u, v)$.
-                  </li>
-                  <li>
-                    If v's alarm is set for later than $T + l(u, v)$, then reset
-                    it to this earlier time.
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-        <p>
-          <b>Dijkstra's algorithm.</b> The alarm clock algorithm computes
-          distances in any graph with positive integral edge lengths. It is
-          almost ready for use, except that we need to somehow implement the
-          system of alarms. The right data structure for this job is a
-          <strong>priority queue</strong> (usually implemented via a heap), which maintains a set
-          of elements (nodes) with associated numeric key values (alarm times)
-          and supports the following operations:
-        </p>
-        <ul>
-            <li><b>Insert.</b> Add a new element to the set.</li>
-            <li><b>Decrease-key.</b> Accommodate the decrease in key value of a particular element.</li>
-            <li><b>Delete-min.</b> Return the element with the smallest key, and remove it from the set.</li>
-            <li><b>Make-queue.</b> Build a priority queue out of the given elements, with the given key values.</li>
-        </ul>
-        <p>
-            The first two let us set alarms, and the third tells us which alarm is next to go off. Putting
-            this all together, we get Dijkstra's algorithm (Figure 4.8).
+          However, this can be very inefficient if edge lengths are large. A
+          better way is to simulate this process using a **priority queue**. This
+          leads to Dijkstra's algorithm.
         </p>
         <pre class="pseudocode">
             \begin{algorithm}
-            \caption{Dijkstra's shortest-path algorithm.}
+            \caption{Dijkstra's Shortest-Path Algorithm}
             \begin{algorithmic}
-              \Procedure{dijkstra}{$G, l, s$}
+              \Procedure{Dijkstra}{$G, l, s$}
                 \ForAll{$u \in V$}
                   \State $dist(u) \gets \infty$
                   \State $prev(u) \gets \text{nil}$
                 \EndFor
                 \State $dist(s) \gets 0$
-                \State $H \gets \text{makequeue}(V)$ \Comment{using dist-values as keys}
+                \State $H \gets \text{makequeue}(V)$ \Comment{Using dist-values as keys}
                 \While{$H$ is not empty}
                   \State $u \gets \text{deletemin}(H)$
-                  \ForAll{edges $(u, v) \in E$}
+                  \ForAll{edge $(u, v) \in E$}
                     \If{$dist(v) > dist(u) + l(u, v)$}
                       \State $dist(v) \gets dist(u) + l(u, v)$
                       \State $prev(v) \gets u$
@@ -492,7 +377,13 @@
             \end{algorithmic}
             \end{algorithm}
           </pre>
-          <p>In the code, dist(u) refers to the current alarm clock setting for node u. A value of $\infty$ means the alarm hasn't so far been set. There is also a special array, prev, that holds on one crucial piece of information for each node u: the identity of the node immediately before it on the shortest path from s to u. By following these back-pointers, we can easily reconstruct shortest paths, and so this array is a compact summary of all the paths found. A full example of the algorithm's operation, along with the final shortest-path tree, is shown in Figure 4.9.</p>
+          <p>
+            In the code, `dist(u)` stores the current best estimate of the
+            shortest path to node `u`, and `prev(u)` stores the predecessor on that
+            path. The priority queue `H` stores vertices, prioritized by their
+            `dist` value. A full example of the algorithm's operation is shown in
+            Figure 4.9.
+          </p>
 
         <figure>
           <img
@@ -506,124 +397,43 @@
             the final shortest-path tree.
           </figcaption>
         </figure>
-        <p>In summary, we can think of Dijkstra's algorithm as just BFS, except it uses a priority queue instead of a regular queue, so as to prioritize nodes in a way that takes edge lengths into account. This viewpoint gives a concrete appreciation of how and why the algorithm works, but there is a more direct, more abstract derivation that doesn't depend upon BFS at all. We now start from scratch with this complementary interpretation.</p>
 
         <h3>4.4.2 An alternative derivation</h3>
         <p>
-          Here's a plan for computing shortest paths: expand outward from the
-          starting point s, steadily growing the region of the graph to which
-          distances and shortest paths are known. This growth should be
-          orderly, first incorporating the closest nodes and then moving on to
-          those further away. More precisely, when the "known region" is some
-          subset of vertices R that includes s, the next addition to it should
-          be the node outside R that is closest to s. Let us call this node v;
-          the question is: how do we identify it?
-        </p>
-        <p>
-            Since we are assuming that all edge lengths are positive, u must be closer to s than v is. This means that u is in R, otherwise it would contradict v's status as the closest node to s outside R. So, the shortest path from s to v is simply a known shortest path extended by a single edge.
-        </p>
-        <p>
-            But there will typically be many single-edge extensions of the currently known shortest paths (Figure 4.10); which of these identifies v? The answer is, the shortest of these extended paths. Because, if an even shorter single-edge-extended path existed, this would once more contradict v's status as the node outside R closest to s. So, it's easy to find v: it is the node outside R for which the smallest value of $distance(s, u) + l(u, v)$ is attained, as u ranges over R. In other words, try all single-edge extensions of the currently known shortest paths, find the shortest such extended path, and proclaim its endpoint to be the next node of R.
-        </p>
-        <figure>
-            <img
-              src="../../../assets/images/algorithms/chpt_4_imgs/figure-4-10.png"
-              alt="Single-edge extensions of known shortest paths."
-              width="700"
-            />
-            <figcaption>
-              Figure 4.10 Single-edge extensions of known shortest paths.
-            </figcaption>
-          </figure>
-        <p>
-            We now have an algorithm for growing R by looking at extensions of the current set of shortest paths. Some extra efficiency comes from noticing that on any given iteration, the only new extensions are those involving the node most recently added to region R. All other extensions will have been assessed previously and do not need to be recomputed.
+          An alternative view of Dijkstra's algorithm is that it grows a region of "known" vertices `R`, to which shortest paths have been found. In each step, it adds the node `v` outside of `R` that is closest to the start node `s`. The path to `v` must come from a node `u` already in `R`, so the algorithm finds the node `v` that minimizes $dist(u) + l(u,v)$ over all $u \in R$.
         </p>
 
         <h3>4.4.3 Running time</h3>
-        <p>At the level of abstraction of Figure 4.8, Dijkstra's algorithm is structurally identical to breadth-first search. However, it is slower because the priority queue primitives are computationally more demanding than the constant-time `eject`'s and `inject`'s of BFS. Since `makequeue` takes at most as long as $|V|$ insert operations, we get a total of $|V|$ `deletemin` and $|V| + |E|$ `insert`/`decreasekey` operations. The time needed for these varies by implementation; for instance, a binary heap gives an overall running time of $O((|V| + |E|) \log |V|)$.</p>
+        <p>The running time of Dijkstra's algorithm is dominated by the priority queue operations. With $|V|$ vertices and $|E|$ edges, there are $|V|$ `deletemin` operations and up to $|E|$ `decreasekey` operations. The total time depends on the heap implementation:</p>
         
-        <h4>Which heap is best?</h4>
-        <p>The running time of Dijkstra's algorithm depends heavily on the priority queue implementation used. Here are the typical choices.</p>
         <table>
             <thead>
                 <tr>
                     <th>Implementation</th>
-                    <th>deletemin</th>
-                    <th>insert/decreasekey</th>
-                    <th>$|V| \cdot \text{deletemin} + (|V| + |E|) \cdot \text{insert}$</th>
+                    <th>Total Running Time</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>Array</td>
-                    <td>$O(|V|)$</td>
-                    <td>$O(1)$</td>
                     <td>$O(|V|^2)$</td>
                 </tr>
                 <tr>
                     <td>Binary heap</td>
-                    <td>$O(\log |V|)$</td>
-                    <td>$O(\log |V|)$</td>
                     <td>$O((|V| + |E|) \log |V|)$</td>
                 </tr>
                 <tr>
-                    <td>d-ary heap</td>
-                    <td>$O(d \log_d |V|)$</td>
-                    <td>$O(\log_d |V|)$</td>
-                    <td>$O((|V| \cdot d + |E|) \log_d |V|)$</td>
-                </tr>
-                <tr>
                     <td>Fibonacci heap</td>
-                    <td>$O(\log |V|)$ (amortized)</td>
-                    <td>$O(1)$ (amortized)</td>
                     <td>$O(|V| \log |V| + |E|)$</td>
                 </tr>
             </tbody>
         </table>
-
-      </section>
-
-      <section id="priority-queues">
-        <h2>4.5 Priority queue implementations</h2>
-        <h3>4.5.1 Array</h3>
-        <p>
-            The simplest implementation of a priority queue is as an unordered array of key values for all potential elements (the vertices of the graph, in the case of Dijkstra's algorithm). Initially, these values are set to $\infty$.
-        </p>
-        <p>
-            An <code>insert</code> or <code>decreasekey</code> is fast, because it just involves adjusting a key value, an $O(1)$ operation. To <code>deletemin</code>, on the other hand, requires a linear-time scan of the list.
-        </p>
-        <h3>4.5.2 Binary heap</h3>
-        <p>
-            Here elements are stored in a complete binary tree, namely, a binary tree in which each level is filled in from left to right, and must be full before the next level is started. In addition, a special ordering constraint is enforced: the key value of any node of the tree is less than or equal to that of its children. In particular, therefore, the root always contains the smallest element.
-        </p>
-        <figure>
-            <img
-              src="../../../assets/images/algorithms/chpt_4_imgs/figure-4-11.png"
-              alt="Operations on a binary heap."
-              width="700"
-            />
-            <figcaption>
-              Figure 4.11 (a) A binary heap with 10 elements. (b)-(d) The "bubble-up" steps in inserting an element. (e)-(g) The "sift-down" steps in a delete-min operation.
-            </figcaption>
-          </figure>
-        <p>
-            To <code>insert</code>, place the new element at the bottom of the tree (in the first available position), and let it "bubble up." That is, if it is smaller than its parent, swap the two and repeat. The number of swaps is at most the height of the tree, which is $\lfloor\log_2 n\rfloor$ when there are $n$ elements. A <code>decreasekey</code> is similar, except that the element is already in the tree, so we let it bubble up from its current position.
-        </p>
-        <p>
-            To <code>deletemin</code>, return the root value. To then remove this element from the heap, take the last node in the tree and place it at the root. Let it "sift down": if it is bigger than either child, swap it with the smaller child and repeat. Again this takes $O(\log n)$ time.
-        </p>
-
-        <h3>4.5.3 d-ary heap</h3>
-        <p>
-            A d-ary heap is identical to a binary heap, except that nodes have $d$ children instead of just two. This reduces the height of a tree with $n$ elements to $\Theta(\log_d n) = \Theta((\log n)/(\log d))$. Inserts are therefore speeded up by a factor of $\Theta(\log d)$. Deletemin operations, however, take a little longer, namely $O(d \log_d n)$.
-        </p>
       </section>
 
       <section id="negative-edges">
         <h2>4.6 Shortest paths in the presence of negative edges</h2>
-        <h3>4.6.1 Negative edges</h3>
         <p>
-            Dijkstra's algorithm works in part because the shortest path from the starting point s to any node v must pass exclusively through nodes that are closer than v. This no longer holds when edge lengths can be negative. In Figure 4.12, the shortest path from S to A passes through B, a node that is further away!
+            Dijkstra's algorithm fails if there are negative edge lengths. The core assumption that the closest node outside the "known" region is the next to be finalized is no longer true.
         </p>
         <figure>
             <img
@@ -634,90 +444,67 @@
             <figcaption>
               Figure 4.12 Dijkstra's algorithm will not work if there are negative edges.
             </figcaption>
-          </figure>
-        <p>What needs to be changed in order to accommodate this new complication? A crucial invariant in Dijkstra's algorithm is that the <code>dist</code> values it maintains are always either overestimates or exactly correct. They start off at $\infty$, and the only way they ever change is by updating along an edge:</p>
-        <pre><code class="language-generic">procedure update((u, v) in E)
-    dist(v) = min(dist(v), dist(u) + l(u, v))</code></pre>
-        <p>This update operation is simply an expression of the fact that the distance to v cannot possibly be more than the distance to u, plus $l(u, v)$. It has the following properties.</p>
-        <ol>
-            <li>It gives the correct distance to v in the particular case where u is the second-last node in the shortest path to v, and dist(u) is correctly set.</li>
-            <li>It will never make dist(v) too small, and in this sense it is safe. For instance, a slew of extraneous updates can't hurt.</li>
-        </ol>
-        <p>
-            This operation is extremely useful: it is harmless, and if used carefully, will correctly set distances. In fact, Dijkstra's algorithm can be thought of simply as a sequence of updates. We know this particular sequence doesn't work with negative edges, but is there some other sequence that does? A shortest path can have at most $|V|-1$ edges. If the sequence of updates performed includes $(s, u_1), (u_1, u_2), \dots, (u_k, t)$ in that order, then the distance to t will be correctly computed.
-        </p>
-        <p>
-            If we don't know all the shortest paths beforehand, how can we be sure to update the right edges in the right order? Here is an easy solution: simply update all the edges, $|V|-1$ times! The resulting $O(|V| \cdot |E|)$ procedure is called the Bellman-Ford algorithm and is shown in Figure 4.13, with an example run in Figure 4.14.
-        </p>
+        </figure>
+        <p>For graphs with negative edges (but no negative cycles), we can use the **Bellman-Ford algorithm**. It works by relaxing all edges repeatedly. Since a shortest path can have at most $|V|-1$ edges, relaxing all $|E|$ edges for $|V|-1$ rounds guarantees finding the shortest path.</p>
+        
         <pre class="pseudocode">
             \begin{algorithm}
-            \caption{The Bellman-Ford algorithm.}
+            \caption{The Bellman-Ford Algorithm}
             \begin{algorithmic}
-              \Procedure{shortest-paths}{$G, l, s$}
+              \Procedure{Bellman-Ford}{$G, l, s$}
                 \ForAll{$u \in V$}
                   \State $dist(u) \gets \infty$
                   \State $prev(u) \gets \text{nil}$
                 \EndFor
                 \State $dist(s) \gets 0$
-                \Repeat{$|V|-1$ times}
-                  \ForAll{edge $e=(u,v) \in E$}
-                    \State $update(e)$ \Comment{dist(v) = min(dist(v), dist(u) + l(u,v))}
+                \For{$i \gets 1$ to $|V|-1$}
+                  \ForAll{edge $(u,v) \in E$}
+                    \If{$dist(v) > dist(u) + l(u,v)$}
+                        \State $dist(v) \gets dist(u) + l(u,v)$
+                        \State $prev(v) \gets u$
+                    \EndIf
                   \EndFor
-                \EndRepeat
+                \EndFor
               \EndProcedure
             \end{algorithmic}
             \end{algorithm}
           </pre>
-
-          <figure>
-            <img
-              src="../../../assets/images/algorithms/chpt_4_imgs/figure-4-14.png"
-              alt="The Bellman-Ford algorithm illustrated on a sample graph."
-              width="700"
-            />
-            <figcaption>
-              Figure 4.14 The Bellman-Ford algorithm illustrated on a sample graph.
-            </figcaption>
-          </figure>
-
+          
         <h3>4.6.2 Negative cycles</h3>
         <p>
-            If the length of an edge in the graph created a negative cycle, it wouldn't make sense to ask about shortest paths. We could go around the cycle multiple times and find paths of arbitrarily small length.
-        </p>
-        <p>
-            The shortest-path problem is ill-posed in graphs with negative cycles. Our algorithm from Section 4.6.1 works only in the absence of such cycles. Fortunately, it is easy to automatically detect negative cycles and issue a warning. Such a cycle would allow us to endlessly apply rounds of update operations, reducing dist estimates every time. So instead of stopping after $|V|-1$ iterations, perform one extra round. There is a negative cycle if and only if some dist value is reduced during this final round.
+            The Bellman-Ford algorithm can also detect negative cycles. If, after $|V|-1$ rounds of relaxation, an additional round still manages to decrease any `dist` value, it means a negative cycle reachable from `s` exists.
         </p>
       </section>
 
       <section id="dags">
         <h2>4.7 Shortest paths in dags</h2>
         <p>
-            There are two subclasses of graphs that automatically exclude the possibility of negative cycles: graphs without negative edges, and graphs without cycles. We already know how to efficiently handle the former. We will now see how the single-source shortest-path problem can be solved in just linear time on directed acyclic graphs (DAGs).
-        </p>
-        <p>
-            In any path of a dag, the vertices appear in increasing linearized order. Therefore, it is enough to linearize (that is, topologically sort) the dag by depth-first search, and then visit the vertices in sorted order, updating the edges out of each. The algorithm is given in Figure 4.15.
+            For **Directed Acyclic Graphs (DAGs)**, we can find shortest paths in linear time, even with negative edges. The key is to process vertices in a **topologically sorted** order. When we process a vertex `u`, we are guaranteed to have already found the shortest paths to all vertices that can precede `u`.
         </p>
         <pre class="pseudocode">
             \begin{algorithm}
-            \caption{A single-source shortest-path algorithm for dags.}
+            \caption{Shortest Paths in a DAG}
             \begin{algorithmic}
-              \Procedure{dag-shortest-paths}{$G, l, s$}
+              \Procedure{DAG-Shortest-Paths}{$G, l, s$}
+                \State Topologically sort the vertices of G
                 \ForAll{$u \in V$}
                   \State $dist(u) \gets \infty$
                   \State $prev(u) \gets \text{nil}$
                 \EndFor
                 \State $dist(s) \gets 0$
-                \State Linearize G
-                \ForAll{each $u \in V$, in linearized order}
-                  \ForAll{edges $(u, v) \in E$}
-                    \State $update((u,v))$
+                \ForAll{each vertex $u$, in topological order}
+                  \ForAll{edge $(u, v) \in E$}
+                    \If{$dist(v) > dist(u) + l(u,v)$}
+                        \State $dist(v) \gets dist(u) + l(u,v)$
+                        \State $prev(v) \gets u$
+                    \EndIf
                   \EndFor
                 \EndFor
               \EndProcedure
             \end{algorithmic}
             \end{algorithm}
           </pre>
-        <p>Notice that our scheme doesn't require edges to be positive. In particular, we can find longest paths in a dag by the same algorithm: just negate all edge lengths.</p>
+        <p>This algorithm runs in $O(|V|+|E|)$ time, dominated by the topological sort.</p>
       </section>
 
       <section id="comments">
@@ -734,7 +521,7 @@
 
       <footer>
         <p>
-          © 2025 Bob Guo •
+          © 2025 Kristopher Kodweis •
           <a
             href="https://github.com/COD1995/ml-meta"
             target="_blank"
@@ -754,4 +541,3 @@
     <script type="module" src="../../../assets/js/build-side-nav.js"></script>
   </body>
 </html>
-```
