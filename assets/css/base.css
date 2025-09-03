@@ -905,13 +905,13 @@ html.theme-dark .toc-chapters a {
 /* --- Book/Chapter dropdown button restyle --- */
 
 .toc-books {
-  margin-bottom: 2rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  margin-bottom: 1rem;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
   display: block;
 }
 .toc-book {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   background: transparent;
   border: none;
   transition: all 0.3s ease;
@@ -978,7 +978,7 @@ html.theme-dark .toc-chapters a {
 .toc-chapters.dropdown-content {
   background: transparent;
   margin-top: 0;
-  padding: 1rem 0 1.5rem 1.5rem;
+  padding: 0.5rem 0 0.75rem 1rem;
   overflow: hidden;
   transition: max-height 0.4s ease, opacity 0.4s ease, padding 0.4s ease;
 }
@@ -997,7 +997,7 @@ html.theme-dark .toc-chapters a {
 .toc-chapters.dropdown-content.show {
   max-height: 1000px !important;
   opacity: 1 !important;
-  padding: 1rem 0 1.5rem 1.5rem !important;
+  padding: 0.5rem 0 0.75rem 1rem !important;
   display: block !important;
   overflow: visible !important;
 }
@@ -1013,8 +1013,8 @@ html.theme-dark .toc-chapters.dropdown-content {
   display: block;
   font-size: 0.95em;
   font-weight: 500;
-  padding: 0.5rem 0;
-  margin: 0.25rem 0;
+  padding: 0.25rem 0;
+  margin: 0.15rem 0;
   color: #6b7280;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -1031,8 +1031,8 @@ html.theme-dark .toc-chapters.dropdown-content {
 
 /* Elegant separation between main nav and contributors */
 #mainNav {
-  margin-bottom: 5rem;
-  padding-bottom: 3rem;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
   position: relative;
 }
 

@@ -1,0 +1,194 @@
+<svg
+  viewBox="0 0 900 400"
+  width="100%"
+  role="img"
+  aria-label="Forward pass of two-input, two-hidden-neuron, one-output network with numeric activations and weights"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <defs>
+    <marker
+      id="arrow-small"
+      markerWidth="6"
+      markerHeight="5"
+      refX="4.5"
+      refY="2.5"
+      orient="auto"
+    >
+      <path d="M0,0 L6,2.5 L0,5 Z" fill="#222"></path>
+    </marker>
+    <style>
+      .layer {
+        fill: none;
+        stroke: #d9d9d9;
+        stroke-width: 2.5;
+        stroke-dasharray: 6 8;
+        rx: 18;
+        ry: 18;
+      }
+      .edge {
+        fill: none;
+        stroke: #222;
+        stroke-width: 2.5;
+        marker-end: url(#arrow-small);
+      }
+      .node text {
+        font: 700 18px system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial;
+        fill: #fff;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+      .node circle {
+        filter: drop-shadow(0 1.5px 2px rgba(0, 0, 0, 0.15));
+      }
+      .i circle {
+        fill: #ffb400;
+      }
+      .h circle {
+        fill: #04b5e2;
+      }
+      .o circle {
+        fill: #88d869;
+      }
+      .w rect {
+        rx: 8;
+        ry: 8;
+        filter: drop-shadow(0 1.5px 2px rgba(0, 0, 0, 0.15));
+      }
+      .w text {
+        font: 700 14px system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial;
+        fill: #fff;
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+      .w12 rect {
+        fill: #3c64b1;
+      }
+      .w34 rect {
+        fill: #f07b3f;
+      }
+      .w56 rect {
+        fill: #8a8a8a;
+      }
+      .layer-label {
+        font: 600 22px system-ui, -apple-system, Segoe UI, Roboto,
+          Helvetica, Arial;
+        fill: #6b6b6b;
+      }
+      .pred {
+        font: 500 18px system-ui;
+        fill: #777;
+      }
+    </style>
+  </defs>
+
+  <!-- Layer boxes & labels -->
+  <g>
+    <rect class="layer" x="30" y="40" width="220" height="280"></rect>
+    <rect
+      class="layer"
+      x="310"
+      y="40"
+      width="220"
+      height="280"
+    ></rect>
+    <rect
+      class="layer"
+      x="590"
+      y="40"
+      width="260"
+      height="280"
+    ></rect>
+
+    <text class="layer-label" x="60" y="32">Input layer</text>
+    <text class="layer-label" x="340" y="32">Hidden layer</text>
+    <text class="layer-label" x="620" y="32">Output layer</text>
+  </g>
+
+  <!-- Edges (left → right) -->
+  <path class="edge" d="M 190 120 L 380 120"></path>
+  <path class="edge" d="M 190 120 L 380 240"></path>
+  <path class="edge" d="M 190 260 L 380 120"></path>
+  <path class="edge" d="M 190 260 L 380 240"></path>
+
+  <!-- Hidden → output edges -->
+  <path class="edge" d="M 500 150 L 714 191"></path>
+  <path class="edge" d="M 500 230 L 712 203"></path>
+
+  <!-- Weight values on the edges -->
+  <g class="w w12">
+    <rect x="310" y="95" width="46" height="32"></rect>
+    <text x="333" y="111">.11</text>
+  </g>
+  <g class="w w12">
+    <rect x="310" y="140" width="46" height="32"></rect>
+    <text x="333" y="156">.21</text>
+  </g>
+  <g class="w w34">
+    <rect x="310" y="198" width="46" height="32"></rect>
+    <text x="333" y="214">.12</text>
+  </g>
+  <g class="w w34">
+    <rect x="310" y="237" width="46" height="32"></rect>
+    <text x="333" y="253">.08</text>
+  </g>
+  <g class="w w56">
+    <rect x="600" y="156" width="46" height="36"></rect>
+    <text x="623" y="179">.14</text>
+  </g>
+  <g class="w w56">
+    <rect x="600" y="198" width="46" height="36"></rect>
+    <text x="623" y="217">.15</text>
+  </g>
+
+  <!-- Nodes with activations -->
+  <g class="node i">
+    <circle cx="120" cy="120" r="45"></circle>
+    <text x="120" y="120">2</text>
+  </g>
+  <g class="node i">
+    <circle cx="120" cy="260" r="45"></circle>
+    <text x="120" y="260">3</text>
+  </g>
+  <g class="node h">
+    <circle cx="440" cy="120" r="45"></circle>
+    <text x="440" y="120">.85</text>
+  </g>
+  <g class="node h">
+    <circle cx="440" cy="240" r="45"></circle>
+    <text x="440" y="240">.48</text>
+  </g>
+  <g class="node o">
+    <circle cx="760" cy="200" r="45"></circle>
+    <text x="760" y="200">.191</text>
+  </g>
+
+  <text class="pred" x="815" y="150" text-anchor="middle">
+    prediction
+  </text>
+  <!-- Arrow from "prediction" down to the output node -->
+  <path
+    d="M 815 158 L 791 180"
+    stroke="#777"
+    stroke-width="2.5"
+    fill="none"
+    marker-end="url(#arrow-small)"
+  />
+
+  <!-- Grey forward-pass arrow positioned below the network -->
+  <rect x="180" y="340" width="460" height="8" fill="#bdbdbd"></rect>
+  <polygon points="640,332 680,346 640,360" fill="#bdbdbd"></polygon>
+
+  <!-- Label underneath the arrow (adjusted lower & expanded viewBox) -->
+  <!-- Changed viewBox height above? If you want to keep lower label, update viewBox to 400. -->
+  <text
+    x="450"
+    y="372"
+    text-anchor="middle"
+    font-size="16"
+    fill="#777"
+  >
+    Forward pass
+  </text>
+</svg>
