@@ -278,189 +278,11 @@
         </p>
 
         <figure class="nn-diagram" style="margin: 2rem 0">
-          <svg
-            viewBox="0 0 900 360"
+          <img
+            src="../../assets/svg/papers/basics/deep-learning-crash-course/neural-network-basic-structure.svg"
+            alt="Two-input, two-hidden-neuron, one-output network with weights w1 to w6"
             width="100%"
-            role="img"
-            aria-label="Two-input, two-hidden-neuron, one-output network with weights w1 to w6"
-          >
-            <defs>
-              <marker
-                id="arrow"
-                markerWidth="6"
-                markerHeight="5"
-                refX="4.5"
-                refY="2.5"
-                orient="auto"
-              >
-                <path d="M0,0 L6,2.5 L0,5 Z" fill="#222"></path>
-              </marker>
-
-              <style>
-                .layer {
-                  fill: none;
-                  stroke: #d9d9d9;
-                  stroke-width: 2.5;
-                  stroke-dasharray: 6 8;
-                  rx: 18;
-                  ry: 18;
-                }
-                .edge {
-                  fill: none;
-                  stroke: #222;
-                  stroke-width: 2.5;
-                  marker-end: url(#arrow);
-                }
-                .node text {
-                  font: 700 18px system-ui, -apple-system, Segoe UI, Roboto,
-                    Helvetica, Arial;
-                  fill: #fff;
-                  text-anchor: middle;
-                  dominant-baseline: middle;
-                }
-                .node circle {
-                  filter: drop-shadow(0 1.5px 2px rgba(0, 0, 0, 0.15));
-                }
-                .i circle {
-                  fill: #ffb400;
-                }
-                .h circle {
-                  fill: #04b5e2;
-                }
-                .o circle {
-                  fill: #88d869;
-                }
-                .w rect {
-                  rx: 8;
-                  ry: 8;
-                  filter: drop-shadow(0 1.5px 2px rgba(0, 0, 0, 0.15));
-                }
-                .w text {
-                  font: 700 14px system-ui, -apple-system, Segoe UI, Roboto,
-                    Helvetica, Arial;
-                  fill: #fff;
-                  text-anchor: middle;
-                  dominant-baseline: middle;
-                }
-                .w12 rect {
-                  fill: #3c64b1;
-                }
-                .w34 rect {
-                  fill: #f07b3f;
-                }
-                .w56 rect {
-                  fill: #8a8a8a;
-                }
-                .layer-label {
-                  font: 600 22px system-ui, -apple-system, Segoe UI, Roboto,
-                    Helvetica, Arial;
-                  fill: #6b6b6b;
-                }
-                .pred {
-                  font: 500 18px system-ui;
-                  fill: #777;
-                }
-              </style>
-            </defs>
-
-            <!-- Layer boxes & labels -->
-            <g>
-              <rect class="layer" x="30" y="40" width="220" height="280"></rect>
-              <rect
-                class="layer"
-                x="310"
-                y="40"
-                width="220"
-                height="280"
-              ></rect>
-              <rect
-                class="layer"
-                x="590"
-                y="40"
-                width="260"
-                height="280"
-              ></rect>
-
-              <text class="layer-label" x="60" y="32">Input layer</text>
-              <text class="layer-label" x="340" y="32">Hidden layer</text>
-              <text class="layer-label" x="620" y="32">Output layer</text>
-            </g>
-
-            <!-- Edges (left -> right) -->
-            <path class="edge" d="M 190 120 L 380 120"></path>
-            <path class="edge" d="M 190 120 L 380 240"></path>
-            <path class="edge" d="M 190 260 L 380 120"></path>
-            <path class="edge" d="M 190 260 L 380 240"></path>
-
-            <!-- hidden -> output (end just before OUT circle) -->
-            <!-- draw these AFTER the nodes so arrowheads aren't hidden -->
-            <!-- Adjusted endpoints to land just outside the output node radius (r=45) -->
-            <path class="edge" d="M 500 150 L 714 191"></path>
-            <!-- h1 -> out (adjusted) -->
-            <path class="edge" d="M 500 230 L 712 203"></path>
-            <!-- h2 -> out -->
-
-            <!-- Weight pills (w4 raised more) -->
-            <g class="w w12">
-              <rect x="310" y="95" width="46" height="32"></rect>
-              <text x="333" y="111">w1</text>
-            </g>
-            <g class="w w12">
-              <rect x="310" y="140" width="46" height="32"></rect>
-              <text x="333" y="156">w2</text>
-            </g>
-            <g class="w w34">
-              <rect x="310" y="198" width="46" height="32"></rect>
-              <text x="333" y="214">w3</text>
-            </g>
-            <g class="w w34">
-              <rect x="310" y="237" width="46" height="32"></rect>
-              <text x="333" y="253">w4</text>
-            </g>
-            <!-- FIXED positions (further left, w5 raised more, w6 lowered more) -->
-            <g class="w w56">
-              <rect x="600" y="156" width="46" height="36"></rect>
-              <text x="623" y="179">w5</text>
-            </g>
-            <g class="w w56">
-              <rect x="600" y="198" width="46" height="36"></rect>
-              <text x="623" y="217">w6</text>
-            </g>
-
-            <!-- Nodes -->
-            <g class="node i">
-              <circle cx="120" cy="120" r="45"></circle>
-              <text x="120" y="120">i₁</text>
-            </g>
-            <g class="node i">
-              <circle cx="120" cy="260" r="45"></circle>
-              <text x="120" y="260">i₂</text>
-            </g>
-            <g class="node h">
-              <circle cx="440" cy="120" r="45"></circle>
-              <text x="440" y="120">h₁</text>
-            </g>
-            <g class="node h">
-              <circle cx="440" cy="240" r="45"></circle>
-              <text x="440" y="240">h₂</text>
-            </g>
-            <g class="node o">
-              <circle cx="760" cy="200" r="45"></circle>
-              <text x="760" y="200">out</text>
-            </g>
-
-            <text class="pred" x="815" y="150" text-anchor="middle">
-              prediction
-            </text>
-            <!-- Arrow from center-bottom of 'prediction' text to edge of output node -->
-            <path
-              d="M 815 158 L 791 180"
-              stroke="#777"
-              stroke-width="2.5"
-              fill="none"
-              marker-end="url(#arrow)"
-            />
-          </svg>
+          />
         </figure>
 
         <p>
@@ -489,188 +311,11 @@
         </p>
 
         <figure class="nn-diagram" style="margin: 2rem 0">
-          <svg
-            viewBox="0 0 900 360"
+          <img
+            src="../../assets/svg/papers/basics/deep-learning-crash-course/neural-network-with-weights.svg"
+            alt="Two-input, two-hidden-neuron, one-output network with weights w1 to w6"
             width="100%"
-            role="img"
-            aria-label="Two-input, two-hidden-neuron, one-output network with weights w1 to w6"
-          >
-            <defs>
-              <marker
-                id="arrow"
-                markerWidth="6"
-                markerHeight="5"
-                refX="4.5"
-                refY="2.5"
-                orient="auto"
-              >
-                <path d="M0,0 L6,2.5 L0,5 Z" fill="#222"></path>
-              </marker>
-
-              <style>
-                .layer {
-                  fill: none;
-                  stroke: #d9d9d9;
-                  stroke-width: 2.5;
-                  stroke-dasharray: 6 8;
-                  rx: 18;
-                  ry: 18;
-                }
-                .edge {
-                  fill: none;
-                  stroke: #222;
-                  stroke-width: 2.5;
-                  marker-end: url(#arrow);
-                }
-                .node text {
-                  font: 700 18px system-ui, -apple-system, Segoe UI, Roboto,
-                    Helvetica, Arial;
-                  fill: #fff;
-                  text-anchor: middle;
-                  dominant-baseline: middle;
-                }
-                .node circle {
-                  filter: drop-shadow(0 1.5px 2px rgba(0, 0, 0, 0.15));
-                }
-                .i circle {
-                  fill: #ffb400;
-                }
-                .h circle {
-                  fill: #04b5e2;
-                }
-                .o circle {
-                  fill: #88d869;
-                }
-                .w rect {
-                  rx: 8;
-                  ry: 8;
-                  filter: drop-shadow(0 1.5px 2px rgba(0, 0, 0, 0.15));
-                }
-                .w text {
-                  font: 700 14px system-ui, -apple-system, Segoe UI, Roboto,
-                    Helvetica, Arial;
-                  fill: #fff;
-                  text-anchor: middle;
-                  dominant-baseline: middle;
-                }
-                .w12 rect {
-                  fill: #3c64b1;
-                }
-                .w34 rect {
-                  fill: #f07b3f;
-                }
-                .w56 rect {
-                  fill: #8a8a8a;
-                }
-                .layer-label {
-                  font: 600 22px system-ui, -apple-system, Segoe UI, Roboto,
-                    Helvetica, Arial;
-                  fill: #6b6b6b;
-                }
-                .pred {
-                  font: 500 18px system-ui;
-                  fill: #777;
-                }
-              </style>
-            </defs>
-
-            <!-- Layer boxes & labels -->
-            <g>
-              <rect class="layer" x="30" y="40" width="220" height="280"></rect>
-              <rect
-                class="layer"
-                x="310"
-                y="40"
-                width="220"
-                height="280"
-              ></rect>
-              <rect
-                class="layer"
-                x="590"
-                y="40"
-                width="260"
-                height="280"
-              ></rect>
-
-              <text class="layer-label" x="60" y="32">Input layer</text>
-              <text class="layer-label" x="340" y="32">Hidden layer</text>
-              <text class="layer-label" x="620" y="32">Output layer</text>
-            </g>
-
-            <!-- Edges (left -> right) -->
-            <path class="edge" d="M 190 120 L 380 120"></path>
-            <path class="edge" d="M 190 120 L 380 240"></path>
-            <path class="edge" d="M 190 260 L 380 120"></path>
-            <path class="edge" d="M 190 260 L 380 240"></path>
-
-            <!-- hidden -> output (end just before OUT circle) -->
-            <!-- draw these AFTER the nodes so arrowheads aren't hidden -->
-            <!-- Adjusted endpoints to land just outside the output node radius (r=45) -->
-            <path class="edge" d="M 500 150 L 714 191"></path>
-            <!-- h1 -> out (adjusted) -->
-            <path class="edge" d="M 500 230 L 712 203"></path>
-            <!-- h2 -> out -->
-
-            <!-- Weight pills with values -->
-            <g class="w w12">
-              <rect x="298" y="95" width="70" height="32"></rect>
-              <text x="333" y="111">0.11</text>
-            </g>
-            <g class="w w12">
-              <rect x="298" y="140" width="70" height="32"></rect>
-              <text x="333" y="156">0.21</text>
-            </g>
-            <g class="w w34">
-              <rect x="298" y="198" width="70" height="32"></rect>
-              <text x="333" y="214">0.12</text>
-            </g>
-            <g class="w w34">
-              <rect x="298" y="237" width="70" height="32"></rect>
-              <text x="333" y="253">0.08</text>
-            </g>
-            <g class="w w56">
-              <rect x="588" y="156" width="70" height="36"></rect>
-              <text x="623" y="179">0.14</text>
-            </g>
-            <g class="w w56">
-              <rect x="588" y="198" width="70" height="36"></rect>
-              <text x="623" y="217">0.15</text>
-            </g>
-
-            <!-- Nodes -->
-            <g class="node i">
-              <circle cx="120" cy="120" r="45"></circle>
-              <text x="120" y="120">i₁</text>
-            </g>
-            <g class="node i">
-              <circle cx="120" cy="260" r="45"></circle>
-              <text x="120" y="260">i₂</text>
-            </g>
-            <g class="node h">
-              <circle cx="440" cy="120" r="45"></circle>
-              <text x="440" y="120">h₁</text>
-            </g>
-            <g class="node h">
-              <circle cx="440" cy="240" r="45"></circle>
-              <text x="440" y="240">h₂</text>
-            </g>
-            <g class="node o">
-              <circle cx="760" cy="200" r="45"></circle>
-              <text x="760" y="200">out</text>
-            </g>
-
-            <text class="pred" x="815" y="150" text-anchor="middle">
-              prediction
-            </text>
-            <!-- Arrow from center-bottom of 'prediction' text to edge of output node -->
-            <path
-              d="M 815 158 L 791 180"
-              stroke="#777"
-              stroke-width="2.5"
-              fill="none"
-              marker-end="url(#arrow)"
-            />
-          </svg>
+          />
         </figure>
 
         <p>
@@ -731,6 +376,154 @@
         </p>
 
         <strong>Forward Pass</strong>
+        <!-- Forward pass network diagram: shows how the initial inputs (2 and 3) 
+     flow through the network with the current weights, activations, and forward-pass arrow -->
+        <figure class="nn-diagram" style="margin: 2rem 0">
+          <img
+            src="../../assets/svg/papers/basics/deep-learning-crash-course/neural-network-forward-pass.svg"
+            alt="Forward pass of two-input, two-hidden-neuron, one-output network with numeric activations and weights"
+            width="100%"
+          />
+        </figure>
+
+        <p>
+          During the forward pass, the network makes predictions based on the
+          current weights. The output is compared to the actual target, and the
+          difference (loss) is computed. How is it calculated? $$
+          \left[\begin{array}{ll}2 & 3\end{array}\right]
+          \cdot\left[\begin{array}{ll}0.11 & 0.12 \\ 0.21 &
+          0.08\end{array}\right]=\left[\begin{array}{ll}0.85 &
+          0.48\end{array}\right] \cdot\left[\begin{array}{l}0.14 \\
+          0.15\end{array}\right]=[0.191] $$ For those of you who are not
+          familiar with matrix multiplication, here's a quick breakdown: $$
+          \begin{array}{ll}2 \times .11+3 \times .21=.85 & .85 \times .14+.48
+          \times .15=.191 \\ 2 \times .12+3 \times .08=.48 & \end{array} $$
+        </p>
+
+        <p>
+          <strong>Calculate Loss</strong> The first prediction is not ideal, it
+          is actually very far off. So what can we do about it? We need to
+          calculate the loss. The loss function quantifies how far off the
+          predictions are from the actual targets. A common choice for
+          regression tasks is the Mean Squared Error (MSE) loss, defined as: $$
+          \text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 $$ where
+          $y_i$ is the actual target and $\hat{y}_i$ is the predicted value.
+          Now, $$ \text { Error }=\frac{1}{2}(0.191-1.0)^{2}=0.327 $$
+        </p>
+
+        <p>
+          <strong>Reducing Error</strong> Our goal is to reduce this error
+          <em
+            >(Since the actual output is constant, the only way to reduce the
+            error is to change the prediction value). One way to do this is by
+            adjusting</em
+          >
+          the weights in the network. This is where the magic of backpropagation
+          comes in. By computing the gradient of the loss with respect to each
+          weight, we can determine how to change the weights to minimize the
+          loss. This process is repeated over many iterations (epochs) until the
+          network learns to make accurate predictions. $$ \require{color}
+          \begin{aligned} \mathbf{prediction} &=
+          \textcolor[RGB]{102,187,106}{\mathbf{out}} \\[4pt] \mathbf{prediction}
+          &=
+          \big(\textcolor[RGB]{3,155,229}{\mathbf{h_1}}\big)\,\textcolor[RGB]{138,138,138}{\mathbf{w_5}}
+          +
+          \big(\textcolor[RGB]{3,155,229}{\mathbf{h_2}}\big)\,\textcolor[RGB]{138,138,138}{\mathbf{w_6}}
+          \\[4pt] \mathbf{prediction} &=
+          \big(i_{1}\,\textcolor[RGB]{60,100,177}{\mathbf{w_1}} +
+          i_{2}\,\textcolor[RGB]{60,100,177}{\mathbf{w_2}}\big)\,\textcolor[RGB]{138,138,138}{\mathbf{w_5}}
+          + \big(i_{1}\,\textcolor[RGB]{240,123,63}{\mathbf{w_3}} +
+          i_{2}\,\textcolor[RGB]{240,123,63}{\mathbf{w_4}}\big)\,\textcolor[RGB]{138,138,138}{\mathbf{w_6}}
+          \end{aligned} $$
+        </p>
+
+        <p>
+          <strong>Backpropagation</strong> The vanilla version of it is gradient
+          descent.Gradient descent is an iterative optimization algorithm for
+          finding the minimum of a function; in our case we want to minimize th
+          error function. To find a local minimum of a function using gradient
+          descent, one takes steps proportional to the negative of the gradient
+          of the function at the current point.
+        </p>
+
+        <!-- Gradient-descent weight update with annotated arrows -->
+        <figure class="eq-update" style="margin: 2rem 0; text-align: center">
+          <style>
+            .eq-wrap {
+              position: relative;
+              display: inline-block;
+              width: 680px;
+            }
+            .eq-update .label {
+              position: absolute;
+              color: #8c8c8c;
+              font: 18px/1.2 "Segoe UI", system-ui, sans-serif;
+              text-align: center;
+              white-space: nowrap;
+            }
+            /* arrows pointing DOWN from the label */
+            .eq-update .label.top::after {
+              content: "";
+              position: absolute;
+              top: 100%;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 2px;
+              height: 28px;
+              background: #bdbdbd;
+            }
+            .eq-update .label.top::before {
+              content: "";
+              position: absolute;
+              top: calc(100% + 28px);
+              left: 50%;
+              transform: translateX(-50%);
+              border-left: 6px solid transparent;
+              border-right: 6px solid transparent;
+              border-top: 6px solid #bdbdbd;
+            }
+            /* arrows pointing UP from the label */
+            .eq-update .label.bottom::after {
+              content: "";
+              position: absolute;
+              bottom: 100%;
+              left: 50%;
+              transform: translateX(-50%);
+              width: 2px;
+              height: 28px;
+              background: #bdbdbd;
+            }
+            .eq-update .label.bottom::before {
+              content: "";
+              position: absolute;
+              bottom: calc(100% + 28px);
+              left: 50%;
+              transform: translateX(-50%);
+              border-left: 6px solid transparent;
+              border-right: 6px solid transparent;
+              border-bottom: 6px solid #bdbdbd;
+            }
+          </style>
+
+          <div class="eq-wrap">
+            <!-- The equation (MathJax) -->
+            $$ \require{ams}\require{color} \mathbf{W_x^{*}} \;=\; \mathbf{W_x}
+            \;-\; \textcolor[RGB]{255,180,0}{\boldsymbol{a}} \left(
+            \frac{\partial \mathrm{Error}}{\partial W_x} \right) $$
+
+            <!-- Labels (positions are percentages across the container; tweak if needed) -->
+            <div class="label bottom" style="left: 14%; bottom: -6px">
+              New weight
+            </div>
+            <div class="label top" style="left: 39%; top: -8px">Old weight</div>
+            <div class="label bottom" style="left: 53%; bottom: -6px">
+              Learning rate
+            </div>
+            <div class="label top" style="left: 77%; top: -8px">
+              Derivative of Error<br />with respect to weight
+            </div>
+          </div>
+        </figure>
       </section>
 
       <section id="activation-functions">
@@ -766,179 +559,6 @@
           ReLU's popularity stems from its simplicity and effectiveness at
           mitigating the vanishing gradient problem that plagued earlier
           activation functions.
-        </p>
-      </section>
-
-      <section id="network-architectures">
-        <h2>4. Popular Network Architectures</h2>
-
-        <blockquote>
-          Different types of neural networks excel at different tasks.
-          Convolutional Neural Networks (CNNs) dominate computer vision,
-          Recurrent Neural Networks (RNNs) excel at sequential data, and
-          Transformers have revolutionized natural language processing.
-        </blockquote>
-
-        <p><strong>Convolutional Neural Networks (CNNs):</strong></p>
-        <p>
-          CNNs use convolution operations to detect features like edges,
-          textures, and patterns in images. They're designed to be
-          translation-invariant, meaning they can recognize a cat whether it
-          appears in the top-left or bottom-right of an image.
-        </p>
-
-        <p><strong>Recurrent Neural Networks (RNNs):</strong></p>
-        <p>
-          RNNs maintain internal memory to process sequential data like text or
-          time series. Modern variants like LSTMs and GRUs solve the vanishing
-          gradient problem that limited earlier RNN architectures.
-        </p>
-
-        <p><strong>Transformer Networks:</strong></p>
-        <p>
-          Transformers use attention mechanisms to process sequences in parallel
-          rather than sequentially. This architecture powers modern language
-          models like GPT and has achieved state-of-the-art results across many
-          domains.
-        </p>
-      </section>
-
-      <section id="common-challenges">
-        <h2>5. Common Challenges and Solutions</h2>
-
-        <blockquote>
-          Deep learning practitioners face several recurring challenges:
-          overfitting (memorizing training data), vanishing gradients (weights
-          in early layers barely update), and finding the right hyperparameters.
-        </blockquote>
-
-        <p><strong>Overfitting:</strong></p>
-        <ul>
-          <li>Use dropout during training to randomly ignore some neurons</li>
-          <li>
-            Apply regularization techniques (L1, L2) to penalize large weights
-          </li>
-          <li>Collect more diverse training data</li>
-          <li>Use data augmentation to artificially increase dataset size</li>
-        </ul>
-
-        <p><strong>Vanishing Gradients:</strong></p>
-        <ul>
-          <li>Use ReLU activation functions instead of sigmoid/tanh</li>
-          <li>Apply batch normalization to stabilize training</li>
-          <li>Implement residual connections (skip connections)</li>
-          <li>Use proper weight initialization schemes</li>
-        </ul>
-
-        <p><strong>Hyperparameter Tuning:</strong></p>
-        <ul>
-          <li>Start with proven architectures and modify gradually</li>
-          <li>Use learning rate scheduling</li>
-          <li>Employ validation sets to guide parameter choices</li>
-          <li>Consider automated hyperparameter optimization tools</li>
-        </ul>
-      </section>
-
-      <section id="practical-applications">
-        <h2>6. Real-World Applications</h2>
-
-        <blockquote>
-          Deep learning has achieved remarkable success across diverse fields:
-          image recognition surpassing human performance, natural language
-          processing enabling sophisticated AI assistants, and game-playing AI
-          mastering complex strategic games.
-        </blockquote>
-
-        <p><strong>Computer Vision:</strong></p>
-        <ul>
-          <li>Medical image analysis for disease diagnosis</li>
-          <li>Autonomous vehicle perception systems</li>
-          <li>Facial recognition and object detection</li>
-          <li>Image generation and style transfer</li>
-        </ul>
-
-        <p><strong>Natural Language Processing:</strong></p>
-        <ul>
-          <li>Machine translation between languages</li>
-          <li>Sentiment analysis and text classification</li>
-          <li>Chatbots and conversational AI</li>
-          <li>Text generation and summarization</li>
-        </ul>
-
-        <p><strong>Other Domains:</strong></p>
-        <ul>
-          <li>Drug discovery and molecular design</li>
-          <li>Financial fraud detection</li>
-          <li>Recommendation systems</li>
-          <li>Climate modeling and weather prediction</li>
-        </ul>
-      </section>
-
-      <section id="getting-started">
-        <h2>7. Getting Started</h2>
-
-        <blockquote>
-          The best way to learn deep learning is through hands-on practice.
-          Start with established frameworks like TensorFlow or PyTorch, work
-          through tutorials with real datasets, and gradually tackle more
-          complex projects.
-        </blockquote>
-
-        <p><strong>Learning Path:</strong></p>
-        <ol>
-          <li>
-            <strong>Mathematics Foundation:</strong> Linear algebra, calculus,
-            probability
-          </li>
-          <li><strong>Programming Skills:</strong> Python, NumPy, pandas</li>
-          <li>
-            <strong>Deep Learning Frameworks:</strong> TensorFlow/Keras or
-            PyTorch
-          </li>
-          <li>
-            <strong>Practice Projects:</strong> Image classification, sentiment
-            analysis
-          </li>
-          <li>
-            <strong>Advanced Topics:</strong> Specialized architectures,
-            optimization
-          </li>
-        </ol>
-
-        <p><strong>Practical Tips:</strong></p>
-        <ul>
-          <li>
-            Start simple - don't jump into complex architectures immediately
-          </li>
-          <li>Focus on data quality over quantity</li>
-          <li>Use pre-trained models when possible (transfer learning)</li>
-          <li>Keep detailed logs of experiments and results</li>
-          <li>Join communities and read recent research papers</li>
-        </ul>
-      </section>
-
-      <section id="future-directions">
-        <h2>8. Future Directions</h2>
-
-        <blockquote>
-          Deep learning continues to evolve rapidly. Current research focuses on
-          making models more efficient, interpretable, and capable of learning
-          from fewer examples. Emerging areas include few-shot learning, neural
-          architecture search, and integration with symbolic reasoning.
-        </blockquote>
-
-        <p>
-          The field is moving toward more efficient and generalizable AI
-          systems. Key trends include developing smaller models that perform as
-          well as larger ones, creating systems that can explain their
-          decisions, and building AI that can learn new tasks quickly with
-          minimal data - much like humans do.
-        </p>
-        <p>
-          As we advance, the integration of deep learning with other AI
-          approaches promises even more powerful and versatile systems, bringing
-          us closer to artificial general intelligence while addressing current
-          limitations in robustness, interpretability, and efficiency.
         </p>
       </section>
 
